@@ -1,0 +1,35 @@
+@startuml
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+hide fields
+hide methods
+hide empty members
+top to bottom direction
+
+class Usuario
+class Administrador
+class DisponibilidadDelChatbot
+class Consentimiento
+class CapsulaDePerfil
+class Personaje
+class Alan
+class Aura
+class Conversacion
+class Mensaje
+class EventoDeSeguridad
+class RecursoDeAyuda
+
+Personaje <|-- Alan
+Personaje <|-- Aura
+
+Usuario -- Consentimiento : otorga
+Usuario -- CapsulaDePerfil : posee
+Usuario -- Conversacion : mantiene
+CapsulaDePerfil -- Conversacion : orienta
+Conversacion -- Personaje : acompañada por
+Conversacion *-- Mensaje : contiene
+Mensaje -- EventoDeSeguridad : origina
+EventoDeSeguridad -- RecursoDeAyuda : remite a
+Administrador -- DisponibilidadDelChatbot : controla
+DisponibilidadDelChatbot -- Conversacion : condiciona
+@enduml
