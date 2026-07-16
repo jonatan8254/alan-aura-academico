@@ -3,6 +3,15 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-16 — v0.9.0 · Especificación textual de casos de uso ECU-00…ECU-10 (SD-21)
+- **Añadido:** `docs/07_casos_uso/especificaciones/` con el índice `ECU-00` y las **10 especificaciones** `ECU-01…ECU-10`, generadas con la skill `use-case-specifier` a partir de DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato y el plan archivado.
+- **Forma:** **completa** (§1–§23) en CU-04/05/06/07/10 (canon-sensibles: eliminación en cascada, consentimiento/minimización, conversación gobernada, *fail-safe*, kill switch auditado); **ágil** (§23) en CU-01/02/03/08/09. Empaquetado un archivo por CU + índice.
+- **Trazabilidad:** los **26 RF** de REQ-01 cubiertos sin huérfanos; poblada la **columna CU** de `TRZ-01`.
+- **Gate de calidad:** la skill **no** trae validador ejecutable → cada spec **embebe su checklist §22 (20 ítems)** y todas pasaron el loop de auditoría del orquestador (rúbrica + 8 pasos + traza *backward* + canon §5) **sin hallazgos Crítico/Mayor**.
+- **Orquestación:** las 5 specs **ágiles** por subagentes **Sonnet** (auditadas antes de incorporarse); las 5 **completas** por el orquestador.
+- **Hallazgo abierto (RA-01):** discrepancia del nº de campos que recibe el LLM — cápsula canónica (3, RN-01.3/PRIV-R1) vs plan §3.4 `ContextoInicialConversacionalV1` (5 + personaje + versión); se sigue el canon, pendiente reconciliar (CU-05 §21, CU-06 §21).
+- **Actualizado:** `INDICE_MAESTRO` (filas ECU), `ESTADO_PIPELINE` (Fase 2: dominio ✅ + casos de uso ✅ + **especificación ✅**), `CLAUDE.md`/`AGENTS.md` §Alcance (Fase 2 en curso; corrige el texto que aún marcaba «casos de uso» fuera de alcance), `REGISTRO_DECISIONES` (SD-21).
+
 ## 2026-07-12 — v0.8.0 · Diagrama de casos de uso DCU-01 (SD-20)
 - **Añadido:** `docs/07_casos_uso/DCU-01_casos_uso.puml` (+ `.md` + `.svg`) — **diagrama de casos de uso** generado con la skill `uml-use-case-diagram` a partir de MV-01, MD-01, VIS-01 y REQ-01.
 - **Contenido:** 4 actores (Visitante, Usuario adulto, Administrador, y **Proveedor LLM (Groq)** como sistema externo); 10 casos de uso en 3 paquetes (Acceso y cuenta · Acompañamiento · Administración de plataforma); 1 `<<extend>>` (Derivar ante peligro → Conversar) y 0 `<<include>>`.

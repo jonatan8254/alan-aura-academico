@@ -32,5 +32,7 @@ Ficha (ID/Insumos/Consumidores/Hogar/Estado/Changelog/DoD) · marcas de evidenci
 ## §7 — Procedencia documental (histórica)
 Los artefactos de la Fase 1 (documental) se construyeron consultando `auditoria_fable5/02_auditoria/` del macroproyecto Smart-AID (repositorio separado, solo durante esa fase, ya cerrada). Esa fuente **no está presente** en este repositorio; el detalle de qué se consultó y con qué nivel de verificación vive en `docs/00_gobernanza/MANIFIESTO_FUENTES.md`.
 
-## §8 — Alcance de la fase
-Se produce todo lo pre-ICONIX (visión, ADR, MV, RF/RNF, calidad, reglas, privacidad, seguridad, norma, trazabilidad, plan). **No adelantar** casos de uso, dominio, robustez, secuencias ni código: quedan planificados en `PLAN-01`.
+## §8 — Alcance del pipeline (estado)
+- **Fase 1 (pre-ICONIX) — cerrada:** visión, ADR, MV, RF/RNF, calidad, reglas, privacidad, seguridad, norma, trazabilidad, plan.
+- **Fase 2 (ICONIX) — en curso:** producidos el modelo de dominio (`MD-01`), el diagrama de casos de uso (`DCU-01`) y la especificación textual de casos de uso (`ECU-00…ECU-10`).
+- **No adelantar** análisis de robustez, secuencias, diseño de clases ni código: quedan planificados. **Siguiente artefacto ICONIX: el análisis de robustez.**

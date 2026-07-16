@@ -28,6 +28,7 @@
 - Fuente primaria del corpus del proyecto durante la Fase 1 (ya cerrada): los entregables auditados de `auditoria_fable5/02_auditoria/` del macroproyecto Smart-AID (repositorio separado, no incluido aquí). Detalle de qué se consultó en `docs/00_gobernanza/MANIFIESTO_FUENTES.md`.
 - No versionar ni copiar contenido con derechos de autor de terceros (normas ISO, libros): se **cita**, no se reproduce.
 
-## 6. Alcance de esta fase
-- Se producen: visión, ADR, modelos verbales, RF/RNF, requisitos de calidad, reglas de negocio, privacidad, protocolo de seguridad, puente normativo, trazabilidad, plan de proyecto.
-- **Fuera de alcance (no adelantar):** casos de uso, modelo de dominio, robustez, secuencias, código. Quedan planificados en `PLAN-01`, no producidos.
+## 6. Alcance del pipeline (estado actual)
+- **Fase 1 (documental) — cerrada:** visión, ADR, modelos verbales, RF/RNF, requisitos de calidad, reglas de negocio, privacidad, protocolo de seguridad, puente normativo, trazabilidad, plan de proyecto.
+- **Fase 2 (ICONIX) — en curso:** producidos el **modelo de dominio** (`MD-01`), el **diagrama de casos de uso** (`DCU-01`) y la **especificación textual de los casos de uso** (`ECU-00…ECU-10`).
+- **Fuera de alcance por ahora (no adelantar):** análisis de robustez, secuencias, diseño de clases y código. Quedan planificados, no producidos. **Siguiente artefacto ICONIX: el análisis de robustez.**
