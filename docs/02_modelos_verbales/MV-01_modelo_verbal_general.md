@@ -2,8 +2,15 @@
 
 **Asignatura:** Diseño y Construcción de Productos de Software
 **Profesor:** Albeiro Espinosa Bedoya, Ph.D., M.Sc.
-**Autor:** Jonatan Estiven Sánchez Vargas
-**Período académico:** 2026-1 · **Universidad Nacional de Colombia — Sede Medellín, Facultad de Minas** · Grupo 20
+**Autores:** Jonatan Estiven Sánchez Vargas
+
+**Período académico:** 2026-1 · **Universidad Nacional de Colombia — Sede Medellín, Facultad de Minas** · Grupo 5
+Santiago Bedoya
+Santiago Eusse Gil
+Luis Fernando Montoya Rodriguez
+Jonatan Estiven Sanchez Vargas
+
+ 
 
 > Este modelo verbal se presenta en dos partes. La **Parte A (secciones 1–6)** sigue el formato de entrega del curso —título, contexto, descripción, requisitos funcionales, no funcionales y de calidad—, redactada como documento narrativo. La **Parte B** conserva la **formalización conceptual rigurosa** que ya tenía este modelo (estándar E8: glosario del dominio, taxonomía, relaciones tipadas, reglas de negocio y checklist verificable), que es la que alimenta la extracción del modelo de dominio. Los metadatos de control del artefacto (ID, versión, insumos, changelog) abren la Parte B.
 
