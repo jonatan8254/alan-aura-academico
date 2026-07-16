@@ -3,6 +3,12 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-12 — v0.8.0 · Diagrama de casos de uso DCU-01 (SD-20)
+- **Añadido:** `docs/07_casos_uso/DCU-01_casos_uso.puml` (+ `.md` + `.svg`) — **diagrama de casos de uso** generado con la skill `uml-use-case-diagram` a partir de MV-01, MD-01, VIS-01 y REQ-01.
+- **Contenido:** 4 actores (Visitante, Usuario adulto, Administrador, y **Proveedor LLM (Groq)** como sistema externo); 10 casos de uso en 3 paquetes (Acceso y cuenta · Acompañamiento · Administración de plataforma); 1 `<<extend>>` (Derivar ante peligro → Conversar) y 0 `<<include>>`.
+- **Trazabilidad:** los 26 RF de REQ-01 cubiertos sin huérfanos. **Validador:** 0 errores.
+- **Siguiente artefacto ICONIX:** especificación textual de cada caso de uso (`use-case-specifier`).
+
 ## 2026-07-12 — v0.7.0 · Formato de entrega del curso en MV-01 (SD-19)
 - **MV-01 v2.3:** se antepone la **Parte A** (secciones 1–6: Título, Contexto, Descripción, Requisitos Funcionales, No Funcionales y de Calidad) en el **estilo narrativo del ejemplo del curso**; la formalización E8 se conserva íntegra como **Parte B**. Contenido de la Parte A extraído de VIS-01, REQ-01 y el plan archivado. Sin cambios en clases, relaciones ni reglas (la extracción de dominio no se afecta).
 - **Nota:** el "Período académico 2026-1" del encabezado es una inferencia — el usuario debe confirmarlo/ajustarlo.

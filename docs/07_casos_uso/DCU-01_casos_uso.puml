@@ -1,0 +1,44 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Visitante" as Visitante
+actor "Usuario adulto" as Usuario
+actor "Administrador de plataforma" as Admin
+actor "Proveedor LLM (Groq)" as LLM <<sistema externo>>
+
+rectangle "Alan & Aura Académico" {
+  package "Acceso y cuenta" {
+    usecase "Consultar presentación del servicio" as CU_Pres
+    usecase "Registrar cuenta" as CU_Reg
+    usecase "Iniciar sesión" as CU_Login
+    usecase "Gestionar cuenta y datos personales" as CU_Cuenta
+  }
+  package "Acompañamiento" {
+    usecase "Otorgar consentimiento y caracterizar el perfil" as CU_Onb
+    usecase "Conversar con el acompañante" as CU_Chat
+    usecase "Derivar ante peligro" as CU_Deriv
+  }
+  package "Administración de plataforma" {
+    usecase "Consultar directorio de usuarios" as CU_Dir
+    usecase "Consultar métricas de uso" as CU_Met
+    usecase "Habilitar o deshabilitar el chatbot" as CU_Kill
+  }
+}
+
+Visitante -- CU_Pres
+Visitante -- CU_Reg
+Usuario -- CU_Login
+Admin -- CU_Login
+Usuario -- CU_Onb
+Usuario -- CU_Chat
+Usuario -- CU_Cuenta
+CU_Chat -- LLM
+Admin -- CU_Dir
+Admin -- CU_Met
+Admin -- CU_Kill
+
+CU_Deriv ..> CU_Chat : <<extend>>
+@enduml

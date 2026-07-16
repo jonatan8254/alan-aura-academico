@@ -35,10 +35,12 @@
 | **NORM-01** | `04_trazabilidad/NORM-01_puente_normativo.md` | D6-bis (cláusulas verificadas), REQ-01 | TRZ-01, evaluación (fase 4) |
 | **TRZ-01** | `04_trazabilidad/TRZ-01_trazabilidad.md` | VIS-01, MV-01, REQ-01, SEG-01, NORM-01 | Verificación de cobertura, fase 2/4 |
 | **PLAN-01** | `05_plan/PLAN-01_plan_proyecto.md` | Todos los anteriores | Ejecución del subproyecto |
-| **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | Casos de uso, robustez, clases (fase 2+) |
+| **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, clases (fase 2+) |
+| **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez |
 
 ## Cadena de dependencia (resumen)
 `VIS-01 → ADR-001 → MV-01 (vistas: Onboarding · Conversación (+contrato) · Seguridad · Administración) → REQ-01 → {PRIV-01, SEG-01} → NORM-01 → TRZ-01 → PLAN-01`
+Fase 2 ICONIX: `MV-01 → MD-01 (dominio) → DCU-01 (casos de uso) → [especificación textual → robustez → secuencia → clases]`
 
 ## Estándares por artefacto
 - **MV-01 (consolidado):** E8, 11 rasgos {1,2,3,6,7,12,13,14,15,16,17} + checklist único; apto para extracción de dominio (§14 Handoff, modo *academic strict*).
@@ -47,3 +49,4 @@
 - **NORM-01:** filas [V-cláusula] reusadas de D6-bis; 3 niveles de verificación.
 - **TRZ-01:** objetivo → actor → RF/RN → calidad → norma → prueba-planeada; cero huérfanos.
 - **MD-01:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); 11 clases, sin atributos/multiplicidades; validador 0/0.
+- **DCU-01:** diagrama de casos de uso PlantUML (skill `uml-use-case-diagram`); 4 actores, 10 casos de uso, 3 paquetes, 1 `<<extend>>`, 0 `<<include>>`; validador 0 errores.

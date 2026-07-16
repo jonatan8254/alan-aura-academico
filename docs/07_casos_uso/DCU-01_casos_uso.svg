@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="650" viewBox="0 0 680 650" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>Diagrama de casos de uso — Alan &amp; Aura Académico</title>
+<desc>Cuatro actores (Visitante, Usuario adulto, Administrador, Proveedor LLM como sistema externo) y diez casos de uso en tres paquetes (Acceso y cuenta, Acompañamiento, Administración de plataforma). "Derivar ante peligro" es un extend de "Conversar con el acompañante".</desc>
+
+<rect x="0" y="0" width="680" height="650" fill="#FFFFFF"/>
+
+<g stroke="#8a8a8a" stroke-width="1" fill="none">
+<line x1="67" y1="110" x2="262" y2="100"/>
+<line x1="67" y1="116" x2="262" y2="146"/>
+<line x1="67" y1="330" x2="262" y2="192"/>
+<line x1="67" y1="333" x2="262" y2="238"/>
+<line x1="67" y1="336" x2="262" y2="302"/>
+<line x1="67" y1="339" x2="262" y2="348"/>
+<line x1="613" y1="120" x2="438" y2="192"/>
+<line x1="613" y1="124" x2="438" y2="474"/>
+<line x1="613" y1="126" x2="438" y2="520"/>
+<line x1="613" y1="128" x2="438" y2="566"/>
+<line x1="582" y1="352" x2="438" y2="348"/>
+</g>
+
+<rect x="175" y="42" width="350" height="560" rx="6" fill="none" stroke="#5F5E5A" stroke-width="1.5"/>
+<text x="350" y="62" text-anchor="middle" font-size="13" font-weight="500" fill="#2C2C2A">Alan &amp; Aura Académico</text>
+
+<rect x="188" y="74" width="324" height="192" rx="4" fill="none" stroke="#B4B2A9" stroke-dasharray="4 3"/>
+<text x="196" y="90" text-anchor="start" font-size="12" font-weight="500" fill="#5F5E5A">Acceso y cuenta</text>
+<rect x="188" y="278" width="324" height="140" rx="4" fill="none" stroke="#B4B2A9" stroke-dasharray="4 3"/>
+<text x="196" y="294" text-anchor="start" font-size="12" font-weight="500" fill="#5F5E5A">Acompañamiento</text>
+<rect x="188" y="432" width="324" height="160" rx="4" fill="none" stroke="#B4B2A9" stroke-dasharray="4 3"/>
+<text x="196" y="448" text-anchor="start" font-size="12" font-weight="500" fill="#5F5E5A">Administración de plataforma</text>
+
+<g font-size="11">
+<ellipse cx="350" cy="100" rx="88" ry="19" fill="#E6F1FB" stroke="#185FA5"/><text x="350" y="97" text-anchor="middle" fill="#0C447C">Consultar presentación<tspan x="350" dy="13">del servicio</tspan></text>
+<ellipse cx="350" cy="146" rx="88" ry="19" fill="#E6F1FB" stroke="#185FA5"/><text x="350" y="150" text-anchor="middle" fill="#0C447C">Registrar cuenta</text>
+<ellipse cx="350" cy="192" rx="88" ry="19" fill="#E6F1FB" stroke="#185FA5"/><text x="350" y="196" text-anchor="middle" fill="#0C447C">Iniciar sesión</text>
+<ellipse cx="350" cy="238" rx="88" ry="19" fill="#E6F1FB" stroke="#185FA5"/><text x="350" y="235" text-anchor="middle" fill="#0C447C">Gestionar cuenta y<tspan x="350" dy="13">datos personales</tspan></text>
+<ellipse cx="350" cy="308" rx="90" ry="19" fill="#E1F5EE" stroke="#0F6E56"/><text x="350" y="305" text-anchor="middle" fill="#04342C">Otorgar consentimiento<tspan x="350" dy="13">y caracterizar perfil</tspan></text>
+<ellipse cx="350" cy="354" rx="90" ry="19" fill="#E1F5EE" stroke="#0F6E56"/><text x="350" y="351" text-anchor="middle" fill="#04342C">Conversar con<tspan x="350" dy="13">el acompañante</tspan></text>
+<ellipse cx="350" cy="398" rx="82" ry="18" fill="#FAECE7" stroke="#993C1D"/><text x="350" y="402" text-anchor="middle" fill="#4A1B0C">Derivar ante peligro</text>
+<ellipse cx="350" cy="474" rx="88" ry="19" fill="#F1EFE8" stroke="#5F5E5A"/><text x="350" y="471" text-anchor="middle" fill="#2C2C2A">Consultar directorio<tspan x="350" dy="13">de usuarios</tspan></text>
+<ellipse cx="350" cy="520" rx="88" ry="19" fill="#F1EFE8" stroke="#5F5E5A"/><text x="350" y="517" text-anchor="middle" fill="#2C2C2A">Consultar métricas<tspan x="350" dy="13">de uso</tspan></text>
+<ellipse cx="350" cy="566" rx="88" ry="19" fill="#F1EFE8" stroke="#5F5E5A"/><text x="350" y="563" text-anchor="middle" fill="#2C2C2A">Habilitar/deshabilitar<tspan x="350" dy="13">el chatbot</tspan></text>
+</g>
+
+<g stroke="#993C1D" stroke-width="1.3" fill="none">
+<polyline points="432,398 462,398 462,354 440,354" stroke-dasharray="5 3"/>
+<polygon points="440,354 449,349 449,359" fill="#993C1D" stroke="none"/>
+</g>
+<text x="466" y="378" text-anchor="start" font-size="10" fill="#993C1D">«extend»</text>
+
+<g stroke="#2C2C2A" stroke-width="1.4" fill="none">
+<circle cx="55" cy="95" r="9"/><line x1="55" y1="104" x2="55" y2="126"/><line x1="43" y1="113" x2="67" y2="113"/><line x1="55" y1="126" x2="45" y2="141"/><line x1="55" y1="126" x2="65" y2="141"/>
+<circle cx="55" cy="318" r="9"/><line x1="55" y1="327" x2="55" y2="349"/><line x1="43" y1="336" x2="67" y2="336"/><line x1="55" y1="349" x2="45" y2="364"/><line x1="55" y1="349" x2="65" y2="364"/>
+<circle cx="625" cy="100" r="9"/><line x1="625" y1="109" x2="625" y2="131"/><line x1="613" y1="118" x2="637" y2="118"/><line x1="625" y1="131" x2="615" y2="146"/><line x1="625" y1="131" x2="635" y2="146"/>
+</g>
+<g font-size="12" fill="#2C2C2A" text-anchor="middle">
+<text x="55" y="160">Visitante</text>
+<text x="55" y="383">Usuario adulto</text>
+<text x="625" y="165">Administrador</text>
+</g>
+
+<rect x="580" y="332" width="90" height="46" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/>
+<text x="625" y="326" text-anchor="middle" font-size="9" fill="#5F5E5A" font-style="italic">«sistema externo»</text>
+<text x="625" y="352" text-anchor="middle" font-size="11" fill="#2C2C2A">Proveedor LLM</text>
+<text x="625" y="366" text-anchor="middle" font-size="11" fill="#2C2C2A">(Groq)</text>
+</svg>

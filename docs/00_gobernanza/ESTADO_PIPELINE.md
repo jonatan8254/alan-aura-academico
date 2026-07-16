@@ -4,7 +4,7 @@
 ---
 
 ## Dónde estamos
-Fase **1 cerrada** y **Fase 2 (ICONIX) iniciada** (2026-07-12): el paquete documental está completo y ya se produjo el **primer artefacto ICONIX**, el **modelo de dominio `MD-01`** (`docs/06_dominio/`, PlantUML; validador de la skill 0/0). No hay código ni pilotos, por diseño. Siguiente artefacto ICONIX: casos de uso (pendiente).
+Fase **1 cerrada** y **Fase 2 (ICONIX) en curso** (2026-07-12): el paquete documental está completo y ya se produjeron los dos primeros artefactos ICONIX — el **modelo de dominio `MD-01`** (`docs/06_dominio/`) y el **diagrama de casos de uso `DCU-01`** (`docs/07_casos_uso/`), ambos en PlantUML con validador de la skill en 0 errores. No hay código ni pilotos, por diseño. Siguiente artefacto ICONIX: **especificación textual de los casos de uso**.
 
 ## Fases del subproyecto
 
@@ -12,7 +12,7 @@ Fase **1 cerrada** y **Fase 2 (ICONIX) iniciada** (2026-07-12): el paquete docum
 |---|---|---|
 | 0 | Delimitación de alcance (plan generado con Codex) | ✅ cerrada (insumo externo) |
 | 1 | **Auditoría del plan + artefactos documentales mínimos** (esta fase) | ✅ **cerrada (2026-07-12)** |
-| 2 | Análisis y diseño ICONIX (dominio → CU → robustez → secuencia → clases) | 🟩 **iniciada** — modelo de dominio `MD-01` ✅ (2026-07-12); casos de uso pendientes |
+| 2 | Análisis y diseño ICONIX (dominio → CU → robustez → secuencia → clases) | 🟩 **en curso** — `MD-01` (dominio) ✅ · `DCU-01` (casos de uso) ✅ (2026-07-12); especificación textual de CU pendiente |
 | 3 | Construcción del MVP (Django/LLM/gate de seguridad) | ⬜ planificada |
 | 4 | Verificación, despliegue académico y entrega | ⬜ planificada |
 
@@ -72,7 +72,7 @@ Leyenda: ✅ afirmado/cumplido · ➖ no aplica al artefacto.
 
 ## Qué sigue (después de la Fase 1)
 1. Revisión del usuario de VIS-01/ADR-001/REQ-01 (validaciones nivel 6: servicios externos y frontera legal).
-2. Fase 2 (ICONIX) **en curso**: modelo de dominio `MD-01` ✅ producido desde MV-01 (skill `uml-domain-modeler`, modo *academic strict*, validador 0/0). Siguiente: casos de uso (skill `uml-use-case-diagram`) reusando los nombres de clase de MD-01 — pendiente, no iniciado.
+2. Fase 2 (ICONIX) **en curso**: `MD-01` (dominio) ✅ y `DCU-01` (casos de uso) ✅ producidos con las skills `uml-domain-modeler` y `uml-use-case-diagram` (validador 0 errores en ambos). Siguiente: **especificación textual de cada caso de uso** (skill `use-case-specifier`) reusando los nombres de DCU-01 — pendiente.
 3. Diferido explícito: repo git separado, grafo y vault del subproyecto (cuando el usuario lo decida).
 
 ## Invariantes que no se relajan
