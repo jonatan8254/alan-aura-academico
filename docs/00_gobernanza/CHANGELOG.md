@@ -3,6 +3,13 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-12 — v0.7.0 · Formato de entrega del curso en MV-01 (SD-19)
+- **MV-01 v2.3:** se antepone la **Parte A** (secciones 1–6: Título, Contexto, Descripción, Requisitos Funcionales, No Funcionales y de Calidad) en el **estilo narrativo del ejemplo del curso**; la formalización E8 se conserva íntegra como **Parte B**. Contenido de la Parte A extraído de VIS-01, REQ-01 y el plan archivado. Sin cambios en clases, relaciones ni reglas (la extracción de dominio no se afecta).
+- **Nota:** el "Período académico 2026-1" del encabezado es una inferencia — el usuario debe confirmarlo/ajustarlo.
+
+## 2026-07-12 — v0.6.0 · Repositorio independiente (SD-18)
+- Este repositorio es el resultado de extraer el subproyecto desde `subproyecto_academico_alan_aura/` del repo de SmartAID a un repositorio GitHub propio (`jonatan8254/alan-aura-academico`, privado). **Es la fuente de verdad activa**; la copia en SmartAID queda como snapshot histórico. Se corrigieron 11 referencias al macro (ahora citas de procedencia, sin enlaces rotos).
+
 ## 2026-07-12 — v0.5.0 · Reconciliación contra el plan completo (SD-17)
 - **Motivo:** al archivar el plan completo (SD-16) se detectaron 5 discrepancias entre el texto real y los artefactos construidos a partir de una reconstrucción forense parcial.
 - **Historial de sesión:** `RN-02.2`/`RN-03` (MV-01) y `RF-09`/`RNF-04` (REQ-01) corregidos — el LLM **sí** recibe hasta 4 intercambios de la sesión actual (no "cero historial"); nunca historial de sesiones previas. Propagado a `PRIV-R1` y `C-4`/`CA-4` del contrato.
