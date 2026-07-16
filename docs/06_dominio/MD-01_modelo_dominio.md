@@ -73,7 +73,7 @@ Cadena: `MV-01 → MD-01 (este) → casos de uso → especificación → robuste
 
 ## 6. Diferido a fases posteriores (reserva)
 Coherente con el modo *academic strict* y la regla ICONIX «no attributes / defer multiplicity» — todo esto vive en MV-01 §13 y se incorporará al **refinamiento** (no al modelo inicial):
-- **Atributos / dominios de valor:** `Usuario.edad`, `CapsulaDePerfil.{preferenciaDePersonaje, focoEmocional, tonoPreferido}`, textos de consentimiento/*disclosure*, señales del gate.
+- **Atributos / dominios de valor:** `Usuario.edad`, `CapsulaDePerfil.{mood_self_report, energy_self_report, conversation_goal, response_style, character}` + metadatos `schema_version`/`consent_version` (= `ContextoInicialConversacionalV1`, plan §3.4; SD-22), textos de consentimiento/*disclosure*, señales del gate.
 - **Multiplicidades:** ver MV-01 §13.2 (candidatas, diferidas).
 - **Clases de estado** (candidatas, no incluidas para mantener el modelo mínimo-suficiente): `EstadoConsentimiento` {otorgado, revocado}, `EstadoConversacion` {activa, cerrada}. Se añadirán solo si mejoran la trazabilidad de casos de uso.
 

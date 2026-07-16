@@ -40,6 +40,7 @@ Fase **1 cerrada** y **Fase 2 (ICONIX) en curso** (act. 2026-07-16): el paquete 
 4. ✅ Tabla de personajes del contrato enriquecida (P-1..P-8: función/tono/respuesta típica/preguntas/sugerencias/longitud/límites).
 5. ✅ Plantilla del fallback citada en SEG-01 §5 (sin números fijos, respeta SD-12).
 6. ⬜ Tabla de endpoints (§4.9 del plan) — diferida a ARQ-01 (fase de construcción, no aplica a esta fase documental).
+7. ✅ **Cápsula de 5 campos (SD-22, RA-01 cerrada, 2026-07-16):** el LLM recibe `ContextoInicialConversacionalV1` (5 de contenido + 2 metadatos), no la cápsula de 3 campos — MV-01 RN-01.3/§3/§13.1, REQ-01 RF-04/05, PRIV-01 PRIV-R1/§2, MD-01 §6, ECU-04/05/06/00. Sigue siendo minimización; PRIV-R9 intacta.
 
 ## Corrección de alcance (SD-15, 2026-07-12)
 Verificación forense contra el plan de Codex: se restauraron las 3 funciones reales del administrador (directorio, métricas agregadas, kill switch) y las de cuenta del usuario (registro/login, reinicio de perfil, revocación, eliminación en cascada, manejo de errores), y se quitó la edición administrativa que el plan excluye (recursos/textos **por entorno**). Propagado a VIS-01, MV-01 (v2.1, +`DisponibilidadDelChatbot`), REQ-01 (v1.1, +RF-19…26), PRIV-01, CONTRATO, MD-01 (12 clases) y TRZ-01. Detalle en `CHANGELOG.md` (v0.4.0) y `REGISTRO_DECISIONES.md` (SD-15).

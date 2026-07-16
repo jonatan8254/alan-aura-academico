@@ -1,5 +1,5 @@
 # TRZ-01 — Matriz de trazabilidad del MVP
-**ID:** TRZ-01 · **Hogar:** `docs/04_trazabilidad/` · **Fecha:** 2026-07-16 · **Versión:** v1.3 (SD-21: **columna CU poblada** — cada RF trazado a su especificación `ECU-0X`; dimensión CU cerrada · SD-15: +RF-19…26 cuenta/acceso y sesión; admin realineado; MD-01 disponible · SD-17: RF-25/26 con límites de tasa exactos y RN-02.9).
+**ID:** TRZ-01 · **Hogar:** `docs/04_trazabilidad/` · **Fecha:** 2026-07-16 · **Versión:** v1.4 (SD-22: RF-04/05 coherentes con la cápsula de 5 campos = `ContextoInicialConversacionalV1` · SD-21: **columna CU poblada** — cada RF trazado a su especificación `ECU-0X`; dimensión CU cerrada · SD-15: +RF-19…26 cuenta/acceso y sesión; admin realineado; MD-01 disponible · SD-17: RF-25/26 con límites de tasa exactos y RN-02.9).
 **Insumos:** VIS-01 (OBJ-1…OBJ-7), MV-01 (vistas), contrato, REQ-01 (RF-01…26/RNF/RC/RN), PRIV-01, SEG-01, NORM-01, MD-01 (dominio).
 **Consumidores:** verificación de cobertura; fase 2 (CU/dominio) y fase 4 (pruebas).
 **Criterio de cierre:** **cero requisitos huérfanos** — todo RF traza a ≥1 objetivo, ≥1 regla y ≥1 prueba planificada; todo objetivo tiene ≥1 RF; todo RC tiene ≥1 RF **o RNF**.
@@ -17,8 +17,8 @@
 | RF-01 | OBJ-1 | Usuario | MV-01 §Onboarding | RN-09, RN-01.1 | RC-06 | §3.4 | Verificar *disclosure* previo a captura | CU-05 |
 | RF-02 | OBJ-1 | Usuario | MV-01 §Onboarding | RN-01, RN-10, RN-01.2 | — | — | Caso <18 no continúa | CU-05 |
 | RF-03 | OBJ-1 | Usuario | MV-01 §Onboarding | RN-02, RN-07, RN-01.5 | RC-04 | Security | Otorgar/revocar consentimiento | CU-05 |
-| RF-04 | OBJ-1 | Usuario | MV-01 §Onboarding | RN-01.3, RN-01.4 | RC-04 | Security | Completar con campos opcionales vacíos | CU-05 |
-| RF-05 | OBJ-1/OBJ-4 | Usuario | MV-01 §Onboarding | RN-03 | RC-04 | Security | Inspección de contenido de la cápsula | CU-05 |
+| RF-04 | OBJ-1 | Usuario | MV-01 §Onboarding | RN-01.3, RN-01.4 | RC-04 | Security | Completar dejando los 4 autorreportes vacíos; `character` obligatorio | CU-05 |
+| RF-05 | OBJ-1/OBJ-4 | Usuario | MV-01 §Onboarding | RN-03 | RC-04 | Security | Inspección: la cápsula = 5 campos + metadatos (`ContextoInicialConversacionalV1`) | CU-05 |
 | RF-06 | OBJ-1 | Usuario | MV-01 §Conversación | — | RC-06 | §3.4 | Presentación de Alan y Aura visible | CU-05 |
 | RF-07 | OBJ-2 | Usuario | MV-01 §Conversación | RN-02.6 | RC-08 | Func. suitability | Iniciar con personaje elegido | CU-06 |
 | RF-08 | OBJ-2 | Usuario / LLM | MV-01 §Conversación | RN-02.2 | RC-05, RC-08 | Perf. / Func. | Intercambio de turnos coherentes | CU-06 |

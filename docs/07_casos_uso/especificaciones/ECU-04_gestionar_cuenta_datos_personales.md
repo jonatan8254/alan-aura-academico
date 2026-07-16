@@ -76,7 +76,7 @@
 | Concepto/clase | Descripción | Participación | Atributos (reserva) | Relaciones |
 |---|---|---|---|---|
 | Usuario | Titular de la cuenta | Se elimina (o conserva) | username, alias | Usuario–CapsulaDePerfil; Usuario–Consentimiento |
-| CapsulaDePerfil | Resumen mínimo | Se borra o deja de alimentar | 3 campos | CapsulaDePerfil–Conversacion (orienta) |
+| CapsulaDePerfil | Resumen mínimo (`ContextoInicialConversacionalV1`) | Se borra o deja de alimentar | 5 campos + metadatos | CapsulaDePerfil–Conversacion (orienta) |
 | Consentimiento | Aceptación granular | Se revoca / se elimina en cascada | estado | Usuario–Consentimiento |
 
 **Control terminológico**
@@ -167,7 +167,7 @@
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |
 |---|---|---|---|---|
 | Usuario | cuenta | Eliminar | Paso 3 | Borrado en cascada (PRIV-R11) |
-| CapsulaDePerfil | 3 campos | Eliminar | Paso 3, FA-01 | Deja de existir |
+| CapsulaDePerfil | 5 campos + metadatos | Eliminar | Paso 3, FA-01 | Deja de existir |
 | Consentimiento | estado | Actualizar (revocar) / Eliminar | FA-02, paso 3 | Revocable (RN-07) |
 
 ## 19. Trazabilidad

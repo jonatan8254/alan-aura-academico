@@ -81,7 +81,7 @@
 | Conversacion | Sesión efímera de acompañamiento (no persiste) | Se abre y se descarta | estado ∈ {activa, cerrada} | Usuario–Conversacion (mantiene); Conversacion*--Mensaje |
 | Mensaje | Turno dentro de la conversación | Se intercambia | — | Conversacion*--Mensaje; Mensaje–EventoDeSeguridad |
 | Personaje (Alan, Aura) | Estilo de acompañamiento | Conduce la conversación | — | Conversacion–Personaje (acompañada por) |
-| CapsulaDePerfil | Resumen mínimo | Orienta la conversación (vía LLM) | preferenciaDePersonaje, focoEmocional, tonoPreferido | CapsulaDePerfil–Conversacion (orienta) |
+| CapsulaDePerfil | Resumen mínimo (`ContextoInicialConversacionalV1`) | Orienta la conversación (vía LLM) | mood_self_report, energy_self_report, conversation_goal, response_style, character (+ schema_version, consent_version) | CapsulaDePerfil–Conversacion (orienta) |
 | DisponibilidadDelChatbot | Estado global habilitado/deshabilitado | Condiciona el inicio | estado | DisponibilidadDelChatbot–Conversacion (condiciona) |
 | EventoDeSeguridad | Ocurrencia de peligro explícito | Puede originarse de un Mensaje | — | Mensaje–EventoDeSeguridad (origina) |
 
@@ -204,8 +204,8 @@
 |---|---|---|---|---|
 | Conversacion | estado | Crear / Cancelar | Paso 1, 8 | Efímera; se descarta al cerrar (RF-13) |
 | Mensaje | contenido del turno | Crear / Validar | Paso 2 | ≤1.500 caracteres; no se persiste |
-| CapsulaDePerfil | 3 campos | Consultar | Paso 4 | Solo esos campos viajan al LLM |
-| Contexto al LLM (`ContextoInicialConversacionalV1`) | cápsula + persona + ≤4 intercambios + turno | Construir / Enviar | Paso 4 | Sin datos identificatorios (PRIV-R9) |
+| CapsulaDePerfil | 5 campos de contenido + metadatos (`ContextoInicialConversacionalV1`) | Consultar | Paso 4 | Solo esos campos viajan al LLM |
+| Contexto al LLM (`ContextoInicialConversacionalV1`) | cápsula (5 campos, incluye `character`) + system prompt de personalidad + ≤4 intercambios + turno | Construir / Enviar | Paso 4 | Sin datos identificatorios (PRIV-R9) |
 | EventoDeSeguridad | señal de peligro | Validar | Paso 3 | Determinista; deriva a CU-07 |
 
 ## 19. Trazabilidad
@@ -234,7 +234,7 @@
 ## 21. Riesgos, ambigüedades y decisiones pendientes
 | ID | Tipo | Descripción | Impacto | Decisión | Estado |
 |---|---|---|---|---|---|
-| RA-01 | Ambigüedad | Nº de campos que recibe el LLM: la cápsula canónica (RN-01.3/PRIV-R1) son **3**; el plan §3.4 (`ContextoInicialConversacionalV1`) lista **5 autorreportes + personaje + versión**. | Define el *payload* real (CA-02) | Seguir el canon (3 campos); reconciliar con el plan §3.4 (compartida con CU-05 RA-01). | **Abierto** |
+| RA-01 | Ambigüedad (histórica) | Nº de campos que recibe el LLM: la cápsula canónica nombraba **3**; el plan §3.4 (`ContextoInicialConversacionalV1`) lista **5 de contenido + metadatos**. | Define el *payload* real (CA-02) | **Resuelto (SD-22):** se adoptan los **5 campos del plan** + `schema_version`/`consent_version`; el *payload* del paso 4 usa `ContextoInicialConversacionalV1`. | **Resuelto** |
 | RA-02 | Riesgo | El gate binario no detecta peligro **implícito** (limitación declarada, SEG-01 §2). | Alcance de seguridad | Declarado con honestidad; solo se garantiza el explícito. | Aceptado |
 | RA-03 | Riesgo | Latencia del LLM podría incumplir RC-05 (p95 ≤ 5 s). | Rendimiento | Medir en construcción; umbral revisable [N6]. | Abierto (R-6) |
 | RA-04 | Riesgo | Disponibilidad de Groq `gpt-oss-20b`/free tier (V6-a). | Operación | Diseño agnóstico de proveedor (ADR-001-D3). | Abierto |

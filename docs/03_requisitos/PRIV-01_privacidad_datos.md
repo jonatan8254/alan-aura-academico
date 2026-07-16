@@ -1,5 +1,5 @@
 # PRIV-01 — Privacidad y manejo de datos del MVP
-**ID:** PRIV-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-12 · **Versión:** v1.2 (SD-15: cuenta, contadores operativos y qué NO ve el admin; SD-17: inventario mapeado 1:1 a las 7 entidades exactas del plan).
+**ID:** PRIV-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-16 · **Versión:** v1.3 (SD-22: cápsula = `ContextoInicialConversacionalV1` de 5 campos + 2 metadatos en el inventario §2 y PRIV-R1; PRIV-R9 intacta; SD-15: cuenta, contadores operativos y qué NO ve el admin; SD-17: inventario mapeado 1:1 a las 7 entidades exactas del plan).
 **Insumos:** canon de dominio; MV-01 §Onboarding y §Cuenta (cápsula/consentimiento/cuenta); ADR-001-D2 (SQLite); plan §3.4 (exclusiones al LLM), §3.7 (qué no ve el admin); Ley 1581/2012 + Decreto 1377/2013 (citadas, no reproducidas).
 **Consumidores:** REQ-01 (RNF-03/04, RC-04), SEG-01, TRZ-01.
 **Naturaleza:** requisitos de privacidad y minimización. **Honestidad §4.9:** la validación de frontera legal (Ley 1581) es **nivel 6** — se formula, no se resuelve aquí (V6-b).
@@ -17,7 +17,7 @@ Mapeado 1:1 a las **entidades exactas del plan** (§4.14): `User` · `ConsentRec
 | **Cuenta** (username, alias, contraseña hasheada, rol) | `User` | Sí | Sí | **No** | Hasta eliminación de cuenta (+ 30 días, plan §4.14) |
 | Declaración de edad (≥18) + versión de disclosure | `User` | Sí (booleana) | Sí | **No** | Igual que cuenta |
 | Consentimiento (otorgado/revocado + fecha) | `ConsentRecord` | Sí | Sí | **No** | Igual que cuenta |
-| Cápsula: preferencia de personaje, foco emocional, tono | `InitialConversationProfile` | Opcional (cada campo) | Sí (asociada al usuario) | **Sí** (los campos con valor) | Hasta reinicio, revocación o eliminación |
+| Cápsula (`ContextoInicialConversacionalV1`): `mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style` (autorreportes opcionales), `character` (obligatorio) + metadatos `schema_version`/`consent_version` | `InitialConversationProfile` | Opcional (los 4 autorreportes; `character` obligatorio) | Sí (asociada al usuario) | **Sí** (los 5 campos con valor + metadatos) | Hasta reinicio, revocación o eliminación |
 | **Contenido de la conversación (mensajes)** | *(no existe entidad — plan excluye `Conversation`/`Message`)* | En memoria de sesión | **No (nunca)** | Turno actual + hasta 4 intercambios de la sesión | **Se descarta al cerrar** |
 | Contador diario de uso (llamadas/día por usuario) | `DailyUsageCounter` | Sí | Sí | **No** | Máx. 30 días (plan §4.14) |
 | Evento técnico (latencia, modelo, versión de prompt, estado — **sin contenido**) | `OperationalEvent` | Sí | Sí | **No** | 30 días; base de las métricas **agregadas** del admin |
@@ -29,7 +29,7 @@ Mapeado 1:1 a las **entidades exactas del plan** (§4.14): `User` · `ConsentRec
 ## 3. Requisitos de privacidad
 | ID | Requisito | Traza |
 |---|---|---|
-| PRIV-R1 | El LLM recibe **solo** la cápsula (3 campos) + hasta 4 intercambios de la sesión actual + el turno; **nunca** historial de sesiones previas. | RN-03, RN-02.2, RNF-04, RC-04, plan §3.4 |
+| PRIV-R1 | El LLM recibe **solo** la cápsula (`ContextoInicialConversacionalV1`: 5 campos de contenido + `schema_version`/`consent_version`) + hasta 4 intercambios de la sesión actual + el turno; **nunca** historial de sesiones previas. | RN-03, RN-02.2, RNF-04, RC-04, plan §3.4 |
 | PRIV-R2 | El contenido del chat **no** se persiste en BD ni en logs. | RN-04, RNF-03 |
 | PRIV-R3 | El consentimiento es granular y **revocable**; al revocar cesa el uso de la cápsula y se marca para descarte. | RN-07, RN-01.5 |
 | PRIV-R4 | No se recolectan datos de categorías especiales (salud detallada, biomarcadores, menores). | canon, SD-08 | 

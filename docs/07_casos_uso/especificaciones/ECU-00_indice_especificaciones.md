@@ -51,8 +51,8 @@ Los **26 RF** de REQ-01 aparecen en el §19/§Trazabilidad de ≥1 especificaci�
 ## 6. Gate de calidad (verificación documental)
 La skill `use-case-specifier` **no** trae validador ejecutable (a diferencia de MD-01/DCU-01, con `validate_*.py`). La verificación es **documental**: cada spec **embebe su checklist §22 (20 ítems)** como evidencia, y todas pasaron el **loop de auditoría** del orquestador (checklist §22 + rúbrica de severidades + «8 pasos» + traza *backward* concepto∈MD-01 / actor·relación∈DCU-01 / flujo∈MV-01 + matriz de canon §5) **sin hallazgos Crítico/Mayor**. Los borradores mecánicos (CU-01/02/03/08/09) se auditaron antes de incorporarse.
 
-## 7. Ambigüedad abierta (a reconciliar con el usuario)
-- **RA-01 (nº de campos al LLM):** la cápsula canónica (RN-01.3 / PRIV-R1) nombra **3 campos** {preferenciaDePersonaje, focoEmocional, tonoPreferido} y limita a esos el envío al LLM; el plan §3.4 (`ContextoInicialConversacionalV1`) lista **5 autorreportes + personaje + versión de consentimiento**. Las specs siguen el **canon del subproyecto (3 campos)** y marcan la discrepancia en CU-05 §21 y CU-06 §21. Pendiente decidir el mapeo 5→3 (afecta el *payload* real de CU-06).
+## 7. Reconciliación RA-01 (cerrada — SD-22)
+- **RA-01 (nº de campos al LLM) — RESUELTA (SD-22):** se adopta la definición del plan §3.4 (`ContextoInicialConversacionalV1`): la cápsula = **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`). Se descarta el colapso a 3 campos. Propagado a RN-01.3 (MV-01), RF-04/RF-05 (REQ-01), PRIV-R1 e inventario §2 (PRIV-01), MD-01 §6 y a CU-04/CU-05/CU-06 (§7/§18/§21). **PRIV-R9 (lista de prohibidos al LLM) intacta**; sigue siendo minimización.
 
 ## 8. Siguiente paso ICONIX
 **Análisis de robustez** (`DR-01…DR-10`) por caso de uso, reusando los objetos de frontera/entidad/control ya insinuados en cada flujo; luego diagramas de secuencia (`DS-XX`) y pruebas (`CP-XX`).

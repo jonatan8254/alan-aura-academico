@@ -3,13 +3,19 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-16 — v0.10.0 · Reconciliación RA-01: cápsula de 5 campos (SD-22)
+- **Decidido (usuario):** el LLM recibe `ContextoInicialConversacionalV1` (plan §3.4) = **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`), en lugar de la cápsula de 3 campos {preferenciaDePersonaje, focoEmocional, tonoPreferido}. **RA-01 cerrada.**
+- **Propagado (loop de auditoría hasta converger):** MV-01 (RN-01.3 raíz, §3, §13.1 — **v2.4**), REQ-01 (RF-04/05 — **v1.3**), PRIV-01 (inventario §2, PRIV-R1 — **v1.3**), CONTRATO (C-4), MD-01 §6, ECU-04/05/06 (§7/§18/§21), ECU-00 §7, TRZ-01 (RF-04/05 — **v1.4**).
+- **Canon:** sigue siendo minimización (autorreportes gruesos de 3–5 puntos, sin historial/diario/biomarcadores); **PRIV-R9 intacta** (lista de prohibidos al LLM). Refuerza la revisión legal V6-b.
+- **Verificación:** `grep` de `preferenciaDePersonaje|focoEmocional|tonoPreferido` = 0; `3 campos` solo en los 2 falsos positivos de registro; `RA-01` solo como «Resuelto (SD-22)».
+
 ## 2026-07-16 — v0.9.0 · Especificación textual de casos de uso ECU-00…ECU-10 (SD-21)
 - **Añadido:** `docs/07_casos_uso/especificaciones/` con el índice `ECU-00` y las **10 especificaciones** `ECU-01…ECU-10`, generadas con la skill `use-case-specifier` a partir de DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato y el plan archivado.
 - **Forma:** **completa** (§1–§23) en CU-04/05/06/07/10 (canon-sensibles: eliminación en cascada, consentimiento/minimización, conversación gobernada, *fail-safe*, kill switch auditado); **ágil** (§23) en CU-01/02/03/08/09. Empaquetado un archivo por CU + índice.
 - **Trazabilidad:** los **26 RF** de REQ-01 cubiertos sin huérfanos; poblada la **columna CU** de `TRZ-01`.
 - **Gate de calidad:** la skill **no** trae validador ejecutable → cada spec **embebe su checklist §22 (20 ítems)** y todas pasaron el loop de auditoría del orquestador (rúbrica + 8 pasos + traza *backward* + canon §5) **sin hallazgos Crítico/Mayor**.
 - **Orquestación:** las 5 specs **ágiles** por subagentes **Sonnet** (auditadas antes de incorporarse); las 5 **completas** por el orquestador.
-- **Hallazgo abierto (RA-01):** discrepancia del nº de campos que recibe el LLM — cápsula canónica (3, RN-01.3/PRIV-R1) vs plan §3.4 `ContextoInicialConversacionalV1` (5 + personaje + versión); se sigue el canon, pendiente reconciliar (CU-05 §21, CU-06 §21).
+- **Hallazgo abierto (RA-01):** discrepancia del nº de campos que recibe el LLM — cápsula canónica (3, RN-01.3/PRIV-R1) vs plan §3.4 `ContextoInicialConversacionalV1` (5 + personaje + versión); se sigue el canon, pendiente reconciliar (CU-05 §21, CU-06 §21). **(→ resuelto en v0.10.0 / SD-22.)**
 - **Actualizado:** `INDICE_MAESTRO` (filas ECU), `ESTADO_PIPELINE` (Fase 2: dominio ✅ + casos de uso ✅ + **especificación ✅**), `CLAUDE.md`/`AGENTS.md` §Alcance (Fase 2 en curso; corrige el texto que aún marcaba «casos de uso» fuera de alcance), `REGISTRO_DECISIONES` (SD-21).
 
 ## 2026-07-12 — v0.8.0 · Diagrama de casos de uso DCU-01 (SD-20)

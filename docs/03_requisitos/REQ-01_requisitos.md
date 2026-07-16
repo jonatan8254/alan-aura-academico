@@ -1,5 +1,5 @@
 # REQ-01 — Requisitos del MVP «Alan & Aura Académico»
-**ID:** REQ-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-12 · **Versión:** v1.2 (SD-15: +cuenta/acceso RF-19…24, +sesión/robustez RF-25/26, admin realineado; SD-17: límites de tasa exactos +RNF-10, historial de sesión precisado en RF-09/RNF-04).
+**ID:** REQ-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-16 · **Versión:** v1.3 (SD-22: cápsula de **5 campos + 2 metadatos** = `ContextoInicialConversacionalV1` en RF-04/RF-05; SD-15: +cuenta/acceso RF-19…24, +sesión/robustez RF-25/26, admin realineado; SD-17: límites de tasa exactos +RNF-10, historial de sesión precisado en RF-09/RNF-04).
 **Insumos:** MV-01 (consolidado, con sus vistas), contrato conversacional, VIS-01 (OBJ), ADR-001, SEG-01, PRIV-01, ISO/IEC 25010:2023 (vía NORM-01/D6-bis).
 **Consumidores:** TRZ-01, NORM-01, pruebas (fase 2), construcción (fase 3).
 **Frontera dura (disciplina K):** este artefacto produce **RF, RNF, requisitos de calidad (RC) con GQM+umbral y reglas de negocio tipadas (RN)**. **No** produce casos de uso, modelo de dominio, robustez ni secuencias (fase 2).
@@ -22,8 +22,8 @@
 | RF-01 | Mostrar el *disclosure* de IA antes de solicitar cualquier dato. | RN-09, RN-01.1 | El *disclosure* aparece en la primera pantalla; ningún campo se captura antes. |
 | RF-02 | Solicitar declaración de edad y bloquear a menores de 18. | RN-01, RN-01.2 | Con edad <18 no se continúa ni se registra dato. |
 | RF-03 | Registrar consentimiento granular y revocable. | RN-02, RN-07 | Se puede otorgar y revocar; sin consentimiento no hay conversación. |
-| RF-04 | Capturar datos mínimos de perfil (preferencia de personaje, foco emocional, tono), todos opcionales. | RN-01.3, RN-01.4 | Se puede completar el onboarding dejando campos en "prefiero no decir". |
-| RF-05 | Generar la cápsula de perfil a partir del onboarding. | RN-03, REL-2 | La cápsula contiene solo los 3 campos definidos; nada más. |
+| RF-04 | Capturar los datos de la caracterización (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style` autorreportes opcionales; `character` obligatorio {alan, aura}). | RN-01.3, RN-01.4 | Se puede completar el onboarding dejando los 4 autorreportes en "prefiero no responder"; solo `character` es obligatorio para iniciar chat. |
+| RF-05 | Generar la cápsula de perfil (`ContextoInicialConversacionalV1`) a partir del onboarding. | RN-03, REL-2, plan §3.4 | La cápsula contiene solo los **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`); nada más. |
 | RF-06 | Presentar a Alan y Aura (rol y estilo) antes de conversar. | OBJ-1, MV-01 §Conversación | El usuario ve ambos personajes y puede elegir. |
 
 ### Conversación (OBJ-2, MV-01 §Conversación, contrato)

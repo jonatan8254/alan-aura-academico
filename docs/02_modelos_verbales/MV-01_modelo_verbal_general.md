@@ -61,7 +61,7 @@ En **capacidad de interacción**, al menos el **80 %** de las personas de prueba
 # Parte B — Modelo verbal conceptual (formalización E8)
 
 > Lo que sigue es el modelo verbal **conceptual y riguroso** (estándar E8) que ya tenía este artefacto: glosario del dominio, taxonomía de clasificación, catálogo de relaciones tipadas, reglas de negocio y checklist verificable. Es la fuente que alimenta la extracción del modelo de dominio (`../06_dominio/MD-01_modelo_dominio.puml`). La ficha de control del artefacto abre esta parte.
-**ID:** MV-01 · **Familia:** MV (único) · **Hogar:** `docs/02_modelos_verbales/` · **Fecha:** 2026-07-12 · **Versión:** externa v2.3 / interna v2.3.0 · **Autoría:** Jonatan E. Sánchez Vargas (subproyecto).
+**ID:** MV-01 · **Familia:** MV (único) · **Hogar:** `docs/02_modelos_verbales/` · **Fecha:** 2026-07-16 · **Versión:** externa v2.4 / interna v2.4.0 · **Autoría:** Jonatan E. Sánchez Vargas (subproyecto).
 **Naturaleza declarada:** modelo verbal conceptual (analítico, pre-formal) — glosario del dominio. No es diseño técnico, ni modelo de datos, ni arquitectura, ni casos de uso.
 **Insumos:** VIS-01, ADR-001, `00_AUDITORIA_PLAN_CODEX.md`, canon del macro; estándar E8 (subconjunto de 11 rasgos, SD-04).
 **Consumidores:** la skill `uml-domain-modeler` (extracción del modelo de dominio, fase 2), REQ-01, contrato conversacional.
@@ -69,6 +69,7 @@ En **capacidad de interacción**, al menos el **80 %** de las personas de prueba
 **Cambio v2.1 (SD-15):** **alineación al plan de Codex** — se restauran gestión de cuenta (registro/login, reinicio de perfil, revocación, eliminación en cascada), el actor **Visitante**, y las 3 funciones reales del administrador (directorio, métricas agregadas, **kill switch**); entra la clase **DisponibilidadDelChatbot**; se descarta `Configuracion` como clase (recursos/textos **por entorno**, no por edición del admin).
 **Cambio v2.2 (SD-17):** **reconciliación con el plan completo archivado** — se precisa el historial de sesión (RN-02.2/RN-03: hasta 4 intercambios de la sesión actual, no "cero historial") y se añaden los límites de tasa exactos (RN-02.8/RN-02.9: 20 msg/sesión, 1.500 caracteres, 350 tokens, 3/min, 30/día, timeout 20 s). Además, la relación `Administrador -- Usuario` (supervisa) se **retira** del dominio (era de acceso, no conceptual; el directorio es caso de uso).
 **Cambio v2.3 (SD-19):** **formato de entrega del curso** — se antepone la **Parte A (secciones 1–6)** en el estilo narrativo del ejemplo provisto (título, contexto, descripción, RF, RNF, requisitos de calidad), con el contenido real del miniproyecto extraído de VIS-01/REQ-01/plan; la formalización E8 se conserva íntegra como **Parte B**. Sin cambios en clases, relaciones ni reglas.
+**Cambio v2.4 (SD-22):** **reconciliación RA-01 — cápsula de 5 campos.** Se adopta la definición del plan §3.4 (`ContextoInicialConversacionalV1`): la `CapsulaDePerfil` pasa de 3 a **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`). Afecta RN-01.3, §3 y §13.1; sigue siendo minimización (autorreportes gruesos, sin historial/diario/biomarcadores; PRIV-R9 intacta). Sin cambios en clases ni relaciones.
 **Estándar de cumplimiento:** E8 — **11 rasgos {1, 2, 3, 6, 7, 12, 13, 14, 15, 16, 17}**; checklist en §Checklist (Parte B).
 
 ---
@@ -103,7 +104,7 @@ Nombres canónicos en español, PascalCase, **un término por concepto** (alias 
 | **Configuracion** | **Descartada como clase** (contenedor técnico) | Agrupa recursos/textos/parámetros; en el dominio se descarta (infra). Los recursos se aprovisionan **por entorno**; lo domain-meaningful queda en `RecursoDeAyuda`. |
 | MetricaDeUso / EventoOperativo (cuentas, onboardings, llamadas 7d, tasa éxito/error) | **Vista derivada / diferido** | El admin ve métricas **agregadas** (plan §3.7): reporte sobre datos operativos sin contenido. **No** se modela como clase en la primera pasada (§13). |
 | Cuenta (username, alias, contraseña) | **Atributo de `Usuario` / diferido** | La identidad de acceso son atributos de `Usuario`; no se crea clase `Cuenta` aparte (§13). |
-| edad, preferenciaDePersonaje, focoEmocional, tonoPreferido, textoDeConsentimiento, textoDeDisclosure, estados | **Atributo / dominio de valor** | **No** son clases → reserva (§13). |
+| edad, `mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`, `schema_version`, `consent_version`, textoDeConsentimiento, textoDeDisclosure, estados | **Atributo / dominio de valor** | **No** son clases → reserva (§13). Los 5 de contenido + 2 metadatos forman `ContextoInicialConversacionalV1` (plan §3.4), que es lo que recibe el LLM. |
 | acompañamiento, derivación, activación, calma | **Etiqueta de relación** | Describen cómo se conectan clases, no son clases. |
 | LLM/Groq, Django, SQLite, PythonAnywhere, gate, fallback, onboarding-como-proceso, chat-como-UI, mensajes de éxito/error | **Término UI/técnico → descartado** | No entran al dominio (§14 exclusiones). |
 
@@ -179,7 +180,7 @@ Cada regla: ID · enunciado · **tipo** (Wiegers) · origen · justificación. C
 |---|---|---|---|
 | RN-01.1 | El *disclosure* de IA se muestra antes de pedir cualquier dato. | Restricción | RN-09 |
 | RN-01.2 | La edad se declara antes del consentimiento; <18 no continúa. | Restricción | RN-01, RN-10 |
-| RN-01.3 | La `CapsulaDePerfil` se compone solo de {preferenciaDePersonaje, focoEmocional, tonoPreferido}. | Restricción | RN-03 |
+| RN-01.3 | La `CapsulaDePerfil` se materializa al LLM como `ContextoInicialConversacionalV1` (plan §3.4): **5 campos de contenido** —`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style` (autorreportes opcionales) y `character` (obligatorio, {alan, aura})— **+ 2 metadatos** (`schema_version`, `consent_version`). Sin otros campos. | Restricción | RN-03, plan §3.4 |
 | RN-01.4 | Ningún campo de perfil es obligatorio salvo edad y consentimiento. | Habilitador | canon (minimización) |
 | RN-01.5 | El consentimiento se puede revocar desde el onboarding y después. | Habilitador | RN-07 |
 
@@ -288,7 +289,7 @@ Un concepto = un nombre. Alias históricos declarados, **no** en uso activo.
 En modo *academic strict* estos elementos **se difieren** (regla ICONIX «no attributes / defer multiplicity»); se conservan aquí para el diccionario de datos y el refinamiento posterior.
 
 **13.1 Dominios de valor (atributos candidatos, diferidos):**
-`Usuario.{username, alias, contraseña, edad (≥18), esAdulto (bool), versionDisclosure}` · `CapsulaDePerfil.preferenciaDePersonaje ∈ {Alan, Aura, sin_preferencia}` · `CapsulaDePerfil.focoEmocional ∈ {estrés, ánimo bajo, ansiedad, otro}` · `CapsulaDePerfil.tonoPreferido ∈ {cercano, sobrio}` · `Consentimiento.estado ∈ {otorgado, revocado}` · `Conversacion.estado ∈ {activa, cerrada}` · `DisponibilidadDelChatbot.estado ∈ {habilitado, deshabilitado}`. Recursos/textos/parámetros del gate = **configuración por entorno** (no atributos de una clase de dominio).
+`Usuario.{username, alias, contraseña, edad (≥18), esAdulto (bool), versionDisclosure}` · **`CapsulaDePerfil` = `ContextoInicialConversacionalV1` (plan §3.4):** `mood_self_report ∈ {muy mal, mal, neutral, bien, muy bien, prefiero no responder}` (opcional) · `energy_self_report ∈ {baja, media, alta, prefiero no responder}` (opcional) · `conversation_goal ∈ {sentirme escuchado, calmarme, ordenar ideas, dar un paso pequeño, recibir una sugerencia breve, prefiero no responder}` (opcional) · `response_style ∈ {breve y directo, equilibrado, pausado y reflexivo, sin preferencia}` (opcional) · `character ∈ {alan, aura}` (**obligatorio**, `source: user_choice`) · metadatos `schema_version`, `consent_version`. Cada autorreporte lleva `{value, source: "self_report", collected_at}`. · `Consentimiento.estado ∈ {otorgado, revocado}` · `Conversacion.estado ∈ {activa, cerrada}` · `DisponibilidadDelChatbot.estado ∈ {habilitado, deshabilitado}`. Recursos/textos/parámetros del gate = **configuración por entorno** (no atributos de una clase de dominio).
 
 **13.2 Vista derivada (no clase):** `MétricaDeUso` / `EventoOperativo` = agregados operativos (contadores) que el admin visualiza; se derivan de `Usuario`/`Conversacion`, sin contenido individual.
 

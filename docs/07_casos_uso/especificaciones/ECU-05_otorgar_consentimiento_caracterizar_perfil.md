@@ -80,14 +80,14 @@
 |---|---|---|---|---|
 | Usuario | Persona adulta registrada | Titular del consentimiento y la cápsula | esAdulto, versionDisclosure | Usuario–Consentimiento (otorga); Usuario–CapsulaDePerfil (posee) |
 | Consentimiento | Registro de aceptación granular y revocable | Se **crea** (otorgado) | estado ∈ {otorgado, revocado}, fecha | Usuario–Consentimiento |
-| CapsulaDePerfil | Resumen mínimo que orienta la conversación | Se **crea** (opcional) | preferenciaDePersonaje, focoEmocional, tonoPreferido | CapsulaDePerfil–Conversacion (orienta) |
+| CapsulaDePerfil | Resumen mínimo (`ContextoInicialConversacionalV1`) que orienta la conversación | Se **crea** | mood_self_report, energy_self_report, conversation_goal, response_style (opcionales), character (obligatorio) + schema_version/consent_version | CapsulaDePerfil–Conversacion (orienta) |
 | Personaje (Alan, Aura) | Estilo de acompañamiento | Se presenta / selecciona | — | Personaje <|-- Alan; Personaje <|-- Aura |
 
 **Control terminológico**
 
 | Término oficial | Significado | Sinónimos o términos prohibidos | Observación |
 |---|---|---|---|
-| CapsulaDePerfil | Resumen mínimo (≤3 campos) que orienta la conversación | prohibido: «perfil», «PerfilInicialParaLLM» (alias macro) | No es historial (MV-01 §6) |
+| CapsulaDePerfil | Cápsula (`ContextoInicialConversacionalV1`): 5 campos de contenido + 2 metadatos (plan §3.4) | prohibido: «perfil», «PerfilInicialParaLLM» (alias macro) | No es historial (MV-01 §6) |
 | Consentimiento | Aceptación granular y revocable | prohibido: «permiso», «términos» | Ciclo otorgado/revocado |
 | Disclosure | Aviso de que se conversa con una IA | prohibido: «aviso legal» sin más | Precede a toda captura |
 
@@ -147,7 +147,7 @@
 ## 14. Postcondiciones
 | Tipo | Postcondición | Verificación |
 |---|---|---|
-| Éxito | Existe un `Consentimiento` otorgado; opcionalmente una `CapsulaDePerfil` (≤3 campos); el Usuario puede iniciar CU-06 | Inspección de registros |
+| Éxito | Existe un `Consentimiento` otorgado; una `CapsulaDePerfil` (5 campos de contenido + metadatos; los 4 autorreportes opcionales, `character` obligatorio); el Usuario puede iniciar CU-06 | Inspección de registros |
 | Fallo | No se crea consentimiento; no hay cápsula; no se habilita el chat | Inspección |
 | Datos creados | `Consentimiento` (otorgado + fecha + versión disclosure); `CapsulaDePerfil` (campos respondidos) | Inspección |
 | Datos modificados | `Usuario` (esAdulto=verdadero, versionDisclosure) | Inspección |
@@ -164,7 +164,7 @@
 | RN-10 | «Adulto» = declara edad ≥18 en el onboarding. | Término | Paso 3 | MV-01 §7.1 |
 | RN-01.1 | El *disclosure* precede a cualquier dato. | Restricción | Paso 1 | MV-01 §7.2 |
 | RN-01.2 | La edad se declara antes del consentimiento; <18 no continúa. | Restricción | Paso 3, FE-01 | MV-01 §7.2 |
-| RN-01.3 | La cápsula se compone solo de {preferenciaDePersonaje, focoEmocional, tonoPreferido}. | Restricción | Paso 7 | MV-01 §7.2 |
+| RN-01.3 | La cápsula (`ContextoInicialConversacionalV1`) = 5 campos de contenido (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) + metadatos (`schema_version`, `consent_version`). | Restricción | Paso 7 | MV-01 §7.2, plan §3.4 |
 | RN-01.4 | Ningún campo de perfil es obligatorio salvo edad y consentimiento. | Habilitador | FA-01/FA-02 | MV-01 §7.2 |
 | RN-01.5 | El consentimiento se puede revocar desde el onboarding y después. | Habilitador | FA-03 | MV-01 §7.2 |
 | RN-04.2 | La mayoría de edad se guarda como declaración booleana + versión de disclosure, no como fecha de nacimiento. | Hecho | Paso 3 | MV-01 §7.5 |
@@ -172,7 +172,7 @@
 ## 16. Requisitos especiales
 | ID | Categoría | Requisito | Criterio verificable |
 |---|---|---|---|
-| RE-01 | Privacidad | La cápsula contiene solo los campos definidos; nada de historial/diario/biomarcadores (PRIV-R1/R4/R9). | Inspección de la cápsula = solo los campos de RN-01.3 |
+| RE-01 | Privacidad | La cápsula contiene solo los 5 campos + metadatos definidos; nada de historial/diario/biomarcadores (PRIV-R1/R4/R9). | Inspección de la cápsula = solo los campos de RN-01.3 (5 + metadatos) |
 | RE-02 | Seguridad/Consentimiento | *Disclosure* y consentimiento preceden a toda captura (PRIV-R8, RN-09). | Ningún dato se captura antes del *disclosure* |
 | RE-03 | Usabilidad | Onboarding ≈2 min, español CO, comprensible para adultos (RNF-01, RC-06). | ≥80 % completan sin asistencia (MET-06) |
 | RE-04 | Legal/regulatorio | El texto de consentimiento se aprovisiona por entorno y requiere revisión legal (Ley 1581). | Texto revisado por experto antes de piloto (V6-b) |
@@ -189,11 +189,11 @@
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |
 |---|---|---|---|---|
 | Consentimiento | estado, fecha, versión de disclosure | Crear / Confirmar | Paso 5 | Revocable (RN-01.5) |
-| CapsulaDePerfil | preferenciaDePersonaje, focoEmocional, tonoPreferido | Crear / Seleccionar | Paso 7 | Solo campos de RN-01.3; opcionales |
+| CapsulaDePerfil | mood_self_report, energy_self_report, conversation_goal, response_style, character (+ schema_version, consent_version) | Crear / Seleccionar | Paso 7 | Solo campos de RN-01.3; los 4 autorreportes opcionales, `character` obligatorio |
 | Usuario | esAdulto, versionDisclosure | Actualizar | Paso 3 | Booleano, no fecha de nacimiento (RN-04.2) |
 | Personaje | Alan / Aura | Seleccionar | Paso 8–9 | Uno por sesión (cambiable, RN-02.6) |
 
-> **Nota de origen (encuesta):** el plan §3.3 define 5 preguntas → atributos `mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`. El mapeo exacto de esos 5 a los 3 campos canónicos de la cápsula (RN-01.3) es una **ambigüedad abierta** (ver §21 RA-01).
+> **Nota de origen (encuesta):** el plan §3.3 define 5 preguntas → los **5 campos de contenido** de la cápsula (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`), **1:1** con `ContextoInicialConversacionalV1` (plan §3.4). No hay colapso 5→3: la cápsula = estos 5 + metadatos (`schema_version`, `consent_version`). Reconciliado en **SD-22** (ver §21 RA-01).
 
 ## 19. Trazabilidad
 | Tipo de elemento | Referencia | Relación con el CU |
@@ -214,14 +214,14 @@
 | CA-01 | Dado un usuario que inicia el onboarding, cuando aparece la primera pantalla, entonces ve el *disclosure* de IA antes de cualquier captura de datos. | Flujo básico | Inspección de pantalla 1 |
 | CA-02 | Dado un usuario que declara <18, cuando lo confirma, entonces el sistema no continúa ni registra perfil. | FE-01 | Prueba de caso <18 |
 | CA-03 | Dado un usuario, cuando otorga el consentimiento, entonces se crea el registro y puede avanzar; sin consentimiento, no avanza. | Flujo básico / FE-02 | Traza de consentimiento |
-| CA-04 | Dado un usuario que completa la caracterización, cuando se genera la cápsula, entonces contiene solo los campos de RN-01.3 y nada más. | Flujo básico | Inspección de la cápsula |
+| CA-04 | Dado un usuario que completa la caracterización, cuando se genera la cápsula, entonces contiene solo los 5 campos de contenido + metadatos (RN-01.3) y nada más. | Flujo básico | Inspección de la cápsula |
 | CA-05 | Dado un usuario que omite preguntas, cuando finaliza, entonces la cápsula se arma solo con lo respondido, sin *defaults*. | FA-02 | Inspección de la cápsula |
 | CA-06 | Dado un usuario, cuando termina el onboarding, entonces ve a Alan y Aura y puede elegir. | Flujo básico | Observación |
 
 ## 21. Riesgos, ambigüedades y decisiones pendientes
 | ID | Tipo | Descripción | Impacto | Decisión | Estado |
 |---|---|---|---|---|---|
-| RA-01 | Ambigüedad | La caracterización se describe con **5 preguntas** (VIS-01/MV-01/plan §3.3: ánimo, energía, objetivo, estilo, personaje), pero la cápsula canónica (RN-01.3) y lo que recibe el LLM (PRIV-R1/RNF-04) nombran **3 campos**; el plan §3.4 (`ContextoInicialConversacionalV1`) lista **5 autorreportes + personaje + versión de consentimiento**. | Define qué recibe realmente el LLM | Seguir el **canon del subproyecto (3 campos)** como autoridad; reconciliar el mapeo 5→3 y la discrepancia con el plan §3.4. | **Abierto** (a reconciliar con el usuario) |
+| RA-01 | Ambigüedad (histórica) | La cápsula canónica nombraba **3 campos** mientras el plan §3.4 (`ContextoInicialConversacionalV1`) lista **5 de contenido + metadatos**. | Define qué recibe el LLM | **Resuelto (SD-22):** se adoptan los **5 campos del plan** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) + `schema_version`/`consent_version`; RN-01.3, RF-04/05 y PRIV-R1 actualizados. | **Resuelto** |
 | RA-02 | Riesgo | El texto de consentimiento requiere revisión legal antes de uso con personas reales. | Cumplimiento Ley 1581 | Aprovisionar por entorno; V6-b | Abierto |
 | RA-03 | Decisión pendiente | Prototipos/GUI del onboarding. | Diseño de interacción | Fase de construcción | Abierto |
 
