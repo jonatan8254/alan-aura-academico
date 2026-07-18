@@ -158,7 +158,7 @@
 | Página | Panel administrativo (control de disponibilidad) | Ver y cambiar el estado del chatbot | estado actual | Habilitar, Deshabilitar, Confirmar/Cancelar | 1–3 |
 | Endpoint visible | `POST /plataforma-admin/chat-access/` | Cambiar el kill switch | nuevo estado, confirmación | Enviar | 3 |
 
-> Prototipos gráficos: **[Pendiente]** (fase de construcción).
+> **Diseño de alta fidelidad producido (SD-23):** ver `../../08_diseno/DIS-00_inventario_y_plan.md` (pantalla P-16) y `DIS-01_sistema_diseno.md` (sistema de diseño: tokens, doble voz Alan/Aura, componentes). Mockups renderizados en claro y oscuro con estados no-felices. Los prototipos gráficos de producción quedan pendientes de la fase de construcción.
 
 ## 18. Datos y objetos manipulados
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |

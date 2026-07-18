@@ -183,7 +183,7 @@
 | Página | Onboarding (multipaso) | Disclosure→edad→consentimiento→encuesta→personajes | (por pantalla) | Continuar, Otorgar, Omitir, Elegir | 1–9 |
 | Endpoint visible | `POST /onboarding/` | Guardar consentimiento y perfil | consentimiento, respuestas de encuesta | Enviar | 5, 7 |
 
-> Prototipos gráficos: **[Pendiente]** (fase de construcción). §17 se limita a referencias planificadas.
+> **Diseño de alta fidelidad producido (SD-23):** ver `../../08_diseno/DIS-00_inventario_y_plan.md` (pantallas P-05 a P-09) y `DIS-01_sistema_diseno.md` (sistema de diseño: tokens, doble voz Alan/Aura, componentes). Mockups renderizados en claro y oscuro con estados no-felices. Los prototipos gráficos de producción quedan pendientes de la fase de construcción.
 
 ## 18. Datos y objetos manipulados
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |

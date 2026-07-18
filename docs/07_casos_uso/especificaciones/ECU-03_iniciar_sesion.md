@@ -68,6 +68,7 @@
 | Interfaz técnica (referencia, no es paso) | Endpoints `POST /login/`, `POST /logout/`, `POST /plataforma-admin/login/` (referencia) |
 | Criterios de aceptación | CA-01, CA-02, CA-03 |
 | Diseño (planificado) | DR-03/DS-03 (robustez/secuencia, pendientes) |
+| Diseño (mockup) | DIS-00 P-03 y P-04 + DIS-01 |
 
 ## 7. Checklist de revisión §22 (evidencia del gate) — 20 ítems
 | # | Criterio | Cumple |

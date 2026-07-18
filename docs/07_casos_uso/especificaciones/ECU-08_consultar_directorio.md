@@ -67,6 +67,7 @@
 | Interfaz de referencia | `GET /plataforma-admin/` (referencia) |
 | Criterios de aceptación | CA-01, CA-02 |
 | Fases siguientes (planificadas) | DR-08 (robustez), DS-08 (secuencia) |
+| Diseño (mockup) | DIS-00 P-14 + DIS-01 |
 
 ## 7. Checklist de revisión §22 (20 ítems)
 | # | Criterio | Cumple |

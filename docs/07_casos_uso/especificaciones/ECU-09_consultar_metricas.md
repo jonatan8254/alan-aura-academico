@@ -79,6 +79,7 @@
 | Interfaz (referencia preliminar) | `GET /plataforma-admin/` — referencial; la tabla formal de endpoints queda diferida a ARQ-01, fase de construcción (ver `docs/00_gobernanza/ESTADO_PIPELINE.md`) |
 | Criterios de aceptación | CA-01, CA-02 |
 | Próximos artefactos ICONIX | DR-09 (robustez), DS-09 (secuencia) — planificados, no producidos en esta fase |
+| Diseño (mockup) | DIS-00 P-15 + DIS-01 |
 
 ## 7. Checklist de revisión §22 (20 ítems)
 | # | Criterio | Cumple |

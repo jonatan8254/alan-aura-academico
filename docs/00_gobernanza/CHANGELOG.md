@@ -3,6 +3,10 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-18 — v0.11.1 · Enlace del §17 de las ECU al diseño + informe académico
+- **Enlazado:** el §17 (Prototipos/GUI) de las 5 specs completas y la trazabilidad de las 5 ágiles ahora referencian `docs/08_diseno/DIS-00`/`DIS-01` y la(s) pantalla(s) `P-XX` correspondiente(s) — cierra el diferido de SD-23.
+- **Añadido:** `docs/09_informe/Informe_Academico_Alan_Aura.docx` — informe académico completo del proyecto (portada, tabla de contenido, resumen, objetivos, metodología ICONIX, desarrollo por fases, arquitectura, trazabilidad, calidad ISO/IEC 25010, diseño de interfaz, conclusiones, referencias y anexos) para revisión del profesor. Integrantes: Jonatan E. Sánchez Vargas (líder), Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil.
+
 ## 2026-07-16 — v0.11.0 · Base de diseño de interfaz: sistema + mockups (SD-23)
 - **Añadido:** `docs/08_diseno/` con `DIS-00_inventario_y_plan.md` (investigación con fuentes, inventario de 16 pantallas, plan por pantalla) y `DIS-01_sistema_diseno.md` (tokens con contraste AA, doble voz Alan/Aura, biblioteca de componentes).
 - **Fundamento (evidencia):** 6 hallazgos citados (alianza terapéutica Wysa/Woebot, psicología del color, mensajería de crisis segura, consentimiento por capas, tipografía humanista, movimiento accesible) — cada decisión trazada en DIS-01 §0.

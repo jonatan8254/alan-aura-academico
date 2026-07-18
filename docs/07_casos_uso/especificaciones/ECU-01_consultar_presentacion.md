@@ -84,6 +84,7 @@
 | Diagrama de casos de uso | DCU-01 — «Consultar presentación del servicio» |
 | Criterio(s) | CA-01, CA-02 |
 | Robustez/secuencia planificados | DR-01 / DS-01 (planificados) |
+| Diseño (mockup) | DIS-00 P-01 + DIS-01 |
 
 ## 7. Checklist de revisión §22 (evidencia del gate)
 

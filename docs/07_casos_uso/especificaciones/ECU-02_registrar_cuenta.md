@@ -77,6 +77,7 @@
 | Interfaz técnica (referencia, no es paso) | Endpoint `POST /registro/` |
 | Criterios de aceptación | CA-01, CA-02, CA-03 |
 | Diseño (planificado) | DR-02/DS-02 (robustez/secuencia, pendientes) |
+| Diseño (mockup) | DIS-00 P-02 + DIS-01 |
 
 ## 7. Checklist de revisión §22 (evidencia del gate)
 | # | Criterio | Cumple |

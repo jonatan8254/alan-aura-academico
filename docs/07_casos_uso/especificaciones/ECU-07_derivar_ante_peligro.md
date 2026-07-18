@@ -172,7 +172,7 @@
 | Página | Pantalla de contención/derivación | Mostrar contención + recursos | mensaje fijo, recursos (por entorno) | Iniciar nueva sesión | 3–7 |
 | Endpoint visible | `POST /api/chat/` (respuesta `mode=safety_fallback`) | Devolver el *fallback* | reply (fijo), mode | — | 5 |
 
-> **Texto del *fallback*:** se aprovisiona por entorno; la plantilla de referencia (con marcadores `[línea de emergencia, config]`, `[línea de apoyo local, config]`) vive citada en SEG-01 §5 y en el plan §3.8. **No** se reproducen números fijos en este artefacto (RN-06/SD-12). Prototipos gráficos: **[Pendiente]**.
+> **Texto del *fallback*:** se aprovisiona por entorno; la plantilla de referencia (con marcadores `[línea de emergencia, config]`, `[línea de apoyo local, config]`) vive citada en SEG-01 §5 y en el plan §3.8. **No** se reproducen números fijos en este artefacto (RN-06/SD-12). **Diseño de alta fidelidad producido (SD-23):** ver `../../08_diseno/DIS-00_inventario_y_plan.md` (pantalla P-12) y `DIS-01_sistema_diseno.md` (sistema de diseño: tokens, doble voz Alan/Aura, componentes). Mockups renderizados en claro y oscuro con estados no-felices. Los prototipos gráficos de producción quedan pendientes de la fase de construcción.
 
 ## 18. Datos y objetos manipulados
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |

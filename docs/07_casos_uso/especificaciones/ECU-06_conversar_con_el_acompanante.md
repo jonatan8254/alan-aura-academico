@@ -197,7 +197,7 @@
 | Página | Interfaz de chat | Conversar con Alan/Aura | mensaje, selector de personaje | Enviar, Cambiar personaje, Cerrar | 1–8 |
 | Endpoint visible | `POST /api/chat/` | Ejecutar una conversación (ChatRequestV1 → ChatResponseV1) | character, message, history (≤4), client_request_id | Enviar | 2–6 |
 
-> `ChatRequestV1` no acepta perfil ni *prompt* desde el cliente, ni roles `system`/`developer`; el historial es entrada no confiable (plan §4.9). Prototipos gráficos: **[Pendiente]**.
+> `ChatRequestV1` no acepta perfil ni *prompt* desde el cliente, ni roles `system`/`developer`; el historial es entrada no confiable (plan §4.9). **Diseño de alta fidelidad producido (SD-23):** ver `../../08_diseno/DIS-00_inventario_y_plan.md` (pantallas P-10 y P-11) y `DIS-01_sistema_diseno.md` (sistema de diseño: tokens, doble voz Alan/Aura, componentes). Mockups renderizados en claro y oscuro con estados no-felices. Los prototipos gráficos de producción quedan pendientes de la fase de construcción.
 
 ## 18. Datos y objetos manipulados
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |
