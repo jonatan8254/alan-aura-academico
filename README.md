@@ -1,8 +1,8 @@
 # Alan & Aura Académico
 
 > **MVP conversacional de apoyo emocional realizable en ~1 mes**, derivado y **simplificado** de Smart-AID (Releases 0.1 + 0.2). Repositorio **independiente**, extraído del macroproyecto profesional Smart-AID/TalentTrack.
-> Materia: *Diseño y Construcción de Productos de Software* — UNAL Medellín, Facultad de Minas, Grupo 20.
-> **Autor, ideador y líder:** Jonatan Estiven Sánchez Vargas.
+> Materia: *Diseño y Construcción de Productos de Software* — UNAL Medellín, Facultad de Minas, Grupo 5.
+> **Líder / arquitecto:** Jonatan Estiven Sánchez Vargas. · **Integrantes:** Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil.
 
 ---
 
@@ -43,6 +43,7 @@ alan-aura-academico/
 ├── README.md                         (este archivo)
 ├── AGENTS.md · CLAUDE.md             Reglas operativas para agentes (canon heredado, sin default de modelo)
 ├── 00_AUDITORIA_PLAN_CODEX.md        Auditoría breve del plan generado con Codex
+├── 00_PLAN_CODEX_ORIGINAL.md         Fuente primaria (verbatim) del plan de Codex
 └── docs/
     ├── 00_gobernanza/                Índice, cápsula de contexto, estado, decisiones, changelog, manifiesto de fuentes
     ├── 01_vision/                    VIS-01 (visión/alcance) · ADR-001 (decisiones técnicas)
@@ -50,7 +51,10 @@ alan-aura-academico/
     ├── 03_requisitos/                REQ-01 (RF/RNF/calidad/reglas) · PRIV-01 · SEG-01
     ├── 04_trazabilidad/              NORM-01 (puente normativo) · TRZ-01 (trazabilidad)
     ├── 05_plan/                      PLAN-01 (plan de proyecto de 1 mes)
-    └── 06_dominio/                   MD-01 (modelo de dominio PlantUML, fase 2 ICONIX)
+    ├── 06_dominio/                   MD-01 (modelo de dominio, PlantUML)
+    ├── 07_casos_uso/                 DCU-01 (diagrama de casos de uso) + especificaciones/ ECU-00…ECU-10
+    ├── 08_diseno/                    DIS-00 (inventario + plan) · DIS-01 (sistema de diseño) + 16 mockups de alta fidelidad
+    └── 09_informe/                   Informe académico (.docx) para revisión del profesor
 ```
 
 ## Cómo rehidratar contexto (leer en orden)
@@ -62,8 +66,8 @@ alan-aura-academico/
 
 ## Estado
 
-Paquete documental completo, **repositorio independiente ya creado** (SD-18), y **Fase 2 (ICONIX) iniciada**: ya se produjo el **modelo de dominio** ([`MD-01`](docs/06_dominio/MD-01_modelo_dominio.puml), PlantUML). **Fuera de alcance por ahora** (planificados, no producidos): casos de uso, robustez, secuencias, código y grafo/vault propios.
+Paquete documental completo, **repositorio independiente** (SD-18), y **Fase 2 (ICONIX) en curso**: producidos el **modelo de dominio** ([`MD-01`](docs/06_dominio/MD-01_modelo_dominio.puml)), el **diagrama de casos de uso** ([`DCU-01`](docs/07_casos_uso/DCU-01_casos_uso.puml)), la **especificación textual de los 10 casos de uso** ([`ECU-00…ECU-10`](docs/07_casos_uso/especificaciones/)) y la **base de diseño de interfaz** ([`DIS-00`/`DIS-01`](docs/08_diseno/) + 16 mockups de alta fidelidad en claro y oscuro). Los **26 RF** quedan trazados sin huérfanos, y existe un **informe académico** ([`docs/09_informe/`](docs/09_informe/)) para la entrega. **Siguiente artefacto ICONIX:** análisis de robustez. **Fuera de alcance por ahora** (planificados, no producidos): robustez, secuencias, código y grafo/vault propios.
 
 ## Estándares aplicados
 
-Modelo verbal → **E8** (subconjunto de 11 rasgos, checklist verificable). Requisitos → frontera **K** + convención de IDs. Calidad → **SQuaRE / ISO-IEC 25010:2023** (incluida la familia *safety*) con **GQM** y umbral obligatorio. Reglas de negocio → taxonomía **Wiegers**. Puente normativo → mini **D6-bis** reusando cláusulas ya verificadas. Contrato de personajes → **E4** simplificado. Canon de dominio en cada artefacto; marcas de evidencia y regla de honestidad heredadas del protocolo de auditoría.
+Modelo verbal → **E8** (subconjunto de 11 rasgos, checklist verificable). Requisitos → frontera **K** + convención de IDs. Calidad → **SQuaRE / ISO-IEC 25010:2023** (incluida la familia *safety*) con **GQM** y umbral obligatorio. Reglas de negocio → taxonomía **Wiegers**. Puente normativo → mini **D6-bis** reusando cláusulas ya verificadas. Contrato de personajes → **E4** simplificado. Análisis y diseño → **ICONIX** (dominio → casos de uso → especificación textual). Diseño de interfaz → sistema de diseño y mockups **fundamentados en evidencia** (agentes de bienestar, psicología del color, mensajería de crisis, consentimiento por capas, tipografía, accesibilidad WCAG). Canon de dominio en cada artefacto; marcas de evidencia y regla de honestidad heredadas del protocolo de auditoría.
