@@ -74,7 +74,8 @@ Leyenda: ✅ afirmado/cumplido · ➖ no aplica al artefacto.
 ## Qué sigue (después de la Fase 1)
 1. Revisión del usuario de VIS-01/ADR-001/REQ-01 (validaciones nivel 6: servicios externos y frontera legal).
 2. Fase 2 (ICONIX) **en curso**: `MD-01` (dominio) ✅, `DCU-01` (casos de uso) ✅ y `ECU-00…10` (especificación textual) ✅ producidos con las skills `uml-domain-modeler`, `uml-use-case-diagram` y `use-case-specifier`. Los 26 RF quedan trazados a su CU (columna CU de TRZ-01 poblada), cero huérfanos. Siguiente: **análisis de robustez** (`DR-XX`) por caso de uso, reusando frontera/entidad/control de cada spec.
-3. Diferido explícito: repo git separado, grafo y vault del subproyecto (cuando el usuario lo decida).
+3. **Diseño de interfaz (SD-23):** base visual producida — `docs/08_diseno/DIS-00` (inventario de 16 pantallas + plan) y `DIS-01` (sistema de diseño con contraste AA, doble voz Alan/Aura, semilla teal/ámbar), más **16 mockups de alta fidelidad** (claro/oscuro, estados no-felices, contención) renderizados y fundamentados en evidencia. Base para poblar el §17 de las ECU y guiar la construcción.
+4. Diferido explícito: repo git separado, grafo y vault del subproyecto (cuando el usuario lo decida).
 
 ## Invariantes que no se relajan
 - Aislamiento: cambios solo bajo `subproyecto_academico_alan_aura/`.

@@ -3,6 +3,14 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-16 — v0.11.0 · Base de diseño de interfaz: sistema + mockups (SD-23)
+- **Añadido:** `docs/08_diseno/` con `DIS-00_inventario_y_plan.md` (investigación con fuentes, inventario de 16 pantallas, plan por pantalla) y `DIS-01_sistema_diseno.md` (tokens con contraste AA, doble voz Alan/Aura, biblioteca de componentes).
+- **Fundamento (evidencia):** 6 hallazgos citados (alianza terapéutica Wysa/Woebot, psicología del color, mensajería de crisis segura, consentimiento por capas, tipografía humanista, movimiento accesible) — cada decisión trazada en DIS-01 §0.
+- **Semilla de arte:** base calma-dominante (neutros cálidos + tonos fríos); **Aura teal** `#3E8E82` / **Alan ámbar** `#D98A2B`; crisis en tono *grounding* (nunca rojo de alarma).
+- **Mockups:** 16 pantallas de alta fidelidad renderizadas en la conversación (claro y oscuro, con estados de error/degradación y la pantalla de contención/derivación), por paquetes (Acceso y cuenta · Acompañamiento · Administración).
+- **Canon:** no clínico · disclosure antes de capturar datos · seguridad > engagement (sin gamificación ni dark patterns) · minimización · admin sin datos individuales · AA + reduce-motion.
+- **Diferido (opcional):** poblar el §17 de cada ECU con enlace a DIS-00/DIS-01.
+
 ## 2026-07-16 — v0.10.0 · Reconciliación RA-01: cápsula de 5 campos (SD-22)
 - **Decidido (usuario):** el LLM recibe `ContextoInicialConversacionalV1` (plan §3.4) = **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`), en lugar de la cápsula de 3 campos {preferenciaDePersonaje, focoEmocional, tonoPreferido}. **RA-01 cerrada.**
 - **Propagado (loop de auditoría hasta converger):** MV-01 (RN-01.3 raíz, §3, §13.1 — **v2.4**), REQ-01 (RF-04/05 — **v1.3**), PRIV-01 (inventario §2, PRIV-R1 — **v1.3**), CONTRATO (C-4), MD-01 §6, ECU-04/05/06 (§7/§18/§21), ECU-00 §7, TRZ-01 (RF-04/05 — **v1.4**).

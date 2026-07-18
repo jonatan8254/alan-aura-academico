@@ -38,6 +38,7 @@
 | **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, clases (fase 2+) |
 | **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez |
 | **ECU-00…10** | `07_casos_uso/especificaciones/ECU-00_indice…ECU-10_*.md` | DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato, plan | Robustez (DR), secuencia (DS), pruebas (CP) |
+| **DIS-00 / DIS-01** | `08_diseno/DIS-00_inventario_y_plan.md`, `08_diseno/DIS-01_sistema_diseno.md` | DCU-01, ECU-00…10, VIS-01, MV-01, REQ-01, PRIV-01, SEG-01, ADR-001; evidencia (Fase 1) | Mockups, §17 de las ECU, fase de construcción |
 
 ## Cadena de dependencia (resumen)
 `VIS-01 → ADR-001 → MV-01 (vistas: Onboarding · Conversación (+contrato) · Seguridad · Administración) → REQ-01 → {PRIV-01, SEG-01} → NORM-01 → TRZ-01 → PLAN-01`
