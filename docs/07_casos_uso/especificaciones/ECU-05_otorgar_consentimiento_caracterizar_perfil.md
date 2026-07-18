@@ -12,7 +12,7 @@
 | Nombre del sistema | Aplicación de acompañamiento conversacional «Alan & Aura Académico» |
 | ID del documento | DOC-CU-05 |
 | Versión | v1.0 |
-| Autor | Jonatan Estiven Sánchez Vargas (subproyecto) |
+| Autor(es) | Jonatan Estiven Sánchez Vargas (redacción) · Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil |
 | Fecha de creación | 2026-07-16 |
 | Fecha de última actualización | 2026-07-16 |
 | Estado | Propuesto |

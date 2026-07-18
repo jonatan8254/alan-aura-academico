@@ -16,7 +16,7 @@
 - No versionar contenido con © de terceros; se cita en APA/puntual, no se reproduce.
 
 ## §3 — Identidad y nomenclatura
-- Hijo académico de Smart-AID (materia *Diseño y Construcción de Productos de Software*, UNAL Medellín, Grupo 20). Ideador/líder: Jonatan Estiven Sánchez Vargas.
+- Hijo académico de Smart-AID (materia *Diseño y Construcción de Productos de Software*, UNAL Medellín, Grupo 5). Ideador/líder: Jonatan Estiven Sánchez Vargas. Equipo: Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil.
 - **Alan** (masculino; alias históricos Alanus ≡ Alanor) y **Aura** (femenino; precursor Pandora) en todo artefacto nuevo. No corregir grafías en originales; citar la grafía original al referenciar.
 
 ## §4 — Canon de dominio

@@ -63,6 +63,8 @@ Priorización (MoSCoW): **Must** E1, E2 (núcleo), E3 (seguridad), E4 (privacida
 | **Calidad** | Pruebas de RC (umbrales), *set* de peligro explícito, rúbrica de personaje. |
 | **Datos/privacidad** | Cumplimiento PRIV-01; preparación de la consulta legal (V6-b). |
 
+> Los roles de desarrollo backend, front/UX, calidad y datos/privacidad los cubre el resto del equipo (Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil), con asignación específica a definir al abrir la fase de construcción.
+
 > Asignación de personas a roles: decisión del equipo del curso; este plan sugiere la estructura, no la nomina.
 
 ## 8. Hitos y verificaciones nivel 6

@@ -1,5 +1,5 @@
 # Contrato conversacional Alan / Aura (E4 simplificado)
-**ID:** CONV-CONTRATO-01 · **Padre:** MV-01 §Vista Conversación · **Hogar:** `docs/02_modelos_verbales/` · **Fecha:** 2026-07-12 · **Versión:** v1.2 (SD-17: C-4 precisa historial de sesión; tabla P-1..P-8 enriquecida del plan §3.6) · **Autoría:** Jonatan E. Sánchez Vargas.
+**ID:** CONV-CONTRATO-01 · **Padre:** MV-01 §Vista Conversación · **Hogar:** `docs/02_modelos_verbales/` · **Fecha:** 2026-07-12 · **Versión:** v1.2 (SD-17: C-4 precisa historial de sesión; tabla P-1..P-8 enriquecida del plan §3.6) · **Autoría:** Equipo Alan & Aura Académico — Jonatan E. Sánchez Vargas (líder/redacción), Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil.
 **Naturaleza:** contrato de comportamiento conversacional (adaptación simplificada del E4 del macro). **Insumos:** MV-01 §Vista Conversación, SEG-01, canon, identidad Alan/Aura (megaprompt). **Consumidores:** construcción del *system prompt*, SEG-01, pruebas de conversación (fase 2).
 **Convención de marcas:** **[C]** = cláusula **contractual** dura (obligatoria; la personalidad NO puede violarla). **[P]** = rasgo de **personalidad** (estilístico; modulable por personaje/usuario).
 

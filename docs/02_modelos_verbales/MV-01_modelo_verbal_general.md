@@ -2,13 +2,9 @@
 
 **Asignatura:** Diseño y Construcción de Productos de Software
 **Profesor:** Albeiro Espinosa Bedoya, Ph.D., M.Sc.
-**Autores:** Jonatan Estiven Sánchez Vargas
+**Autores:** Jonatan Estiven Sánchez Vargas · Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil
 
 **Período académico:** 2026-1 · **Universidad Nacional de Colombia — Sede Medellín, Facultad de Minas** · Grupo 5
-Santiago Bedoya
-Santiago Eusse Gil
-Luis Fernando Montoya Rodriguez
-Jonatan Estiven Sanchez Vargas
 
  
 
@@ -61,7 +57,7 @@ En **capacidad de interacción**, al menos el **80 %** de las personas de prueba
 # Parte B — Modelo verbal conceptual (formalización E8)
 
 > Lo que sigue es el modelo verbal **conceptual y riguroso** (estándar E8) que ya tenía este artefacto: glosario del dominio, taxonomía de clasificación, catálogo de relaciones tipadas, reglas de negocio y checklist verificable. Es la fuente que alimenta la extracción del modelo de dominio (`../06_dominio/MD-01_modelo_dominio.puml`). La ficha de control del artefacto abre esta parte.
-**ID:** MV-01 · **Familia:** MV (único) · **Hogar:** `docs/02_modelos_verbales/` · **Fecha:** 2026-07-16 · **Versión:** externa v2.4 / interna v2.4.0 · **Autoría:** Jonatan E. Sánchez Vargas (subproyecto).
+**ID:** MV-01 · **Familia:** MV (único) · **Hogar:** `docs/02_modelos_verbales/` · **Fecha:** 2026-07-16 · **Versión:** externa v2.4 / interna v2.4.0 · **Autoría:** Equipo Alan & Aura Académico — Jonatan E. Sánchez Vargas (líder/redacción), Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil.
 **Naturaleza declarada:** modelo verbal conceptual (analítico, pre-formal) — glosario del dominio. No es diseño técnico, ni modelo de datos, ni arquitectura, ni casos de uso.
 **Insumos:** VIS-01, ADR-001, `00_AUDITORIA_PLAN_CODEX.md`, canon del macro; estándar E8 (subconjunto de 11 rasgos, SD-04).
 **Consumidores:** la skill `uml-domain-modeler` (extracción del modelo de dominio, fase 2), REQ-01, contrato conversacional.
