@@ -107,4 +107,7 @@
 ## 7. Checklist de canon por pantalla (gate de diseño)
 No clínico · *disclosure* de IA antes de capturar datos · sin gamificación agresiva ni dark patterns (seguridad > engagement) · minimización y consentimiento visibles · solo adultos · español (Colombia) · admin sin datos individuales · crisis serena (no alarmista) · AA + reduce-motion · construible con Django templates + JS mínimo.
 
+## 8. Style-tile y mockups aplicados
+El sistema se ve renderizado en [`mockups/00_style_tile.html`](mockups/00_style_tile.html) (paleta, tipografía, componentes) y aplicado en las 16 pantallas de [`mockups/index.html`](mockups/index.html) — ver el inventario y la traza pantalla → RF/ECU en DIS-00 §2/§6.
+
 **Fin de DIS-01.**

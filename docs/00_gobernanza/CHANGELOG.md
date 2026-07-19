@@ -3,6 +3,11 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-18 — v0.11.2 · Corrección: mockups persistidos como archivos (SD-24)
+- **Corregido:** los 16 mockups + style-tile de SD-23 se habían renderizado solo en la conversación, sin escribirse al repositorio (`git status` no los mostraba). El usuario lo detectó al no verlos en GitHub.
+- **Añadido:** `docs/08_diseno/mockups/` con 19 archivos HTML autocontenidos — `00_style_tile.html`, `p01…p16` (con `p10` en variante clara y oscura), `index.html` (galería con navegación por paquete). Colores hardcoded (mismos hex de DIS-01), iconos Tabler vía CDN, sin dependencias externas al proyecto.
+- **Actualizado:** `DIS-00` (columna «Archivo» con enlace real por pantalla, §6 nuevo) y `DIS-01` (§8 nuevo, puntero a la galería).
+
 ## 2026-07-18 — v0.11.1 · Enlace del §17 de las ECU al diseño + informe académico
 - **Enlazado:** el §17 (Prototipos/GUI) de las 5 specs completas y la trazabilidad de las 5 ágiles ahora referencian `docs/08_diseno/DIS-00`/`DIS-01` y la(s) pantalla(s) `P-XX` correspondiente(s) — cierra el diferido de SD-23.
 - **Añadido:** `docs/09_informe/Informe_Academico_Alan_Aura.docx` — informe académico completo del proyecto (portada, tabla de contenido, resumen, objetivos, metodología ICONIX, desarrollo por fases, arquitectura, trazabilidad, calidad ISO/IEC 25010, diseño de interfaz, conclusiones, referencias y anexos) para revisión del profesor. Integrantes: Jonatan E. Sánchez Vargas (líder), Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil.
