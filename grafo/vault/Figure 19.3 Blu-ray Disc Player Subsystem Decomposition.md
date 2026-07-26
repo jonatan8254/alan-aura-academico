@@ -1,0 +1,24 @@
+---
+source_file: "Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p401_figure_19_3_19_3_it_includes_motors_to_open_close_disc_tray.png"
+type: "image"
+community: "Baselined Requirements & Decomposition"
+tags:
+  - graphify/image
+  - graphify/INFERRED
+  - community/Baselined_Requirements__Decomposition
+source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p401_figure_19_3_19_3_it_includes_motors_to_open_close_disc_tray.png"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p401_figure_19_3_19_3_it_includes_motors_to_open_close_disc_tray.png"
+source_asset: "no duplicado en el vault (figura de libro/norma)"
+---
+
+# Figure 19.3: Blu-ray Disc Player Subsystem Decomposition
+
+## Origen
+- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p401_figure_19_3_19_3_it_includes_motors_to_open_close_disc_tray.png`
+- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+
+
+## Connections
+- [[Figure 19.1 Baselined Requirements Drive Plans, Designs, Tests]] - `conceptually_related_to` [INFERRED]
+
+#graphify/image #graphify/INFERRED #community/Baselined_Requirements__Decomposition

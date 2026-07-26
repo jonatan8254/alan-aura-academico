@@ -1,0 +1,24 @@
+---
+source_file: "90003_2018.md"
+type: "document"
+community: "Software Engineering Standards"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Software_Engineering_Standards
+source_path: "libros_y_normas_markdown/90003_2018.md"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\90003_2018.md"
+source_note: "[[02_Fuentes/Conocimiento/90003_2018]]"
+---
+
+# ISO/IEC 27001 Information security management
+
+## Origen
+- Fuente en este vault: [[02_Fuentes/Conocimiento/90003_2018]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/90003_2018.md`
+
+
+## Connections
+- [[ISOIECIEEE 900032018]] - `cites` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/Software_Engineering_Standards

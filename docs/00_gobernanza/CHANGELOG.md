@@ -3,6 +3,16 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-25 — v0.14.0 · Grafo de conocimiento propio del subproyecto (SD-27)
+- **Añadido:** `grafo/` — grafo de conocimiento **propio del subproyecto**, aislado del macroproyecto (`README.md`, `graph_subproyecto_final.json`, `vault/`, `scripts/`). Cierra/ejecuta el diferido de SD-11.
+- **Origen:** construido en el proyecto principal (`SmartAID/grafo_subproyecto/`) sobre **copias**; los artefactos originales del macro (`graphify-out/`, `vault_obsidian/`) nunca se modificaron — verificado por hash SHA256 antes y después de cada etapa.
+- **Composición:** **2.876 nodos** = 262 extraídos de los 37 `.md` de `docs/` + 2.614 de un grafo de solo libros y normas (sin ningún nodo de Smart-AID/TalentTrack). 2.893 aristas, 249 hiperaristas, 769 comunidades (55 nuevas del subproyecto + 714 de conocimiento), 34 puentes `same_as`.
+- **Extracción:** con el modelo **Opus** vía `graphify extract`, por subcarpeta y en `--mode deep` — un primer intento en bloque dio resultados pobres (40 nodos, esencialmente un índice) y se descartó.
+- **Nombrado de comunidades:** generado con Opus. Se detectó que `graphify label --missing-only` re-clusterizaba **todo** el grafo como efecto secundario (alteraba 2.162 de los 2.614 nodos de conocimiento); se rechazó ese resultado y se injertaron solo los 55 nombres nuevos por voto mayoritario a nivel de nodo, dejando las 714 comunidades de conocimiento intactas (verificado: 0 diferencias de id/comunidad/nombre).
+- **Trazabilidad del vault:** las 2.876 notas de concepto enlazan a su documento fuente. Los 37 `.md` del subproyecto y los 25 libros/normas de texto están copiados en `grafo/vault/02_Fuentes/`. **Decisión no obvia (1):** las ~882 figuras extraídas de los libros (~109 MB) **no** se duplican — pesan más de 10× el texto y son material con derechos.
+- **Decisión no obvia (2) — licencia:** `grafo/vault/02_Fuentes/Conocimiento/` (9,8 MB de libros y normas con derechos: PMBOK 7, ISO/IEC 90003, ISO/IEC 25010/25020, Wiegers…) queda en `.gitignore` a propósito — el vault es autocontenido en disco, pero el repositorio no redistribuye material licenciado.
+- **Actualizado:** `INDICE_MAESTRO` (fila `grafo/`), `REGISTRO_DECISIONES` (SD-27).
+
 ## 2026-07-25 — v0.13.0 · Cierre de PER-H1 y PER-H3 (SD-26)
 - **Resuelto PER-H1:** la `CapsulaDePerfil` **siempre existe** al terminar el onboarding, con `character` como contenido mínimo. `character` se **reclasifica** como *elección de interlocutor* y **precondición funcional** del chat —del mismo rango que el consentimiento—, no como autorreporte de perfil. Se elige esta opción porque **no reabre SD-22**: lo que recibe el LLM (RN-01.3, `ContextoInicialConversacionalV1`) queda intacto.
 - **Nueva regla RN-01.6** y **RN-01.4 precisada** («ningún **autorreporte** de la caracterización es obligatorio»; obligatorios son edad, consentimiento y `character`). **Cardinalidad fijada:** `Usuario–CapsulaDePerfil` = **1 a 1 tras el onboarding**.

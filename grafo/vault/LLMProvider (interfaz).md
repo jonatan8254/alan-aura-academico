@@ -1,0 +1,29 @@
+---
+source_file: "00_PLAN_CODEX_ORIGINAL.md"
+type: "concept"
+community: "Alan & Aura MVP Dev"
+tags:
+  - graphify/concept
+  - graphify/EXTRACTED
+  - community/Alan__Aura_MVP_Dev
+source_path: "00_PLAN_CODEX_ORIGINAL.md"
+source_absolute_path: "C:\GitHub\alan-aura-academico\00_PLAN_CODEX_ORIGINAL.md"
+source_note: "[[02_Fuentes/Subproyecto/00_PLAN_CODEX_ORIGINAL]]"
+---
+
+# LLMProvider (interfaz)
+
+## Origen
+- Fuente original del subproyecto: [[02_Fuentes/Subproyecto/00_PLAN_CODEX_ORIGINAL]]
+- Archivo original: `00_PLAN_CODEX_ORIGINAL.md`
+
+
+## Connections
+- [[Alan (personaje — activación práctica)]] - `conceptually_related_to` [INFERRED]
+- [[App Django conversation]] - `references` [EXTRACTED]
+- [[Aura (personaje — regulación y reflexión)]] - `conceptually_related_to` [INFERRED]
+- [[FakeLLMProvider]] - `implements` [EXTRACTED]
+- [[GroqLLMProvider]] - `implements` [EXTRACTED]
+- [[UnavailableLLMProvider]] - `implements` [EXTRACTED]
+
+#graphify/concept #graphify/EXTRACTED #community/Alan__Aura_MVP_Dev

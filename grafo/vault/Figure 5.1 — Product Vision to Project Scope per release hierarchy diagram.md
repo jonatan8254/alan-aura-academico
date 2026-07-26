@@ -1,0 +1,24 @@
+---
+source_file: "Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p101_figure_5_1_5_1_scope_is_more_dynamic_than_vision_because_stakeholders.png"
+type: "image"
+community: "Product Vision to Scope"
+tags:
+  - graphify/image
+  - graphify/INFERRED
+  - community/Product_Vision_to_Scope
+source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p101_figure_5_1_5_1_scope_is_more_dynamic_than_vision_because_stakeholders.png"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p101_figure_5_1_5_1_scope_is_more_dynamic_than_vision_because_stakeholders.png"
+source_asset: "no duplicado en el vault (figura de libro/norma)"
+---
+
+# Figure 5.1 — Product Vision to Project Scope per release hierarchy diagram
+
+## Origen
+- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p101_figure_5_1_5_1_scope_is_more_dynamic_than_vision_because_stakeholders.png`
+- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+
+
+## Connections
+- [[Figure 5.5 — Chemical Tracking System business problems→objectives→product concept traceability diagram]] - `conceptually_related_to` [INFERRED]
+
+#graphify/image #graphify/INFERRED #community/Product_Vision_to_Scope

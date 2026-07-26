@@ -1,0 +1,25 @@
+---
+source_file: "ISO_IEC_25023_1_2016_Systems_and_software_engineering.md"
+type: "concept"
+community: "Quality Measure Elements"
+tags:
+  - graphify/concept
+  - graphify/EXTRACTED
+  - community/Quality_Measure_Elements
+source_path: "libros_y_normas_markdown/ISO_IEC_25023_1_2016_Systems_and_software_engineering.md"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25023_1_2016_Systems_and_software_engineering.md"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25023_1_2016_Systems_and_software_engineering]]"
+---
+
+# Measurement function
+
+## Origen
+- Fuente en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25023_1_2016_Systems_and_software_engineering]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25023_1_2016_Systems_and_software_engineering.md`
+
+
+## Connections
+- [[Quality measure_1]] - `conceptually_related_to` [EXTRACTED]
+- [[Quality measure element (QME)_1]] - `references` [EXTRACTED]
+
+#graphify/concept #graphify/EXTRACTED #community/Quality_Measure_Elements

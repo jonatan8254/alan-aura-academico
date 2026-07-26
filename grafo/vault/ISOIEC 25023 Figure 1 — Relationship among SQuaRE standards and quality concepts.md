@@ -1,0 +1,24 @@
+---
+source_file: "ISO_IEC_25023_1_2016_Systems_and_software_engineering_p006_figure_1_1_depicts_relationship_between_international_standard_other_international_standards_in.png"
+type: "image"
+community: "ISO/IEC 25023 Quality Measurement"
+tags:
+  - graphify/image
+  - graphify/INFERRED
+  - community/ISO/IEC_25023_Quality_Measurement
+source_path: "libros_y_normas_markdown/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p006_figure_1_1_depicts_relationship_between_international_standard_other_international_standards_in.png"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25023_1_2016_Systems_and_software_engineering_p006_figure_1_1_depicts_relationship_between_international_standard_other_international_standards_in.png"
+source_asset: "no duplicado en el vault (figura de libro/norma)"
+---
+
+# ISO/IEC 25023 Figure 1 — Relationship among SQuaRE standards and quality concepts
+
+## Origen
+- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p006_figure_1_1_depicts_relationship_between_international_standard_other_international_standards_in.png`
+- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+
+
+## Connections
+- [[ISOIEC 25023 p013 — Approach to quality measurement (characteristics→measure→elements)]] - `semantically_similar_to` [INFERRED]
+
+#graphify/image #graphify/INFERRED #community/ISO/IEC_25023_Quality_Measurement

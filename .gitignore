@@ -29,3 +29,10 @@ desktop.ini
 # ── Temporales ──
 *.tmp
 scratchpad/
+
+# ── Corpus de conocimiento del grafo (material con derechos) ──
+# El vault es autocontenido en disco, pero el repositorio NO redistribuye
+# libros ni normas con licencia (PMBOK 7, ISO/IEC 90003, ISO/IEC 25010/25020,
+# Wiegers…). Se reconstruye con grafo/scripts/vincular_fuentes.py a partir del
+# corpus original. Ver grafo/README.md §Licencia.
+grafo/vault/02_Fuentes/Conocimiento/

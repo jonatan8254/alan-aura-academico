@@ -1,0 +1,21 @@
+---
+source_file: "Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p184_visual_asset_46_agile_planning_terminology.png"
+type: "image"
+community: "Agile Planning Terminology Diagram"
+tags:
+  - graphify/image
+  - graphify/EXTRACTED
+  - community/Agile_Planning_Terminology_Diagram
+source_path: "libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p184_visual_asset_46_agile_planning_terminology.png"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p184_visual_asset_46_agile_planning_terminology.png"
+source_asset: "no duplicado en el vault (figura de libro/norma)"
+---
+
+# Diagram: Agile Planning Terminology (Increment→Iterations→Release)
+
+## Origen
+- Figura extraida de un libro/norma: `libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p184_visual_asset_46_agile_planning_terminology.png`
+- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+
+
+#graphify/image #graphify/EXTRACTED #community/Agile_Planning_Terminology_Diagram

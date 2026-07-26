@@ -1,0 +1,25 @@
+---
+source_file: "PMBOK_Edicion_7_p201_visual_asset_33_2_7_3_2_radiadores_de_informacion.png"
+type: "image"
+community: "Burndown/Burnup Charts"
+tags:
+  - graphify/image
+  - graphify/INFERRED
+  - community/Burndown/Burnup_Charts
+source_path: "libros_y_normas_markdown/PMBOK_Edicion_7_p201_visual_asset_33_2_7_3_2_radiadores_de_informacion.png"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\PMBOK_Edicion_7_p201_visual_asset_33_2_7_3_2_radiadores_de_informacion.png"
+source_asset: "no duplicado en el vault (figura de libro/norma)"
+---
+
+# Gráfica de trabajo pendiente (Burndown)
+
+## Origen
+- Figura extraida de un libro/norma: `libros_y_normas_markdown/PMBOK_Edicion_7_p201_visual_asset_33_2_7_3_2_radiadores_de_informacion.png`
+- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+
+
+## Connections
+- [[Gráfica combinada de trabajo pendiente y realizado]] - `conceptually_related_to` [INFERRED]
+- [[Gráfico de trabajo Puntos de Historia Realizados vs línea ideal (10 días)]] - `semantically_similar_to` [INFERRED]
+
+#graphify/image #graphify/INFERRED #community/Burndown/Burnup_Charts

@@ -1,0 +1,24 @@
+---
+source_file: "Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png"
+type: "image"
+community: "Requirements & Project Processes"
+tags:
+  - graphify/image
+  - graphify/INFERRED
+  - community/Requirements__Project_Processes
+source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png"
+source_asset: "no duplicado en el vault (figura de libro/norma)"
+---
+
+# Figure 31.2 — Stakeholders Interacting with Software Development Group
+
+## Origen
+- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png`
+- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+
+
+## Connections
+- [[How Requirements Relate to Other Project Processes (asset 271, context diagram)]] - `conceptually_related_to` [INFERRED]
+
+#graphify/image #graphify/INFERRED #community/Requirements__Project_Processes

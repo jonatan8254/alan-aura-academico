@@ -1,0 +1,37 @@
+---
+source_file: "UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md"
+type: "concept"
+community: "UML Modeling Perspectives"
+tags:
+  - graphify/concept
+  - graphify/EXTRACTED
+  - community/UML_Modeling_Perspectives
+source_path: "libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md"
+source_note: "[[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit]]"
+---
+
+# UML (Unified Modeling Language)
+
+## Origen
+- Fuente en este vault: [[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md`
+
+
+## Connections
+- [[Activity Diagram]] - `references` [EXTRACTED]
+- [[Class Diagram]] - `references` [EXTRACTED]
+- [[Development Process (RUPAgileIterative)]] - `conceptually_related_to` [EXTRACTED]
+- [[Martin Fowler (author)]] - `references` [EXTRACTED]
+- [[Model Driven Architecture (MDA)]] - `references` [EXTRACTED]
+- [[Object Management Group (OMG)]] - `references` [EXTRACTED]
+- [[Package Diagram]] - `references` [EXTRACTED]
+- [[Sequence Diagram_1]] - `references` [EXTRACTED]
+- [[State Machine Diagram]] - `references` [EXTRACTED]
+- [[UML Meta-Model]] - `references` [EXTRACTED]
+- [[UML as Blueprint]] - `references` [EXTRACTED]
+- [[UML as Programming Language]] - `references` [EXTRACTED]
+- [[UML as Sketch]] - `references` [EXTRACTED]
+- [[Use Case Diagram_1]] - `references` [EXTRACTED]
+
+#graphify/concept #graphify/EXTRACTED #community/UML_Modeling_Perspectives

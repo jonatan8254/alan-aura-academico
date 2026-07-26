@@ -1,0 +1,33 @@
+---
+source_file: "UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md"
+type: "concept"
+community: "Activity Diagram Notation"
+tags:
+  - graphify/concept
+  - graphify/EXTRACTED
+  - community/Activity_Diagram_Notation
+source_path: "libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md"
+source_note: "[[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit]]"
+---
+
+# Activity Diagram
+
+## Origen
+- Fuente en este vault: [[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md`
+
+
+## Connections
+- [[Decision and Merge]] - `references` [EXTRACTED]
+- [[Expansion Region]] - `references` [EXTRACTED]
+- [[Fork and Join]] - `references` [EXTRACTED]
+- [[Interaction Overview Diagram]] - `conceptually_related_to` [EXTRACTED]
+- [[Partition (Swim Lane)]] - `references` [EXTRACTED]
+- [[Pin]] - `references` [EXTRACTED]
+- [[Signal]] - `references` [EXTRACTED]
+- [[Token]] - `references` [EXTRACTED]
+- [[UML (Unified Modeling Language)]] - `references` [EXTRACTED]
+- [[UML Version Changes]] - `references` [EXTRACTED]
+
+#graphify/concept #graphify/EXTRACTED #community/Activity_Diagram_Notation

@@ -1,0 +1,25 @@
+---
+source_file: "UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p101_table_packages_dependencies.png"
+type: "concept"
+community: "Package Dependency Diagrams"
+tags:
+  - graphify/concept
+  - graphify/EXTRACTED
+  - community/Package_Dependency_Diagrams
+source_path: "libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p101_table_packages_dependencies.png"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p101_table_packages_dependencies.png"
+source_asset: "no duplicado en el vault (figura de libro/norma)"
+---
+
+# Package Dependency
+
+## Origen
+- Figura extraida de un libro/norma: `libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p101_table_packages_dependencies.png`
+- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+
+
+## Connections
+- [[Figure 7.2 – Package diagram for an enterprise application]] - `references` [EXTRACTED]
+- [[Package dependency diagram (presentationdomaindata mapperdatabase, leasingasset)]] - `references` [EXTRACTED]
+
+#graphify/concept #graphify/EXTRACTED #community/Package_Dependency_Diagrams

@@ -1,0 +1,25 @@
+---
+source_file: "Software_Measurement_Establish_stract_evaluate_execute.md"
+type: "concept"
+community: "Function Point Estimation"
+tags:
+  - graphify/concept
+  - graphify/INFERRED
+  - community/Function_Point_Estimation
+source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute.md"
+source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute.md"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute]]"
+---
+
+# Code-oriented (LOC) Productivity Measurement
+
+## Origen
+- Fuente en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute.md`
+
+
+## Connections
+- [[Function Points (IFPUG)]] - `semantically_similar_to` [INFERRED]
+- [[Productivity, Efficiency and Effectiveness]] - `references` [EXTRACTED]
+
+#graphify/concept #graphify/INFERRED #community/Function_Point_Estimation
