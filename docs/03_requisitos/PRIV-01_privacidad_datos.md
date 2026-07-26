@@ -1,5 +1,5 @@
 # PRIV-01 — Privacidad y manejo de datos del MVP
-**ID:** PRIV-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-16 · **Versión:** v1.3 (SD-22: cápsula = `ContextoInicialConversacionalV1` de 5 campos + 2 metadatos en el inventario §2 y PRIV-R1; PRIV-R9 intacta; SD-15: cuenta, contadores operativos y qué NO ve el admin; SD-17: inventario mapeado 1:1 a las 7 entidades exactas del plan).
+**ID:** PRIV-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.4 (SD-26: la cápsula **siempre existe** tras el onboarding con `character` como mínimo — PER-H1 resuelta; `estado` del directorio acotado en PRIV-R10 — PER-H3 resuelta; SD-22:  cápsula = `ContextoInicialConversacionalV1` de 5 campos + 2 metadatos en el inventario §2 y PRIV-R1; PRIV-R9 intacta; SD-15: cuenta, contadores operativos y qué NO ve el admin; SD-17: inventario mapeado 1:1 a las 7 entidades exactas del plan).
 **Insumos:** canon de dominio; MV-01 §Onboarding y §Cuenta (cápsula/consentimiento/cuenta); ADR-001-D2 (SQLite); plan §3.4 (exclusiones al LLM), §3.7 (qué no ve el admin); Ley 1581/2012 + Decreto 1377/2013 (citadas, no reproducidas).
 **Consumidores:** REQ-01 (RNF-03/04, RC-04), SEG-01, TRZ-01, **PER-01** (mapa de persistencia — consolida este inventario con el plan §4.14/§4.15 y las ECU).
 **Naturaleza:** requisitos de privacidad y minimización. **Honestidad §4.9:** la validación de frontera legal (Ley 1581) es **nivel 6** — se formula, no se resuelve aquí (V6-b).
@@ -17,7 +17,7 @@ Mapeado 1:1 a las **entidades exactas del plan** (§4.14): `User` · `ConsentRec
 | **Cuenta** (username, alias, contraseña hasheada, rol) | `User` | Sí | Sí | **No** | Hasta eliminación de cuenta (+ 30 días, plan §4.14) |
 | Declaración de edad (≥18) + versión de disclosure | `User` | Sí (booleana) | Sí | **No** | Igual que cuenta |
 | Consentimiento (otorgado/revocado + fecha) | `ConsentRecord` | Sí | Sí | **No** | Igual que cuenta |
-| Cápsula (`ContextoInicialConversacionalV1`): `mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style` (autorreportes opcionales), `character` (obligatorio) + metadatos `schema_version`/`consent_version` | `InitialConversationProfile` | Opcional (los 4 autorreportes; `character` obligatorio) | Sí (asociada al usuario) | **Sí** (los 5 campos con valor + metadatos) | Hasta reinicio, revocación o eliminación |
+| Cápsula (`ContextoInicialConversacionalV1`): `mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style` (autorreportes opcionales), `character` (obligatorio) + metadatos `schema_version`/`consent_version` | `InitialConversationProfile` | Opcional (los 4 autorreportes; `character` obligatorio) | Sí (asociada al usuario). **Siempre existe** tras el onboarding: si se omiten los 4 autorreportes, queda con solo `character`, sin *defaults* (RN-01.6, SD-26) | **Sí** (los 5 campos con valor + metadatos) | Hasta reinicio, revocación o eliminación |
 | **Contenido de la conversación (mensajes)** | *(no existe entidad — plan excluye `Conversation`/`Message`)* | En memoria de sesión | **No (nunca)** | Turno actual + hasta 4 intercambios de la sesión | **Se descarta al cerrar** |
 | Contador diario de uso (llamadas/día por usuario) | `DailyUsageCounter` | Sí | Sí | **No** | Máx. 30 días (plan §4.14) |
 | Evento técnico (latencia, modelo, versión de prompt, estado — **sin contenido**) | `OperationalEvent` | Sí | Sí | **No** | 30 días; base de las métricas **agregadas** del admin |
@@ -38,7 +38,7 @@ Mapeado 1:1 a las **entidades exactas del plan** (§4.14): `User` · `ConsentRec
 | PRIV-R7 | El administrador no accede a cápsulas ni conversaciones. | RN-03.5 |
 | PRIV-R8 | *Disclosure* y consentimiento preceden a cualquier captura y a la primera conversación. | RN-09, RF-01 |
 | PRIV-R9 | El LLM **no** recibe: username, alias, ID, rol, contraseña, historial previo a la sesión, puntajes, datos biométricos/laborales/clínicos, campos no respondidos, inferencias, fecha de registro ni métricas. | RN-03, plan §3.4 |
-| PRIV-R10 | El administrador ve solo **agregados** y el **directorio truncado** (alias, ID truncado, estado, onboarding); nunca contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | RN-03.2/.3/.5 |
+| PRIV-R10 | El administrador ve solo **agregados** y el **directorio truncado** (alias, ID truncado, **`estado` ∈ {activo, sin consentimiento vigente}** —derivado, no editable—, onboarding); nunca contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | RN-03.2/.3/.5; SD-26 |
 | PRIV-R11 | La **eliminación de cuenta** borra en **cascada** todos los datos asociados (cápsula, consentimiento, contadores del usuario). | RN-04.4 |
 | PRIV-R12 | La contraseña se almacena **hasheada**; nunca en claro, en el cliente ni accesible al admin. | RNF-09, plan §3.7 |
 

@@ -1,6 +1,6 @@
 # ECU-08 — Especificación de caso de uso: «Consultar directorio de usuarios» (CU-08)
-**ID documento:** DOC-CU-08 · **Caso de uso:** CU-08 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-16 · **Versión:** v1.0 · **Estado:** Propuesto.
-**Insumos:** DCU-01, MV-01, MD-01, REQ-01, PRIV-01, VIS-01, plan §3.2/§3.7/§4.9.
+**ID documento:** DOC-CU-08 · **Caso de uso:** CU-08 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-25 · **Versión:** v1.1 (SD-26: dominio de valores de `estado` fijado — resolución de PER-H3) · **Estado:** Propuesto.
+**Insumos:** DCU-01, MV-01, MD-01, REQ-01, PRIV-01, VIS-01, PER-01, plan §3.2/§3.7/§4.9.
 **Forma:** **ágil** (núcleo ICONIX / plantilla §23).
 **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -22,7 +22,7 @@
 ### 2.1 Flujo básico
 | Paso | Responsable | Acción | Concepto | Respuesta |
 |---|---|---|---|---|
-| 1 | Administrador | Abre la vista de directorio en el panel administrativo. | Interfaz: Panel administrativo (vista de directorio) | El sistema muestra el directorio mínimo: alias, ID truncado, fecha de registro, estado y si completó el onboarding. |
+| 1 | Administrador | Abre la vista de directorio en el panel administrativo. | Interfaz: Panel administrativo (vista de directorio) | El sistema muestra el directorio mínimo: alias, ID truncado, fecha de registro, **estado ∈ {activo, sin consentimiento vigente}** (derivado de `ConsentRecord`) y si completó el onboarding. |
 | 2 | Administrador | Revisa la lista del directorio. | Usuario (vista mínima) | El sistema mantiene ocultos el username completo, las respuestas de encuesta, la CapsulaDePerfil, los Mensajes y el personaje elegido. |
 
 ### 2.2 Flujos alternativos
@@ -40,7 +40,7 @@
 | ID | Regla | Fuente |
 |---|---|---|
 | RN-03.1 | El Administrador tiene exactamente tres funciones (directorio, métricas, kill switch); consultar el directorio es una de ellas. | MV-01 §7.4; REQ-01 §1 |
-| RN-03.2 | El directorio muestra únicamente: alias, ID truncado, fecha de registro, estado y si completó el onboarding. | REQ-01 §1 (RF-15); MV-01 §7.2–§7.5 |
+| RN-03.2 | El directorio muestra únicamente: alias, ID truncado, fecha de registro, **estado ∈ {activo, sin consentimiento vigente}** y si completó el onboarding. `estado` es **derivado** de `ConsentRecord`, no un campo editable ni una suspensión — la suspensión individual está fuera de alcance (VIS-01 §5). *(Dominio de valores fijado en SD-26, resolución de PER-H3.)* | REQ-01 §1 (RF-15); MV-01 §7.2–§7.5; PER-01 §3.1 |
 | RN-03.5 | El Administrador no ve username completo, respuestas de encuesta, CapsulaDePerfil, Mensajes, personaje elegido, conteos por usuario, contraseñas ni tokens. | REQ-01 §4 (consolidado); MV-01 §7.2–§7.5 |
 | PRIV-R10 | El administrador ve solo agregados y el directorio truncado (alias, ID truncado, estado, onboarding); nunca contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | PRIV-01 §3 |
 | RNF-08 | El rol (usuario/administrador) se determina y valida en el servidor; no seleccionable ni alterable desde el cliente. | REQ-01 §2 |
@@ -54,7 +54,7 @@
 ## 5. Criterios de aceptación (Dado/Cuando/Entonces)
 | ID | Criterio | Flujo |
 |---|---|---|
-| CA-01 | Dado un Administrador autenticado con rol validado en servidor, cuando consulta el directorio de usuarios, entonces el sistema muestra alias, ID truncado, fecha de registro, estado y onboarding completado, y NO muestra username completo ni contenido individual. | Flujo básico (§2.1) |
+| CA-01 | Dado un Administrador autenticado con rol validado en servidor, cuando consulta el directorio de usuarios, entonces el sistema muestra alias, ID truncado, fecha de registro, estado ∈ {activo, sin consentimiento vigente} y onboarding completado, y NO muestra username completo ni contenido individual. | Flujo básico (§2.1) |
 | CA-02 | Dado un actor no administrador (sin sesión, o autenticado con rol insuficiente), cuando intenta acceder a la vista de directorio, entonces el sistema responde `401` o `403` según el caso y no expone el directorio. | Flujos de excepción FE-01/FE-02 (§2.3) |
 
 ## 6. Trazabilidad

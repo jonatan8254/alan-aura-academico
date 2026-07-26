@@ -1,5 +1,5 @@
 # PER-01 — Mapa de persistencia del MVP «Alan & Aura Académico»
-**ID:** PER-01 · **Familia:** requisitos de datos · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** PER-01 · **Familia:** requisitos de datos · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.1 (SD-26: **PER-H1 y PER-H3 resueltas**) · **Estado:** Propuesto.
 **Insumos:** `00_PLAN_CODEX_ORIGINAL.md` §4.14 (almacenamiento y retención) y §4.15 (telemetría) — fuente primaria; PRIV-01 §2/§3 (inventario y requisitos de privacidad); ADR-001-D2 (SQLite); MD-01 (vocabulario de dominio); ECU-02/04/05/06/08/09/10 (qué crea, lee y borra cada caso de uso); REQ-01 (RF-13/18/20/22/23/24, RNF-03/08/09).
 **Consumidores:** análisis de robustez (`DR-XX`), diseño de clases y **modelo de datos** (fase 2 tardía), construcción (migraciones Django), pruebas de privacidad (RC-04), TRZ-01.
 **Naturaleza:** **inventario consolidado de persistencia** — reúne en un solo lugar lo que hoy está disperso entre el plan, PRIV-01 y las ECU. **No es** diseño de esquema físico, ni modelo de clases, ni DDL: no fija tipos, claves, índices, tablas intermedias ni nombres de columnas. Esas decisiones pertenecen a la fase de diseño (CLAUDE.md §6, «no adelantar»). **No introduce requisitos nuevos**: todo lo que afirma está trazado a un artefacto existente.
@@ -12,6 +12,7 @@
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v1.0 | 2026-07-25 | J. Sánchez | Creación (SD-25). Consolida el inventario de persistencia disperso en plan §4.14/§4.15, PRIV-01 §2 y las ECU; declara 4 hallazgos abiertos (PER-H1…PER-H4). |
+| v1.1 | 2026-07-25 | J. Sánchez | **SD-26:** cierre de **PER-H1** (la cápsula siempre existe con `character` como mínimo; `character` reclasificado como precondición funcional ⇒ nueva **RN-01.6**) y de **PER-H3** (`estado` del directorio ∈ {activo, sin consentimiento vigente}, derivado de `ConsentRecord`). PER-H2 y PER-H4 siguen abiertos por decisión. Propagado a MV-01 v2.5, REQ-01 v1.4, PRIV-01 v1.4, ECU-04 v1.1, ECU-05 v1.1, ECU-08 v1.1. |
 
 ---
 
@@ -65,7 +66,7 @@ Motor: **SQLite** (ADR-001-D2), justificado precisamente porque el volumen es m�
 | `esAdulto` (booleano) | [E1] | RN-04.2, ECU-05 §14 | Declaración, **no** fecha de nacimiento |
 | `versionDisclosure` | [E1] | RN-04.2, ECU-05 §14 | Qué versión del aviso de IA aceptó |
 | fecha de registro | [E1] | RN-03.2, plan §4.9 (directorio) | El directorio la muestra ⇒ se persiste |
-| `estado` | [I2] | RN-03.2, plan §4.9 (directorio) | **Dominio de valores sin definir** → ver **PER-H3** |
+| `estado` ∈ {activo, sin consentimiento vigente} | [E1] | RN-03.2, RF-15, PRIV-R10 (SD-26) | **Derivado** de `ConsentRecord`, no editable ni almacenado aparte; **no** es suspensión (fuera de alcance, VIS-01 §5). Resuelto en **PER-H3** |
 
 **Prohibido almacenar** (RN-04.1, [E1]): nombre legal, documento de identidad, correo, teléfono, dirección, fecha de nacimiento. Sin recuperación de contraseña por correo ni verificación de correo (RN-04.6).
 
@@ -96,8 +97,11 @@ Es el **gate binario de todo el chat**: sin `estado = otorgado` no hay conversac
 | `consent_version` (metadato) | — | Sí | [E1] |
 
 Reglas que el almacenamiento debe respetar:
-- **Sin *defaults*** para los campos omitidos: la cápsula se arma solo con lo respondido (RN-01.3, FA-02 de ECU-05). Un campo omitido **no se guarda**; no se guarda vacío ni con valor por defecto. [E1]
-- **Ningún campo de perfil es obligatorio** salvo edad y consentimiento (RN-01.4) — lo que colisiona con `character` obligatorio → ver **PER-H1**.
+- **La cápsula siempre existe** al terminar el onboarding, con `character` como contenido mínimo (**RN-01.6**, SD-26). `character` no es un autorreporte de perfil sino la **elección de interlocutor** —precondición funcional del chat, del mismo rango que el consentimiento—, por eso su obligatoriedad no contradice la minimización. La cardinalidad `User–InitialConversationProfile` es, por tanto, **1 a 1 tras el onboarding** (0 antes). [E1]
+- **Sin *defaults*** para los campos omitidos: la cápsula se arma solo con lo respondido (RN-01.3, FA-01/FA-02 de ECU-05). Un campo omitido **no se guarda**; no se guarda vacío ni con valor por defecto. Omitir los 4 autorreportes deja la cápsula con **un solo campo de contenido**. [E1]
+- **Ningún autorreporte es obligatorio** (RN-01.4, precisada en SD-26): el usuario puede omitir los cuatro sin perder el acceso al chat.
+- El valor persistido de `character` es la **última elección** y actúa como predeterminado; el personaje es **cambiable por sesión** (RN-02.6) sin reescribir la cápsula. [E1]
+- **Reiniciar la caracterización borra también `character`** ⇒ el usuario queda sin poder conversar hasta rehacer CU-05 (FA-01 de ECU-04, RF-22). Consecuencia deliberada de RN-01.6. [E1]
 - Es el **único** origen de datos que viaja al proveedor LLM (PRIV-R1).
 - El administrador **no** puede alcanzarla por ninguna vía (PRIV-R7, RN-03.5).
 
@@ -166,7 +170,7 @@ Retención: vigencia del curso + 30 días.
 | **PER-T1** | **Borrado en cascada:** eliminar `User` suprime `ConsentRecord` + `InitialConversationProfile` + `DailyUsageCounter` de ese usuario. | PRIV-R11, RN-04.4, RF-24, CA-01 de ECU-04 [E1] |
 | **PER-T2** | **No reidentificación de la telemetría:** `OperationalEvent` y `AdministrativeAction` no deben permitir reconstruir qué hizo un usuario concreto (no llevan alias ni username; plan §4.15). | plan §4.15, PRIV-R10 [E1] |
 | **PER-T3** | **Segregación del administrador:** ninguna consulta administrativa puede alcanzar `InitialConversationProfile`, contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | PRIV-R7, PRIV-R10, RN-03.5 [E1] |
-| **PER-T4** | **Directorio truncado:** CU-08 expone únicamente alias, **ID truncado**, fecha de registro, estado y flag de onboarding. | RN-03.2, RF-15 [E1] |
+| **PER-T4** | **Directorio truncado:** CU-08 expone únicamente alias, **ID truncado**, fecha de registro, **`estado` ∈ {activo, sin consentimiento vigente}** (derivado, no almacenado aparte) y flag de onboarding. | RN-03.2, RF-15, SD-26 [E1] |
 | **PER-T5** | **Purga por ventana:** retenciones heterogéneas (30 días para contadores y eventos; vigencia para cuenta) exigen un mecanismo de purga programada, no solo un campo de fecha. | plan §4.14 [I2] |
 | **PER-T6** | **Hash de contraseña** en almacenamiento; jamás en claro, en el cliente ni accesible al admin. | PRIV-R12, RNF-09 [E1] |
 | **PER-T7** | **Reinicio ≠ revocación:** «reiniciar caracterización» (RF-22) **borra** la cápsula; «revocar personalización» (RF-23) hace que **deje de alimentar** la conversación. Son dos operaciones distintas sobre estados distintos. | RN-04.3, RN-07, FA-01/FA-02 de ECU-04 [E1] |
@@ -225,10 +229,10 @@ La no-persistencia es una propiedad **de este sistema**; no de la cadena complet
 
 | ID | Tipo | Descripción | Impacto en el modelo de datos | Estado |
 |---|---|---|---|---|
-| **PER-H1** | Contradicción | **FA-01 de ECU-05** dice que quien omite la caracterización «continúa **sin cápsula** de preferencias» y elige personaje en el paso 8; pero `character` es campo **obligatorio** de la cápsula (RN-01.3, PRIV-01 §2) y **RN-01.4** afirma que ningún campo de perfil es obligatorio salvo edad y consentimiento. Las tres afirmaciones no pueden ser simultáneamente ciertas. | Decide si `InitialConversationProfile` **siempre existe** tras el onboarding (con `character` como mínimo) o si `character` debe vivir en `User`. Afecta la cardinalidad `User–InitialConversationProfile` y el borrado de RF-22. | **Abierto** |
-| **PER-H2** | Ambigüedad | RF-24 exige que tras eliminar la cuenta «no quede dato asociado recuperable», pero plan §4.14 fija «hasta eliminación o cierre **+ 30 días**». Ya registrada como RA-01 en ECU-04 §21. | Define si la eliminación es borrado físico inmediato o borrado lógico con purga diferida — y por tanto si el esquema necesita marca de baja. | **Abierto** (heredado de ECU-04 RA-01) |
-| **PER-H3** | Hueco | El campo **`estado`** del usuario aparece en el directorio administrativo (RN-03.2, RF-15, plan §4.9) pero **su dominio de valores no está definido en ningún artefacto**. No se sabe si es {activo, eliminado}, {activo, suspendido} u otra cosa — y el plan excluye explícitamente la suspensión individual (VIS-01 §5). | Sin dominio de valores no se puede persistir el campo que CU-08 debe mostrar. | **Abierto** |
-| **PER-H4** | Hueco menor | `DailyUsageCounter` está nombrada y acotada (por usuario, diaria, ≤30 días) pero **sus campos y su llave no están especificados** en ningún artefacto. | Detalle de diseño; se resuelve en la fase de modelo de datos, sin decisión de canon. | **Abierto** (bajo) |
+| **PER-H1** | Contradicción | **FA-01 de ECU-05** decía que quien omite la caracterización «continúa **sin cápsula** de preferencias» y elige personaje en el paso 8; pero `character` es campo **obligatorio** de la cápsula (RN-01.3, PRIV-01 §2) y **RN-01.4** afirmaba que ningún campo de perfil es obligatorio salvo edad y consentimiento. Las tres afirmaciones no podían ser simultáneamente ciertas. | Definía la cardinalidad `User–InitialConversationProfile` y el borrado de RF-22. | **Resuelto (SD-26).** La cápsula **siempre existe** tras el onboarding, con `character` como contenido mínimo. `character` se reclasifica como **precondición funcional** (elección de interlocutor), no como autorreporte de perfil ⇒ **RN-01.4 precisada** y **RN-01.6 añadida** (MV-01 v2.5). Cardinalidad: **1 a 1 tras el onboarding**. Consecuencia aceptada: reiniciar la caracterización inhabilita el chat hasta rehacer CU-05. **No reabre SD-22**: lo que recibe el LLM (RN-01.3) queda intacto. Propagado a REQ-01 v1.4, PRIV-01 v1.4, ECU-04 v1.1, ECU-05 v1.1 (RA-04). |
+| **PER-H2** | Ambigüedad | RF-24 exige que tras eliminar la cuenta «no quede dato asociado recuperable», pero plan §4.14 fija «hasta eliminación o cierre **+ 30 días**». Ya registrada como RA-01 en ECU-04 §21. | Define si la eliminación es borrado físico inmediato o borrado lógico con purga diferida — y por tanto si el esquema necesita marca de baja. | **Abierto por decisión (SD-26):** se resuelve en construcción, cuando se sepa si el hosting hace respaldos. No bloquea robustez. |
+| **PER-H3** | Hueco | El campo **`estado`** del usuario aparecía en el directorio administrativo (RN-03.2, RF-15, plan §4.9) pero **su dominio de valores no estaba definido en ningún artefacto**. No se sabía si era {activo, eliminado}, {activo, suspendido} u otra cosa — y el plan excluye explícitamente la suspensión individual (VIS-01 §5). | Sin dominio de valores no se podía mostrar el campo que CU-08 exige. | **Resuelto (SD-26).** `estado` ∈ **{activo, sin consentimiento vigente}**, **derivado** de `ConsentRecord` — **no** es un campo editable, ni almacenado aparte, ni una suspensión. Es lo único operativamente útil para el admin sin exponer dato sensible (compatible con PRIV-R10). Propagado a REQ-01 v1.4 (RF-15), PRIV-01 v1.4 (PRIV-R10), ECU-08 v1.1. |
+| **PER-H4** | Hueco menor | `DailyUsageCounter` está nombrada y acotada (por usuario, diaria, ≤30 días) pero **sus campos y su llave no están especificados** en ningún artefacto. | Detalle de diseño; se resuelve en la fase de modelo de datos, sin decisión de canon. | **Abierto por decisión (SD-26):** puro detalle de diseño. No bloquea robustez. |
 
 > **Corrección de un falso hallazgo (honestidad §4.9).** En la conversación que originó este documento se afirmó que «`plan §4.14` no existe en este repositorio» y que el inventario de entidades carecía de fuente verificable. **Es falso:** §4.14 y §4.15 están en [`00_PLAN_CODEX_ORIGINAL.md`](../../00_PLAN_CODEX_ORIGINAL.md), la fuente primaria archivada en **SD-16**. El error vino de buscar en `PLAN-01_plan_proyecto.md`, que es otro artefacto. La regla de independencia (CLAUDE.md §0) **se cumple**: la fuente está dentro del repositorio.
 
@@ -273,15 +277,15 @@ La no-persistencia es una propiedad **de este sistema**; no de la cadena complet
 - [x] Trazabilidad sin afirmaciones huérfanas (§9).
 - [x] Hallazgos abiertos declarados con ID (§8), no silenciados.
 - [x] Canon de dominio verificado (§10).
-- [ ] Revisión del usuario sobre **PER-H1** y **PER-H3** (bloquean el modelo de datos).
+- [x] Revisión del usuario sobre **PER-H1** y **PER-H3** — **resueltas en SD-26** y propagadas a MV-01, REQ-01, PRIV-01, ECU-04/05/08.
 
 ---
 
 ## 11. Cierre
 
 - **Confirmado:** 7 entidades persistidas, **ninguna** con contenido conversacional; 3 de ellas con purga a 30 días; 1 sola (`InitialConversationProfile`) alcanza al proveedor LLM. El inventario tiene fuente primaria verificable dentro del repositorio (plan §4.14/§4.15).
-- **Hallazgo más relevante:** **PER-H1** — la contradicción sobre `character` obligatorio vs. «continúa sin cápsula» debe resolverse **antes** del modelo de datos, porque cambia la cardinalidad `User–InitialConversationProfile` y el comportamiento de RF-22.
-- **Recomendación:** resolver PER-H1 y PER-H3 con el usuario; PER-H2 puede esperar al diseño; PER-H4 es de detalle.
+- **Hallazgos cerrados (SD-26):** **PER-H1** — la cápsula siempre existe con `character` como mínimo; cardinalidad `User–InitialConversationProfile` = **1 a 1 tras el onboarding**. **PER-H3** — `estado` ∈ {activo, sin consentimiento vigente}, derivado de `ConsentRecord`. Ambas se resolvieron **antes** del análisis de robustez, para que `DR-04`/`DR-05`/`DR-06` no hereden la contradicción.
+- **Hallazgos abiertos por decisión:** PER-H2 (se resuelve en construcción, con el hosting a la vista) y PER-H4 (detalle de diseño). Ninguno bloquea robustez.
 - **Pendiente (fuera de alcance):** el modelo de datos propiamente dicho, las migraciones y la tabla de endpoints (§4.9 del plan, ya diferida a ARQ-01 en SD-17).
 
 **Fin de PER-01.**

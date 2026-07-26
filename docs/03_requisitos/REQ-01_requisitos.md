@@ -1,5 +1,5 @@
 # REQ-01 — Requisitos del MVP «Alan & Aura Académico»
-**ID:** REQ-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-16 · **Versión:** v1.3 (SD-22: cápsula de **5 campos + 2 metadatos** = `ContextoInicialConversacionalV1` en RF-04/RF-05; SD-15: +cuenta/acceso RF-19…24, +sesión/robustez RF-25/26, admin realineado; SD-17: límites de tasa exactos +RNF-10, historial de sesión precisado en RF-09/RNF-04).
+**ID:** REQ-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.4 (SD-26: `character` como precondición funcional — RN-01.6 en la traza de RF-04/RF-05; dominio de valores de `estado` fijado en RF-15; SD-22:  cápsula de **5 campos + 2 metadatos** = `ContextoInicialConversacionalV1` en RF-04/RF-05; SD-15: +cuenta/acceso RF-19…24, +sesión/robustez RF-25/26, admin realineado; SD-17: límites de tasa exactos +RNF-10, historial de sesión precisado en RF-09/RNF-04).
 **Insumos:** MV-01 (consolidado, con sus vistas), contrato conversacional, VIS-01 (OBJ), ADR-001, SEG-01, PRIV-01, ISO/IEC 25010:2023 (vía NORM-01/D6-bis).
 **Consumidores:** TRZ-01, NORM-01, pruebas (fase 2), construcción (fase 3).
 **Frontera dura (disciplina K):** este artefacto produce **RF, RNF, requisitos de calidad (RC) con GQM+umbral y reglas de negocio tipadas (RN)**. **No** produce casos de uso, modelo de dominio, robustez ni secuencias (fase 2).
@@ -22,8 +22,8 @@
 | RF-01 | Mostrar el *disclosure* de IA antes de solicitar cualquier dato. | RN-09, RN-01.1 | El *disclosure* aparece en la primera pantalla; ningún campo se captura antes. |
 | RF-02 | Solicitar declaración de edad y bloquear a menores de 18. | RN-01, RN-01.2 | Con edad <18 no se continúa ni se registra dato. |
 | RF-03 | Registrar consentimiento granular y revocable. | RN-02, RN-07 | Se puede otorgar y revocar; sin consentimiento no hay conversación. |
-| RF-04 | Capturar los datos de la caracterización (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style` autorreportes opcionales; `character` obligatorio {alan, aura}). | RN-01.3, RN-01.4 | Se puede completar el onboarding dejando los 4 autorreportes en "prefiero no responder"; solo `character` es obligatorio para iniciar chat. |
-| RF-05 | Generar la cápsula de perfil (`ContextoInicialConversacionalV1`) a partir del onboarding. | RN-03, REL-2, plan §3.4 | La cápsula contiene solo los **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`); nada más. |
+| RF-04 | Capturar los datos de la caracterización (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style` autorreportes opcionales; `character` obligatorio {alan, aura}). | RN-01.3, RN-01.4, RN-01.6 | Se puede completar el onboarding dejando los 4 autorreportes en "prefiero no responder"; solo `character` es obligatorio para iniciar chat. |
+| RF-05 | Generar la cápsula de perfil (`ContextoInicialConversacionalV1`) a partir del onboarding. | RN-03, RN-01.6, REL-2, plan §3.4 | La cápsula contiene solo los **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`); nada más. **Siempre se genera** al terminar el onboarding: si el usuario omitió los 4 autorreportes, queda con solo `character` (sin *defaults* para los omitidos). |
 | RF-06 | Presentar a Alan y Aura (rol y estilo) antes de conversar. | OBJ-1, MV-01 §Conversación | El usuario ve ambos personajes y puede elegir. |
 
 ### Conversación (OBJ-2, MV-01 §Conversación, contrato)
@@ -41,7 +41,7 @@
 | ID | Requisito | Origen | Criterio de aceptación |
 |---|---|---|---|
 | RF-14 | Autenticar al administrador por **login separado**; el rol se valida en el **servidor** (no alterable desde el cliente). | RN-03.7, plan §3.2 | Un usuario ordinario que visite rutas admin recibe 403/redirección aunque modifique el cliente. |
-| RF-15 | Visualizar el **directorio mínimo** de usuarios: alias, **ID truncado**, fecha de registro, estado y onboarding completado. | RN-03.1, RN-03.2 | El directorio no muestra username completo, respuestas de encuesta ni contenido. |
+| RF-15 | Visualizar el **directorio mínimo** de usuarios: alias, **ID truncado**, fecha de registro, **estado** ∈ {activo, sin consentimiento vigente} y onboarding completado. | RN-03.1, RN-03.2 | El directorio no muestra username completo, respuestas de encuesta ni contenido. `estado` es **derivado** de `ConsentRecord`, no un campo editable ni una suspensión (la suspensión individual está fuera de alcance, VIS-01 §5). |
 | RF-16 | Visualizar **métricas agregadas**: total de cuentas, onboardings, llamadas al chat en 7 días y tasa técnica de éxito/error. | RN-03.1, RN-03.3 | Las cifras son agregadas; no hay conteos ni datos por usuario. |
 | RF-17 | **Habilitar/deshabilitar globalmente el chatbot** (kill switch), con confirmación. | RN-03.1, RN-03.4, RN-02.7 | Con el chatbot deshabilitado, ningún usuario puede iniciar conversación. |
 | RF-18 | Registrar la acción del kill switch (auditoría: quién/cuándo). | RN-03.4 | Cada cambio de disponibilidad queda con autor y fecha; sin datos de usuario. |
@@ -103,7 +103,7 @@ Taxonomía Wiegers: término / hecho / restricción / habilitador de acción / i
 |---|---|
 | **Término** | RN-10 (adulto), RN-11 (peligro explícito). |
 | **Hecho** | RN-04.2 (mayoría de edad = declaración booleana + versión de disclosure). |
-| **Restricción** | RN-01, RN-02, RN-03, RN-04, RN-06, RN-08, RN-09; RN-01.1/.2/.3; RN-02.2/.3/.4/.5/.7/.8; RN-03.1/.2/.3/.5/.6/.7; RN-04.1/.5/.6. |
+| **Restricción** | RN-01, RN-02, RN-03, RN-04, RN-06, RN-08, RN-09; RN-01.1/.2/.3/.6; RN-02.2/.3/.4/.5/.7/.8; RN-03.1/.2/.3/.5/.6/.7; RN-04.1/.5/.6. |
 | **Habilitador de acción** | RN-05, RN-07; RN-01.4/.5; RN-02.1/.6; RN-03.4 (kill switch); RN-04.3 (reinicio/revocación), RN-04.4 (eliminación en cascada). |
 | **Inferencia** | *(ninguna en el MVP; el gate es determinista, no inferencial — decisión honesta, SEG-01).* |
 | **Cálculo** | *(ninguna sobre datos de bienestar; las métricas del admin son **contadores operativos agregados**, no scoring del usuario).* |

@@ -3,6 +3,16 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-25 — v0.13.0 · Cierre de PER-H1 y PER-H3 (SD-26)
+- **Resuelto PER-H1:** la `CapsulaDePerfil` **siempre existe** al terminar el onboarding, con `character` como contenido mínimo. `character` se **reclasifica** como *elección de interlocutor* y **precondición funcional** del chat —del mismo rango que el consentimiento—, no como autorreporte de perfil. Se elige esta opción porque **no reabre SD-22**: lo que recibe el LLM (RN-01.3, `ContextoInicialConversacionalV1`) queda intacto.
+- **Nueva regla RN-01.6** y **RN-01.4 precisada** («ningún **autorreporte** de la caracterización es obligatorio»; obligatorios son edad, consentimiento y `character`). **Cardinalidad fijada:** `Usuario–CapsulaDePerfil` = **1 a 1 tras el onboarding**.
+- **Consecuencia aceptada y documentada:** reiniciar la caracterización (RF-22) borra también `character` ⇒ el usuario queda **sin poder conversar** hasta rehacer CU-05 (PRE-02 ya lo permitía).
+- **Resuelto PER-H3:** el `estado` del directorio administrativo queda acotado a **{activo, sin consentimiento vigente}**, **derivado** de `ConsentRecord` — no editable, no almacenado aparte, y **no** es una suspensión individual (fuera de alcance, VIS-01 §5). Compatible con PRIV-R10.
+- **Abiertos por decisión:** PER-H2 (RF-24 «sin remanentes» vs. retención +30 días — se resuelve en construcción, con el hosting a la vista) y PER-H4 (campos de `DailyUsageCounter` — detalle de diseño). Ninguno bloquea el análisis de robustez.
+- **Momento:** ambos se cerraron **antes** de entrar a robustez, para que `DR-04`/`DR-05`/`DR-06` no heredaran la contradicción.
+- **Propagado (loop de auditoría hasta converger):** MV-01 **v2.5** (RN-01.4 precisada, +RN-01.6, RN-03.2, Parte A §4), REQ-01 **v1.4** (RF-04/05/15, taxonomía Wiegers), PRIV-01 **v1.4** (inventario §2, PRIV-R10), TRZ-01 **v1.5** (RN-01.6 trazada desde RF-04/05, **cero reglas huérfanas**), ECU-05 **v1.1** (FA-01, §4, §11, §14, §15, §18, CA-05, RA-04, §23), ECU-04 **v1.1** (FA-01, §14, CA-02), ECU-08 **v1.1** (§2.1, RN-03.2, CA-01), PER-01 **v1.1**, y el mockup `p14_admin_directorio.html` (la etiqueta «Inactivo» pasa a «Sin consentimiento»).
+- **Verificación:** `grep` de «sin cápsula» = solo FE-01 de ECU-05 (menor de edad, correcto) y las citas históricas del propio hallazgo; `grep` de «Inactivo» = 0; RN-01.6 presente en MV-01, REQ-01, TRZ-01, PER-01 y ECU-05.
+
 ## 2026-07-25 — v0.12.0 · Mapa de persistencia PER-01 (SD-25)
 - **Añadido:** `docs/03_requisitos/PER-01_mapa_persistencia.md` — **inventario consolidado de persistencia**: qué información sobrevive a la sesión, dónde vive, quién la ve y cuánto dura. Reúne en un solo artefacto lo que estaba disperso entre el plan §4.14/§4.15, `PRIV-01` §2 y las ECU.
 - **Contenido:** las **7 entidades** del plan (`User`, `ConsentRecord`, `InitialConversationProfile`, `PlatformSetting`, `DailyUsageCounter`, `OperationalEvent`, `AdministrativeAction`) con sus campos trazados uno a uno; la lista de lo que **nunca** se persiste; **7 reglas transversales** (`PER-T1…T7`: cascada, no reidentificación, segregación del admin, directorio truncado, purga por ventana, hash, reinicio≠revocación); mapa de relaciones; y la frontera externa de retención del proveedor LLM (V6-a).

@@ -1,5 +1,5 @@
 # ECU-05 — Especificación de caso de uso: «Otorgar consentimiento y caracterizar el perfil» (CU-05)
-**ID documento:** DOC-CU-05 · **Caso de uso:** CU-05 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-16 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-05 · **Caso de uso:** CU-05 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-25 · **Versión:** v1.1 · **Estado:** Propuesto.
 **Forma:** **completa** (24 secciones de la skill `use-case-specifier`, §1–§23) — caso de uso **canon-sensible** (consentimiento, minimización, solo adultos).
 **Insumos:** DCU-01, MV-01 §Vista Onboarding, MD-01, REQ-01 (RF-01…06), PRIV-01, VIS-01, contrato, plan §3.1/§3.3/§3.4. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -22,6 +22,7 @@
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
+| v1.1 | 2026-07-25 | J. Sánchez | **Resolución de PER-H1 (SD-26):** la `CapsulaDePerfil` **siempre existe** al terminar el onboarding, con `character` como contenido mínimo. Corrige FA-01 (decía «continúa sin cápsula»), §4, §14, §20 CA-05 y §23; precisa RN-01.4 y añade RN-01.6; nota sobre el personaje cambiable por sesión en §18. Sin cambios en el flujo básico ni en lo que recibe el LLM. |
 
 ## 2. Entradas esperadas
 | Insumo | Descripción | Estado |
@@ -56,7 +57,7 @@
 | Objetivo | Obtener el **consentimiento informado** del usuario adulto y construir una **CapsulaDePerfil mínima** que oriente la conversación, con *disclosure* de IA previo. |
 | Descripción breve | Onboarding: *disclosure* → declaración de edad → consentimiento granular → caracterización opcional (5 preguntas) → generación de la cápsula → presentación de Alan y Aura. |
 | Valor funcional | Habilita la conversación con seguridad ética (sin consentimiento no hay chat) y personaliza mínimamente sin recolectar historial. |
-| Resultado observable | Existe un `Consentimiento` otorgado y (opcionalmente) una `CapsulaDePerfil`; el usuario puede elegir personaje y pasar a CU-06. |
+| Resultado observable | Existen un `Consentimiento` otorgado y una `CapsulaDePerfil` (**siempre**, con `character` como contenido mínimo; los 4 autorreportes son opcionales); el usuario puede pasar a CU-06. |
 
 ## 5. Actores
 | Tipo | Actor | Descripción | Participación |
@@ -127,12 +128,12 @@
 | 6 | Sistema | Ofrece la caracterización opcional de cinco preguntas (ánimo, energía, objetivo, estilo, personaje) | — | Muestra la pantalla de caracterización | Pantalla de caracterización |
 | 7 | Usuario | Responde u omite cada pregunta | CapsulaDePerfil | **Arma** la `CapsulaDePerfil` con los campos respondidos (sin *defaults* para los omitidos) | Pantalla de caracterización |
 | 8 | Sistema | Presenta a Alan (activación) y Aura (calma) | Personaje | Muestra la presentación de personajes | Presentación de Alan/Aura |
-| 9 | Usuario | Confirma el personaje con quien desea conversar | Personaje | Deja listo el inicio de la conversación (CU-06) | Presentación de Alan/Aura |
+| 9 | Usuario | Confirma el personaje con quien desea conversar | Personaje, CapsulaDePerfil | **Completa** la `CapsulaDePerfil` con `character` (la cápsula queda existente en todo caso) y deja listo el inicio de la conversación (CU-06) | Presentación de Alan/Aura |
 
 ## 12. Flujos alternativos
 | ID | Nombre | Punto de inicio | Condición | Resultado | Retorno | Reglas |
 |---|---|---|---|---|---|---|
-| FA-01 | Omitir caracterización | Paso 6 | El Usuario rechaza la caracterización opcional | Continúa sin cápsula de preferencias; elegirá personaje en el paso 8 | Al paso 8 | RN-01.4 |
+| FA-01 | Omitir caracterización | Paso 6 | El Usuario rechaza la caracterización opcional | Continúa **sin autorreportes**; la cápsula queda con solo `character`, que elegirá en el paso 8–9 | Al paso 8 | RN-01.4, RN-01.6 |
 | FA-02 | Respuestas parciales | Paso 7 | El Usuario responde algunas preguntas y omite otras | La cápsula se arma solo con lo respondido; sin *defaults* | Al paso 8 | RN-01.3, plan §3.3 |
 | FA-03 | Revocar en el onboarding | Paso 5+ | El Usuario revoca el consentimiento | Cesa el uso de la cápsula; no se habilita el chat | Fin sin conversación | RN-01.5, RN-07 |
 
@@ -147,7 +148,7 @@
 ## 14. Postcondiciones
 | Tipo | Postcondición | Verificación |
 |---|---|---|
-| Éxito | Existe un `Consentimiento` otorgado; una `CapsulaDePerfil` (5 campos de contenido + metadatos; los 4 autorreportes opcionales, `character` obligatorio); el Usuario puede iniciar CU-06 | Inspección de registros |
+| Éxito | Existe un `Consentimiento` otorgado y **siempre** una `CapsulaDePerfil` (los 4 autorreportes opcionales, `character` obligatorio + metadatos); el Usuario puede iniciar CU-06 | Inspección de registros |
 | Fallo | No se crea consentimiento; no hay cápsula; no se habilita el chat | Inspección |
 | Datos creados | `Consentimiento` (otorgado + fecha + versión disclosure); `CapsulaDePerfil` (campos respondidos) | Inspección |
 | Datos modificados | `Usuario` (esAdulto=verdadero, versionDisclosure) | Inspección |
@@ -165,8 +166,9 @@
 | RN-01.1 | El *disclosure* precede a cualquier dato. | Restricción | Paso 1 | MV-01 §7.2 |
 | RN-01.2 | La edad se declara antes del consentimiento; <18 no continúa. | Restricción | Paso 3, FE-01 | MV-01 §7.2 |
 | RN-01.3 | La cápsula (`ContextoInicialConversacionalV1`) = 5 campos de contenido (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) + metadatos (`schema_version`, `consent_version`). | Restricción | Paso 7 | MV-01 §7.2, plan §3.4 |
-| RN-01.4 | Ningún campo de perfil es obligatorio salvo edad y consentimiento. | Habilitador | FA-01/FA-02 | MV-01 §7.2 |
+| RN-01.4 | Ningún **autorreporte** de la caracterización es obligatorio; el usuario puede omitir los 4. Obligatorios son solo edad, consentimiento y `character`. | Habilitador | FA-01/FA-02 | MV-01 §7.2 |
 | RN-01.5 | El consentimiento se puede revocar desde el onboarding y después. | Habilitador | FA-03 | MV-01 §7.2 |
+| RN-01.6 | `character` no es autorreporte de perfil sino **elección de interlocutor** y precondición funcional del chat ⇒ la `CapsulaDePerfil` **siempre existe** tras el onboarding, con `character` como mínimo. El valor persistido es la última elección y actúa como predeterminado (cambiable por sesión, RN-02.6). | Restricción | Paso 9, FA-01 | MV-01 §7.2 (SD-26) |
 | RN-04.2 | La mayoría de edad se guarda como declaración booleana + versión de disclosure, no como fecha de nacimiento. | Hecho | Paso 3 | MV-01 §7.5 |
 
 ## 16. Requisitos especiales
@@ -191,7 +193,7 @@
 | Consentimiento | estado, fecha, versión de disclosure | Crear / Confirmar | Paso 5 | Revocable (RN-01.5) |
 | CapsulaDePerfil | mood_self_report, energy_self_report, conversation_goal, response_style, character (+ schema_version, consent_version) | Crear / Seleccionar | Paso 7 | Solo campos de RN-01.3; los 4 autorreportes opcionales, `character` obligatorio |
 | Usuario | esAdulto, versionDisclosure | Actualizar | Paso 3 | Booleano, no fecha de nacimiento (RN-04.2) |
-| Personaje | Alan / Aura | Seleccionar | Paso 8–9 | Uno por sesión (cambiable, RN-02.6) |
+| Personaje | Alan / Aura | Seleccionar | Paso 8–9 | Uno por sesión (cambiable, RN-02.6). Lo persistido en `character` es la **última elección**, que actúa como predeterminado; la sesión puede usar otro sin reescribir la cápsula (RN-01.6) |
 
 > **Nota de origen (encuesta):** el plan §3.3 define 5 preguntas → los **5 campos de contenido** de la cápsula (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`), **1:1** con `ContextoInicialConversacionalV1` (plan §3.4). No hay colapso 5→3: la cápsula = estos 5 + metadatos (`schema_version`, `consent_version`). Reconciliado en **SD-22** (ver §21 RA-01).
 
@@ -215,7 +217,7 @@
 | CA-02 | Dado un usuario que declara <18, cuando lo confirma, entonces el sistema no continúa ni registra perfil. | FE-01 | Prueba de caso <18 |
 | CA-03 | Dado un usuario, cuando otorga el consentimiento, entonces se crea el registro y puede avanzar; sin consentimiento, no avanza. | Flujo básico / FE-02 | Traza de consentimiento |
 | CA-04 | Dado un usuario que completa la caracterización, cuando se genera la cápsula, entonces contiene solo los 5 campos de contenido + metadatos (RN-01.3) y nada más. | Flujo básico | Inspección de la cápsula |
-| CA-05 | Dado un usuario que omite preguntas, cuando finaliza, entonces la cápsula se arma solo con lo respondido, sin *defaults*. | FA-02 | Inspección de la cápsula |
+| CA-05 | Dado un usuario que omite preguntas, cuando finaliza, entonces la cápsula se arma solo con lo respondido, sin *defaults*; y si omitió las cuatro, la cápsula **existe igualmente** con solo `character`. | FA-01/FA-02 | Inspección de la cápsula |
 | CA-06 | Dado un usuario, cuando termina el onboarding, entonces ve a Alan y Aura y puede elegir. | Flujo básico | Observación |
 
 ## 21. Riesgos, ambigüedades y decisiones pendientes
@@ -224,6 +226,7 @@
 | RA-01 | Ambigüedad (histórica) | La cápsula canónica nombraba **3 campos** mientras el plan §3.4 (`ContextoInicialConversacionalV1`) lista **5 de contenido + metadatos**. | Define qué recibe el LLM | **Resuelto (SD-22):** se adoptan los **5 campos del plan** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) + `schema_version`/`consent_version`; RN-01.3, RF-04/05 y PRIV-R1 actualizados. | **Resuelto** |
 | RA-02 | Riesgo | El texto de consentimiento requiere revisión legal antes de uso con personas reales. | Cumplimiento Ley 1581 | Aprovisionar por entorno; V6-b | Abierto |
 | RA-03 | Decisión pendiente | Prototipos/GUI del onboarding. | Diseño de interacción | Fase de construcción | Abierto |
+| RA-04 | Contradicción (detectada en `PER-01`, **PER-H1**) | FA-01 decía que quien omite la caracterización «continúa **sin cápsula**», mientras `character` es campo **obligatorio** de la cápsula (RN-01.3) y RN-01.4 afirmaba que ningún campo de perfil lo es. Las tres no podían ser ciertas a la vez. | Define la cardinalidad `Usuario–CapsulaDePerfil` y qué borra exactamente RF-22 | **Resuelto (SD-26):** la cápsula **siempre existe** tras el onboarding, con `character` como contenido mínimo. `character` se reclasifica como **precondición funcional** (elección de interlocutor), no como autorreporte de perfil ⇒ RN-01.4 precisada, RN-01.6 añadida. No cambia lo que recibe el LLM (RN-01.3 intacta) ni reabre SD-22. | **Resuelto** |
 
 ## 22. Checklist de revisión metodológica (§22)
 | # | Criterio | Cumple | Observación |
@@ -260,8 +263,8 @@
 | Flujo básico | Disclosure → edad → consentimiento → encuesta opcional → cápsula → elegir personaje. |
 | Flujos alternativos | Omitir/parcializar encuesta; revocar consentimiento. |
 | Flujos de excepción | <18; sin consentimiento; 400; 401. |
-| Postcondición de éxito | Consentimiento otorgado (+ cápsula opcional); listo para CU-06. |
-| Reglas de negocio | RN-01/02/09/10, RN-01.1…1.5, RN-04.2. |
+| Postcondición de éxito | Consentimiento otorgado + cápsula (siempre existe, mínimo `character`); listo para CU-06. |
+| Reglas de negocio | RN-01/02/09/10, RN-01.1…1.6, RN-04.2. |
 | Criterios de aceptación | CA-01…CA-06. |
 | Casos relacionados | CU-03 (precede), CU-06 (sigue). |
 

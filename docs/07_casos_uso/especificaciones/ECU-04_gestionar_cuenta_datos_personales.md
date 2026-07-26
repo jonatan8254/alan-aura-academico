@@ -1,5 +1,5 @@
 # ECU-04 — Especificación de caso de uso: «Gestionar cuenta y datos personales» (CU-04)
-**ID documento:** DOC-CU-04 · **Caso de uso:** CU-04 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-16 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-04 · **Caso de uso:** CU-04 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-25 · **Versión:** v1.1 · **Estado:** Propuesto.
 **Forma:** **completa** (§1–§23) — caso de uso **canon-sensible** (borrado en cascada, revocación, supresión de datos). Agrupa tres subobjetivos (DCU-01 decisión 3): reiniciar perfil, revocar personalización, eliminar cuenta.
 **Insumos:** DCU-01, MV-01 §Vista Cuenta, MD-01, REQ-01 (RF-22/23/24), PRIV-01, VIS-01, plan §3.1/§4.9/§4.14. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -22,6 +22,7 @@
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
+| v1.1 | 2026-07-25 | J. Sánchez | **Consecuencia de PER-H1 (SD-26):** como la cápsula siempre existe con `character` (RN-01.6), reiniciar la caracterización deja al usuario **sin poder conversar** hasta rehacer CU-05. Precisado en FA-01, §14 y CA-02. |
 
 ## 2. Entradas esperadas
 | Insumo | Descripción | Estado |
@@ -119,7 +120,7 @@
 ## 12. Flujos alternativos
 | ID | Nombre | Punto | Condición | Resultado | Retorno | Reglas |
 |---|---|---|---|---|---|---|
-| FA-01 | Reiniciar caracterización | Paso 1 | El Usuario elige «Reiniciar caracterización» | Se **borra** la `CapsulaDePerfil`; la cuenta permanece | Fin | RN-04.3, RF-22 |
+| FA-01 | Reiniciar caracterización | Paso 1 | El Usuario elige «Reiniciar caracterización» | Se **borra** la `CapsulaDePerfil` (incluido `character`); la cuenta y el consentimiento permanecen. Como `character` es precondición del chat (RN-01.6), el Usuario debe **rehacer CU-05** —paso 6 en adelante— para volver a conversar | Fin (→ CU-05, PRE-02) | RN-04.3, RN-01.6, RF-22 |
 | FA-02 | Revocar personalización | Paso 1 | El Usuario elige «Revocar personalización» | La cápsula **deja de alimentar** la conversación | Fin | RN-04.3, RN-07, RF-23 |
 | FA-03 | Cancelar eliminación | Paso 2 | El Usuario no confirma | No se elimina nada | Vuelve al paso 1 | — |
 
@@ -133,7 +134,7 @@
 | Tipo | Postcondición | Verificación |
 |---|---|---|
 | Éxito (eliminar) | La cuenta y todos sus datos asociados se suprimen; se cierra la sesión | Inspección: sin remanentes recuperables |
-| Éxito (reiniciar) | La `CapsulaDePerfil` deja de existir; la cuenta permanece | Inspección |
+| Éxito (reiniciar) | La `CapsulaDePerfil` deja de existir; la cuenta y el consentimiento permanecen; el chat queda inhabilitado hasta rehacer la caracterización (CU-05) | Inspección |
 | Éxito (revocar) | La cápsula no vuelve a alimentar la conversación | Prueba de conversación |
 | Fallo | Ninguna acción se ejecuta; la cuenta queda intacta | Inspección |
 | Datos eliminados | `Usuario` + `CapsulaDePerfil` + `Consentimiento` + contadores (cascada); o solo `CapsulaDePerfil` (reiniciar) | Inspección |
@@ -187,7 +188,7 @@
 | ID | Criterio (Dado/Cuando/Entonces) | Flujo | Evidencia |
 |---|---|---|---|
 | CA-01 | Dado un usuario que elimina su cuenta, cuando confirma, entonces se ejecuta el borrado en cascada y no queda dato asociado recuperable. | Flujo básico | Inspección de datos |
-| CA-02 | Dado un usuario, cuando reinicia su caracterización, entonces la cápsula deja de existir y la cuenta permanece. | FA-01 | Inspección |
+| CA-02 | Dado un usuario, cuando reinicia su caracterización, entonces la cápsula deja de existir, la cuenta permanece y el sistema lo dirige a rehacer CU-05 antes de poder conversar. | FA-01 | Inspección |
 | CA-03 | Dado un usuario, cuando revoca la personalización, entonces la cápsula no vuelve a alimentar la conversación. | FA-02 | Prueba de conversación |
 | CA-04 | Dada la opción de eliminar, cuando el usuario no confirma, entonces no se elimina nada. | FA-03 | Prueba |
 
