@@ -1,7 +1,7 @@
 # PRIV-01 — Privacidad y manejo de datos del MVP
 **ID:** PRIV-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-16 · **Versión:** v1.3 (SD-22: cápsula = `ContextoInicialConversacionalV1` de 5 campos + 2 metadatos en el inventario §2 y PRIV-R1; PRIV-R9 intacta; SD-15: cuenta, contadores operativos y qué NO ve el admin; SD-17: inventario mapeado 1:1 a las 7 entidades exactas del plan).
 **Insumos:** canon de dominio; MV-01 §Onboarding y §Cuenta (cápsula/consentimiento/cuenta); ADR-001-D2 (SQLite); plan §3.4 (exclusiones al LLM), §3.7 (qué no ve el admin); Ley 1581/2012 + Decreto 1377/2013 (citadas, no reproducidas).
-**Consumidores:** REQ-01 (RNF-03/04, RC-04), SEG-01, TRZ-01.
+**Consumidores:** REQ-01 (RNF-03/04, RC-04), SEG-01, TRZ-01, **PER-01** (mapa de persistencia — consolida este inventario con el plan §4.14/§4.15 y las ECU).
 **Naturaleza:** requisitos de privacidad y minimización. **Honestidad §4.9:** la validación de frontera legal (Ley 1581) es **nivel 6** — se formula, no se resuelve aquí (V6-b).
 
 ---

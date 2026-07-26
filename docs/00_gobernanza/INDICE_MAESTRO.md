@@ -32,6 +32,7 @@
 | **REQ-01** | `03_requisitos/REQ-01_requisitos.md` | MV-01, VIS-01, ADR-001, 25010:2023 | TRZ-01, NORM-01, pruebas (fase 2) |
 | **PRIV-01** | `03_requisitos/PRIV-01_privacidad_datos.md` | Canon, MV-01 §Onboarding, Ley 1581 | REQ-01, SEG-01, TRZ-01 |
 | **SEG-01** | `03_requisitos/SEG-01_protocolo_seguridad.md` | E3 (S0-S5), D22 fallback, MV-01 §Conversación | REQ-01, TRZ-01, NORM-01 |
+| **PER-01** | `03_requisitos/PER-01_mapa_persistencia.md` | Plan §4.14/§4.15, PRIV-01, ADR-001-D2, MD-01, ECU-02/04/05/06/08/09/10, REQ-01 | Robustez, diseño de clases y modelo de datos, migraciones (fase 3), pruebas de privacidad (RC-04) |
 | **NORM-01** | `04_trazabilidad/NORM-01_puente_normativo.md` | D6-bis (cláusulas verificadas), REQ-01 | TRZ-01, evaluación (fase 4) |
 | **TRZ-01** | `04_trazabilidad/TRZ-01_trazabilidad.md` | VIS-01, MV-01, REQ-01, SEG-01, NORM-01 | Verificación de cobertura, fase 2/4 |
 | **PLAN-01** | `05_plan/PLAN-01_plan_proyecto.md` | Todos los anteriores | Ejecución del subproyecto |
@@ -53,3 +54,4 @@ Fase 2 ICONIX: `MV-01 → MD-01 (dominio) → DCU-01 (casos de uso) → [especif
 - **TRZ-01:** objetivo → actor → RF/RN → calidad → norma → prueba-planeada; cero huérfanos.
 - **MD-01:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); 11 clases, sin atributos/multiplicidades; validador 0/0.
 - **DCU-01:** diagrama de casos de uso PlantUML (skill `uml-use-case-diagram`); 4 actores, 10 casos de uso, 3 paquetes, 1 `<<extend>>`, 0 `<<include>>`; validador 0 errores.
+- **PER-01:** inventario consolidado de persistencia (7 entidades del plan §4.14 + telemetría §4.15); marcas [E1]/[I2], reglas transversales `PER-T1…T7`, hallazgos abiertos `PER-H1…H4`. **No** es diseño de esquema: sin tipos, claves ni DDL.

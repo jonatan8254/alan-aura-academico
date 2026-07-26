@@ -48,7 +48,7 @@ alan-aura-academico/
     ├── 00_gobernanza/                Índice, cápsula de contexto, estado, decisiones, changelog, manifiesto de fuentes
     ├── 01_vision/                    VIS-01 (visión/alcance) · ADR-001 (decisiones técnicas)
     ├── 02_modelos_verbales/          MV-01 consolidado (vistas Onboarding·Conversación·Seguridad·Administración) + contrato conversacional (E4 simplificado)
-    ├── 03_requisitos/                REQ-01 (RF/RNF/calidad/reglas) · PRIV-01 · SEG-01
+    ├── 03_requisitos/                REQ-01 (RF/RNF/calidad/reglas) · PRIV-01 · SEG-01 · PER-01 (mapa de persistencia)
     ├── 04_trazabilidad/              NORM-01 (puente normativo) · TRZ-01 (trazabilidad)
     ├── 05_plan/                      PLAN-01 (plan de proyecto de 1 mes)
     ├── 06_dominio/                   MD-01 (modelo de dominio, PlantUML)

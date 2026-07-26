@@ -3,6 +3,15 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-25 — v0.12.0 · Mapa de persistencia PER-01 (SD-25)
+- **Añadido:** `docs/03_requisitos/PER-01_mapa_persistencia.md` — **inventario consolidado de persistencia**: qué información sobrevive a la sesión, dónde vive, quién la ve y cuánto dura. Reúne en un solo artefacto lo que estaba disperso entre el plan §4.14/§4.15, `PRIV-01` §2 y las ECU.
+- **Contenido:** las **7 entidades** del plan (`User`, `ConsentRecord`, `InitialConversationProfile`, `PlatformSetting`, `DailyUsageCounter`, `OperationalEvent`, `AdministrativeAction`) con sus campos trazados uno a uno; la lista de lo que **nunca** se persiste; **7 reglas transversales** (`PER-T1…T7`: cascada, no reidentificación, segregación del admin, directorio truncado, purga por ventana, hash, reinicio≠revocación); mapa de relaciones; y la frontera externa de retención del proveedor LLM (V6-a).
+- **Precisión nueva:** los campos exactos de `OperationalEvent` provienen del **plan §4.15** (8 campos incluidos / 8 exclusiones), que hasta ahora no se había citado en ningún artefacto — incluye que **no** se guarda el motivo textual del *fallback* ni la categoría emocional (refuerza PRIV-R6, uso no punitivo).
+- **Hallazgos abiertos declarados:** `PER-H1` (contradicción: `character` obligatorio en la cápsula vs. FA-01 de ECU-05 «continúa sin cápsula» vs. RN-01.4 — **bloquea el modelo de datos**), `PER-H2` (RF-24 «sin remanentes» vs. retención +30 días; heredado de RA-01 de ECU-04), `PER-H3` (el campo `estado` del directorio no tiene dominio de valores definido), `PER-H4` (campos de `DailyUsageCounter` sin especificar).
+- **Corrección de honestidad (§4.9):** durante el análisis previo se afirmó que «plan §4.14 no existe en este repositorio»; **era falso** — está en `00_PLAN_CODEX_ORIGINAL.md` (fuente primaria archivada en SD-16). El error fue buscar en `PLAN-01_plan_proyecto.md`. Queda corregido explícitamente en PER-01 §8. La regla de independencia (CLAUDE.md §0) **se cumple**.
+- **Alcance respetado:** PER-01 **no** adelanta diseño (CLAUDE.md §6) — sin tipos, claves, índices, DDL ni diagrama de clases; **cero requisitos nuevos** (solo consolida y traza los existentes).
+- **Actualizado:** `INDICE_MAESTRO` (fila PER-01 + estándar), `ESTADO_PIPELINE`, `REGISTRO_DECISIONES` (SD-25), `README` (mapa de entregables).
+
 ## 2026-07-18 — v0.11.2 · Corrección: mockups persistidos como archivos (SD-24)
 - **Corregido:** los 16 mockups + style-tile de SD-23 se habían renderizado solo en la conversación, sin escribirse al repositorio (`git status` no los mostraba). El usuario lo detectó al no verlos en GitHub.
 - **Añadido:** `docs/08_diseno/mockups/` con 19 archivos HTML autocontenidos — `00_style_tile.html`, `p01…p16` (con `p10` en variante clara y oscura), `index.html` (galería con navegación por paquete). Colores hardcoded (mismos hex de DIS-01), iconos Tabler vía CDN, sin dependencias externas al proyecto.
