@@ -8,14 +8,16 @@ tags:
   - community/Requirement_Types_Abstraction_Levels
 source_path: "libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p134_figure_5_1_5_1_shows_relative_levels_of_abstraction_several_types_of.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p134_figure_5_1_5_1_shows_relative_levels_of_abstraction_several_types_of.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p134_figure_5_1_5_1_shows_relative_levels_of_abstraction_several_types_of.png]]"
 ---
 
 # Relative Levels of Abstraction of Requirement Types (arrow diagram)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p134_figure_5_1_5_1_shows_relative_levels_of_abstraction_several_types_of.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p134_figure_5_1_5_1_shows_relative_levels_of_abstraction_several_types_of.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p134_figure_5_1_5_1_shows_relative_levels_of_abstraction_several_types_of.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p134_figure_5_1_5_1_shows_relative_levels_of_abstraction_several_types_of.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Requirement_Types_Abstraction_Levels

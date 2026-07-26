@@ -8,14 +8,16 @@ tags:
   - community/ISO/IEC_25023_Quality_Measurement
 source_path: "libros_y_normas_markdown/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p013_visual_asset_03_6_2_approach_to_quality_measurement.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25023_1_2016_Systems_and_software_engineering_p013_visual_asset_03_6_2_approach_to_quality_measurement.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p013_visual_asset_03_6_2_approach_to_quality_measurement.png]]"
 ---
 
 # ISO/IEC 25023 p013 — Approach to quality measurement (characteristics→measure→elements)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p013_visual_asset_03_6_2_approach_to_quality_measurement.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p013_visual_asset_03_6_2_approach_to_quality_measurement.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p013_visual_asset_03_6_2_approach_to_quality_measurement.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25023_1_2016_Systems_and_software_engineering_p013_visual_asset_03_6_2_approach_to_quality_measurement.png]]
 
 
 ## Connections

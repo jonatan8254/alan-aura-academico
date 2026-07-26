@@ -8,14 +8,16 @@ tags:
   - community/ISO_25022_Rating_Levels_Chart
 source_path: "libros_y_normas_markdown/ISO_IEC_25022_1_2016_Systems_and_software_engineering_Systems_and_software_p042_visual_asset_04_relationship_between_different_quality_models.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25022_1_2016_Systems_and_software_engineering_Systems_and_software_p042_visual_asset_04_relationship_between_different_quality_models.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25022_1_2016_Systems_and_software_engineering_Systems_and_software_p042_visual_asset_04_relationship_between_different_quality_models.png]]"
 ---
 
 # ISO/IEC 25022 p042 — Rating levels vs measurement scale (Opportunity/Acceptable/Unacceptable)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25022_1_2016_Systems_and_software_engineering_Systems_and_software_p042_visual_asset_04_relationship_between_different_quality_models.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25022_1_2016_Systems_and_software_engineering_Systems_and_software_p042_visual_asset_04_relationship_between_different_quality_models.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25022_1_2016_Systems_and_software_engineering_Systems_and_software_p042_visual_asset_04_relationship_between_different_quality_models.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25022_1_2016_Systems_and_software_engineering_Systems_and_software_p042_visual_asset_04_relationship_between_different_quality_models.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/ISO_25022_Rating_Levels_Chart

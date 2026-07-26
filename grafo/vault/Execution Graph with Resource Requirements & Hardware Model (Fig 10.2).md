@@ -8,14 +8,16 @@ tags:
   - community/Software_Performance_Engineering
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p301_figure_10_2_10_2_10_2_transformation_of_sequence_diagrams_execution_graphs.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p301_figure_10_2_10_2_10_2_transformation_of_sequence_diagrams_execution_graphs.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p301_figure_10_2_10_2_10_2_transformation_of_sequence_diagrams_execution_graphs.png]]"
 ---
 
 # Execution Graph with Resource Requirements & Hardware Model (Fig 10.2)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p301_figure_10_2_10_2_10_2_transformation_of_sequence_diagrams_execution_graphs.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p301_figure_10_2_10_2_10_2_transformation_of_sequence_diagrams_execution_graphs.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p301_figure_10_2_10_2_10_2_transformation_of_sequence_diagrams_execution_graphs.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p301_figure_10_2_10_2_10_2_transformation_of_sequence_diagrams_execution_graphs.png]]
 
 
 ## Connections

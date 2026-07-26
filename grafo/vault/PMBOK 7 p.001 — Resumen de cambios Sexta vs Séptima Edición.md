@@ -8,14 +8,16 @@ tags:
   - community/PMBOK_7_Principles
 source_path: "libros_y_normas_markdown/PMBOK_Edicion_7_p001_visual_asset_02_resumen_de_cambios.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\PMBOK_Edicion_7_p001_visual_asset_02_resumen_de_cambios.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p001_visual_asset_02_resumen_de_cambios.png]]"
 ---
 
 # PMBOK 7 p.001 — Resumen de cambios Sexta vs Séptima Edición
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/PMBOK_Edicion_7_p001_visual_asset_02_resumen_de_cambios.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p001_visual_asset_02_resumen_de_cambios.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/PMBOK_Edicion_7_p001_visual_asset_02_resumen_de_cambios.png`
+
+![[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p001_visual_asset_02_resumen_de_cambios.png]]
 
 
 ## Connections

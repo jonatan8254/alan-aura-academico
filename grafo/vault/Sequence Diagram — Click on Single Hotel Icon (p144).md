@@ -8,14 +8,16 @@ tags:
   - community/Hotel_Map_Domain_Model
 source_path: "libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p144_figure_7_5_7_5_display_rollover_information_zeroed_in_on_move_mouse.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p144_figure_7_5_7_5_display_rollover_information_zeroed_in_on_move_mouse.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p144_figure_7_5_7_5_display_rollover_information_zeroed_in_on_move_mouse.png]]"
 ---
 
 # Sequence Diagram — Click on Single Hotel Icon (p144)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p144_figure_7_5_7_5_display_rollover_information_zeroed_in_on_move_mouse.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p144_figure_7_5_7_5_display_rollover_information_zeroed_in_on_move_mouse.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p144_figure_7_5_7_5_display_rollover_information_zeroed_in_on_move_mouse.png`
+
+![[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p144_figure_7_5_7_5_display_rollover_information_zeroed_in_on_move_mouse.png]]
 
 
 ## Connections

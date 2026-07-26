@@ -8,14 +8,16 @@ tags:
   - community/ISO_25040_Title_Page_Logo
 source_path: "libros_y_normas_markdown/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p001_visual_asset_01_systems_software_engineering_page_8_0_systems_software_quality_page.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p001_visual_asset_01_systems_software_engineering_page_8_0_systems_software_quality_page.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p001_visual_asset_01_systems_software_engineering_page_8_0_systems_software_quality_page.png]]"
 ---
 
 # ISO/IEC 25040:2011 — ISO/IEC Logo (title page)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p001_visual_asset_01_systems_software_engineering_page_8_0_systems_software_quality_page.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p001_visual_asset_01_systems_software_engineering_page_8_0_systems_software_quality_page.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p001_visual_asset_01_systems_software_engineering_page_8_0_systems_software_quality_page.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p001_visual_asset_01_systems_software_engineering_page_8_0_systems_software_quality_page.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/ISO_25040_Title_Page_Logo

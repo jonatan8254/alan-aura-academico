@@ -8,14 +8,16 @@ tags:
   - community/COTS_Package_Customization
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p426_figure_21_2_21_2_you_might_want_to_create_business_processes_user.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p426_figure_21_2_21_2_you_might_want_to_create_business_processes_user.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p426_figure_21_2_21_2_you_might_want_to_create_business_processes_user.png]]"
 ---
 
 # Figure 22.1: COTS Package customization — Configure, Integrate (Existing Applications), Extend (Extensions) into Customized COTS Package
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p426_figure_21_2_21_2_you_might_want_to_create_business_processes_user.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p426_figure_21_2_21_2_you_might_want_to_create_business_processes_user.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p426_figure_21_2_21_2_you_might_want_to_create_business_processes_user.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p426_figure_21_2_21_2_you_might_want_to_create_business_processes_user.png]]
 
 
 ## Connections

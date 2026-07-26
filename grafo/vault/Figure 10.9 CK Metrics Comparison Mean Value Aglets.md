@@ -8,14 +8,16 @@ tags:
   - community/CK/MOOD_Metrics_Comparison
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p326_figure_10_9_10_9_mean_value_aglets_is_0_222_because_of.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p326_figure_10_9_10_9_mean_value_aglets_is_0_222_because_of.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p326_figure_10_9_10_9_mean_value_aglets_is_0_222_because_of.png]]"
 ---
 
 # Figure 10.9 CK Metrics Comparison Mean Value Aglets
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p326_figure_10_9_10_9_mean_value_aglets_is_0_222_because_of.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p326_figure_10_9_10_9_mean_value_aglets_is_0_222_because_of.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p326_figure_10_9_10_9_mean_value_aglets_is_0_222_because_of.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p326_figure_10_9_10_9_mean_value_aglets_is_0_222_because_of.png]]
 
 
 ## Connections

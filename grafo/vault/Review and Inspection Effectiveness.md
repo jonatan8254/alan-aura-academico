@@ -8,14 +8,16 @@ tags:
   - community/Review__Inspection_Effectiveness
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_11_10_11_page_144_0_wenneson_found_inspections_of_fortran.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p126_figure_10_11_10_11_page_144_0_wenneson_found_inspections_of_fortran.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_11_10_11_page_144_0_wenneson_found_inspections_of_fortran.png]]"
 ---
 
 # Review and Inspection Effectiveness
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_11_10_11_page_144_0_wenneson_found_inspections_of_fortran.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_11_10_11_page_144_0_wenneson_found_inspections_of_fortran.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_11_10_11_page_144_0_wenneson_found_inspections_of_fortran.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_11_10_11_page_144_0_wenneson_found_inspections_of_fortran.png]]
 
 
 ## Connections

@@ -6,16 +6,13 @@ tags:
   - graphify/concept
   - graphify/INFERRED
   - community/ERD_Data_Modeling_Notation
-source_path: "libros_y_normas_markdown/libros_y_normas_markdown"
-source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\libros_y_normas_markdown"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_scope: "corpus de conocimiento (sin documento unico)"
 ---
 
 # Data Modeling Notation (ERD / Crow's-Foot / UML Class)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/libros_y_normas_markdown`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Concepto agregado: no procede de un documento unico del corpus, sino del conjunto de libros y normas. Sin archivo fuente que enlazar.
 
 
 ## Connections

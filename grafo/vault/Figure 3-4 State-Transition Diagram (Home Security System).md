@@ -8,14 +8,16 @@ tags:
   - community/State-Transition__Events
 source_path: "libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p080_figure_3_4_3_4_shows_a_state_transition_portion_of_a_home.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p080_figure_3_4_3_4_shows_a_state_transition_portion_of_a_home.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p080_figure_3_4_3_4_shows_a_state_transition_portion_of_a_home.png]]"
 ---
 
 # Figure 3-4: State-Transition Diagram (Home Security System)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p080_figure_3_4_3_4_shows_a_state_transition_portion_of_a_home.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p080_figure_3_4_3_4_shows_a_state_transition_portion_of_a_home.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p080_figure_3_4_3_4_shows_a_state_transition_portion_of_a_home.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p080_figure_3_4_3_4_shows_a_state_transition_portion_of_a_home.png]]
 
 
 ## Connections

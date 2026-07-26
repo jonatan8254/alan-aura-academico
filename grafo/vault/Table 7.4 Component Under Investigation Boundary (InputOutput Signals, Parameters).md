@@ -8,14 +8,16 @@ tags:
   - community/Functional_Process_Data_Flow
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_table_7_4_case_study_feasibility_study_cosmic_ffp.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p176_table_7_4_case_study_feasibility_study_cosmic_ffp.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_table_7_4_case_study_feasibility_study_cosmic_ffp.png]]"
 ---
 
 # Table 7.4: Component Under Investigation Boundary (Input/Output Signals, Parameters)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_table_7_4_case_study_feasibility_study_cosmic_ffp.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_table_7_4_case_study_feasibility_study_cosmic_ffp.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_table_7_4_case_study_feasibility_study_cosmic_ffp.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_table_7_4_case_study_feasibility_study_cosmic_ffp.png]]
 
 
 ## Connections

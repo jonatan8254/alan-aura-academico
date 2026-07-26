@@ -8,14 +8,16 @@ tags:
   - community/Fault_and_Failure_Analysis
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p101_table_9_5_6_q_22_what_relation_between_module_reuse.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p101_table_9_5_6_q_22_what_relation_between_module_reuse.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p101_table_9_5_6_q_22_what_relation_between_module_reuse.png]]"
 ---
 
 # Table 9.5.6 — Q22 Faults per Module over Time
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p101_table_9_5_6_q_22_what_relation_between_module_reuse.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p101_table_9_5_6_q_22_what_relation_between_module_reuse.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p101_table_9_5_6_q_22_what_relation_between_module_reuse.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p101_table_9_5_6_q_22_what_relation_between_module_reuse.png]]
 
 
 ## Connections

@@ -8,14 +8,16 @@ tags:
   - community/Use_Case_Activity_Diagram
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p176_figure_8_3_8_3_actor_s_ultimate_goalto_request_a_chemicalis_same.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p176_figure_8_3_8_3_actor_s_ultimate_goalto_request_a_chemicalis_same.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p176_figure_8_3_8_3_actor_s_ultimate_goalto_request_a_chemicalis_same.png]]"
 ---
 
 # Activity Diagram: Normal Flow and Alternative Flow of a use case
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p176_figure_8_3_8_3_actor_s_ultimate_goalto_request_a_chemicalis_same.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p176_figure_8_3_8_3_actor_s_ultimate_goalto_request_a_chemicalis_same.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p176_figure_8_3_8_3_actor_s_ultimate_goalto_request_a_chemicalis_same.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p176_figure_8_3_8_3_actor_s_ultimate_goalto_request_a_chemicalis_same.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Use_Case_Activity_Diagram

@@ -19,10 +19,15 @@ Tres casos:
    SmartAID (regla del proyecto: el corpus original se cita como fuente
    canonica; la copia del vault es solo operativa).
 
-3. Nodos origen_grafo=conocimiento con fuente .png (967): son figuras
-   extraidas de los libros (~109 MB, 882 imagenes). NO se duplican en el
-   vault por peso y por licencia (son figuras de libros y normas ISO con
-   derechos). La nota apunta por ruta absoluta al original.
+3. Nodos origen_grafo=conocimiento con fuente .png (967): las 882 figuras
+   extraidas de los libros (~109 MB) tambien estan copiadas en
+   02_Fuentes/Conocimiento/. La nota EMBEBE la imagen (![[...]]) para que se
+   vea al abrirla, ademas del enlace y la ruta al original.
+
+4. Caso aparte: 3 nodos cuyo source_file es la cadena "libros_y_normas_markdown"
+   (el nombre de la carpeta, sin archivo). Son conceptos agregados que no
+   proceden de un documento unico. No se les inventa un enlace: se declara
+   explicitamente que su origen es el corpus en conjunto.
 """
 import sys; sys.stdout.reconfigure(encoding="utf-8")
 import json, re, hashlib
@@ -104,11 +109,13 @@ print(f"Fuentes del subproyecto copiadas: {len(fuente_notafile)}/{len(MAPA_FUENT
 
 # --- 2. Inventario de las copias de conocimiento ya presentes en el vault
 conoc_dir = VAULT / "02_Fuentes" / "Conocimiento"
-conoc_disponibles = {p.name for p in conoc_dir.glob("*.md")} if conoc_dir.exists() else set()
-print(f"Fuentes de conocimiento disponibles en el vault: {len(conoc_disponibles)}")
+conoc_disponibles = {p.name for p in conoc_dir.iterdir() if p.is_file()} if conoc_dir.exists() else set()
+n_md = sum(1 for x in conoc_disponibles if x.lower().endswith(".md"))
+print(f"Fuentes de conocimiento en el vault: {len(conoc_disponibles)} "
+      f"({n_md} textos + {len(conoc_disponibles) - n_md} figuras)")
 
 # --- 3. Enriquecer cada nota de concepto
-stats = {"subproyecto": 0, "conocimiento_md": 0, "conocimiento_png": 0}
+stats = {"subproyecto": 0, "conocimiento_md": 0, "conocimiento_png": 0, "conocimiento_agregado": 0}
 faltantes, sin_copia = [], set()
 
 for n in nodes:
@@ -142,7 +149,16 @@ for n in nodes:
     elif origen_grafo == "conocimiento":
         nombre = limpiar_prefijo(source_file)
         abs_path = CONOCIMIENTO_ROOT / nombre
-        if nombre.lower().endswith(".md"):
+        if nombre in ("", "libros_y_normas_markdown"):
+            # concepto agregado: no procede de un documento unico del corpus
+            extra_front = 'source_scope: "corpus de conocimiento (sin documento unico)"\n'
+            origen_section = (
+                "## Origen\n"
+                "- Concepto agregado: no procede de un documento unico del corpus, "
+                "sino del conjunto de libros y normas. Sin archivo fuente que enlazar.\n"
+            )
+            stats["conocimiento_agregado"] += 1
+        elif nombre.lower().endswith(".md"):
             if nombre not in conoc_disponibles:
                 sin_copia.add(nombre)
                 continue
@@ -160,16 +176,23 @@ for n in nodes:
             )
             stats["conocimiento_md"] += 1
         else:
-            # figura extraida de un libro: no se duplica en el vault
+            # figura extraida de un libro: copiada en el vault y embebida
+            if nombre not in conoc_disponibles:
+                sin_copia.add(nombre)
+                continue
             extra_front = (
                 f'source_path: "libros_y_normas_markdown/{nombre}"\n'
                 f'source_absolute_path: "{abs_path}"\n'
-                'source_asset: "no duplicado en el vault (figura de libro/norma)"\n'
+                f'source_note: "[[02_Fuentes/Conocimiento/{nombre}]]"\n'
             )
             origen_section = (
                 "## Origen\n"
-                f"- Figura extraida de un libro/norma: `libros_y_normas_markdown/{nombre}`\n"
-                "- No duplicada en este vault (peso y licencia); abrir desde la ruta original.\n"
+                f"- Figura extraida de un libro/norma, en este vault: "
+                f"[[02_Fuentes/Conocimiento/{nombre}]]\n"
+                f"- Original canonico (proyecto principal, solo lectura): "
+                f"`libros_y_normas_markdown/{nombre}`\n"
+                "\n"
+                f"![[02_Fuentes/Conocimiento/{nombre}]]\n"
             )
             stats["conocimiento_png"] += 1
     else:
@@ -190,11 +213,14 @@ for n in nodes:
     note_path.write_text("\n".join(lines), encoding="utf-8")
 
 print(f"\nNotas enriquecidas:")
-print(f"  subproyecto      : {stats['subproyecto']:5d} / 262")
-print(f"  conocimiento .md : {stats['conocimiento_md']:5d} / 1644")
-print(f"  conocimiento .png: {stats['conocimiento_png']:5d} / 967")
-print(f"  TOTAL            : {sum(stats.values()):5d} / {len(nodes)}")
+print(f"  subproyecto           : {stats['subproyecto']:5d}")
+print(f"  conocimiento (texto)  : {stats['conocimiento_md']:5d}")
+print(f"  conocimiento (figura) : {stats['conocimiento_png']:5d}")
+print(f"  conocimiento (agregado): {stats['conocimiento_agregado']:4d}")
+print(f"  TOTAL                 : {sum(stats.values()):5d} / {len(nodes)}")
+if sum(stats.values()) != len(nodes):
+    print("  !! FALTAN NOTAS POR ENRIQUECER")
 print(f"\nNotas no encontradas en disco: {len(faltantes)}")
-print(f"Fuentes .md de conocimiento citadas pero sin copia en el vault: {len(sin_copia)}")
+print(f"Fuentes citadas pero sin copia en el vault: {len(sin_copia)}")
 for s in sorted(sin_copia)[:10]:
     print("   ", s)

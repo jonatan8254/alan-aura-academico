@@ -8,14 +8,16 @@ tags:
   - community/Goal-Question-Metric_Method
 source_path: "libros_y_normas_markdown/SQ_Sesion15_GQM_p031_visual_asset_23_8_1_definicion_de_metas_claras_y_alineadas.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\SQ_Sesion15_GQM_p031_visual_asset_23_8_1_definicion_de_metas_claras_y_alineadas.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/SQ_Sesion15_GQM_p031_visual_asset_23_8_1_definicion_de_metas_claras_y_alineadas.png]]"
 ---
 
 # UNAL Logo — GQM 8.1 Definición de metas claras y alineadas
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/SQ_Sesion15_GQM_p031_visual_asset_23_8_1_definicion_de_metas_claras_y_alineadas.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/SQ_Sesion15_GQM_p031_visual_asset_23_8_1_definicion_de_metas_claras_y_alineadas.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/SQ_Sesion15_GQM_p031_visual_asset_23_8_1_definicion_de_metas_claras_y_alineadas.png`
+
+![[02_Fuentes/Conocimiento/SQ_Sesion15_GQM_p031_visual_asset_23_8_1_definicion_de_metas_claras_y_alineadas.png]]
 
 
 ## Connections

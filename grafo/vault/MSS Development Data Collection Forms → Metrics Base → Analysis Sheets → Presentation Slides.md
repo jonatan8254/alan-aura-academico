@@ -8,14 +8,16 @@ tags:
   - community/MSS_Data_Collection
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p076_visual_asset_25_7_4_2_development_of_an_mss.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p076_visual_asset_25_7_4_2_development_of_an_mss.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p076_visual_asset_25_7_4_2_development_of_an_mss.png]]"
 ---
 
 # MSS Development: Data Collection Forms → Metrics Base → Analysis Sheets → Presentation Slides
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p076_visual_asset_25_7_4_2_development_of_an_mss.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p076_visual_asset_25_7_4_2_development_of_an_mss.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p076_visual_asset_25_7_4_2_development_of_an_mss.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p076_visual_asset_25_7_4_2_development_of_an_mss.png]]
 
 
 ## Connections

@@ -51,9 +51,11 @@ Los 37 documentos fuente del subproyecto, copiados en `02_Fuentes/Subproyecto/` 
 
 El grafo incluye 2614 nodos de conocimiento (617 comunidades), heredados intactos del grafo de conocimiento aislado (solo libros/normas, sin contaminacion del macroproyecto Smart-AID).
 
-Los **25 documentos de texto** que los sustentan estan copiados en `02_Fuentes/Conocimiento/` — el vault es autocontenido para lectura. Cada nota de concepto enlaza a su copia por wikilink y conserva `source_absolute_path` al original canonico en el proyecto principal.
+El vault es **autocontenido**: estan copiados aqui tanto los **25 documentos de texto** como las **882 figuras** extraidas de ellos (`02_Fuentes/Conocimiento/`). Cada nota de concepto enlaza a su copia por wikilink — las de figura ademas la embeben — y conserva `source_absolute_path` al original canonico en el proyecto principal.
 
-Las **883 figuras** extraidas de esos libros y normas (~109 MB de imagenes) **no se duplican aqui**: pesan mas de 10x el texto y son material con derechos. Sus notas apuntan por ruta absoluta al original.
+> Esa carpeta esta excluida del control de versiones (`.gitignore`): es material con derechos y el repositorio no lo redistribuye. Se reconstruye con `scripts/vincular_fuentes.py` a partir del corpus original.
+
+### Documentos de texto
 
 | Documento de conocimiento |
 |---|
@@ -82,3 +84,7 @@ Las **883 figuras** extraidas de esos libros y normas (~109 MB de imagenes) **no
 | [[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit\|UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit.md]] |
 | [[02_Fuentes/Conocimiento/Use_Case_Driven_Object_Modeling_with_UMLTheory_and_Practice\|Use_Case_Driven_Object_Modeling_with_UMLTheory_and_Practice.md]] |
 | [[02_Fuentes/Conocimiento/normasiso90012015\|normasiso90012015.md]] |
+
+### Figuras (882)
+
+Se consultan desde la nota de concepto que las cita (cada una embebe su imagen). No se listan aqui una por una por volumen.

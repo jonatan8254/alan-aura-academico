@@ -8,14 +8,16 @@ tags:
   - community/Managing_Multiple_Baselines
 source_path: "libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p170_visual_asset_18_span_id_page_169_0_span_managing_multiple_baselines_changes.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p170_visual_asset_18_span_id_page_169_0_span_managing_multiple_baselines_changes.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p170_visual_asset_18_span_id_page_169_0_span_managing_multiple_baselines_changes.png]]"
 ---
 
 # Release Baseline with Iteration Baselines (timeline diagram)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p170_visual_asset_18_span_id_page_169_0_span_managing_multiple_baselines_changes.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p170_visual_asset_18_span_id_page_169_0_span_managing_multiple_baselines_changes.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p170_visual_asset_18_span_id_page_169_0_span_managing_multiple_baselines_changes.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p170_visual_asset_18_span_id_page_169_0_span_managing_multiple_baselines_changes.png]]
 
 
 ## Connections

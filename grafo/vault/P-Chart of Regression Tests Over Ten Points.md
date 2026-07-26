@@ -8,14 +8,16 @@ tags:
   - community/Regression_Tests_P-Chart
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p401_figure_11_30_11_30_shows_entire_process_of_process_improvement_quantitative_process.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p401_figure_11_30_11_30_shows_entire_process_of_process_improvement_quantitative_process.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p401_figure_11_30_11_30_shows_entire_process_of_process_improvement_quantitative_process.png]]"
 ---
 
 # P-Chart of Regression Tests Over Ten Points
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p401_figure_11_30_11_30_shows_entire_process_of_process_improvement_quantitative_process.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p401_figure_11_30_11_30_shows_entire_process_of_process_improvement_quantitative_process.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p401_figure_11_30_11_30_shows_entire_process_of_process_improvement_quantitative_process.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p401_figure_11_30_11_30_shows_entire_process_of_process_improvement_quantitative_process.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Regression_Tests_P-Chart

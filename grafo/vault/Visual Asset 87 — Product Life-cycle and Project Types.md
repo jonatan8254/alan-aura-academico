@@ -8,14 +8,16 @@ tags:
   - community/Project_Phases__Life-Cycle
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p201_visual_asset_87_basic_activities_within_software_project_management_can_be_clustered_as.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p201_visual_asset_87_basic_activities_within_software_project_management_can_be_clustered_as.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p201_visual_asset_87_basic_activities_within_software_project_management_can_be_clustered_as.png]]"
 ---
 
 # Visual Asset 87 — Product Life-cycle and Project Types
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p201_visual_asset_87_basic_activities_within_software_project_management_can_be_clustered_as.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p201_visual_asset_87_basic_activities_within_software_project_management_can_be_clustered_as.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p201_visual_asset_87_basic_activities_within_software_project_management_can_be_clustered_as.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p201_visual_asset_87_basic_activities_within_software_project_management_can_be_clustered_as.png]]
 
 
 ## Connections

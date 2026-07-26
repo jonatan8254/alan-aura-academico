@@ -8,14 +8,16 @@ tags:
   - community/Measurement_Analysis_Goals
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_6_6_6_first_specific_goal_its_specific_practices_describes_preparation.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_6_6_6_first_specific_goal_its_specific_practices_describes_preparation.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_6_6_6_first_specific_goal_its_specific_practices_describes_preparation.png]]"
 ---
 
 # Figure 6.6 — Measurement & Analysis Specific Goals/Practices (Align, Provide Results) Diagram
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_6_6_6_first_specific_goal_its_specific_practices_describes_preparation.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_6_6_6_first_specific_goal_its_specific_practices_describes_preparation.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_6_6_6_first_specific_goal_its_specific_practices_describes_preparation.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_6_6_6_first_specific_goal_its_specific_practices_describes_preparation.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Measurement_Analysis_Goals

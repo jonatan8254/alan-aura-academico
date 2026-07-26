@@ -8,14 +8,16 @@ tags:
   - community/Review__Inspection_Effectiveness
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_18_10_18_shows_results_on_learning_effects_during_first_half_3e7a577e.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p126_figure_10_18_10_18_shows_results_on_learning_effects_during_first_half_3e7a577e.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_18_10_18_shows_results_on_learning_effects_during_first_half_3e7a577e.png]]"
 ---
 
 # Figure 10.18 (variant) — Number of Reviews Executed by Experience Level
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_18_10_18_shows_results_on_learning_effects_during_first_half_3e7a577e.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_18_10_18_shows_results_on_learning_effects_during_first_half_3e7a577e.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_18_10_18_shows_results_on_learning_effects_during_first_half_3e7a577e.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_18_10_18_shows_results_on_learning_effects_during_first_half_3e7a577e.png]]
 
 
 ## Connections

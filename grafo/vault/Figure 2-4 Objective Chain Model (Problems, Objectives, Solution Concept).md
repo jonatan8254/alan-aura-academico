@@ -8,14 +8,16 @@ tags:
   - community/Meal_Order_Data_Models
 source_path: "libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p045_figure_2_4_2_4_a_more_sophisticated_rml_model_called_objective_chain.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p045_figure_2_4_2_4_a_more_sophisticated_rml_model_called_objective_chain.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p045_figure_2_4_2_4_a_more_sophisticated_rml_model_called_objective_chain.png]]"
 ---
 
 # Figure 2-4: Objective Chain Model (Problems, Objectives, Solution Concept)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p045_figure_2_4_2_4_a_more_sophisticated_rml_model_called_objective_chain.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p045_figure_2_4_2_4_a_more_sophisticated_rml_model_called_objective_chain.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p045_figure_2_4_2_4_a_more_sophisticated_rml_model_called_objective_chain.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p045_figure_2_4_2_4_a_more_sophisticated_rml_model_called_objective_chain.png]]
 
 
 ## Connections

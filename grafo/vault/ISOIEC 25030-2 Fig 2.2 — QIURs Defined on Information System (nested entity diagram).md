@@ -8,14 +8,16 @@ tags:
   - community/ISO_25030_Quality_Requirements
 source_path: "libros_y_normas_markdown/ISO_IEC_25030_2_2019_p013_figure_2_2_qiurs_defined_on_information_system_which_includes_not_only.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25030_2_2019_p013_figure_2_2_qiurs_defined_on_information_system_which_includes_not_only.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p013_figure_2_2_qiurs_defined_on_information_system_which_includes_not_only.png]]"
 ---
 
 # ISO/IEC 25030-2 Fig 2.2 — QIURs Defined on Information System (nested entity diagram)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p013_figure_2_2_qiurs_defined_on_information_system_which_includes_not_only.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p013_figure_2_2_qiurs_defined_on_information_system_which_includes_not_only.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p013_figure_2_2_qiurs_defined_on_information_system_which_includes_not_only.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p013_figure_2_2_qiurs_defined_on_information_system_which_includes_not_only.png]]
 
 
 ## Connections

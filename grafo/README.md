@@ -10,7 +10,7 @@ libros y normas (sin ningún nodo de Smart-AID/TalentTrack).
 | **Aristas / hiperaristas** | 2.893 / 249 |
 | **Comunidades** | 769 — 55 nuevas del subproyecto + 714 de conocimiento |
 | **Puentes `same_as`** | 34 (conocimiento ↔ subproyecto) |
-| **Notas del vault** | 3.645 de concepto/comunidad + 62 documentos fuente |
+| **Notas del vault** | 3.645 de concepto/comunidad + 944 documentos fuente copiados |
 
 ## Contenido
 
@@ -22,7 +22,7 @@ grafo/
 │   ├── 01_Indices/                   índice de fuentes y de comunidades
 │   ├── 02_Fuentes/
 │   │   ├── Subproyecto/              los 37 .md de docs/, con su ruta preservada
-│   │   └── Conocimiento/             los 25 libros y normas (ver «Licencia» abajo)
+│   │   └── Conocimiento/             25 libros y normas + 882 figuras (ver «Licencia»)
 │   └── *.md                          una nota por concepto y por comunidad
 └── scripts/                        ← cómo se construyó (reproducibilidad)
 ```
@@ -38,24 +38,26 @@ Cada nota de concepto trae:
 
 ## Trazabilidad
 
-Cada nota enlaza de vuelta a su fuente. Tres casos:
+El vault es **autocontenido**: todo documento fuente citado por el grafo está
+copiado dentro, y cada nota enlaza de vuelta a él. Cuatro casos:
 
 1. **Subproyecto (262 nodos)** → wikilink a `02_Fuentes/Subproyecto/…`, copia
    íntegra del `.md` de `docs/` con su ruta original preservada.
 2. **Conocimiento, texto (1.644 nodos)** → wikilink a `02_Fuentes/Conocimiento/…`,
-   copia íntegra del libro o norma.
-3. **Conocimiento, figuras (970 nodos)** → solo ruta absoluta al original. Son
-   ~882 imágenes extraídas de los libros (~109 MB): pesan más de 10× el texto y
-   son material con derechos, así que no se duplican aquí.
+   copia íntegra del libro o norma (25 documentos).
+3. **Conocimiento, figuras (967 nodos)** → wikilink a `02_Fuentes/Conocimiento/…`
+   y **la imagen embebida en la propia nota** (882 figuras, ~109 MB).
+4. **Conceptos agregados (3 nodos)** → no proceden de un documento único sino del
+   corpus en conjunto. No se les inventa un enlace: la nota lo declara.
 
-En los tres casos se conserva la ruta al **original canónico**; la copia del vault
+En todos los casos se conserva la ruta al **original canónico**; la copia del vault
 es operativa, no sustituye a la fuente.
 
 ## ⚠️ Licencia del corpus de conocimiento
 
-`vault/02_Fuentes/Conocimiento/` contiene el texto íntegro de libros y normas con
-derechos de autor (PMBOK 7, ISO/IEC 90003, ISO/IEC 25010/25020, Wiegers, entre
-otros), usados como material de estudio del curso.
+`vault/02_Fuentes/Conocimiento/` contiene el texto íntegro y las figuras de libros
+y normas con derechos de autor (PMBOK 7, ISO/IEC 90003, ISO/IEC 25010/25020,
+Wiegers, entre otros), usados como material de estudio del curso. Son ~119 MB.
 
 **Esa carpeta está en `.gitignore` a propósito**: el vault es autocontenido en
 disco, pero el repositorio no redistribuye material licenciado. Para

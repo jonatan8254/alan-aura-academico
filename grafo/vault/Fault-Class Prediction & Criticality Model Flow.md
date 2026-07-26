@@ -8,14 +8,16 @@ tags:
   - community/Reliability_Growth__Fault_Prediction
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p276_visual_asset_116_9_3_3_identifying_error_prone_components.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p276_visual_asset_116_9_3_3_identifying_error_prone_components.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p276_visual_asset_116_9_3_3_identifying_error_prone_components.png]]"
 ---
 
 # Fault-Class Prediction & Criticality Model Flow
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p276_visual_asset_116_9_3_3_identifying_error_prone_components.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p276_visual_asset_116_9_3_3_identifying_error_prone_components.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p276_visual_asset_116_9_3_3_identifying_error_prone_components.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p276_visual_asset_116_9_3_3_identifying_error_prone_components.png]]
 
 
 ## Connections

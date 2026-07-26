@@ -8,14 +8,16 @@ tags:
   - community/Requirements__Project_Processes
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png]]"
 ---
 
 # Figure 31.2 — Stakeholders Interacting with Software Development Group
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p551_figure_31_2_31_2_shows_some_of_project_stakeholders_who_might_interact.png]]
 
 
 ## Connections

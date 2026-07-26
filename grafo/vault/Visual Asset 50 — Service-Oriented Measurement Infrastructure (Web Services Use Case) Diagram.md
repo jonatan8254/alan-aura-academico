@@ -8,14 +8,16 @@ tags:
   - community/Functional_Size_Measurement_Services
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p101_visual_asset_50_5_5_a_service_oriented_measurement_infrastructure.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p101_visual_asset_50_5_5_a_service_oriented_measurement_infrastructure.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p101_visual_asset_50_5_5_a_service_oriented_measurement_infrastructure.png]]"
 ---
 
 # Visual Asset 50 — Service-Oriented Measurement Infrastructure (Web Services Use Case) Diagram
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p101_visual_asset_50_5_5_a_service_oriented_measurement_infrastructure.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p101_visual_asset_50_5_5_a_service_oriented_measurement_infrastructure.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p101_visual_asset_50_5_5_a_service_oriented_measurement_infrastructure.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p101_visual_asset_50_5_5_a_service_oriented_measurement_infrastructure.png]]
 
 
 ## Connections

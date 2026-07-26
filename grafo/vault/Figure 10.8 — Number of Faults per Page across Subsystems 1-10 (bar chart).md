@@ -8,14 +8,16 @@ tags:
   - community/Review_Effectiveness
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_8_10_8_an_important_indication_effectiveness_of_reviewing_effectiveness_of.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p126_figure_10_8_10_8_an_important_indication_effectiveness_of_reviewing_effectiveness_of.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_8_10_8_an_important_indication_effectiveness_of_reviewing_effectiveness_of.png]]"
 ---
 
 # Figure 10.8 — Number of Faults per Page across Subsystems 1-10 (bar chart)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_8_10_8_an_important_indication_effectiveness_of_reviewing_effectiveness_of.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_8_10_8_an_important_indication_effectiveness_of_reviewing_effectiveness_of.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p126_figure_10_8_10_8_an_important_indication_effectiveness_of_reviewing_effectiveness_of.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p126_figure_10_8_10_8_an_important_indication_effectiveness_of_reviewing_effectiveness_of.png]]
 
 
 ## Connections

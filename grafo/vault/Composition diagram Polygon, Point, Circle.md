@@ -8,14 +8,16 @@ tags:
   - community/Composition_Diagram_Polygon
 source_path: "libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p076_figure_5_5_3_but_hardly_any_semantics_as_jim_rumbaugh_says.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p076_figure_5_5_3_but_hardly_any_semantics_as_jim_rumbaugh_says.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p076_figure_5_5_3_but_hardly_any_semantics_as_jim_rumbaugh_says.png]]"
 ---
 
 # Composition diagram: Polygon, Point, Circle
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p076_figure_5_5_3_but_hardly_any_semantics_as_jim_rumbaugh_says.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p076_figure_5_5_3_but_hardly_any_semantics_as_jim_rumbaugh_says.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p076_figure_5_5_3_but_hardly_any_semantics_as_jim_rumbaugh_says.png`
+
+![[02_Fuentes/Conocimiento/UML_Distilled_A_Brief_Guide_to_the_Standard_Object_Modeling_Fowler_Martin_3_edit_p076_figure_5_5_3_but_hardly_any_semantics_as_jim_rumbaugh_says.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Composition_Diagram_Polygon

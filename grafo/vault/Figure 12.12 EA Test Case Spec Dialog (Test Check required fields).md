@@ -8,14 +8,16 @@ tags:
   - community/Model-Driven_Testing
 source_path: "libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p258_figure_12_12_12_12_12_12_ea_test_case_spec_dialog_set.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p258_figure_12_12_12_12_12_12_ea_test_case_spec_dialog_set.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p258_figure_12_12_12_12_12_12_ea_test_case_spec_dialog_set.png]]"
 ---
 
 # Figure 12.12: EA Test Case Spec Dialog (Test Check required fields)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p258_figure_12_12_12_12_12_12_ea_test_case_spec_dialog_set.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p258_figure_12_12_12_12_12_12_ea_test_case_spec_dialog_set.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p258_figure_12_12_12_12_12_12_ea_test_case_spec_dialog_set.png`
+
+![[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p258_figure_12_12_12_12_12_12_ea_test_case_spec_dialog_set.png]]
 
 
 ## Connections

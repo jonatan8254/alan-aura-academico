@@ -8,14 +8,16 @@ tags:
   - community/Function_Point__COSMIC-FFP
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_82_measurement_worksheet_example.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_82_measurement_worksheet_example.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_82_measurement_worksheet_example.png]]"
 ---
 
 # Diagram: COSMIC-FFP Measurement Worksheet (Layers, Functional Processes, Data Groups, E/X/R/W)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_82_measurement_worksheet_example.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_82_measurement_worksheet_example.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_82_measurement_worksheet_example.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_82_measurement_worksheet_example.png]]
 
 
 ## Connections

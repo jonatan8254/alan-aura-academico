@@ -8,14 +8,16 @@ tags:
   - community/Hotel_Map_Design_Models
 source_path: "libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p165_figure_8_1_8_1_as_you_can_see_is_a_basic_list.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p165_figure_8_1_8_1_as_you_can_see_is_a_basic_list.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p165_figure_8_1_8_1_as_you_can_see_is_a_basic_list.png]]"
 ---
 
 # Domain Model: Hotel Map Robustness Diagram (Fig 8.1)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p165_figure_8_1_8_1_as_you_can_see_is_a_basic_list.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p165_figure_8_1_8_1_as_you_can_see_is_a_basic_list.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p165_figure_8_1_8_1_as_you_can_see_is_a_basic_list.png`
+
+![[02_Fuentes/Conocimiento/Agile_Development_with_ICONIX_Process_People_Process_and_Doug_Rosenberg_Mark_Col_p165_figure_8_1_8_1_as_you_can_see_is_a_basic_list.png]]
 
 
 ## Connections

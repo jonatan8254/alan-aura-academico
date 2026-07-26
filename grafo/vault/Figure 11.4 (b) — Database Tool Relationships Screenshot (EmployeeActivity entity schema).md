@@ -8,14 +8,16 @@ tags:
   - community/MSS_Data_Flow
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p151_visual_asset_63_11_4_data_collection.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p151_visual_asset_63_11_4_data_collection.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p151_visual_asset_63_11_4_data_collection.png]]"
 ---
 
 # Figure 11.4 (b) — Database Tool Relationships Screenshot (Employee/Activity entity schema)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p151_visual_asset_63_11_4_data_collection.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p151_visual_asset_63_11_4_data_collection.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p151_visual_asset_63_11_4_data_collection.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p151_visual_asset_63_11_4_data_collection.png]]
 
 
 ## Connections

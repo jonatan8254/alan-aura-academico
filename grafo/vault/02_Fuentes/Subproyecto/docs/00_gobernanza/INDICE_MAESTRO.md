@@ -29,6 +29,7 @@ created_for: obsidian_traceability_vault
 | — | `AGENTS.md` / `CLAUDE.md` | Reglas operativas para agentes (aislamiento, sin default de modelo). |
 | **PLAN-CODEX-ORIGINAL** | `00_PLAN_CODEX_ORIGINAL.md` | **Fuente primaria verbatim** del plan generado con Codex. Ancla de toda cita "plan §X.Y" en el subproyecto. No se edita. |
 | — | `00_AUDITORIA_PLAN_CODEX.md` | Auditoría breve del plan (consume PLAN-CODEX-ORIGINAL). |
+| — | `grafo/README.md` | **Grafo de conocimiento propio del subproyecto** (SD-27): 2.876 nodos (262 del subproyecto + 2.614 de conocimiento) + vault de Obsidian trazable a cada documento fuente, aislado del macroproyecto. Ver detalle en `REGISTRO_DECISIONES.md` (SD-27). |
 
 ## Contenido (`docs/`)
 | ID | Archivo | Insumos | Consumidores |

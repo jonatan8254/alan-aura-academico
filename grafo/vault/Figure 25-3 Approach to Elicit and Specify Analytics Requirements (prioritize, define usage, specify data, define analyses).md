@@ -8,14 +8,16 @@ tags:
   - community/Business_Analytics_Requirements
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p451_figure_25_3_25_3_outlines_an_approach_to_elicit_specify_requirements_analytics.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p451_figure_25_3_25_3_outlines_an_approach_to_elicit_specify_requirements_analytics.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p451_figure_25_3_25_3_outlines_an_approach_to_elicit_specify_requirements_analytics.png]]"
 ---
 
 # Figure 25-3: Approach to Elicit and Specify Analytics Requirements (prioritize, define usage, specify data, define analyses)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p451_figure_25_3_25_3_outlines_an_approach_to_elicit_specify_requirements_analytics.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p451_figure_25_3_25_3_outlines_an_approach_to_elicit_specify_requirements_analytics.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p451_figure_25_3_25_3_outlines_an_approach_to_elicit_specify_requirements_analytics.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p451_figure_25_3_25_3_outlines_an_approach_to_elicit_specify_requirements_analytics.png]]
 
 
 ## Connections

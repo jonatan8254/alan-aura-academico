@@ -8,14 +8,16 @@ tags:
   - community/Restaurant_Ordering_Feature_Tree
 source_path: "libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p167_figure_7_1_7_1_even_though_team_will_build_site_integrate_it.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p167_figure_7_1_7_1_even_though_team_will_build_site_integrate_it.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p167_figure_7_1_7_1_even_though_team_will_build_site_integrate_it.png]]"
 ---
 
 # Feature Tree with Priority Annotations (fishbone diagram)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p167_figure_7_1_7_1_even_though_team_will_build_site_integrate_it.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p167_figure_7_1_7_1_even_though_team_will_build_site_integrate_it.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p167_figure_7_1_7_1_even_though_team_will_build_site_integrate_it.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p167_figure_7_1_7_1_even_though_team_will_build_site_integrate_it.png]]
 
 
 ## Connections

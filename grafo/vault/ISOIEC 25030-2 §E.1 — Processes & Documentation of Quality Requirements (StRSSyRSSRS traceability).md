@@ -8,14 +8,16 @@ tags:
   - community/Quality_Requirements_Traceability
 source_path: "libros_y_normas_markdown/ISO_IEC_25030_2_2019_p038_visual_asset_11_e_1_processes_documentations_of_quality_requirements.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25030_2_2019_p038_visual_asset_11_e_1_processes_documentations_of_quality_requirements.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p038_visual_asset_11_e_1_processes_documentations_of_quality_requirements.png]]"
 ---
 
 # ISO/IEC 25030-2 §E.1 — Processes & Documentation of Quality Requirements (StRS/SyRS/SRS traceability)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p038_visual_asset_11_e_1_processes_documentations_of_quality_requirements.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p038_visual_asset_11_e_1_processes_documentations_of_quality_requirements.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p038_visual_asset_11_e_1_processes_documentations_of_quality_requirements.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p038_visual_asset_11_e_1_processes_documentations_of_quality_requirements.png]]
 
 
 ## Connections

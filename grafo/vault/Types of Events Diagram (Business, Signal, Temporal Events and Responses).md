@@ -8,14 +8,16 @@ tags:
   - community/State-Transition__Events
 source_path: "libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p076_visual_asset_36_span_id_page_76_0_span_types_of_events_page.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p076_visual_asset_36_span_id_page_76_0_span_types_of_events_page.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p076_visual_asset_36_span_id_page_76_0_span_types_of_events_page.png]]"
 ---
 
 # Types of Events Diagram (Business, Signal, Temporal Events and Responses)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p076_visual_asset_36_span_id_page_76_0_span_types_of_events_page.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p076_visual_asset_36_span_id_page_76_0_span_types_of_events_page.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p076_visual_asset_36_span_id_page_76_0_span_types_of_events_page.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_Essentials_Core_Practices_for_Karl_Wiegers_Author_Candase_p076_visual_asset_36_span_id_page_76_0_span_types_of_events_page.png]]
 
 
 ## Connections

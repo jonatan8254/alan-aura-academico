@@ -8,14 +8,16 @@ tags:
   - community/ISO/IEC_25030-2_Quality_Requirements
 source_path: "libros_y_normas_markdown/ISO_IEC_25030_2_2019_p026_visual_asset_08_a_2_1_general.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25030_2_2019_p026_visual_asset_08_a_2_1_general.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p026_visual_asset_08_a_2_1_general.png]]"
 ---
 
 # ISO/IEC 25030-2 §A.2.1 — S-1 Defining the Project Contexts (S1-1..S1-4 flow)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p026_visual_asset_08_a_2_1_general.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p026_visual_asset_08_a_2_1_general.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p026_visual_asset_08_a_2_1_general.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p026_visual_asset_08_a_2_1_general.png]]
 
 
 ## Connections

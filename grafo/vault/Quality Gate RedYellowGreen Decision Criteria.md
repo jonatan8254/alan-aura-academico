@@ -8,14 +8,16 @@ tags:
   - community/Quality_Gates
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p251_visual_asset_111_9_2_3_case_study_quality_gates.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p251_visual_asset_111_9_2_3_case_study_quality_gates.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p251_visual_asset_111_9_2_3_case_study_quality_gates.png]]"
 ---
 
 # Quality Gate Red/Yellow/Green Decision Criteria
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p251_visual_asset_111_9_2_3_case_study_quality_gates.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p251_visual_asset_111_9_2_3_case_study_quality_gates.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p251_visual_asset_111_9_2_3_case_study_quality_gates.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p251_visual_asset_111_9_2_3_case_study_quality_gates.png]]
 
 
 ## Connections

@@ -8,14 +8,16 @@ tags:
   - community/Information_Model__Manipulation_Traps
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_60_6_5_5_statistical_traps_how_to_avoid_them.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_60_6_5_5_statistical_traps_how_to_avoid_them.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_60_6_5_5_statistical_traps_how_to_avoid_them.png]]"
 ---
 
 # Visual Asset 60 — Real World to Information Model with Cognition & Ignorance Barriers Diagram
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_60_6_5_5_statistical_traps_how_to_avoid_them.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_60_6_5_5_statistical_traps_how_to_avoid_them.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_60_6_5_5_statistical_traps_how_to_avoid_them.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_60_6_5_5_statistical_traps_how_to_avoid_them.png]]
 
 
 ## Connections

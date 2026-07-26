@@ -8,14 +8,16 @@ tags:
   - community/Chemical_Request_Dialog_Map
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p376_figure_17_6_17_6_illustrates_a_portion_of_dialog_map_request_a.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p376_figure_17_6_17_6_illustrates_a_portion_of_dialog_map_request_a.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p376_figure_17_6_17_6_illustrates_a_portion_of_dialog_map_request_a.png]]"
 ---
 
 # Figure 17.6: Dialog Map Chemical Request (DB40-DB70)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p376_figure_17_6_17_6_illustrates_a_portion_of_dialog_map_request_a.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p376_figure_17_6_17_6_illustrates_a_portion_of_dialog_map_request_a.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p376_figure_17_6_17_6_illustrates_a_portion_of_dialog_map_request_a.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p376_figure_17_6_17_6_illustrates_a_portion_of_dialog_map_request_a.png]]
 
 
 ## Connections

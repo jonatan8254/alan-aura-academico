@@ -8,14 +8,16 @@ tags:
   - community/PMBOK_7_Principles
 source_path: "libros_y_normas_markdown/PMBOK_Edicion_7_p026_visual_asset_07_principios_de_la_direccion_de_proyectos.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\PMBOK_Edicion_7_p026_visual_asset_07_principios_de_la_direccion_de_proyectos.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p026_visual_asset_07_principios_de_la_direccion_de_proyectos.png]]"
 ---
 
 # Principios de la Dirección de Proyectos
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/PMBOK_Edicion_7_p026_visual_asset_07_principios_de_la_direccion_de_proyectos.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p026_visual_asset_07_principios_de_la_direccion_de_proyectos.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/PMBOK_Edicion_7_p026_visual_asset_07_principios_de_la_direccion_de_proyectos.png`
+
+![[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p026_visual_asset_07_principios_de_la_direccion_de_proyectos.png]]
 
 
 ## Connections

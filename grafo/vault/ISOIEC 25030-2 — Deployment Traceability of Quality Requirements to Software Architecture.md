@@ -8,14 +8,16 @@ tags:
   - community/Quality_Requirements_Traceability
 source_path: "libros_y_normas_markdown/ISO_IEC_25030_2_2019_p046_visual_asset_12_example_of_deployment_traceability_of_quality_requirements_to_software.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25030_2_2019_p046_visual_asset_12_example_of_deployment_traceability_of_quality_requirements_to_software.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p046_visual_asset_12_example_of_deployment_traceability_of_quality_requirements_to_software.png]]"
 ---
 
 # ISO/IEC 25030-2 — Deployment Traceability of Quality Requirements to Software Architecture
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p046_visual_asset_12_example_of_deployment_traceability_of_quality_requirements_to_software.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p046_visual_asset_12_example_of_deployment_traceability_of_quality_requirements_to_software.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25030_2_2019_p046_visual_asset_12_example_of_deployment_traceability_of_quality_requirements_to_software.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25030_2_2019_p046_visual_asset_12_example_of_deployment_traceability_of_quality_requirements_to_software.png]]
 
 
 ## Connections

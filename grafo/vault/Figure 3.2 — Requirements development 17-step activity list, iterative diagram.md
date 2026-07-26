@@ -8,14 +8,16 @@ tags:
   - community/Requirements_Process_Cycle
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p076_figure_3_2_3_2_these_steps_generally_performed_approximately_in_numerical_sequence.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p076_figure_3_2_3_2_these_steps_generally_performed_approximately_in_numerical_sequence.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p076_figure_3_2_3_2_these_steps_generally_performed_approximately_in_numerical_sequence.png]]"
 ---
 
 # Figure 3.2 — Requirements development 17-step activity list, iterative diagram
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p076_figure_3_2_3_2_these_steps_generally_performed_approximately_in_numerical_sequence.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p076_figure_3_2_3_2_these_steps_generally_performed_approximately_in_numerical_sequence.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p076_figure_3_2_3_2_these_steps_generally_performed_approximately_in_numerical_sequence.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p076_figure_3_2_3_2_these_steps_generally_performed_approximately_in_numerical_sequence.png]]
 
 
 ## Connections

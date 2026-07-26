@@ -8,14 +8,16 @@ tags:
   - community/ETVX_Process_Modelling
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p076_visual_asset_21_6_3_3_etxm_modelling_technique.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p076_visual_asset_21_6_3_3_etxm_modelling_technique.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p076_visual_asset_21_6_3_3_etxm_modelling_technique.png]]"
 ---
 
 # ETX Simplified Modelling Technique Diagram (Entrance/Tasks/eXit)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p076_visual_asset_21_6_3_3_etxm_modelling_technique.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p076_visual_asset_21_6_3_3_etxm_modelling_technique.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p076_visual_asset_21_6_3_3_etxm_modelling_technique.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p076_visual_asset_21_6_3_3_etxm_modelling_technique.png]]
 
 
 ## Connections

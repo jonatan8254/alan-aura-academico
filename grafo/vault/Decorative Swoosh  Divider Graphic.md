@@ -8,14 +8,16 @@ tags:
   - community/Decorative_Divider_Graphic
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_63_trap_2_we_need_to_achieve_objectives_i_e_manipulating.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_63_trap_2_we_need_to_achieve_objectives_i_e_manipulating.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_63_trap_2_we_need_to_achieve_objectives_i_e_manipulating.png]]"
 ---
 
 # Decorative Swoosh / Divider Graphic
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_63_trap_2_we_need_to_achieve_objectives_i_e_manipulating.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_63_trap_2_we_need_to_achieve_objectives_i_e_manipulating.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_63_trap_2_we_need_to_achieve_objectives_i_e_manipulating.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_visual_asset_63_trap_2_we_need_to_achieve_objectives_i_e_manipulating.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Decorative_Divider_Graphic

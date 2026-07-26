@@ -8,14 +8,16 @@ tags:
   - community/Growth_Chart_Cartoon
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p026_figure_2_2_2_2_shows_relationship_between_different_stakeholder_needs_benefits_they.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p026_figure_2_2_2_2_shows_relationship_between_different_stakeholder_needs_benefits_they.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p026_figure_2_2_2_2_shows_relationship_between_different_stakeholder_needs_benefits_they.png]]"
 ---
 
 # Figure 2.2 — Cartoon of Presenter Pointing at Growth Chart
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p026_figure_2_2_2_2_shows_relationship_between_different_stakeholder_needs_benefits_they.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p026_figure_2_2_2_2_shows_relationship_between_different_stakeholder_needs_benefits_they.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p026_figure_2_2_2_2_shows_relationship_between_different_stakeholder_needs_benefits_they.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p026_figure_2_2_2_2_shows_relationship_between_different_stakeholder_needs_benefits_they.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Growth_Chart_Cartoon

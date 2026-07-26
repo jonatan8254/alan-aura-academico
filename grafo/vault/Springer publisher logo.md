@@ -8,14 +8,16 @@ tags:
   - community/Springer_Publisher_Logo
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p001_table_checkpoint_chunk_chunk_000000_000024_pages_0_24_software_measurement_002d29a0.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p001_table_checkpoint_chunk_chunk_000000_000024_pages_0_24_software_measurement_002d29a0.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p001_table_checkpoint_chunk_chunk_000000_000024_pages_0_24_software_measurement_002d29a0.png]]"
 ---
 
 # Springer publisher logo
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p001_table_checkpoint_chunk_chunk_000000_000024_pages_0_24_software_measurement_002d29a0.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p001_table_checkpoint_chunk_chunk_000000_000024_pages_0_24_software_measurement_002d29a0.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p001_table_checkpoint_chunk_chunk_000000_000024_pages_0_24_software_measurement_002d29a0.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p001_table_checkpoint_chunk_chunk_000000_000024_pages_0_24_software_measurement_002d29a0.png]]
 
 
 #graphify/image #graphify/EXTRACTED #community/Springer_Publisher_Logo

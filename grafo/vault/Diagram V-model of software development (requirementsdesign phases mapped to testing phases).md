@@ -8,14 +8,16 @@ tags:
   - community/Formal_Inspection_Process
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p351_figure_17_1_17_1_illustrates_v_model_of_software_development_it_shows.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p351_figure_17_1_17_1_illustrates_v_model_of_software_development_it_shows.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p351_figure_17_1_17_1_illustrates_v_model_of_software_development_it_shows.png]]"
 ---
 
 # Diagram: V-model of software development (requirements/design phases mapped to testing phases)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p351_figure_17_1_17_1_illustrates_v_model_of_software_development_it_shows.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p351_figure_17_1_17_1_illustrates_v_model_of_software_development_it_shows.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p351_figure_17_1_17_1_illustrates_v_model_of_software_development_it_shows.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p351_figure_17_1_17_1_illustrates_v_model_of_software_development_it_shows.png]]
 
 
 ## Connections

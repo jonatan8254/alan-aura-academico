@@ -8,14 +8,16 @@ tags:
   - community/Interrupts_Bar_Charts
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p176_table_through_which_medium_do_interrupts_occur.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p176_table_through_which_medium_do_interrupts_occur.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p176_table_through_which_medium_do_interrupts_occur.png]]"
 ---
 
 # Bar Chart: Interrupts by Interruption Media
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p176_table_through_which_medium_do_interrupts_occur.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p176_table_through_which_medium_do_interrupts_occur.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p176_table_through_which_medium_do_interrupts_occur.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p176_table_through_which_medium_do_interrupts_occur.png]]
 
 
 ## Connections

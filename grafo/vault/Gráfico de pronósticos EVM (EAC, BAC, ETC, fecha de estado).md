@@ -8,14 +8,16 @@ tags:
   - community/Earned_Value_Management_Charts
 source_path: "libros_y_normas_markdown/PMBOK_Edicion_7_p176_visual_asset_31_2_7_2_7_pronosticos.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\PMBOK_Edicion_7_p176_visual_asset_31_2_7_2_7_pronosticos.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p176_visual_asset_31_2_7_2_7_pronosticos.png]]"
 ---
 
 # Gráfico de pronósticos EVM (EAC, BAC, ETC, fecha de estado)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/PMBOK_Edicion_7_p176_visual_asset_31_2_7_2_7_pronosticos.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p176_visual_asset_31_2_7_2_7_pronosticos.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/PMBOK_Edicion_7_p176_visual_asset_31_2_7_2_7_pronosticos.png`
+
+![[02_Fuentes/Conocimiento/PMBOK_Edicion_7_p176_visual_asset_31_2_7_2_7_pronosticos.png]]
 
 
 ## Connections

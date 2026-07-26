@@ -8,14 +8,16 @@ tags:
   - community/ISO_9001_Quality_Management
 source_path: "libros_y_normas_markdown/90003_2018_p007_visual_asset_04_0_3_1_general.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\90003_2018_p007_visual_asset_04_0_3_1_general.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/90003_2018_p007_visual_asset_04_0_3_1_general.png]]"
 ---
 
 # Diagrama esquemático de elementos de un proceso (0.3.1)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/90003_2018_p007_visual_asset_04_0_3_1_general.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/90003_2018_p007_visual_asset_04_0_3_1_general.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/90003_2018_p007_visual_asset_04_0_3_1_general.png`
+
+![[02_Fuentes/Conocimiento/90003_2018_p007_visual_asset_04_0_3_1_general.png]]
 
 
 ## Connections

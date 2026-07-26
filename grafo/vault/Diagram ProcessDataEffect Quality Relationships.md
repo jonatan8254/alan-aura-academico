@@ -8,14 +8,16 @@ tags:
   - community/Measurement_Information_Model
 source_path: "libros_y_normas_markdown/Systems_and_software_engineering_Systems_and_software_British_Standards_Institut_p001_visual_asset_04_6_1_data_quality_measurement_concepts.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Systems_and_software_engineering_Systems_and_software_British_Standards_Institut_p001_visual_asset_04_6_1_data_quality_measurement_concepts.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Systems_and_software_engineering_Systems_and_software_British_Standards_Institut_p001_visual_asset_04_6_1_data_quality_measurement_concepts.png]]"
 ---
 
 # Diagram: Process/Data/Effect Quality Relationships
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Systems_and_software_engineering_Systems_and_software_British_Standards_Institut_p001_visual_asset_04_6_1_data_quality_measurement_concepts.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Systems_and_software_engineering_Systems_and_software_British_Standards_Institut_p001_visual_asset_04_6_1_data_quality_measurement_concepts.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Systems_and_software_engineering_Systems_and_software_British_Standards_Institut_p001_visual_asset_04_6_1_data_quality_measurement_concepts.png`
+
+![[02_Fuentes/Conocimiento/Systems_and_software_engineering_Systems_and_software_British_Standards_Institut_p001_visual_asset_04_6_1_data_quality_measurement_concepts.png]]
 
 
 ## Connections

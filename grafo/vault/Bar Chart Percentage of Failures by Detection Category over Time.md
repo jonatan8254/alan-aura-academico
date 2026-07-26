@@ -8,14 +8,16 @@ tags:
   - community/MSS_Data_Collection
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p101_figure_9_10_9_10_faults_found_classified_according_to_functionality_9_5.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p101_figure_9_10_9_10_faults_found_classified_according_to_functionality_9_5.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p101_figure_9_10_9_10_faults_found_classified_according_to_functionality_9_5.png]]"
 ---
 
 # Bar Chart: Percentage of Failures by Detection Category over Time
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p101_figure_9_10_9_10_faults_found_classified_according_to_functionality_9_5.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p101_figure_9_10_9_10_faults_found_classified_according_to_functionality_9_5.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p101_figure_9_10_9_10_faults_found_classified_according_to_functionality_9_5.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p101_figure_9_10_9_10_faults_found_classified_according_to_functionality_9_5.png]]
 
 
 ## Connections

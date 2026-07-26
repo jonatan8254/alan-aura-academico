@@ -42,11 +42,9 @@ for source_file, relpath in sorted(MAPA_FUENTES.items()):
     note_link = f"02_Fuentes/Subproyecto/{relpath[:-3]}"
     lines.append(f"| [[{note_link}\\|{source_file}]] | `{relpath}` |")
 conoc_dir = VAULT / "02_Fuentes" / "Conocimiento"
-conoc_files = sorted(p.name for p in conoc_dir.glob("*.md")) if conoc_dir.exists() else []
-n_png = len(set(
-    n.get("source_file") for n in con
-    if not str(n.get("source_file", "")).lower().endswith(".md")
-))
+todos = sorted(p.name for p in conoc_dir.iterdir() if p.is_file()) if conoc_dir.exists() else []
+conoc_files = [x for x in todos if x.lower().endswith(".md")]
+n_png = len(todos) - len(conoc_files)
 
 lines += [
     "",
@@ -56,21 +54,31 @@ lines += [
     "heredados intactos del grafo de conocimiento aislado (solo libros/normas, "
     "sin contaminacion del macroproyecto Smart-AID).",
     "",
-    f"Los **{len(conoc_files)} documentos de texto** que los sustentan estan copiados en "
-    "`02_Fuentes/Conocimiento/` — el vault es autocontenido para lectura. "
-    "Cada nota de concepto enlaza a su copia por wikilink y conserva "
+    f"El vault es **autocontenido**: estan copiados aqui tanto los "
+    f"**{len(conoc_files)} documentos de texto** como las **{n_png} figuras** "
+    "extraidas de ellos (`02_Fuentes/Conocimiento/`). Cada nota de concepto enlaza "
+    "a su copia por wikilink — las de figura ademas la embeben — y conserva "
     "`source_absolute_path` al original canonico en el proyecto principal.",
     "",
-    f"Las **{n_png} figuras** extraidas de esos libros y normas (~109 MB de imagenes) "
-    "**no se duplican aqui**: pesan mas de 10x el texto y son material con derechos. "
-    "Sus notas apuntan por ruta absoluta al original.",
+    "> Esa carpeta esta excluida del control de versiones (`.gitignore`): es "
+    "material con derechos y el repositorio no lo redistribuye. Se reconstruye "
+    "con `scripts/vincular_fuentes.py` a partir del corpus original.",
+    "",
+    "### Documentos de texto",
     "",
     "| Documento de conocimiento |",
     "|---|",
 ]
 for name in conoc_files:
     lines.append(f"| [[02_Fuentes/Conocimiento/{name[:-3]}\\|{name}]] |")
-lines.append("")
+lines += [
+    "",
+    f"### Figuras ({n_png})",
+    "",
+    "Se consultan desde la nota de concepto que las cita (cada una embebe su "
+    "imagen). No se listan aqui una por una por volumen.",
+    "",
+]
 (indices_dir / "Indice de fuentes.md").write_text("\n".join(lines), encoding="utf-8")
 
 # --- Indice de comunidades del subproyecto

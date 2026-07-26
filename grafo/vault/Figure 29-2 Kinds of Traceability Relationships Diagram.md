@@ -8,14 +8,16 @@ tags:
   - community/Requirements_Traceability
 source_path: "libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p526_figure_29_2_29_2_illustrates_many_kinds_of_traceability_relationships_can_be.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p526_figure_29_2_29_2_illustrates_many_kinds_of_traceability_relationships_can_be.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p526_figure_29_2_29_2_illustrates_many_kinds_of_traceability_relationships_can_be.png]]"
 ---
 
 # Figure 29-2: Kinds of Traceability Relationships Diagram
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p526_figure_29_2_29_2_illustrates_many_kinds_of_traceability_relationships_can_be.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p526_figure_29_2_29_2_illustrates_many_kinds_of_traceability_relationships_can_be.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p526_figure_29_2_29_2_illustrates_many_kinds_of_traceability_relationships_can_be.png`
+
+![[02_Fuentes/Conocimiento/Software_Requirements_3rd_Edition_Developer_Best_Wiegers_Karl_Beatty_Joy_3rd_ed_p526_figure_29_2_29_2_illustrates_many_kinds_of_traceability_relationships_can_be.png]]
 
 
 ## Connections

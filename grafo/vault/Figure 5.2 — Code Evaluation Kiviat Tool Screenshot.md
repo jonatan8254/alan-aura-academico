@@ -8,14 +8,16 @@ tags:
   - community/Kiviat_Code_Evaluation
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p101_figure_5_2_5_2_shows_one_of_methods_of_code_evaluation_by.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p101_figure_5_2_5_2_shows_one_of_methods_of_code_evaluation_by.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p101_figure_5_2_5_2_shows_one_of_methods_of_code_evaluation_by.png]]"
 ---
 
 # Figure 5.2 — Code Evaluation Kiviat Tool Screenshot
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p101_figure_5_2_5_2_shows_one_of_methods_of_code_evaluation_by.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p101_figure_5_2_5_2_shows_one_of_methods_of_code_evaluation_by.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p101_figure_5_2_5_2_shows_one_of_methods_of_code_evaluation_by.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p101_figure_5_2_5_2_shows_one_of_methods_of_code_evaluation_by.png]]
 
 
 ## Connections

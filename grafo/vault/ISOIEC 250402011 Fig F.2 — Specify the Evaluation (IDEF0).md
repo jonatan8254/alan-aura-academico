@@ -8,14 +8,16 @@ tags:
   - community/ISO_25040_Evaluation_Process
 source_path: "libros_y_normas_markdown/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p047_diagram_f_2_specify_evaluation.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p047_diagram_f_2_specify_evaluation.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p047_diagram_f_2_specify_evaluation.png]]"
 ---
 
 # ISO/IEC 25040:2011 Fig F.2 — Specify the Evaluation (IDEF0)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p047_diagram_f_2_specify_evaluation.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p047_diagram_f_2_specify_evaluation.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p047_diagram_f_2_specify_evaluation.png`
+
+![[02_Fuentes/Conocimiento/ISO_IEC_25040_1_2011_Internacional_Systems_and_software_engineering_p047_diagram_f_2_specify_evaluation.png]]
 
 
 ## Connections

@@ -8,14 +8,16 @@ tags:
   - community/Measurement_Data_Architecture
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p151_figure_6_19_6_19_bottom_part_shows_operational_tools_which_typically_contain.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p151_figure_6_19_6_19_bottom_part_shows_operational_tools_which_typically_contain.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p151_figure_6_19_6_19_bottom_part_shows_operational_tools_which_typically_contain.png]]"
 ---
 
 # Figure 6.19: Layered Measurement Data Architecture (Operational Tools to Analysis)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p151_figure_6_19_6_19_bottom_part_shows_operational_tools_which_typically_contain.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p151_figure_6_19_6_19_bottom_part_shows_operational_tools_which_typically_contain.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p151_figure_6_19_6_19_bottom_part_shows_operational_tools_which_typically_contain.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p151_figure_6_19_6_19_bottom_part_shows_operational_tools_which_typically_contain.png]]
 
 
 ## Connections

@@ -8,14 +8,16 @@ tags:
   - community/Function_Point__COSMIC-FFP
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_81_cosmic_ffp_measurement_phase.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_81_cosmic_ffp_measurement_phase.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_81_cosmic_ffp_measurement_phase.png]]"
 ---
 
 # Diagram: COSMIC-FFP Data Movement Sub-Processes (Entry, Exit, Read, Write, Manipulation)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_81_cosmic_ffp_measurement_phase.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_81_cosmic_ffp_measurement_phase.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_81_cosmic_ffp_measurement_phase.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p176_visual_asset_81_cosmic_ffp_measurement_phase.png]]
 
 
 ## Connections

@@ -8,14 +8,16 @@ tags:
   - community/Productivity_Regression_Charts
 source_path: "libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_17_6_17_finally_provides_forecast_subsequent_product_releases_a_continued_711b6247.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_17_6_17_finally_provides_forecast_subsequent_product_releases_a_continued_711b6247.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_17_6_17_finally_provides_forecast_subsequent_product_releases_a_continued_711b6247.png]]"
 ---
 
 # Figure 6.17 — Productivity Forecast Chart with Full Y-Axis Scale (Visualization Trap)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_17_6_17_finally_provides_forecast_subsequent_product_releases_a_continued_711b6247.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_17_6_17_finally_provides_forecast_subsequent_product_releases_a_continued_711b6247.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_17_6_17_finally_provides_forecast_subsequent_product_releases_a_continued_711b6247.png`
+
+![[02_Fuentes/Conocimiento/Software_Measurement_Establish_stract_evaluate_execute_p126_figure_6_17_6_17_finally_provides_forecast_subsequent_product_releases_a_continued_711b6247.png]]
 
 
 ## Connections

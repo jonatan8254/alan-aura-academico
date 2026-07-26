@@ -8,14 +8,16 @@ tags:
   - community/CMM_Maturity__Measurement
 source_path: "libros_y_normas_markdown/The_goal_question_metric_method_p026_figure_2_5_2_5_paulk_et_al_1993_cmm_helps_organisations_improve.png"
 source_absolute_path: "C:\GitHub\SmartAID\libros_y_normas_markdown\The_goal_question_metric_method_p026_figure_2_5_2_5_paulk_et_al_1993_cmm_helps_organisations_improve.png"
-source_asset: "no duplicado en el vault (figura de libro/norma)"
+source_note: "[[02_Fuentes/Conocimiento/The_goal_question_metric_method_p026_figure_2_5_2_5_paulk_et_al_1993_cmm_helps_organisations_improve.png]]"
 ---
 
 # Diagram: CMM Five Maturity Levels (Paulk et al. 1993)
 
 ## Origen
-- Figura extraida de un libro/norma: `libros_y_normas_markdown/The_goal_question_metric_method_p026_figure_2_5_2_5_paulk_et_al_1993_cmm_helps_organisations_improve.png`
-- No duplicada en este vault (peso y licencia); abrir desde la ruta original.
+- Figura extraida de un libro/norma, en este vault: [[02_Fuentes/Conocimiento/The_goal_question_metric_method_p026_figure_2_5_2_5_paulk_et_al_1993_cmm_helps_organisations_improve.png]]
+- Original canonico (proyecto principal, solo lectura): `libros_y_normas_markdown/The_goal_question_metric_method_p026_figure_2_5_2_5_paulk_et_al_1993_cmm_helps_organisations_improve.png`
+
+![[02_Fuentes/Conocimiento/The_goal_question_metric_method_p026_figure_2_5_2_5_paulk_et_al_1993_cmm_helps_organisations_improve.png]]
 
 
 ## Connections
