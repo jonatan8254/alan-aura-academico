@@ -30,6 +30,19 @@ desktop.ini
 *.tmp
 scratchpad/
 
+# ── Preferencias locales de Obsidian (no contenido del vault) ──
+# app.json/appearance.json/core-plugins.json/workspace*.json son estado de UI
+# del editor (pestañas abiertas, tema, plugins activos en esta máquina): cambian
+# en cada apertura y no aportan al grafo. graph.json SÍ se versiona (colorGroups
+# es contenido real, la leyenda de comunidades de SD-27) pero Obsidian le mezcla
+# estado de vista transitorio (zoom, filtros, fuerzas) en cada sesión — se
+# descarta con `git checkout -- grafo/vault/.obsidian/graph.json` si reaparece.
+grafo/vault/.obsidian/app.json
+grafo/vault/.obsidian/appearance.json
+grafo/vault/.obsidian/core-plugins.json
+grafo/vault/.obsidian/workspace.json
+grafo/vault/.obsidian/workspace-mobile.json
+
 # ── Corpus de conocimiento del grafo (material con derechos) ──
 # El vault es autocontenido en disco, pero el repositorio NO redistribuye
 # libros ni normas con licencia (PMBOK 7, ISO/IEC 90003, ISO/IEC 25010/25020,
