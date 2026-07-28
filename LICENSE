@@ -1,0 +1,131 @@
+Alan & Aura Académico — paquete documental de análisis y diseño
+
+Copyright © 2026
+  Jonatan Estiven Sánchez Vargas
+  Santiago Bedoya García
+  Luis Fernando Montoya Rodríguez
+  Santiago Eusse Gil
+
+TODOS LOS DERECHOS RESERVADOS.
+
+Obra colectiva del Grupo 5 · Diseño y Construcción de Productos de Software
+Universidad Nacional de Colombia — Facultad de Minas, Medellín.
+
+Ideación, liderazgo, arquitectura y redacción: Jonatan Estiven Sánchez Vargas.
+La construcción del MVP será trabajo conjunto del equipo; los créditos de
+implementación se asignarán cuando esa fase se realice.
+
+
+────────────────────────────────────────────────────────────────────────
+DECISIÓN DELIBERADA, NO UN OLVIDO
+────────────────────────────────────────────────────────────────────────
+
+  Este repositorio se publica bajo derecho de autor pleno, sin conceder
+  ninguna licencia abierta ni Creative Commons. Es intencional.
+
+  Su propósito es ser LEÍDO y EVALUADO — por el profesorado, por pares
+  académicos, por revisores y por colaboradores potenciales. No se
+  publica para ser reutilizado.
+
+  Si vienes a leer el trabajo, todo lo que necesitas está concedido más
+  abajo.
+
+
+────────────────────────────────────────────────────────────────────────
+LO QUE SÍ PUEDES HACER
+────────────────────────────────────────────────────────────────────────
+
+  · Leer, consultar y navegar este repositorio.
+  · Evaluarlo con fines académicos, profesionales o de selección.
+  · Enlazarlo.
+  · Citar fragmentos breves con atribución, en los términos que permita
+    la ley aplicable sobre limitaciones y excepciones al derecho de
+    autor.
+
+
+────────────────────────────────────────────────────────────────────────
+LO QUE REQUIERE AUTORIZACIÓN PREVIA Y POR ESCRITO
+────────────────────────────────────────────────────────────────────────
+
+  · Copiar, reproducir o republicar esta obra, en todo o en parte
+    sustancial, en cualquier medio.
+  · Modificarla, adaptarla o crear obras derivadas de ella.
+  · Redistribuirla, modificada o sin modificar.
+  · Usarla con cualquier finalidad comercial.
+  · Usar su arquitectura, metodología, requisitos, modelos o
+    especificaciones como base de otro producto, servicio, publicación
+    o entregable académico.
+  · Emplearla para entrenar, ajustar o evaluar modelos de aprendizaje
+    automático.
+
+
+────────────────────────────────────────────────────────────────────────
+SIN LICENCIA DE PATENTE NI DE MARCA
+────────────────────────────────────────────────────────────────────────
+
+  Nada aquí concede licencia, inmunidad ni derecho alguno sobre
+  patentes, modelos de utilidad, diseños industriales u otros derechos
+  de propiedad industrial, presentes o futuros.
+
+  Los nombres "Alan & Aura", "Smart-AID" y "TalentTrack" quedan
+  reservados. No se concede licencia para usarlos.
+
+
+────────────────────────────────────────────────────────────────────────
+CONDICIONES DE LA PLATAFORMA
+────────────────────────────────────────────────────────────────────────
+
+  Este repositorio se aloja en GitHub. Sus Términos de Servicio permiten
+  a cualquier usuario de la plataforma ver y bifurcar (fork) repositorios
+  públicos, con independencia de la licencia que elija el titular. Esa
+  autorización es condición de publicar allí y este aviso no puede
+  revocarla. Todos los demás derechos siguen reservados: bifurcar dentro
+  de la plataforma no concede derecho a redistribuir, adaptar ni usar
+  esta obra fuera de ella.
+
+
+────────────────────────────────────────────────────────────────────────
+MATERIAL DE TERCEROS — CITADO, NUNCA REDISTRIBUIDO
+────────────────────────────────────────────────────────────────────────
+
+  Este repositorio CITA normas y literatura por su identificador y
+  cláusula; no reproduce ninguna. Entre ellas: ISO/IEC 25010:2023,
+  ISO/IEC 25030, ISO/IEC 25022, ISO/IEC 25023, ISO/IEC 25040, PMBOK
+  Guide, y las obras metodológicas de Wiegers y Rosenberg. También se
+  citan instrumentos legales colombianos como derecho público: Ley 1581
+  de 2012 y Decreto 1377 de 2013.
+
+  El corpus de conocimiento con derechos queda EXCLUIDO del control de
+  versiones (véase `.gitignore` y `grafo/README.md`): el repositorio no
+  redistribuye libros ni normas con licencia. Quien desee consultarlos
+  debe obtenerlos de sus titulares.
+
+
+────────────────────────────────────────────────────────────────────────
+PERMISOS Y CONTACTO
+────────────────────────────────────────────────────────────────────────
+
+  Las solicitudes de cualquier uso más allá de lo anterior son
+  bienvenidas. Abre un issue en este repositorio.
+
+
+════════════════════════════════════════════════════════════════════════
+ENGLISH SUMMARY
+════════════════════════════════════════════════════════════════════════
+
+  Copyright © 2026 Jonatan Estiven Sánchez Vargas, Santiago Bedoya
+  García, Luis Fernando Montoya Rodríguez and Santiago Eusse Gil.
+  ALL RIGHTS RESERVED.
+
+  A collective academic work (Grupo 5, Software Product Design and
+  Construction, Universidad Nacional de Colombia — Facultad de Minas).
+  Conception, leadership, architecture and writing by Jonatan Estiven
+  Sánchez Vargas.
+
+  This repository is published to be read and evaluated, not reused. The
+  absence of an open licence is deliberate. You may read, evaluate, link
+  to it, and quote briefly with attribution. Copying, modification,
+  redistribution, commercial use, use as the basis of another product or
+  deliverable, and use for machine-learning training require prior
+  written permission. No patent or trademark rights are granted.
+  Standards and literature are cited, never redistributed.

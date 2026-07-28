@@ -68,6 +68,14 @@ alan-aura-academico/
 
 Paquete documental completo, **repositorio independiente** (SD-18), y **Fase 2 (ICONIX) en curso**: producidos el **modelo de dominio** ([`MD-01`](docs/06_dominio/MD-01_modelo_dominio.puml)), el **diagrama de casos de uso** ([`DCU-01`](docs/07_casos_uso/DCU-01_casos_uso.puml)), la **especificación textual de los 10 casos de uso** ([`ECU-00…ECU-10`](docs/07_casos_uso/especificaciones/)) y la **base de diseño de interfaz** ([`DIS-00`/`DIS-01`](docs/08_diseno/) + 16 mockups de alta fidelidad en claro y oscuro). Los **26 RF** quedan trazados sin huérfanos, y existe un **informe académico** ([`docs/09_informe/`](docs/09_informe/)) para la entrega. **Siguiente artefacto ICONIX:** análisis de robustez. **Fuera de alcance por ahora** (planificados, no producidos): robustez, secuencias, código y grafo/vault propios.
 
+## Licencia y derechos
+
+**© 2026 Jonatan Estiven Sánchez Vargas, Santiago Bedoya García, Luis Fernando Montoya Rodríguez y Santiago Eusse Gil. [Todos los derechos reservados](LICENSE).**
+
+Obra colectiva del **Grupo 5**. **Ideación, liderazgo, arquitectura y redacción:** Jonatan Estiven Sánchez Vargas. La **construcción del MVP será trabajo conjunto del equipo**; los créditos de implementación se asignarán cuando esa fase se realice.
+
+Este repositorio se publica para ser **leído y evaluado**, no reutilizado — y la ausencia de licencia abierta es deliberada, no un olvido. Puedes leerlo, evaluarlo, enlazarlo y citar fragmentos breves con atribución. Copiar, modificar, redistribuir, usarlo con fines comerciales o tomarlo como base de otro producto o entregable académico requiere autorización previa. No se concede licencia de patente ni de marca. Las normas y la literatura se **citan, nunca se redistribuyen**: el corpus con derechos queda excluido del control de versiones. Detalle completo en [`LICENSE`](LICENSE).
+
 ## Estándares aplicados
 
 Modelo verbal → **E8** (subconjunto de 11 rasgos, checklist verificable). Requisitos → frontera **K** + convención de IDs. Calidad → **SQuaRE / ISO-IEC 25010:2023** (incluida la familia *safety*) con **GQM** y umbral obligatorio. Reglas de negocio → taxonomía **Wiegers**. Puente normativo → mini **D6-bis** reusando cláusulas ya verificadas. Contrato de personajes → **E4** simplificado. Análisis y diseño → **ICONIX** (dominio → casos de uso → especificación textual). Diseño de interfaz → sistema de diseño y mockups **fundamentados en evidencia** (agentes de bienestar, psicología del color, mensajería de crisis, consentimiento por capas, tipografía, accesibilidad WCAG). Canon de dominio en cada artefacto; marcas de evidencia y regla de honestidad heredadas del protocolo de auditoría.
