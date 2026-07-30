@@ -1,33 +1,68 @@
 @startuml
 skinparam linetype ortho
 skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName Segoe UI, Helvetica, Arial, sans-serif
+skinparam defaultFontSize 13
+skinparam ArrowColor #5F5E5A
+skinparam ArrowThickness 1.5
+skinparam PackageBackgroundColor transparent
+skinparam PackageBorderColor #B4B2A9
+skinparam PackageFontColor #5F5E5A
+skinparam PackageFontSize 12
+skinparam ClassBorderThickness 1
 hide fields
 hide methods
 hide empty members
+hide circle
 top to bottom direction
 
-class Usuario
-class Administrador
-class DisponibilidadDelChatbot
-class Consentimiento
-class CapsulaDePerfil
-class Personaje
-class Alan
-class Aura
-class Conversacion
-class Mensaje
-class EventoDeSeguridad
-class RecursoDeAyuda
+package "Acceso y cuenta" {
+  class Visitante #E6F1FB;line:185FA5;text:0C447C
+  class Cuenta #E6F1FB;line:185FA5;text:0C447C
+  class Usuario #E6F1FB;line:185FA5;text:0C447C
+  class Administrador #E6F1FB;line:185FA5;text:0C447C
+}
 
+package "Consentimiento y perfil" {
+  class Consentimiento #EEEDFE;line:534AB7;text:26215C
+  class CapsulaDePerfil #EEEDFE;line:534AB7;text:26215C
+}
+
+package "Acompañamiento" {
+  class Conversacion #E1F5EE;line:0F6E56;text:04342C
+  class Mensaje #E1F5EE;line:0F6E56;text:04342C
+  class Personaje #E1F5EE;line:0F6E56;text:04342C
+  class Alan #E1F5EE;line:0F6E56;text:04342C
+  class Aura #E1F5EE;line:0F6E56;text:04342C
+}
+
+package "Seguridad" {
+  class EventoDeSeguridad #FAECE7;line:993C1D;text:4A1B0C
+  class RecursoDeAyuda #FAECE7;line:993C1D;text:4A1B0C
+}
+
+package "Operación de la plataforma" {
+  class DisponibilidadDelChatbot #F1EFE8;line:5F5E5A;text:2C2C2A
+  class ContadorDeUsoDiario #F1EFE8;line:5F5E5A;text:2C2C2A
+  class EventoOperativo #F1EFE8;line:5F5E5A;text:2C2C2A
+}
+
+Cuenta <|-- Usuario
+Cuenta <|-- Administrador
 Personaje <|-- Alan
 Personaje <|-- Aura
 
+Visitante -- Cuenta : se registra y obtiene
 Usuario -- Consentimiento : otorga
 Usuario -- CapsulaDePerfil : posee
 Usuario -- Conversacion : mantiene
+Usuario -- ContadorDeUsoDiario : acumula
 CapsulaDePerfil -- Conversacion : orienta
 Conversacion -- Personaje : acompañada por
 Conversacion *-- Mensaje : contiene
+Conversacion -- EventoOperativo : origina
 Mensaje -- EventoDeSeguridad : origina
 EventoDeSeguridad -- RecursoDeAyuda : remite a
 Administrador -- DisponibilidadDelChatbot : controla
