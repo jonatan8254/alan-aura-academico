@@ -20,7 +20,7 @@ top to bottom direction
 
 package "Acceso y cuenta" {
   class Visitante #E6F1FB;line:185FA5;text:0C447C
-  class Cuenta #E6F1FB;line:185FA5;text:0C447C
+  class TitularDeCuenta #E6F1FB;line:185FA5;text:0C447C
   class Usuario #E6F1FB;line:185FA5;text:0C447C
   class Administrador #E6F1FB;line:185FA5;text:0C447C
 }
@@ -49,16 +49,16 @@ package "Operación de la plataforma" {
   class EventoOperativo #F1EFE8;line:5F5E5A;text:2C2C2A
 }
 
-Cuenta <|-- Usuario
-Cuenta <|-- Administrador
+TitularDeCuenta <|-- Usuario
+TitularDeCuenta <|-- Administrador
 Personaje <|-- Alan
 Personaje <|-- Aura
 
-Visitante -- Cuenta : se registra y obtiene
+Visitante -- TitularDeCuenta : se convierte en
 Usuario -- Consentimiento : otorga
 Usuario -- CapsulaDePerfil : posee
 Usuario -- Conversacion : mantiene
-Usuario -- ContadorDeUsoDiario : acumula
+Usuario -- ContadorDeUsoDiario : tiene
 CapsulaDePerfil -- Conversacion : orienta
 Conversacion -- Personaje : acompañada por
 Conversacion *-- Mensaje : contiene

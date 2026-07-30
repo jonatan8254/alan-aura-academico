@@ -1,7 +1,7 @@
 # MD-01 — Modelo de dominio del MVP «Alan & Aura Académico»
-**ID:** MD-01 · **Familia:** MD (dominio, fase 2 ICONIX) · **Hogar:** `docs/06_dominio/` · **Fecha:** 2026-07-30 · **Versión:** v1.3 (PDR-01: +`Cuenta` como supertipo de `Usuario`/`Administrador`, +`Visitante`, +`ContadorDeUsoDiario`, +`EventoOperativo`; agrupación en 5 paquetes).
+**ID:** MD-01 · **Familia:** MD (dominio, fase 2 ICONIX) · **Hogar:** `docs/06_dominio/` · **Fecha:** 2026-07-30 · **Versión:** v1.3 (PDR-01: +`TitularDeCuenta` como supertipo de `Usuario`/`Administrador`, +`Visitante`, +`ContadorDeUsoDiario`, +`EventoOperativo`; agrupación en 5 paquetes).
 **Artefacto ejecutable:** [`MD-01_modelo_dominio.puml`](MD-01_modelo_dominio.puml) (PlantUML copy-ready, fuente de verdad). **Render acompañante:** [`MD-01_modelo_dominio.svg`](MD-01_modelo_dominio.svg).
-**Insumos:** MV-01, VIS-01, REQ-01, CONTRATO conversacional, SEG-01, PRIV-01, **PER-01** (mapa de persistencia), TRZ-01, **retroalimentación docente (RET-01)** y el **delta de object discovery de DR-00 §4**.
+**Insumos:** MV-01, VIS-01, REQ-01, CONTRATO conversacional, SEG-01, PRIV-01, **PER-01** (mapa de persistencia), TRZ-01, **retroalimentación docente** (se registrará en `RET-01`, fase D.6) y el **delta de object discovery de DR-00 §4**.
 **Consumidores:** DCU-01, especificación de casos de uso, robustez, clases (fases posteriores).
 **Generado con:** skill `uml-domain-modeler` (modo *academic strict*). **Validador:** `validate_domain_puml.py` → **0 errores / 0 advertencias**.
 **Naturaleza:** análisis estático conceptual — glosario del dominio. **No** es diseño, ni modelo de datos, ni arquitectura, ni flujo, ni diagrama de casos de uso.
@@ -18,10 +18,10 @@
 
 | Clase | Clasificación | Origen |
 |---|---|---|
-| **Visitante** | Actor/rol + clase de dominio | RET-01 punto 2; VIS-01 actor |
-| **Cuenta** | **Supertipo** (identidad de acceso) | RET-01 punto 1; PER-01 §3.1 (`User.rol`) |
-| **Usuario** | Especialización (`is-a` Cuenta) | MV-01 §3, VIS actor |
-| **Administrador** | Especialización (`is-a` Cuenta) | MV-01 §3, VIS actor |
+| **Visitante** | Actor/rol + clase de dominio | Retroalimentación docente punto 2; VIS-01 actor |
+| **TitularDeCuenta** | **Supertipo** (rol: quien posee una cuenta) | Retroalimentación docente punto 1 |
+| **Usuario** | Especialización (`is-a` TitularDeCuenta) | MV-01 §3, VIS actor |
+| **Administrador** | Especialización (`is-a` TitularDeCuenta) | MV-01 §3, VIS actor |
 | **Consentimiento** | Clase central (registro con ciclo de vida) | MV-01 §3, PRIV-01 |
 | **CapsulaDePerfil** | Clase central | MV-01 §3, PRIV-01 |
 | **ContadorDeUsoDiario** | Cuota de uso por usuario | PER-01 §3.5; DR-00 §4.1 |
@@ -40,11 +40,15 @@
 
 ## 3. Decisiones de modelado
 
-1. **`Cuenta` como supertipo (RET-01 punto 1).** El profesor observó que «el administrador es un tipo de usuario». Se resuelve con un **supertipo** en vez de `Usuario <|-- Administrador` porque el `Usuario` de este modelo `otorga Consentimiento`, `posee CapsulaDePerfil` y `mantiene Conversacion` — y un administrador **no hace nada de eso** (canon: no ve datos conversacionales). `Cuenta` recoge lo común (identidad de acceso y rol) y ambos la especializan. Coincide con lo que ya describe **PER-01 §3.1**: no existe entidad `Administrador`; hay una sola cuenta con `rol ∈ {usuario, administrador}`. Pasa el *substitution test*: todo `Usuario` y todo `Administrador` **es** una `Cuenta`.
-2. **`Visitante` pasa a ser clase (RET-01 punto 2) — reversión declarada.** MV-01 §3 y §14 y MD-01 v1.2 §2 lo clasificaban como «actor **sin** clase de dominio», con el criterio «sin datos ni relaciones de dominio». La retroalimentación docente pide representarlo, y la relación `Visitante -- Cuenta : se registra y obtiene` es un hecho real del dominio (ECU-02 §5: «Visitante pasa a Usuario al crear la cuenta»), de modo que **deja de ser una clase huérfana** y no rompe el gate de calidad. Se registra como reversión en `SD-28`.
-3. **`ContadorDeUsoDiario` → añadida.** Materializa la cuota de RN-02.9 (3/min, 30/día) y **participa en el borrado en cascada** (ECU-04 paso 3, PRIV-R11, PER-T1). Sin ella el modelo describía una cascada incompleta: nombraba `Usuario`, `Consentimiento` y `CapsulaDePerfil` y omitía en silencio un dato por usuario que sí se persiste. *(Sus campos siguen sin especificar: `PER-H4` continúa abierto.)*
-4. **`EventoOperativo` → añadida (resuelve D-12).** MV-01 §13.2 lo agrupaba con `MétricaDeUso` como «vista derivada (no clase)», pero **PER-01 §3.6** lo define como entidad persistida de 8 campos y lo declara «la **única** fuente de las métricas agregadas del administrador». La contradicción se resuelve a favor de PER-01: sin esta clase, la tasa técnica de 7 días que exige ECU-09 sería **incomputable**, porque `Conversacion` no se persiste. `MétricaDeUso` **sí sigue siendo vista derivada**.
-5. **El administrador y sus funciones (refinamiento de SD-15, vigente).** Sigue **sin** dibujarse `Administrador -- Usuario` como **asociación**: sería una relación de acceso/comportamiento y la etiqueta «supervisa» se malinterpreta como que el admin vigila las conversaciones, lo que **viola el canon**. Lo que v1.3 añade es una **generalización** (ambos son `Cuenta`), que es una relación distinta y no arrastra ese problema. «Ver directorio» y «ver métricas» siguen siendo **casos de uso**, no relaciones de dominio.
+1. **`TitularDeCuenta` como supertipo (retroalimentación docente, punto 1) — reversión declarada.** El profesor observó que «el administrador es un tipo de usuario». Se resuelve con un **supertipo** en vez de `Usuario <|-- Administrador` porque el `Usuario` de este modelo `otorga Consentimiento`, `posee CapsulaDePerfil` y `mantiene Conversacion` — y un administrador **no hace nada de eso** (canon: no ve datos conversacionales).
+   **Por qué `TitularDeCuenta` y no `Cuenta`:** una `Cuenta` es una *identidad de acceso*, y una persona **no «es»** una identidad de acceso — `Usuario <|-- Cuenta` sería un error de categoría y no pasaría el *substitution test*. `TitularDeCuenta` es un **rol de persona**, y ahí sí: todo `Usuario` y todo `Administrador` **es** alguien que posee una cuenta. La identidad de acceso (`username`, `alias`, `contraseña`, `rol`) pasa a ser atributo diferido del supertipo (§6).
+   **Reversión que esto implica:** MV-01 §3 dice literalmente «*la identidad de acceso son atributos de `Usuario`; **no se crea clase `Cuenta` aparte**(§13)*». Esta versión **se aparta de esa clasificación**: no crea una clase `Cuenta`, pero sí eleva la titularidad a un supertipo, que es lo que hace falta cuando hay **dos** tipos de titular. Queda pendiente de registrar como decisión (`SD-28`, fase D.5).
+   **Nota sobre PER-01:** su §3.1 describe una sola tabla `User` con `rol ∈ {usuario, administrador}`. Eso es el patrón *rol-como-atributo*, que es la **alternativa** de persistencia a esta jerarquía, no su confirmación. Ambas son compatibles — la jerarquía es conceptual y el mapeo a una tabla con discriminador es una decisión de la fase de diseño.
+2. **`Visitante` pasa a ser clase (retroalimentación docente, punto 2) — reversión declarada.** MV-01 §3 y §14 y MD-01 v1.2 §2 lo clasificaban como «actor **sin** clase de dominio», con el criterio «sin datos ni relaciones de dominio». La retroalimentación docente pide representarlo. La relación `Visitante -- TitularDeCuenta : se convierte en` es un **cambio de rol**, no un paso de proceso: quien consulta la presentación sin cuenta pasa a tenerla (ECU-02 §5: «Visitante pasa a Usuario al crear la cuenta»). *El acto de registrarse sigue siendo un caso de uso, no una relación.* Pendiente de registrar en `SD-28` (fase D.5).
+3. **`ContadorDeUsoDiario` → añadida.** El hecho de dominio es que **el servicio limita cuánto se puede conversar** (RN-02.9: 3/min, 30/día) — una regla de negocio, no un mecanismo. La clase es el sustantivo de esa cuota, y **participa en el borrado en cascada** (ECU-04 paso 3, PRIV-R11, PER-T1). Sin ella el modelo describía una cascada incompleta: nombraba `Usuario`, `Consentimiento` y `CapsulaDePerfil` y omitía en silencio un dato por usuario que sí se persiste. *(Sus campos siguen sin especificar: `PER-H4` continúa abierto.)*
+4. **`EventoOperativo` → añadida (resuelve D-12).** Es el **hecho de dominio** de que una conversación ocurrió, registrado *sin su contenido*: es lo que permite al administrador ver agregados sin ver a nadie en particular, que es una exigencia del canon (RN-03.3, PRIV-R10), no un detalle técnico. MV-01 §13.2 lo agrupaba con `MétricaDeUso` como «vista derivada (no clase)»; se resuelve la contradicción a su favor porque `Conversacion` **no se persiste** y sin esta clase la tasa de 7 días de ECU-09 sería incomputable. `MétricaDeUso` **sí sigue siendo vista derivada**.
+   **Riesgo declarado:** su ficha de persistencia (PER-01 §3.6) tiene campos claramente técnicos (`request_id`, `version_prompt`, `entorno`). Esos **no** son atributos de dominio y no se listan en §6: viven en PER-01. Si en una revisión posterior se concluye que la clase solo se sostiene por su tabla, procede sacarla como se hizo con `AccionAdministrativa`.
+5. **El administrador y sus funciones (refinamiento de SD-15, vigente).** Sigue **sin** dibujarse `Administrador -- Usuario` como **asociación**: sería una relación de acceso/comportamiento y la etiqueta «supervisa» se malinterpreta como que el admin vigila las conversaciones, lo que **viola el canon**. Lo que v1.3 añade es una **generalización** (ambos son titulares de cuenta), que es una relación distinta y no arrastra ese problema. «Ver directorio» y «ver métricas» siguen siendo **casos de uso**, no relaciones de dominio.
 6. **`Configuracion` → descartada.** Contenedor técnico de parámetros; los recursos y textos se aprovisionan **por entorno**. `RecursoDeAyuda` permanece como clase.
 7. **`EventoDeSeguridad` y `RecursoDeAyuda` → conservadas.** En un dominio de *safety*, el evento de riesgo es de primera clase.
 8. **`gate` / `fallback` / LLM / Groq / Django / SQLite → excluidos.** Mecanismos e infraestructura, no conceptos del problema.
@@ -56,14 +60,14 @@
 
 | Relación | Tipo | Justificación |
 |---|---|---|
-| `Cuenta <|-- Usuario` · `Cuenta <|-- Administrador` | **Generalización** | *Substitution test*: todo Usuario/Administrador **es** una Cuenta (§3.1) |
+| `TitularDeCuenta <|-- Usuario` · `TitularDeCuenta <|-- Administrador` | **Generalización** | *Substitution test*: todo Usuario/Administrador **es** un titular de cuenta (§3.1) |
 | `Personaje <|-- Alan` · `Personaje <|-- Aura` | **Generalización** | Todo Alan/Aura **es** un Personaje |
 | `Conversacion *-- Mensaje : contiene` | **Composición** | Ciclo de vida dependiente: los mensajes se descartan con la conversación (no persistencia, RN-04) |
-| `Visitante -- Cuenta : se registra y obtiene` | Asociación | Hecho de dominio (ECU-02) |
+| `Visitante -- TitularDeCuenta : se convierte en` | Asociación | Cambio de rol: quien consulta sin cuenta pasa a tenerla (ECU-02) |
 | `Usuario -- Consentimiento : otorga` | Asociación | Consentimiento informado |
 | `Usuario -- CapsulaDePerfil : posee` | Asociación | La cápsula describe mínimamente al usuario |
 | `Usuario -- Conversacion : mantiene` | Asociación | El usuario sostiene conversaciones |
-| `Usuario -- ContadorDeUsoDiario : acumula` | Asociación | Cuota de uso por usuario (RN-02.9) |
+| `Usuario -- ContadorDeUsoDiario : tiene` | Asociación | Cuota de uso por usuario (RN-02.9) |
 | `CapsulaDePerfil -- Conversacion : orienta` | Asociación | Minimización: es lo único que llega al modelo |
 | `Conversacion -- Personaje : acompañada por` | Asociación | Se conduce con Alan o Aura |
 | `Conversacion -- EventoOperativo : origina` | Asociación | Telemetría sin contenido; simétrica de `Mensaje -- EventoDeSeguridad` |
@@ -75,24 +79,28 @@
 **16 clases, 17 relaciones** (4 generalizaciones + 1 composición + 12 asociaciones). Etiquetas conceptuales; sin multiplicidades. **Sin clases huérfanas.**
 
 ## 5. Trazabilidad hacia los casos de uso
-Los sustantivos de este modelo **reaparecen por nombre** en DCU-01. La matriz clase ↔ caso de uso se publica en `TRZ-01` (novedad de PDR-01: antes no existía en ningún artefacto, que es lo que señaló el punto 4 de la retroalimentación docente).
+Los sustantivos de este modelo **reaparecen por nombre** en DCU-01. La matriz clase ↔ caso de uso **se publicará** en `TRZ-01` (fase D.5): hoy **no existe en ningún artefacto**, que es precisamente lo que señaló el punto 4 de la retroalimentación docente.
 
-Ejemplos de la correspondencia buscada: «Registrar cuenta» / «Eliminar cuenta» → `Visitante`, `Cuenta`, `Usuario` · «Otorgar consentimiento y crear la cápsula de perfil» → `Consentimiento`, `CapsulaDePerfil` · «Elegir acompañante (Alan o Aura)» → `Personaje`, `Alan`, `Aura` · «Derivar ante peligro» → `EventoDeSeguridad`, `RecursoDeAyuda` · «Habilitar o deshabilitar el chatbot» → `Administrador`, `DisponibilidadDelChatbot`.
+Ejemplos de la correspondencia buscada: «Registrar cuenta» / «Eliminar cuenta» → `Visitante`, `TitularDeCuenta`, `Usuario` · «Otorgar consentimiento y crear la cápsula de perfil» → `Consentimiento`, `CapsulaDePerfil` · «Elegir acompañante (Alan o Aura)» → `Personaje`, `Alan`, `Aura` · «Derivar ante peligro» → `EventoDeSeguridad`, `RecursoDeAyuda` · «Habilitar o deshabilitar el chatbot» → `Administrador`, `DisponibilidadDelChatbot`.
 
 > **Qué NO va en el dominio.** Las **acciones** (registrar, iniciar sesión, reiniciar, revocar, eliminar, ver directorio, ver métricas) **no** son atributos ni métodos aquí: el modelo **no lleva operaciones** (*academic strict*). Son casos de uso, y solo se vuelven métodos en la fase de diseño.
 
 ## 6. Diferido a fases posteriores
-- **Atributos:** `Cuenta.{username, alias, contrasena, rol}` · `Usuario.{esAdulto, versionDisclosure}` · `Consentimiento.{capa ∈ {base, personalizacion}, estado, fecha, version}` · `CapsulaDePerfil.{mood_self_report, energy_self_report, conversation_goal, response_style, character}` + `schema_version`/`consent_version` · `DisponibilidadDelChatbot.estado` · `ContadorDeUsoDiario.{…}` (**`PER-H4` abierto**) · `EventoOperativo.{timestamp, request_id, latencia, modelo, version_prompt, estado, entorno}`.
+- **Atributos:** `TitularDeCuenta.{username, alias, contrasena, rol}` · `Usuario.{esAdulto, versionDisclosure}` · `Consentimiento.{capa ∈ {base, personalizacion}, estado, fecha, version}` · `CapsulaDePerfil.{mood_self_report, energy_self_report, conversation_goal, response_style, character}` + `schema_version`/`consent_version` · `DisponibilidadDelChatbot.estado` · `ContadorDeUsoDiario.{…}` (**`PER-H4` abierto**) · `EventoOperativo.{momento, resultado}` — los campos técnicos restantes (`request_id`, `version_prompt`, `entorno`…) son de **persistencia**, viven en PER-01 §3.6 y **no** son atributos de dominio.
 - **Multiplicidades:** MV-01 §13.2 (diferidas).
 - **Clases de estado** candidatas, no incluidas: `EstadoConsentimiento`, `EstadoConversacion`.
 
 ## 7. Verificación
-- ✅ `@startuml … @enduml`; `linetype ortho`, `hide fields/methods/empty members`.
-- ✅ Sin operaciones, atributos, multiplicidades ni tipos (modo strict).
-- ✅ Sin clases de implementación/BD/UI/API/infra.
-- ✅ Generalizaciones `is-a` válidas (*substitution test*); composición justificada por ciclo de vida.
-- ✅ **Sin clases huérfanas**: las 16 participan en ≥1 relación.
-- ✅ **Validador `validate_domain_puml.py`: 0 errores / 0 advertencias.**
+
+**Comprobado por script** (`validate_domain_puml.py`): **0 errores / 0 advertencias**. Cubre sintaxis, ausencia de operaciones/atributos/multiplicidades, nombres técnicos, clases desconectadas y etiquetas procedimentales de su lista.
+
+**Comprobado a mano** (el validador no lo cubre):
+- ✅ Generalizaciones `is-a` sometidas al *substitution test* una por una. `TitularDeCuenta <|-- Usuario/Administrador` se replanteó en v1.3 precisamente porque `Cuenta <|-- Usuario` **no** lo pasaba (§3.1).
+- ✅ Composición justificada por ciclo de vida (los mensajes se descartan con la conversación).
+- ✅ Sin clases huérfanas: las 16 participan en ≥1 relación.
+- ✅ Etiquetas conceptuales, no procedimentales. La lista del validador no incluye «origina», «tiene» ni «condiciona»; se revisaron a mano.
+
+**Tensión declarada, no resuelta:** `ContadorDeUsoDiario` y `EventoOperativo` entran al dominio con justificación de regla de negocio (§3.3, §3.4), pero **su origen documental es el mapa de persistencia**. Un revisor puede objetar razonablemente que son infraestructura. La decisión y su motivo quedan por escrito para que sea discutible, no invisible.
 
 ## 8. Cómo renderizar
 El `.svg` se **regenera** desde el `.puml` (los colores y la tipografía viven en el propio `.puml` como `skinparam`, alineados con la paleta del repositorio):
@@ -104,7 +112,7 @@ java -jar plantuml.jar -tsvg -charset UTF-8 MD-01_modelo_dominio.puml
 También sirve VS Code (extensión *PlantUML* → *Preview*) o `plantuml.com`. Ante cualquier discrepancia, **el `.puml` es la fuente de verdad**.
 
 ## 9. Canon de dominio
-La `CapsulaDePerfil` (no el historial) es lo único que orienta la conversación (minimización); `Conversacion`/`Mensaje` no persisten (composición); `EventoDeSeguridad`/`RecursoDeAyuda` materializan la derivación segura; el `Personaje` no es identidad humana. **El `Administrador` no tiene ninguna relación con los datos conversacionales**: comparte con el `Usuario` únicamente la identidad de acceso (`Cuenta`).
+La `CapsulaDePerfil` (no el historial) es lo único que orienta la conversación (minimización); `Conversacion`/`Mensaje` no persisten (composición); `EventoDeSeguridad`/`RecursoDeAyuda` materializan la derivación segura; el `Personaje` no es identidad humana. **El `Administrador` no tiene ninguna relación con los datos conversacionales**: comparte con el `Usuario` únicamente la condición de titular de una cuenta.
 
 ## 10. Cierre
 - **Confirmado:** 16 clases, 17 relaciones (4 generalizaciones + 1 composición + 12 asociaciones), 5 paquetes, validador 0/0, sin huérfanas.

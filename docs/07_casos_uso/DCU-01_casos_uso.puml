@@ -53,13 +53,13 @@ Usuario -- CU_Chat
 Usuario -- CU_Elim
 Usuario -- CU_Reinit
 Usuario -- CU_Revoc
+Usuario -- CU_Cambiar
 Admin -- CU_Dir
 Admin -- CU_Met
 Admin -- CU_Kill
 CU_Chat -- LLM
 
 CU_Onb ..> CU_Elegir : <<include>>
-CU_Cambiar ..> CU_Elegir : <<include>>
 CU_Cambiar ..> CU_Chat : <<extend>>
 CU_Deriv ..> CU_Chat : <<extend>>\n(el gate detecta peligro explícito)
 @enduml
