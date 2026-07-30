@@ -22,6 +22,7 @@
 | **PLAN-CODEX-ORIGINAL** | `00_PLAN_CODEX_ORIGINAL.md` | **Fuente primaria verbatim** del plan generado con Codex. Ancla de toda cita "plan §X.Y" en el subproyecto. No se edita. |
 | — | `00_AUDITORIA_PLAN_CODEX.md` | Auditoría breve del plan (consume PLAN-CODEX-ORIGINAL). |
 | — | `grafo/README.md` | **Grafo de conocimiento propio del subproyecto** (SD-27): 2.876 nodos (262 del subproyecto + 2.614 de conocimiento) + vault de Obsidian trazable a cada documento fuente, aislado del macroproyecto. Ver detalle en `REGISTRO_DECISIONES.md` (SD-27). |
+| — | `GUIA_USO_GRAFO_Y_VAULT.md` | **Instructivo de uso de `grafo/`** (añadido 2026-07-27): cómo consultar el grafo por terminal, navegar el vault en Obsidian, la licencia del corpus de conocimiento y las trampas de `graphify` ya verificadas. Referencia canónica de `grafo/`. |
 
 ## Contenido (`docs/`)
 | ID | Archivo | Insumos | Consumidores |

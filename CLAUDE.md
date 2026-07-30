@@ -32,3 +32,8 @@
 - **Fase 1 (documental) — cerrada:** visión, ADR, modelos verbales, RF/RNF, requisitos de calidad, reglas de negocio, privacidad, protocolo de seguridad, puente normativo, trazabilidad, plan de proyecto.
 - **Fase 2 (ICONIX) — en curso:** producidos el **modelo de dominio** (`MD-01`), el **diagrama de casos de uso** (`DCU-01`) y la **especificación textual de los casos de uso** (`ECU-00…ECU-10`).
 - **Fuera de alcance por ahora (no adelantar):** análisis de robustez, secuencias, diseño de clases y código. Quedan planificados, no producidos. **Siguiente artefacto ICONIX: el análisis de robustez.**
+
+## 7. Grafo de conocimiento y vault de Obsidian (`grafo/`, navegación — no es un entregable)
+- **`grafo/`** (SD-27, 2026-07-25) es una capa de navegación derivada de `docs/` + corpus de conocimiento, **no** un artefacto de la Fase 1/2. **No se edita a mano** (ni el `.json` ni las notas del vault); si algo cambia, se corrige en `docs/` y se regenera con los scripts de `grafo/scripts/`.
+- **Guía completa y canónica: `GUIA_USO_GRAFO_Y_VAULT.md`** (raíz) — qué contiene, cómo consultarlo por terminal (`graphify query/explain/path --graph grafo/graph_subproyecto_final.json`), estructura del vault, licencia del corpus de conocimiento (excluido de git, se reconstruye aparte) y trampas conocidas de `graphify`.
+- **Prohibido:** `graphify extract`/`update`/`cluster-only`/`merge-graphs` sobre `graph_subproyecto_final.json` fuera de un trabajo deliberado con los scripts existentes — reindexar cuesta cuota y puede destruir el nombrado de comunidades ya hecho.

@@ -32,3 +32,6 @@ De un **plan generado con Codex** (auditado en `../../00_AUDITORIA_PLAN_CODEX.md
 
 ## Mapa rápido
 `01_vision/` visión y decisiones · `02_modelos_verbales/` MV + contrato · `03_requisitos/` RF-RNF-calidad-reglas, privacidad, seguridad · `04_trazabilidad/` norma y trazabilidad · `05_plan/` cronograma. Índice completo en `INDICE_MAESTRO.md`.
+
+## Grafo de conocimiento (navegación, no entregable)
+`grafo/` (SD-27) es un mapa de relaciones sobre los 37 documentos de `docs/` + el corpus de conocimiento (libros y normas) — 2.876 nodos, consultable por terminal (`graphify query/explain/path`) o visualmente en Obsidian (`grafo/vault/`). No sustituye a `docs/` ni se edita a mano. Instructivo completo: `GUIA_USO_GRAFO_Y_VAULT.md` (raíz).
