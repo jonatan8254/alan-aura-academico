@@ -1,9 +1,9 @@
 # DCU-01 — Diagrama de casos de uso del MVP «Alan & Aura Académico»
-**ID:** DCU-01 · **Familia:** DCU (casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-07-30 · **Versión:** v2.0 (PDR-01: 10 → 14 casos de uso; responde al punto 3 de la retroalimentación docente).
+**ID:** DCU-01 · **Familia:** DCU (casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-07-30 · **Versión:** v2.1 (PDR-01 tanda 0: compuertas y catálogo de antipatrones de la skill ejecutados por primera vez sobre este artefacto — **sin cambios en el `.puml`**; el resultado se registra en §5). v2.0: 10 → 14 casos de uso, responde al punto 3 de la retroalimentación docente.
 **Artefacto ejecutable:** [`DCU-01_casos_uso.puml`](DCU-01_casos_uso.puml) (**fuente de verdad**). **Render acompañante:** [`DCU-01_casos_uso.svg`](DCU-01_casos_uso.svg), regenerable desde el `.puml`.
 **Insumos:** MV-01, **MD-01 v1.3** (vocabulario controlado — **no** se copian clases; de ahí sale el rol general `Titular de cuenta`), VIS-01, REQ-01 (RF-01…26), contrato conversacional, SEG-01, plan §5.3, **retroalimentación docente** (se registrará en `RET-01`, fase D.6).
 **Consumidores:** `ECU-01…ECU-14`, robustez (`DR-01…DR-14`), secuencia, pruebas.
-**Generado con:** skill `uml-use-case-diagram`. **Validador:** `validate_use_case_puml.py` → **0 errores / 0 advertencias**.
+**Generado con:** skill `uml-use-case-diagram`; sus **compuertas finales y su catálogo de antipatrones** se ejecutaron sobre este artefacto en v2.1 (§5). **Validador:** `validate_use_case_puml.py` → **0 errores / 0 advertencias**, con el alcance acotado que se declara en §5.
 **Naturaleza:** **vista funcional** — un resumen (tabla de contenidos) de las metas de los actores. **No** es un flujo, ni un algoritmo, ni UI, ni arquitectura. La sustancia (flujos, pre/postcondiciones, reglas) vive en la **especificación textual**.
 
 ---
@@ -80,6 +80,16 @@ El punto 3 de la retroalimentación docente decía: «*los requisitos funcionale
 
 > **Alcance real de ese 0/0, dicho sin adornos.** (a) La advertencia de «acceso/autenticación» de v1.0 desaparece porque el script compara **subcadenas literales** y «Iniciar y cerrar sesión» ya no contiene «iniciar sesión» — el script **no** evalúa si la gestión de sesión es explícita. Lo que sostiene el *gate* es RF-14/RF-21/RNF-08 (login, logout, roles), no el validador. (b) La comprobación de **disciplina de asociación** exige flechas (`-+>`) y este `.puml` usa `--`, así que **no se ejecutó**. Se corrió aparte sobre una copia con flechas: avisa de que `Usuario` tiene 6 asociaciones, y se verificó a mano que las seis son metas independientes y ninguna es subpaso de otra.
 
+**Comprobado a mano contra el catálogo de antipatrones de la skill** (14 entradas; ejecutado en v2.1): **0 críticos, 0 mayores**. Tres moderados, todos declarados:
+
+| Antipatrón | Situación en v2.0/v2.1 | Decisión |
+|---|---|---|
+| **#12 «Demasiados casos de uso»** — el trap de Wiegers, *«un solo escenario estalla en 15+»* | 14 casos de uso, justo bajo el umbral | **Se conserva.** El trap describe **un escenario** descompuesto en pasos; aquí son **tres áreas de negocio con metas independientes** (acceso y cuenta, acompañamiento, administración). El aumento de 10 → 14 es la respuesta directa al punto 3 de la retroalimentación docente, que midió que 13 de 26 RF no tenían manifestación gráfica. Subir de 14 sí sería motivo de revisión |
+| **#6 «`<<include>>` usado como secuencia temporal»** | `CU-05 ..> CU-14` extrae los pasos 8-9 del final del onboarding | **Se conserva, ya justificado en §4.** No es *meramente* orden temporal: RF-06 es un requisito propio y la extracción es lo que trae `Personaje`/`Alan`/`Aura` al diagrama (punto 4 del profesor) |
+| **#13 «Subfunción como caso de uso»** | `CU-14` es, por naturaleza, una subfunción | **Se conserva.** Cae en la excepción que el propio catálogo admite: *«o, raramente, un `<<include>>` justificado»* |
+
+Antipatrones descartados sin reserva: sin flujo disfrazado de diagrama, sin validaciones/cálculos/persistencia como casos de uso (RF-10 y RF-26 quedaron fuera y declarados en §4), sin actor colgado de subfunciones (`CU-14` y `CU-07` no tienen asociación de actor), sin clases del dominio copiadas, sin salida automática atribuida al actor, sin generalización de casos de uso, y ningún alias con tildes ni espacios.
+
 **Comprobado a mano:**
 - ✅ Los 14 son metas de actor, no flujos, validaciones, cálculos ni pasos de UI.
 - ✅ Disciplina de asociación (§4), verificada elemento por elemento.
@@ -93,7 +103,7 @@ java -jar plantuml.jar -tsvg -charset UTF-8 DCU-01_casos_uso.puml
 La paleta vive en el propio `.puml` como `skinparam`, alineada con MD-01. Ante discrepancia, **el `.puml` manda**.
 
 ## 7. Cierre
-- **Confirmado:** **5 actores** (4 concretos + el rol general `Titular de cuenta`), **14 casos de uso**, 3 paquetes, **13 asociaciones**, 2 generalizaciones de actor, 1 `<<include>>`, 2 `<<extend>>`, validador 0/0.
+- **Confirmado:** **5 actores** (4 concretos + el rol general `Titular de cuenta`), **14 casos de uso**, 3 paquetes, **13 asociaciones**, 2 generalizaciones de actor, 1 `<<include>>`, 2 `<<extend>>`, validador 0/0, compuertas y antipatrones de la skill superados (0 críticos, 0 mayores).
 - **Cobertura:** 26/26 RF; **13 con caso de uso propio** frente a los 9 de v1.0.
 - **Siguiente:** especificación textual `ECU-01…ECU-14` y robustez `DR-01…DR-14`.
 

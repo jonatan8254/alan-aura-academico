@@ -54,7 +54,7 @@ TitularDeCuenta <|-- Administrador
 Personaje <|-- Alan
 Personaje <|-- Aura
 
-Visitante -- TitularDeCuenta : se convierte en
+Visitante -- TitularDeCuenta : precede a
 Usuario -- Consentimiento : otorga
 Usuario -- CapsulaDePerfil : posee
 Usuario -- Conversacion : mantiene
@@ -62,9 +62,9 @@ Usuario -- ContadorDeUsoDiario : tiene
 CapsulaDePerfil -- Conversacion : orienta
 Conversacion -- Personaje : acompañada por
 Conversacion *-- Mensaje : contiene
-Conversacion -- EventoOperativo : origina
-Mensaje -- EventoDeSeguridad : origina
+Conversacion -- EventoOperativo : se documenta con
+Mensaje -- EventoDeSeguridad : se documenta con
 EventoDeSeguridad -- RecursoDeAyuda : remite a
-Administrador -- DisponibilidadDelChatbot : controla
+Administrador -- DisponibilidadDelChatbot : tiene a cargo
 DisponibilidadDelChatbot -- Conversacion : condiciona
 @enduml
