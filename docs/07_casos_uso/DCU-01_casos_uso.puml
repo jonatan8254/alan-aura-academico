@@ -3,6 +3,15 @@ left to right direction
 skinparam linetype ortho
 skinparam packageStyle rectangle
 skinparam shadowing false
+skinparam defaultFontName Segoe UI, Helvetica, Arial, sans-serif
+skinparam defaultFontSize 13
+skinparam ArrowColor #5F5E5A
+skinparam PackageBackgroundColor transparent
+skinparam PackageBorderColor #B4B2A9
+skinparam PackageFontColor #5F5E5A
+skinparam PackageFontSize 12
+skinparam ActorBorderColor #2C2C2A
+skinparam ActorBackgroundColor #F1EFE8
 
 actor "Visitante" as Visitante
 actor "Usuario adulto" as Usuario
@@ -11,34 +20,43 @@ actor "Proveedor LLM (Groq)" as LLM <<sistema externo>>
 
 rectangle "Alan & Aura Académico" {
   package "Acceso y cuenta" {
-    usecase "Consultar presentación del servicio" as CU_Pres
-    usecase "Registrar cuenta" as CU_Reg
-    usecase "Iniciar sesión" as CU_Login
-    usecase "Gestionar cuenta y datos personales" as CU_Cuenta
+    usecase "Consultar presentación del servicio" as CU_Pres #E6F1FB;line:185FA5;text:0C447C
+    usecase "Registrar cuenta" as CU_Reg #E6F1FB;line:185FA5;text:0C447C
+    usecase "Iniciar y cerrar sesión" as CU_Login #E6F1FB;line:185FA5;text:0C447C
+    usecase "Eliminar cuenta" as CU_Elim #E6F1FB;line:185FA5;text:0C447C
+    usecase "Reiniciar la caracterización" as CU_Reinit #E6F1FB;line:185FA5;text:0C447C
+    usecase "Revocar la personalización" as CU_Revoc #E6F1FB;line:185FA5;text:0C447C
   }
   package "Acompañamiento" {
-    usecase "Otorgar consentimiento y caracterizar el perfil" as CU_Onb
-    usecase "Conversar con el acompañante" as CU_Chat
-    usecase "Derivar ante peligro" as CU_Deriv
+    usecase "Otorgar consentimiento y crear la cápsula de perfil" as CU_Onb #E1F5EE;line:0F6E56;text:04342C
+    usecase "Elegir acompañante (Alan o Aura)" as CU_Elegir #E1F5EE;line:0F6E56;text:04342C
+    usecase "Conversar con el acompañante" as CU_Chat #E1F5EE;line:0F6E56;text:04342C
+    usecase "Cambiar de acompañante" as CU_Cambiar #E1F5EE;line:0F6E56;text:04342C
+    usecase "Derivar ante peligro" as CU_Deriv #FAECE7;line:993C1D;text:4A1B0C
   }
   package "Administración de plataforma" {
-    usecase "Consultar directorio de usuarios" as CU_Dir
-    usecase "Consultar métricas de uso" as CU_Met
-    usecase "Habilitar o deshabilitar el chatbot" as CU_Kill
+    usecase "Consultar directorio de usuarios" as CU_Dir #F1EFE8;line:5F5E5A;text:2C2C2A
+    usecase "Consultar métricas de uso" as CU_Met #F1EFE8;line:5F5E5A;text:2C2C2A
+    usecase "Habilitar o deshabilitar el chatbot" as CU_Kill #F1EFE8;line:5F5E5A;text:2C2C2A
   }
 }
 
 Visitante -- CU_Pres
 Visitante -- CU_Reg
 Usuario -- CU_Login
-Admin -- CU_Login
 Usuario -- CU_Onb
 Usuario -- CU_Chat
-Usuario -- CU_Cuenta
-CU_Chat -- LLM
+Usuario -- CU_Elim
+Usuario -- CU_Reinit
+Usuario -- CU_Revoc
+Admin -- CU_Login
 Admin -- CU_Dir
 Admin -- CU_Met
 Admin -- CU_Kill
+CU_Chat -- LLM
 
-CU_Deriv ..> CU_Chat : <<extend>>
+CU_Onb ..> CU_Elegir : <<include>>
+CU_Cambiar ..> CU_Elegir : <<include>>
+CU_Cambiar ..> CU_Chat : <<extend>>
+CU_Deriv ..> CU_Chat : <<extend>>\n(el gate detecta peligro explícito)
 @enduml
