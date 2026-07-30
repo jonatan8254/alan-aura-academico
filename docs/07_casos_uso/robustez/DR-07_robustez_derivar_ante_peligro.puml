@@ -1,0 +1,115 @@
+@startuml
+' DR-07 — Analisis de robustez de CU-07 «Derivar ante peligro» (<<extend>> de CU-06)
+' Insumos: ECU-07, MD-01, DCU-01, DIS-00 (P-12, P-10), SEG-01, contrato conversacional
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Usuario adulto" as ACT_Usuario
+
+boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
+boundary "Contencion y derivacion (P-12)" as B_PantallaContencion
+
+control "Detectar el peligro explicito y suspender la respuesta ordinaria" as C_DetectarPeligro
+control "Mantener el modo seguro" as C_MantenerModoSeguro
+control "Mostrar el mensaje fijo de contencion" as C_MostrarContencion
+control "Derivar a los recursos de ayuda del entorno" as C_DerivarARecursos
+control "Marcar el turno como fallback seguro" as C_MarcarFallback
+control "Bloquear el chat ordinario de la sesion" as C_BloquearChatOrdinario
+control "Permitir iniciar una sesion nueva" as C_PermitirSesionNueva
+control "Orientar a emergencias sin numeros embebidos" as C_OrientacionGenerica #LightCoral
+
+entity "Mensaje" as E_Mensaje
+entity "EventoDeSeguridad" as E_EventoDeSeguridad
+entity "RecursoDeAyuda" as E_RecursoDeAyuda
+entity "Conversacion" as E_Conversacion
+
+ACT_Usuario -- B_InterfazDeChat : PRE-02 ha enviado un mensaje que el gate evalua
+ACT_Usuario -- B_PantallaContencion : 7 elige iniciar una sesion nueva
+B_InterfazDeChat -- C_DetectarPeligro : 1 el gate detecta peligro explicito
+C_DetectarPeligro -- E_Mensaje : 1 evalua el mensaje del turno, sin almacenarlo
+C_DetectarPeligro -- E_EventoDeSeguridad : 1 origina el evento de seguridad, sin contenido individual
+C_DetectarPeligro -- C_MantenerModoSeguro : 2 no interpreta clinicamente ni hace preguntas exploratorias; FE-01 la cadena es determinista y local y opera aunque el proveedor y la red esten caidos
+C_MantenerModoSeguro -- C_MostrarContencion : 3 suspende la personalidad, sin humor ni metaforas
+C_MostrarContencion -- B_PantallaContencion : 3 presenta la contencion
+C_MostrarContencion -- C_DerivarARecursos : 4 orienta a emergencias y apoyo humano
+C_DerivarARecursos -- E_RecursoDeAyuda : 4 lee los recursos aprovisionados por entorno
+C_DerivarARecursos -- B_PantallaContencion : 4 muestra los recursos de derivacion
+C_DerivarARecursos -- C_MarcarFallback : 5 devuelve el modo safety_fallback
+C_MarcarFallback -- C_BloquearChatOrdinario : 6 suspende el dialogo normal
+C_BloquearChatOrdinario -- E_Conversacion : 6 suspende la conversacion de la sesion
+C_BloquearChatOrdinario -- B_InterfazDeChat : 6 el chat ordinario queda bloqueado
+B_PantallaContencion -- C_PermitirSesionNueva : 7 solicita una sesion nueva
+C_PermitirSesionNueva -- E_Conversacion : 7 habilita una conversacion nueva
+C_PermitirSesionNueva -- B_InterfazDeChat : 7 reabre el chat en una sesion nueva
+C_DerivarARecursos -- C_OrientacionGenerica : FA-01 FE-02 los recursos por entorno no estan disponibles o la configuracion es erronea
+C_OrientacionGenerica -- B_PantallaContencion : FA-01 orienta sin numeros embebidos
+C_OrientacionGenerica -- C_MarcarFallback : FA-01 continua al paso 5
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR07
+  <b>CU-07 - Derivar ante peligro</b> (ECU-07) - <<extend>> de CU-06, punto de extension:
+  la evaluacion del gate (paso 3 de CU-06). El Usuario es beneficiario: NO lo solicita.
+  Disparador: el gate de seguridad detecta peligro explicito (RN-11) en un mensaje del usuario;
+  el sistema suspende la respuesta ordinaria del turno. Generado por el Sistema.
+  PRE-01 existe una Conversacion activa (CU-06 en curso). PRE-02 el usuario envio un Mensaje
+  evaluado por el gate. PRE-03 el gate y los recursos estan aprovisionados por entorno.
+
+  <b>Flujo basico</b> (el fallback es determinista y local: opera aunque el LLM o la red esten caidos)
+  1. El sistema detecta peligro explicito y suspende la respuesta ordinaria; origina el
+     EventoDeSeguridad.
+  2. El sistema no interpreta clinicamente ni hace preguntas exploratorias; mantiene el modo
+     seguro.
+  3. El sistema muestra un mensaje fijo de contencion, sin humor ni metaforas (C-10: en modo
+     seguridad se suspende la personalidad).
+  4. El sistema orienta a emergencias y apoyo humano mostrando los RecursoDeAyuda del entorno.
+  5. El sistema devuelve mode=safety_fallback y marca el turno como fallback.
+  6. El sistema bloquea el chat ordinario para esa sesion.
+  7. (posterior) El Usuario puede iniciar una sesion nueva.
+  8. El sistema no almacena el contenido ni contabiliza una clasificacion de riesgo.
+
+  <b>Cursos alternativos</b>
+  FA-01 Recursos no configurados (paso 4): el sistema muestra la contencion y una orientacion
+        generica a emergencias y apoyo humano, sin numeros embebidos; continua en el paso 5.
+
+  <b>Cursos de excepcion</b>
+  FE-01 LLM o red caidos (cualquier paso): el fallback igual opera (determinista y local):
+        muestra contencion y derivacion. Es el diseno fail-safe, no hay recuperacion.
+  FE-02 Falla al leer recursos (paso 4): configuracion ausente o erronea; aplica FA-01
+        (contencion mas orientacion generica); nunca rompe la interfaz.
+
+  <b>Postcondicion</b> Se mostro la contencion y la derivacion; el chat ordinario quedo
+  suspendido en la sesion; no se almacena contenido; no hay clasificacion de riesgo, ni
+  registro individual para el admin, ni notificacion a terceros.
+  <b>Reglas</b> RN-05, RN-11, RN-06; C-3, C-7, C-10.
+  <b>Traza</b> RF-11 -> OBJ-3; SEG-R1..SEG-R6.
+  <b>Pantallas</b> P-12 (contencion y derivacion) y P-10 (chat, pasos 6-7).
+
+  <b>Notas de modelado</b>
+  - <b>Pasos 2 y 8 son prohibiciones (no-acciones).</b> El paso 2 tiene contenido positivo
+    ("mantiene el modo seguro") y se dibuja con la prohibicion como calificador de la
+    etiqueta. El paso 8 no tiene contenido positivo alguno: se realiza como la AUSENCIA de
+    todo Controlador de persistencia o de clasificacion de riesgo en este diagrama. Por eso
+    la unica escritura que aparece, el EventoDeSeguridad, va etiquetada "sin contenido
+    individual" (§14, CA-04).
+  - <b>FE-01 no es una rama:</b> es una propiedad de toda la cadena. Se etiqueta sobre el
+    enlace del paso 2 y NO se dibuja como atajo, porque un camino que saltara el modo seguro
+    contradiria C-10 justo en el caso de uso mas critico. La realizacion de FE-01 es que en
+    este diagrama no existe ninguna frontera con el Proveedor LLM: nada de lo que se dibuja
+    depende de el.
+  - <b>C-10 no tiene Controlador propietario</b>, y es deliberado: la suspension de la
+    personalidad no es una accion aparte sino una propiedad del texto fijo de contencion
+    (el mensaje del paso 3 ya viene sin humor ni metaforas, aprovisionado por entorno).
+  - <b>PRE-01 y PRE-03 no se re-verifican aqui:</b> este CU se dispara desde el paso 3 de
+    CU-06 y hereda su contexto ya validado. La asimetria con DR-06 —que si dibuja un
+    Controlador por precondicion— es deliberada, no un olvido.
+  - FA-01 y FE-02 comparten controlador y arco: ECU-07 les asigna el mismo disparador
+    (paso 4) y el mismo resultado ("aplica FA-01"). La distincion entre "no disponibles" y
+    "ausente o erronea" no esta definida en el texto; queda reportada.
+end note
+
+@enduml

@@ -1,0 +1,71 @@
+@startuml
+' DR-01 — Analisis de robustez de CU-01 «Consultar presentacion del servicio»
+' Insumos: ECU-01, MD-01, DCU-01, DIS-00 (P-01; continuacion P-02/P-03), MV-01, REQ-01
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Visitante" as ACT_Visitante
+
+boundary "Presentacion / landing (P-01)" as B_PaginaPresentacion
+boundary "Registro (P-02)" as B_FormularioRegistro #LightCoral
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
+
+control "Mostrar la presentacion del servicio" as C_MostrarPresentacion
+control "Mantener visibles los accesos a registro e inicio de sesion" as C_MantenerAccesosVisibles
+control "Dirigir al acceso de registro" as C_DirigirARegistro #LightCoral
+control "Dirigir al acceso de inicio de sesion" as C_DirigirAInicioSesion #LightCoral
+control "Mostrar el estado de indisponibilidad" as C_MostrarIndisponibilidad #LightCoral
+
+ACT_Visitante -- B_PaginaPresentacion : 1 solicita la pagina de presentacion
+B_PaginaPresentacion -- C_MostrarPresentacion : 1 mostrar proposito no clinico, limites y accesos
+C_MostrarPresentacion -- C_MantenerAccesosVisibles : 2 el Visitante lee el alcance y los limites
+C_MantenerAccesosVisibles -- B_PaginaPresentacion : 2 mantiene visibles los accesos
+B_PaginaPresentacion -- C_DirigirARegistro : 3 FA-01 elige registrarse
+B_PaginaPresentacion -- C_DirigirAInicioSesion : 3 FA-02 elige iniciar sesion
+C_DirigirARegistro -- B_FormularioRegistro : FA-01 continua en CU-02
+C_DirigirAInicioSesion -- B_PaginaInicioSesion : FA-02 continua en CU-03
+C_MostrarPresentacion -- C_MostrarIndisponibilidad : FE-01 el servicio esta caido o en mantenimiento
+C_MostrarIndisponibilidad -- B_PaginaPresentacion : FE-01 permite reintentar sin crear sesion
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR01
+  <b>CU-01 - Consultar presentacion del servicio</b> (ECU-01) - actor: Visitante
+  PRE-01 el sistema esta desplegado y disponible; no requiere autenticacion.
+
+  <b>Flujo basico</b>
+  1. El Visitante solicita la pagina de presentacion. El sistema muestra la presentacion
+     publica: proposito de acompanamiento no clinico, limites (no diagnostica, no atiende
+     urgencias en autonomia) y accesos (registro / inicio de sesion).
+  2. El Visitante lee el alcance y los limites del servicio. El sistema mantiene visibles
+     los accesos a registro e inicio de sesion.
+  3. El Visitante elige registrarse o iniciar sesion. El sistema lo dirige al acceso elegido.
+
+  <b>Cursos alternativos</b>
+  FA-01 Continuar a registro: el Visitante decide registrarse; el sistema lo dirige al
+        acceso de registro y continua en CU-02.
+  FA-02 Continuar a inicio de sesion: el Visitante ya tiene cuenta; el sistema lo dirige
+        al acceso de inicio de sesion y continua en CU-03.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Pagina de presentacion no disponible: el servicio esta caido o en mantenimiento;
+        el sistema muestra un estado de indisponibilidad y permite reintentar.
+        Sin sesion creada; sin datos capturados.
+
+  <b>Postcondicion</b> El Visitante queda informado del alcance, los limites y los accesos;
+  no se captura ningun dato; no se crea sesion.
+  <b>Reglas</b> RN-04.5, RN-09. <b>Traza</b> RF-19 -> OBJ-7.
+  <b>Pantallas</b> P-01 propia; P-02 y P-03 solo como destino de continuacion (CU-02/CU-03).
+
+  <b>Notas de modelado</b>
+  - <b>Sin objetos tipo Entidad:</b> ECU-01 declara "ninguno persistente"; la postcondicion
+    afirma que no se captura ningun dato. La ausencia es fiel al texto, no un olvido.
+  - El estado de indisponibilidad (FE-01) se pinta sobre P-01, cuyos estados clave en
+    DIS-00 §2 son "default / servicio no disponible": no requiere pantalla nueva.
+end note
+
+@enduml
