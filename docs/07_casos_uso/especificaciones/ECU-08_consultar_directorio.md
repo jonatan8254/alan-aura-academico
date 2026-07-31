@@ -1,96 +1,212 @@
 # ECU-08 — Especificación de caso de uso: «Consultar directorio de usuarios» (CU-08)
-**ID documento:** DOC-CU-08 · **Caso de uso:** CU-08 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-25 · **Versión:** v1.1 (SD-26: dominio de valores de `estado` fijado — resolución de PER-H3) · **Estado:** Propuesto.
-**Insumos:** DCU-01, MV-01, MD-01, REQ-01, PRIV-01, VIS-01, PER-01, plan §3.2/§3.7/§4.9.
-**Forma:** **ágil** (núcleo ICONIX / plantilla §23).
-**Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
+**ID documento:** DOC-CU-08 · **Caso de uso:** CU-08 · **Alias en DCU-01:** `CU_Dir` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.0 (PDR-01, fase D.3, tanda 4) · **Estado:** Propuesto.
+**Forma:** **ágil** (núcleo de dos párrafos + campos mínimos, §23 de la plantilla de la skill `use-case-specifier`) — consulta de solo lectura, sin efectos sobre datos persistidos.
+**Insumos:** DCU-01 v2.1, MD-01 v1.4, MV-01 §7.4 (vista Administración) y §11 (tabla de alias), REQ-01 v1.4 (RF-15, RNF-08), PRIV-01 v1.4 (PRIV-R6/R7/R10/R12), PER-01 v1.1 (PER-T4, PER-H3), VIS-01 §3.2 y §5, DIS-00 §2 paquete C (P-14). **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
+**Origen de la revisión:** v1.1 nombraba el estado del directorio como derivado de `ConsentRecord`, que es el nombre de **persistencia** (vive en PER-01) y no el del dominio (hallazgo D-11); además omitía `Consentimiento` de sus conceptos, citaba el flujo alternativo de otro caso de uso por identificador, alojaba la precondición en una celda compartida y dejaba sus dos excepciones sin desenlace.
 
 ---
 
-## 1. Identificación
-**ID:** CU-08 · **Nombre:** Consultar directorio de usuarios · **Paquete:** Administración de plataforma · **Actor primario:** Administrador de plataforma · **Nivel:** Usuario · **Prioridad:** Media · **Frecuencia:** Baja · **Criticidad:** Media (privacidad) · **Estado:** Propuesto.
+## 1. Identificación y control
 
-## 2. Núcleo del caso de uso (versión resumida §23)
 | Campo | Valor |
 |---|---|
-| Objetivo | Que el Administrador vea un directorio mínimo de usuarios para operar la plataforma, sin acceder a datos individuales sensibles. |
-| Disparador | El Administrador, autenticado, abre la vista de directorio en el panel. |
-| Precondiciones | PRE-01 (Autorización): el Administrador tiene sesión con rol=admin validado en servidor (ver CU-03/FA-01). |
-| Conceptos del dominio | Usuario (se consulta como vista mínima). |
-| Postcondición de éxito | El Administrador ve la lista con campos mínimos; no se expone contenido individual. |
-| Casos relacionados | Requiere CU-03 (Iniciar sesión — login admin); hermano de CU-09 (Consultar métricas de uso) y CU-10 (Habilitar o deshabilitar el chatbot). |
+| ID | CU-08 |
+| Nombre | Consultar directorio de usuarios |
+| Paquete funcional | Administración de plataforma |
+| Nivel de abstracción | Usuario |
+| **Actor primario** | Administrador de plataforma |
+| Prioridad | Media |
+| Frecuencia de uso | Baja |
+| Criticidad | **Alta en privacidad** (es el único punto donde un rol distinto del titular mira cuentas ajenas), baja en función |
+| Estado | Propuesto |
 
-### 2.1 Flujo básico
-| Paso | Responsable | Acción | Concepto | Respuesta |
-|---|---|---|---|---|
-| 1 | Administrador | Abre la vista de directorio en el panel administrativo. | Interfaz: Panel administrativo (vista de directorio) | El sistema muestra el directorio mínimo: alias, ID truncado, fecha de registro, **estado ∈ {activo, sin consentimiento vigente}** (derivado de `ConsentRecord`) y si completó el onboarding. |
-| 2 | Administrador | Revisa la lista del directorio. | Usuario (vista mínima) | El sistema mantiene ocultos el username completo, las respuestas de encuesta, la CapsulaDePerfil, los Mensajes y el personaje elegido. |
+> **Por qué es un caso de uso y no una relación de dominio.** MV-01 §4 retira del modelo la asociación `Administrador -- Usuario`: ver el directorio y ver las métricas quedan clasificados allí como **casos de uso y vistas derivadas** sobre `Usuario`, no como relaciones conceptuales. MD-01 v1.4 lo respeta —la única asociación del `Administrador` es con `DisponibilidadDelChatbot`—, así que este caso de uso construye una **vista mínima** sobre `Usuario` sin que exista vínculo conceptual de supervisión.
 
-### 2.2 Flujos alternativos
-| ID | Nombre | Condición | Resultado |
+**Control terminológico**
+
+| Término oficial | Significado | Sinónimos o términos prohibidos | Observación |
 |---|---|---|---|
-| — | No aplica | — | No aplica — vista única en el MVP. El directorio no pagina ni filtra (una sola vista, sin variantes). |
+| `Usuario` | Clase de MD-01 v1.4; persona adulta registrada, subtipo de `TitularDeCuenta` | prohibido: «cliente», «paciente», «perfil» | El directorio muestra una **vista mínima** sobre esta clase, nunca la cuenta completa |
+| `Consentimiento` | Clase de MD-01 v1.4; aceptación **granular por capas** y revocable | prohibido: **`ConsentRecord`** (nombre de persistencia: vive en PER-01 §2, no en las especificaciones), «permiso», «términos» | Origen del `estado` que muestra el directorio. La corrección del nombre es el hallazgo D-11 de esta versión |
+| `estado` (del directorio) | Valor **derivado** ∈ {activo, sin consentimiento vigente} | prohibido: «suspendido», «bloqueado», «baja» | No es campo editable ni suspensión: VIS-01 §5 excluye la suspensión individual del alcance del administrador |
+| `ID truncado` | Identificador de cuenta acortado, que no permite señalar a una persona | prohibido: «username», «ID completo», «correo» | Se escribe **`ID truncado`** en todo el documento porque así lo nombran REQ-01 (RF-15), MV-01 §7.4, PER-01 (PER-T4) y DIS-00 §3; no se introduce ninguna variante |
+| `Personaje` | Clase de MD-01 v1.4, especializada en `Alan` y `Aura` | prohibido: «bot», «asistente» | Aparece aquí solo como dato **prohibido**: el `Personaje` elegido por cada `Usuario` es uno de los que el directorio no expone. «Acompañante» es su alias de producto en uso activo, declarado en la tabla de alias de MV-01 §11 |
+| Directorio de usuarios | Vista derivada de solo lectura sobre las cuentas de `Usuario` | prohibido: «reporte», «tablero», «exportación» | No hay clase `Directorio` en MD-01: es una vista del caso de uso, y VIS-01 §5 excluye la exportación masiva |
 
-### 2.3 Flujos de excepción
-| ID | Error | Causa | Respuesta | Estado final |
-|---|---|---|---|---|
-| FE-01 | Sesión ausente | Quien intenta abrir el directorio no tiene una sesión activa (no autenticado). | El sistema responde `401` y no muestra el directorio. | Sin acceso. |
-| FE-02 | Rol insuficiente | Quien intenta abrir el directorio está autenticado pero no tiene rol=admin (usuario ordinario). | El sistema responde `403` y no muestra el directorio. | Sin acceso. |
+## 2. Núcleo del caso de uso
 
-## 3. Reglas de negocio (por ID)
-| ID | Regla | Fuente |
-|---|---|---|
-| RN-03.1 | El Administrador tiene exactamente tres funciones (directorio, métricas, kill switch); consultar el directorio es una de ellas. | MV-01 §7.4; REQ-01 §1 |
-| RN-03.2 | El directorio muestra únicamente: alias, ID truncado, fecha de registro, **estado ∈ {activo, sin consentimiento vigente}** y si completó el onboarding. `estado` es **derivado** de `ConsentRecord`, no un campo editable ni una suspensión — la suspensión individual está fuera de alcance (VIS-01 §5). *(Dominio de valores fijado en SD-26, resolución de PER-H3.)* | REQ-01 §1 (RF-15); MV-01 §7.2–§7.5; PER-01 §3.1 |
-| RN-03.5 | El Administrador no ve username completo, respuestas de encuesta, CapsulaDePerfil, Mensajes, personaje elegido, conteos por usuario, contraseñas ni tokens. | REQ-01 §4 (consolidado); MV-01 §7.2–§7.5 |
-| PRIV-R10 | El administrador ve solo agregados y el directorio truncado (alias, ID truncado, estado, onboarding); nunca contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | PRIV-01 §3 |
-| RNF-08 | El rol (usuario/administrador) se determina y valida en el servidor; no seleccionable ni alterable desde el cliente. | REQ-01 §2 |
+**Curso básico.** Con la sesión administrativa abierta, el Administrador de plataforma abre el **Directorio de usuarios** en el panel de administración. El Sistema arma una vista mínima sobre las cuentas de `Usuario` y presenta cinco columnas, y solo cinco: alias, ID truncado, fecha de registro, `estado` ∈ {activo, sin consentimiento vigente} —que el Sistema deriva de la capa base del `Consentimiento` de cada `Usuario`— y si completó el onboarding. El Administrador recorre el listado; el Sistema deja fuera de la vista todo dato individual sensible: el username completo, los cuatro autorreportes de la `CapsulaDePerfil`, los `Mensaje` de cualquier `Conversacion`, el `Personaje` elegido, los conteos por usuario, las contraseñas y los tokens. La consulta es de solo lectura y el flujo **finaliza** sin crear, modificar ni borrar nada.
 
-## 4. Requisitos especiales
-| ID | Categoría | Requisito | Criterio |
-|---|---|---|---|
-| RE-01 | Privacidad | El directorio expone solo el conjunto mínimo/truncado de campos (PRIV-R10); principio anti-reidentificación. | En ninguna respuesta del directorio aparece el username completo, contenido de conversación, respuestas de encuesta ni otro dato individual sensible. |
-| RE-02 | Seguridad | El rol se valida en el servidor, no en el cliente (RNF-08). | Cualquier solicitud de un actor sin rol=admin recibe `401` (sin sesión) o `403` (rol insuficiente); el directorio no se sirve. |
+**Cursos alternativos y de excepción.** Si todavía no existe ninguna cuenta de `Usuario`, el Sistema presenta el directorio vacío con un aviso sobrio y el flujo **finaliza** sin fila alguna (`FA-01`). Si un `Usuario` no tiene vigente la capa base de su `Consentimiento`, el Sistema deriva para su fila el `estado` «sin consentimiento vigente» y el flujo **continúa** con el resto del listado, sin ofrecer acción alguna sobre esa cuenta (`FA-02`). Si quien solicita el directorio no tiene sesión, el Sistema responde `401`, no arma la vista y el flujo **termina** devolviéndolo al login administrativo separado que realiza CU-03 (`FE-01`). Si tiene sesión pero el servidor no le reconoce el rol de administrador, el Sistema responde `403`, no arma la vista y el flujo **termina** sin exponer una sola fila (`FE-02`).
 
-## 5. Criterios de aceptación (Dado/Cuando/Entonces)
-| ID | Criterio | Flujo |
-|---|---|---|
-| CA-01 | Dado un Administrador autenticado con rol validado en servidor, cuando consulta el directorio de usuarios, entonces el sistema muestra alias, ID truncado, fecha de registro, estado ∈ {activo, sin consentimiento vigente} y onboarding completado, y NO muestra username completo ni contenido individual. | Flujo básico (§2.1) |
-| CA-02 | Dado un actor no administrador (sin sesión, o autenticado con rol insuficiente), cuando intenta acceder a la vista de directorio, entonces el sistema responde `401` o `403` según el caso y no expone el directorio. | Flujos de excepción FE-01/FE-02 (§2.3) |
+## 3. Disparador
 
-## 6. Trazabilidad
-| Elemento | Referencia |
+| Campo | Valor |
 |---|---|
-| Requisito funcional | RF-15 → OBJ-6 |
-| Reglas de negocio | RN-03.2, RN-03.5, PRIV-R10, RNF-08 |
-| Modelo de dominio | Usuario (vista mínima) |
-| Caso de uso (diagrama) | DCU-01, «Consultar directorio de usuarios» |
-| Interfaz de referencia | `GET /plataforma-admin/` (referencia) |
-| Criterios de aceptación | CA-01, CA-02 |
-| Fases siguientes (planificadas) | DR-08 (robustez), DS-08 (secuencia) |
-| Diseño (mockup) | DIS-00 P-14 + DIS-01 |
+| **Disparador** | El Administrador de plataforma abre el **Directorio de usuarios** en el panel de administración. |
+| Generado por | Actor (Administrador de plataforma). |
+| Condición inicial observable | El Sistema recibe la solicitud del directorio y comprueba en el servidor la sesión y el rol antes de armar la vista. |
 
-## 7. Checklist de revisión §22 (20 ítems)
-| # | Criterio | Cumple |
+## 4. Precondiciones
+
+Las dos primeras son de autorización y cada una tiene su excepción asociada. La tercera **no bloquea**: sin cuentas registradas el caso de uso sigue siendo válido y produce el listado vacío de `FA-01`. No hay precondición sobre el `Consentimiento` de los usuarios listados: el Administrador consulta el directorio igual, y la ausencia de consentimiento vigente es precisamente uno de los dos valores que el `estado` puede tomar.
+
+| ID | Precondición | Tipo | Verificable |
+|---|---|---|---|
+| PRE-01 | El Administrador tiene una sesión activa, abierta por el login administrativo separado (RF-14). | Autorización | Sí (si no → `FE-01`) |
+| PRE-02 | El servidor reconoce el rol «administrador» del solicitante. | Autorización | Sí (si no → `FE-02`) |
+| PRE-03 | Existe al menos una cuenta de `Usuario` registrada. | Datos | No bloqueante: si no existe, el directorio queda vacío (`FA-01`) |
+
+## 5. Flujo básico
+
+| Paso | Responsable | Acción | Concepto de dominio | Respuesta del sistema | Interfaz |
+|---|---|---|---|---|---|
+| 1 | Administrador | Abre el **Directorio de usuarios** | `Usuario` | El Sistema comprueba la sesión y el rol en el servidor y arma la vista mínima sobre las cuentas de `Usuario` | Directorio de usuarios (P-14) |
+| 2 | Sistema | Deriva el `estado` de cada fila a partir de la capa base del `Consentimiento` de ese `Usuario` | `Consentimiento` | El Sistema asigna «activo» o «sin consentimiento vigente»; no consulta ni expone la capa de personalización | — |
+| 3 | Sistema | Presenta las cinco columnas mínimas: alias, ID truncado, fecha de registro, `estado` y onboarding completado | `Usuario`, `Consentimiento` | El Administrador ve el listado truncado y ninguna acción sobre las filas | Directorio de usuarios (P-14) |
+| 4 | Administrador | Recorre el listado | `Usuario` | El Sistema mantiene fuera de la vista el username completo, los autorreportes de la `CapsulaDePerfil`, los `Mensaje`, el `Personaje` elegido, los conteos por usuario, las contraseñas y los tokens | Directorio de usuarios (P-14) |
+
+## 6. Flujos alternativos y de excepción
+
+| ID | Nombre | Punto | Condición | Respuesta del sistema | Desenlace | Reglas |
+|---|---|---|---|---|---|---|
+| FA-01 | Directorio vacío | Paso 1 | Ninguna cuenta de `Usuario` está registrada todavía | Presenta el directorio vacío con un aviso sobrio, sin error | **Finaliza** con cero filas y sin error | PRE-03, RN-03.2 |
+| FA-02 | Cuenta sin consentimiento vigente | Paso 2 | Un `Usuario` no tiene vigente la capa base de su `Consentimiento` | Deriva para esa fila el `estado` «sin consentimiento vigente»; no ofrece acción alguna sobre ella | **Continúa** en el paso 3 con el resto del listado | RN-03.2, RN-03.5 |
+| FE-01 | Sesión ausente | Paso 1 | Quien solicita el directorio no tiene sesión activa | `401`; no arma la vista ni devuelve fila alguna | **Termina**; el solicitante reingresa por el login administrativo separado que realiza CU-03 | PRE-01, RN-03.7 |
+| FE-02 | Rol insuficiente | Paso 1 | El solicitante tiene sesión pero el servidor no le reconoce el rol de administrador | `403`; no arma la vista ni devuelve fila alguna | **Termina** sin exponer una sola fila | PRE-02, RN-03.7 |
+
+> Convención transversal de excepción: el Sistema no devuelve errores crudos ni volcados técnicos, sino avisos sobrios. Es la misma línea que REQ-01 exige en el criterio de RF-25 —un estado claro y no un error crudo— y que DIS-00 §3 pide para el acceso administrativo: «403 seguro si no es admin» (P-04).
+
+## 7. Postcondiciones
+
+| Tipo | Postcondición | Verificación |
 |---|---|---|
-| 1 | Objetivo único | ✅ — un solo objetivo: ver el directorio mínimo sin acceder a datos individuales. |
-| 2 | Nombre infinitivo + objeto | ✅ — «Consultar» (infinitivo) + «directorio de usuarios» (objeto). |
-| 3 | Actor primario | ✅ — Administrador de plataforma, único. |
-| 4 | Actores externos | ✅ — ninguno; no interviene el Proveedor LLM ni otro actor de sistema. |
-| 5 | Flujo básico completo | ✅ — apertura de la vista y ocultamiento explícito de campos sensibles (§2.1). |
-| 6 | Alternativos suficientes | ✅ — se documenta «no aplica» con justificación (vista única del MVP, §2.2). |
-| 7 | Excepciones relevantes | ✅ — FE-01 (sesión ausente) y FE-02 (rol insuficiente) cubren el acceso indebido. |
-| 8 | Términos MD-01 | ✅ — usa «Usuario» tal como está definido en MD-01; no introduce clases nuevas. |
-| 9 | Sin sinónimos | ✅ — «Administrador» y «Usuario» se usan de forma consistente, sin variantes. |
-| 10 | Interfaces nombradas | ✅ — «Panel administrativo (vista de directorio)» identificado como frontera (§2.1). |
-| 11 | Reglas por ID | ✅ — RN-03.1, RN-03.2, RN-03.5, PRIV-R10, RNF-08 (§3). |
-| 12 | Requisitos especiales separados | ✅ — RE-01/RE-02 en §4, aparte de las reglas de negocio de §3. |
-| 13 | Postcondiciones verificables | ✅ — «ve la lista con campos mínimos; no se expone contenido individual» es observable y se verifica en CA-01. |
-| 14 | Sin implementación | ✅ — sin SQL/Django/endpoints como pasos; el endpoint aparece solo como referencia de trazabilidad (§6), no como paso del flujo. |
-| 15 | Auth como precondición | ✅ — PRE-01 (Autorización) en §2; «iniciar sesión» no se modela como caso de uso incluido, solo como caso relacionado. |
-| 16 | Trazabilidad RF/OBJ/RN/CA | ✅ — RF-15 → OBJ-6, reglas de negocio y CA-01/CA-02 enlazados en §6. |
-| 17 | Criterios Dado/Cuando/Entonces | ✅ — CA-01 y CA-02 en ese formato exacto (§5). |
-| 18 | Base robustez/secuencia | ✅ — el flujo básico distingue actor, frontera (panel administrativo) y concepto de dominio (Usuario), listo para robustez (DR-08/DS-08 planificados). |
-| 19 | Comprensible | ✅ — lenguaje llano, sin jerga técnica innecesaria, verificable por un lector no técnico. |
-| 20 | Coherente con DCU-01 y canon §5 | ✅ — mismo nombre, actor y traza RF-15 → OBJ-6 que DCU-01 §2; respeta el canon de minimización, privacidad por defecto y uso no punitivo reflejado en PRIV-01/REQ-01. |
+| Éxito | El Administrador ve el listado con las cinco columnas mínimas y ninguna otra | Observación de la vista y comparación con la enumeración de `RN-03.2` |
+| **Invariante (privacidad)** | **Ninguna fila expone dato individual sensible**: ni username completo, ni autorreportes de la `CapsulaDePerfil`, ni `Mensaje`, ni el `Personaje` elegido, ni conteos por usuario, ni contraseñas, ni tokens | Inspección de la respuesta del directorio, campo por campo |
+| **Invariante (solo lectura)** | **La consulta no altera nada.** En particular, no toca el `Consentimiento` del que deriva el `estado` ni ninguna cuenta de `Usuario` | Comparación del almacenamiento antes y después: cero escrituras |
+| Fallo | El Sistema no arma la vista y el Administrador no ve fila alguna | Inspección de la respuesta |
+| Datos creados | Ninguno | Inspección |
+| Datos modificados | Ninguno | Inspección |
+| Datos eliminados | Ninguno | Inspección |
+| Cambios de estado | Ninguno. El `estado` que muestra el directorio es **derivado en el momento de la consulta**, no un valor que este caso de uso escriba | Traza |
+| Efectos visibles | El Administrador conoce cuántas cuentas hay y cuáles carecen de consentimiento vigente, sin conocer a nadie en particular | Observación |
+
+## 8. Reglas de negocio
+
+| ID | Regla | Tipo | Flujo | Fuente |
+|---|---|---|---|---|
+| RN-03.1 | El administrador tiene **exactamente tres funciones**: directorio mínimo, métricas agregadas y kill switch. Consultar el directorio es una de ellas. | Restricción | Alcance del CU | MV-01 §7.4; VIS-01 §3.2 (OBJ-6) |
+| RN-03.2 | El directorio muestra solo campos mínimos: alias, **ID truncado**, fecha de registro, **`estado` ∈ {activo, sin consentimiento vigente}** (derivado del `Consentimiento`, no editable ni suspensión) y onboarding completado. | Restricción | Pasos 2–3, FA-01, FA-02 | MV-01 §7.4; REQ-01 (RF-15); PER-01 (PER-T4) |
+| RN-03.5 | El administrador **no** ve: username completo, respuestas de encuesta, cápsula, mensajes, personaje elegido, conteos por usuario, contraseñas ni tokens. | Restricción | Paso 4, FA-02, invariante de privacidad §7 | MV-01 §7.4; canon de minimización |
+| RN-03.6 | El administrador **no** edita recursos, textos ni prompts; el entorno los aprovisiona. | Restricción | Delimita el CU: el panel de administración no es un gestor de contenidos, y el directorio consulta sin editar | MV-01 §7.4 |
+| RN-03.7 | El acceso administrativo es por **login separado** y el servidor valida el rol, que el cliente no puede alterar. | Restricción | PRE-01, PRE-02, FE-01, FE-02 | MV-01 §7.4; REQ-01 (RF-14) |
+
+> La familia completa es `RN-03.1`…`RN-03.7`. Aquí se recogen las cinco que gobiernan este caso de uso; `RN-03.3` (métricas agregadas) pertenece a CU-09 y `RN-03.4` (confirmación y auditoría del kill switch) a CU-10.
+
+## 9. Requisitos especiales
+
+| ID | Categoría | Requisito | Criterio verificable |
+|---|---|---|---|
+| RE-01 | Privacidad | El directorio expone únicamente el conjunto truncado de `RN-03.2` (PRIV-R10) y el administrador no accede a cápsulas ni conversaciones (PRIV-R7). | Inspección de la respuesta del directorio: cero campos fuera de los cinco declarados |
+| RE-02 | Seguridad | El servidor decide sesión y rol; ningún indicador enviado por el cliente los altera (RNF-08; PRIV-01 §4, que limita el acceso administrativo a sus tres funciones con *login* separado). **No** se ancla en PRIV-R12: esa regla trata del hasheo de la contraseña, no de la sesión ni del rol. | Una solicitud sin sesión recibe `401` y una con rol distinto recibe `403`, aunque el cliente diga otra cosa |
+| RE-03 | Uso no punitivo | El directorio es **observación mínima, no gobierno de personas**: no ofrece suspender, sancionar ni segmentar (PRIV-R6; VIS-01 §5 excluye la suspensión individual). | La vista no presenta ninguna acción ejecutable sobre una fila |
+| RE-04 | Anti-reidentificación | El identificador va **truncado** y el alias no es el username; la combinación de columnas no debe permitir señalar a una persona concreta (PRIV-R10). | Revisión de la vista: ningún par de columnas reconstruye la identidad de la cuenta |
+| RE-05 | Minimización del `estado` | El `estado` deriva **solo** de la capa base del `Consentimiento`. Derivarlo también de la capa de personalización revelaría si cada `Usuario` aceptó personalizar, que es dato individual prohibido por `RN-03.5`. | Inspección: dos cuentas con distinta capa de personalización y misma capa base muestran el mismo `estado` |
+
+## 10. Interfaz
+
+| Elemento | Nombre explícito | Propósito | Acciones | Pasos |
+|---|---|---|---|---|
+| Pantalla | **Directorio de usuarios** (P-14, DIS-00 §2 paquete C) | Presentar el listado truncado de cuentas | Abrir el directorio, recorrer el listado | 1, 3, 4 |
+| Ruta visible | `/plataforma-admin/` (DIS-00 §2) | Punto de acceso del panel de administración | Consultar | 1 |
+
+> Estados de P-14 declarados en DIS-00: **lista truncada · vacío · 401/403** — los mismos cuatro desenlaces que cubren el flujo básico, `FA-01`, `FE-01` y `FE-02`. La mini-ficha de DIS-00 §3 lo resume: tabla mínima con alias, ID truncado, fecha, `estado` y onboarding; «**jamás** username completo ni contenido».
+
+## 11. Criterios de aceptación
+
+| ID | Criterio (Dado/Cuando/Entonces) | Flujo | Evidencia |
+|---|---|---|---|
+| CA-01 | Dado un Administrador con sesión activa y rol reconocido por el servidor, cuando abre el **Directorio de usuarios**, entonces ve alias, ID truncado, fecha de registro, `estado` ∈ {activo, sin consentimiento vigente} y onboarding completado, y ninguna columna más. | Flujo básico (pasos 1–3) | Observación de la vista |
+| CA-02 | Dado el directorio presentado, cuando el revisor inspecciona su respuesta campo por campo, entonces no aparece el username completo, ni autorreporte alguno de la `CapsulaDePerfil`, ni `Mensaje`, ni el `Personaje` elegido, ni conteos por usuario, ni contraseñas, ni tokens. | Flujo básico (paso 4) e invariante de privacidad §7 | Inspección de la respuesta |
+| CA-03 | Dada una plataforma sin ninguna cuenta de `Usuario` registrada, cuando el Administrador abre el directorio, entonces ve el listado vacío con un aviso sobrio y sin error. | `FA-01` | Prueba con almacenamiento vacío |
+| CA-04 | Dado un `Usuario` sin la capa base de su `Consentimiento` vigente, cuando el Administrador consulta el directorio, entonces esa fila muestra `estado` «sin consentimiento vigente», el resto del listado aparece igual y ninguna fila ofrece acción ejecutable. | `FA-02` y `RE-03` | Prueba con cuenta sin consentimiento vigente |
+| CA-05 | Dada una solicitud del directorio sin sesión activa, cuando llega al Sistema, entonces responde `401` y no devuelve fila alguna. | `FE-01` | Prueba de acceso sin sesión |
+| CA-06 | Dada una solicitud del directorio con sesión pero sin el rol de administrador reconocido por el servidor, cuando llega al Sistema, entonces responde `403` y no devuelve fila alguna, aunque el cliente afirme lo contrario. | `FE-02` y `RE-02` | Prueba de manipulación del cliente |
+| CA-07 | Dado el almacenamiento antes y después de una consulta completa del directorio, cuando el revisor compara ambos estados, entonces son idénticos: la consulta no escribe nada y el `Consentimiento` de cada `Usuario` queda intacto. | Invariante de solo lectura §7 | Comparación antes/después |
+| CA-08 | Dadas dos cuentas con la misma capa base y distinta capa de personalización de su `Consentimiento`, cuando el Administrador consulta el directorio, entonces ambas muestran el mismo `estado`. | `RE-05` | Prueba con dos cuentas contrastadas |
+
+**Cobertura:** los cinco flujos del documento —básico, `FA-01`, `FA-02`, `FE-01` y `FE-02`— tienen criterio asociado (`CA-01`/`CA-02`, `CA-03`, `CA-04`, `CA-05`, `CA-06`), y las dos invariantes de §7 se verifican en `CA-02` y `CA-07`.
+
+## 12. Trazabilidad
+
+| Tipo de elemento | Referencia | Relación con el CU |
+|---|---|---|
+| **Alias del diagrama ↔ ID** | `CU_Dir` (DCU-01 v2.1) ↔ **CU-08** | Correspondencia explícita. El número **no** sigue el orden de declaración del `.puml`, donde `CU_Dir` es la duodécima declaración: CU-08 conserva la numeración que ya tenía en DCU-01 v1.0, y §2 del diagrama la mantiene al insertar del 11 al 14 los cuatro casos de uso nuevos. Esta nota existe porque, sin ella, el número parecería arbitrario |
+| Requisito funcional | RF-15 «Visualizar el **directorio mínimo** de usuarios: alias, ID truncado, fecha de registro, estado y onboarding completado» | Realizado por este CU, entero: ningún otro caso de uso lo comparte |
+| Requisito funcional relacionado | RF-14 (login administrativo separado) | Lo consumen `PRE-01` y `PRE-02`; lo realiza CU-03, no este CU |
+| Objetivo de negocio | OBJ-6 (VIS-01 §3.2) | Administración con exactamente tres funciones, sin acceso a datos individuales |
+| Matriz de trazabilidad | TRZ-01, fila de RF-15: `RF-15 → OBJ-6 → CU-08`, con ancla de calidad RC-04 y atributo *security* | Confirma desde fuera la cadena que declara esta especificación |
+| Regla de negocio | `RN-03.1`, `RN-03.2`, `RN-03.5`, `RN-03.6`, `RN-03.7` | Gobiernan el flujo y su frontera |
+| Requisito de privacidad | PRIV-R6, PRIV-R7, PRIV-R10 y PRIV-01 §4 | Anclas de `RE-01`, `RE-02`, `RE-03` y `RE-04`. PRIV-R12 **no** es ancla de ninguno: trata del hasheo de la contraseña |
+| Requisito no funcional | RNF-08 (rol validado en servidor) | Ancla de `RE-02` |
+| Modelo de dominio | `Usuario`, `Consentimiento` (conceptos consultados); `CapsulaDePerfil`, `Mensaje`, `Conversacion`, `Personaje` (conceptos **excluidos** de la vista) | `Consentimiento` entra en v2.0: el `estado` se deriva de él y v1.1 lo omitía |
+| Mapa de persistencia | PER-01 (PER-T4, PER-H3 resuelta en SD-26) | Fija el dominio de valores del `estado`; PER-01 conserva el nombre de persistencia, que **no** se usa aquí |
+| Diagrama de casos de uso | `Admin -- CU_Dir` (asociación directa) | Origen de la relación |
+| Caso de uso relacionado | CU-03 «Iniciar y cerrar sesión» | Abre la sesión administrativa que `PRE-01` exige |
+| Casos de uso hermanos | CU-09 «Consultar métricas de uso», CU-10 «Habilitar o deshabilitar el chatbot» | Las otras dos funciones de `RN-03.1`; ninguna se incluye ni extiende con esta |
+| Diseño (mockup) | P-14 «Directorio de usuarios» (DIS-00 §2 paquete C, §3) | Pantalla única del CU |
+| Caso de prueba | CP-08 | Planificado (fase de pruebas) |
+| Robustez / secuencia | **DR-08 está producido** (derivado de ECU-08 v1.1) / DS-08 planificado | Esta versión **lo desalinea**: DR-08 afirma que la especificación no tiene cursos alternativos y v2.0 le añade dos. Rehacerlo es la **fase D.4** |
+| Criterio de aceptación | `CA-01`…`CA-08` | Verificación |
+
+**Sin `<<include>>` ni `<<extend>>`.** El diagrama no dibuja ninguna para este caso de uso y la especificación no la introduce: la comprobación de sesión y rol es precondición y requisito especial, no un subservicio observable, tal como manda la disciplina de la skill.
+
+## 13. Riesgos, ambigüedades y decisiones
+
+| ID | Tipo | Descripción | Decisión | Estado |
+|---|---|---|---|---|
+| RA-01 | Ambigüedad heredada | Con el `Consentimiento` partido en dos capas (decisión de ECU-12 §4.1), «sin consentimiento vigente» dejó de tener un referente único: `RN-03.2` y PER-H3 se escribieron cuando el consentimiento era un interruptor solo. | **Decidido aquí:** el `estado` deriva **solo de la capa base**. Es la única lectura compatible con `RN-03.5`, porque derivarlo de la capa de personalización delataría quién aceptó personalizar —dato individual prohibido—. Se eleva a `RE-05` y a `CA-08`. | **Decidido** |
+| RA-02 | Discrepancia entre insumos | RF-15, `RN-03.2`, PER-T4 y la mini-ficha de P-14 enumeran **cinco** columnas (con fecha de registro); PRIV-R10 enumera **cuatro** y omite la fecha. | **Resuelto a favor de las cinco:** la omisión de PRIV-R10 es abreviatura, no prohibición — su lista de vetos («nunca contenido, respuestas de encuesta, personaje elegido ni conteos por usuario») no nombra la fecha de registro, y cuatro artefactos independientes sí la incluyen. Conviene alinear la redacción de PRIV-R10 en su próxima revisión. | **Resuelto**, con recomendación abierta |
+| RA-03 | Hallazgo corregido | v1.1 llamaba `ConsentRecord` a la clase de la que deriva el `estado`. Ese es el nombre de **persistencia** de PER-01 §2, no el del dominio (hallazgo D-11). | **Corregido:** el documento usa `Consentimiento` en todo su texto, la clase entra en los conceptos del dominio de §12 y `ConsentRecord` queda **prohibido** en el control terminológico de §1. | **Resuelto** |
+| RA-04 | Alcance declarado | El directorio no pagina, no filtra, no ordena y no busca: es una vista única del MVP. | **Decidido:** la paginación es una necesidad de escala que el MVP académico no tiene, y un buscador por alias acercaría el directorio a la reidentificación que `RE-04` evita. Se declara para que sea discutible, no invisible. | **Decidido** |
+| RA-05 | Hueco declarado | **Ningún artefacto del repositorio define qué significa «ID truncado»** (cuántos caracteres, de qué extremo). Lo nombran al menos seis —REQ-01, MV-01, PRIV-01, PER-01, TRZ-01 y DIS-00— y ninguno lo acota. | Sin esa definición, `RE-04` es verificable por revisión y no por medida. Resolver en la fase de construcción; no bloquea la especificación. | Abierto |
+| RA-06 | Hallazgo señalado, fuera de alcance | El nombre de persistencia `ConsentRecord` no solo estaba en esta especificación: el **criterio de aceptación de RF-15 en REQ-01 §1** también dice que el `estado` deriva «de `ConsentRecord`», y PER-H3 en PER-01 lo repite. | **Corregido aquí y señalado allá:** esta especificación queda limpia, pero cerrar D-11 del todo exige tocar REQ-01, que **no** pertenece a este encargo. Se deja anotado para la fase de trazabilidad. | Abierto (en otro artefacto) |
+
+## 14. Checklist de revisión metodológica
+
+| # | Criterio | Cumple | Observación |
+|---|---|---|---|
+| 1 | Objetivo único y claro | ✅ | Ver el directorio mínimo sin acceder a dato individual sensible |
+| 2 | Nombre en verbo infinitivo + objeto | ✅ | «Consultar» + «directorio de usuarios» |
+| 3 | Actor primario identificado | ✅ | Administrador de plataforma, único |
+| 4 | Actores externos al sistema | ✅ | Ninguno; el Proveedor LLM no participa |
+| 5 | Flujo básico = escenario de éxito completo | ✅ | Cuatro pasos, §5 |
+| 6 | Flujos alternativos suficientes | ✅ | `FA-01` (vacío) y `FA-02` (sin consentimiento vigente), ambos con desenlace |
+| 7 | Flujos de excepción relevantes | ✅ | `FE-01` (401) y `FE-02` (403), los dos estados no felices que DIS-00 declara para P-14 |
+| 8 | Términos del dominio (MD-01 v1.4) usados | ✅ | `Usuario` y `Consentimiento` consultados; `CapsulaDePerfil`, `Mensaje`, `Conversacion` y `Personaje` nombrados como excluidos |
+| 9 | Sin sinónimos ambiguos | ✅ | Control terminológico en §1; `ConsentRecord` prohibido |
+| 10 | Interfaces nombradas donde aplica | ✅ | Directorio de usuarios (P-14) y su ruta, §10 |
+| 11 | Reglas de negocio separadas (por ID) | ✅ | §8, fuera de los pasos del flujo |
+| 12 | Requisitos especiales separados | ✅ | §9, cinco requisitos con criterio propio |
+| 13 | Postcondiciones verificables | ✅ | §7, con las dos invariantes de privacidad y de solo lectura |
+| 14 | Sin detalle de implementación | ✅ | Caja negra. Los códigos `401`/`403` son respuestas observables por el actor, y la ruta de §10 es punto de acceso visible, no tecnología |
+| 15 | Autenticación como precondición, no CU incluido | ✅ | `PRE-01` y `PRE-02`; CU-03 aparece como caso relacionado, sin `<<include>>` |
+| 16 | Trazabilidad a RF/OBJ/RN/CA | ✅ | §12, con la correspondencia alias ↔ CU-NN |
+| 17 | Criterios en Dado/Cuando/Entonces | ✅ | §11, ocho criterios; cobertura declarada al pie |
+| 18 | Base para robustez y secuencia | ⚠️ | Actor, frontera y conceptos separados en cada paso, pero **el DR-08 vigente queda desalineado** por los cursos alternativos que añade esta versión: se rehace en la fase D.4 |
+| 19 | Comprensible por usuarios, analistas y desarrolladores | ✅ | Lenguaje llano; ningún término exige conocer la construcción |
+| 20 | Coherente con DCU-01 y con el canon | ⚠️ **Con salvedad** | Coherente en nombre, actor, asociación y traza RF-15 → OBJ-6. La salvedad es `RA-05`: mientras «ID truncado» no tenga definición operativa, la coherencia con el canon anti-reidentificación se sostiene por revisión y no por medida |
+
+> **Honestidad de la verificación (§4.9 del estándar documental heredado).** Todas las citas de este documento se abrieron y leyeron en el repositorio: RF-14, RF-15, RF-25 y RNF-08 en REQ-01; `RN-03.1`…`RN-03.7` en MV-01 §7.4; la tabla de alias en MV-01 §11 y la retirada de `Administrador -- Usuario` en MV-01 §4; PRIV-R6/R7/R10/R12 en PRIV-01 §3; PER-T4 y PER-H3 en PER-01; OBJ-6 y la exclusión de la suspensión individual en VIS-01 §3.2 y §5; la traza RF-15 → OBJ-6 → CU-08 en TRZ-01; P-14 en DIS-00 §2 y §3; `CU_Dir`, su asociación y su posición de declaración en `DCU-01_casos_uso.puml`; y las clases y asociaciones en `MD-01_modelo_dominio.puml`.
+>
+> **Dos límites declarados.** (a) El mockup renderizado de P-14 **no se abrió**: este documento se apoya en la ficha de DIS-00, no en el archivo HTML. (b) Las citas de la forma «plan §X» que aparecen en MV-01, REQ-01, PRIV-01 y PER-01 **sí son verificables**: el plan está en este repositorio, en `00_PLAN_CODEX_ORIGINAL.md` (SD-16), y así lo recuerda PER-01 §8. La versión anterior de esta nota afirmaba lo contrario y lo usaba para no comprobar ninguna cita; era falso. Aun así, cada regla se ancla **además** en el artefacto de este repositorio que la reproduce, porque es el que gobierna.
+
+## 15. Changelog
+
+| Versión | Fecha | Cambio |
+|---|---|---|
+| v1.0 | 2026-07-25 | Creación (fase 2 ICONIX, forma ágil). |
+| v1.1 | 2026-07-25 | SD-26: dominio de valores del `estado` fijado (resolución de PER-H3). |
+| v2.0 | 2026-07-31 | Rehecho en PDR-01, fase D.3, tanda 4, conservando la forma ágil. **Hallazgo D-11 corregido:** `ConsentRecord` → `Consentimiento`, con la clase incorporada a los conceptos del dominio y el nombre de persistencia prohibido en el control terminológico. Se sustituye la cita del flujo alternativo de otro caso de uso por su descripción en prosa; las precondiciones pasan a filas propias (`PRE-01`…`PRE-03`); `FE-01` y `FE-02` declaran desenlace; se corrige un paso en voz impersonal y se retira el término de implementación del checklist. **Se añaden por primera vez:** los dos flujos alternativos que DIS-00 ya exigía para P-14, las postcondiciones con sus dos invariantes, `RE-03`…`RE-05`, seis criterios de aceptación nuevos, la correspondencia alias `CU_Dir` ↔ CU-08 y la sección de riesgos. Se comprobó contra PRIV-01 qué columnas puede mostrar el directorio: las cinco declaradas son legítimas (`RA-02`) y las prohibidas quedan enumeradas en la invariante de privacidad de §7. Se resuelve además a qué capa del `Consentimiento` se refiere «sin consentimiento vigente» tras la separación de ECU-12 (`RA-01`, `RE-05`) y se señala que REQ-01 arrastra el mismo `ConsentRecord` que aquí se corrige (`RA-06`). |
 
 **Fin de ECU-08.**
