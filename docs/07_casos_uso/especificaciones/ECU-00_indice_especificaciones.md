@@ -1,60 +1,105 @@
 # ECU-00 — Índice de especificaciones de casos de uso
-**ID:** ECU-00 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-16 · **Versión:** v1.0 · **Estado:** Propuesto.
-**Propósito:** índice de las **10 especificaciones textuales** de casos de uso derivadas de `DCU-01` con la skill `use-case-specifier` (paso 3 ICONIX).
-**Insumos:** DCU-01 (diagrama), MV-01 (modelo verbal), MD-01 (dominio), REQ-01 (RF/RNF/RC/RN), PRIV-01, SEG-01, contrato conversacional, VIS-01, plan archivado. **Consumidores:** análisis de robustez, diagramas de secuencia, pruebas (fases siguientes).
+**ID:** ECU-00 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.0 · **Estado:** Propuesto.
+**Propósito:** índice de las **14 especificaciones textuales** de casos de uso derivadas de `DCU-01 v2.1` con la skill `use-case-specifier` (paso 3 ICONIX).
+**Insumos:** DCU-01 v2.1, MD-01 v1.4, MV-01, REQ-01, PRIV-01, PER-01, SEG-01, contrato conversacional, VIS-01, DIS-00, `00_PLAN_CODEX_ORIGINAL.md`. **Consumidores:** análisis de robustez, diagramas de secuencia, pruebas.
+**Naturaleza:** este documento es un **índice**, no una especificación. Ver §6 para lo que eso implica en la verificación.
 
 ---
 
-## 1. Las 10 especificaciones
-| CU | Nombre | Archivo | Actor primario | Paquete | Forma | RF → OBJ |
+## 1. Las 14 especificaciones
+
+| CU | Nombre | Archivo | Actor primario | Paquete | Forma | RF |
 |---|---|---|---|---|---|---|
-| **CU-01** | Consultar presentación del servicio | [`ECU-01_consultar_presentacion.md`](ECU-01_consultar_presentacion.md) | Visitante | Acceso y cuenta | Ágil | RF-19 → OBJ-7 |
-| **CU-02** | Registrar cuenta | [`ECU-02_registrar_cuenta.md`](ECU-02_registrar_cuenta.md) | Visitante | Acceso y cuenta | Ágil | RF-20 → OBJ-7 |
-| **CU-03** | Iniciar sesión | [`ECU-03_iniciar_sesion.md`](ECU-03_iniciar_sesion.md) | Usuario (var. Administrador) | Acceso y cuenta | Ágil | RF-14, RF-21 → OBJ-6/7 |
-| **CU-04** | Gestionar cuenta y datos personales | [`ECU-04_gestionar_cuenta_datos_personales.md`](ECU-04_gestionar_cuenta_datos_personales.md) | Usuario | Acceso y cuenta | **Completa** | RF-22/23/24 → OBJ-7/4 |
-| **CU-05** | Otorgar consentimiento y caracterizar el perfil | [`ECU-05_otorgar_consentimiento_caracterizar_perfil.md`](ECU-05_otorgar_consentimiento_caracterizar_perfil.md) | Usuario | Acompañamiento | **Completa** | RF-01…06 → OBJ-1 |
-| **CU-06** | Conversar con el acompañante | [`ECU-06_conversar_con_el_acompanante.md`](ECU-06_conversar_con_el_acompanante.md) | Usuario (sec. Proveedor LLM) | Acompañamiento | **Completa** | RF-07…13/25/26 → OBJ-2/4 |
-| **CU-07** | Derivar ante peligro (`<<extend>>` de CU-06) | [`ECU-07_derivar_ante_peligro.md`](ECU-07_derivar_ante_peligro.md) | Usuario (disparo del sistema) | Acompañamiento | **Completa** | RF-11 → OBJ-3 |
-| **CU-08** | Consultar directorio de usuarios | [`ECU-08_consultar_directorio.md`](ECU-08_consultar_directorio.md) | Administrador | Administración | Ágil | RF-15 → OBJ-6 |
-| **CU-09** | Consultar métricas de uso | [`ECU-09_consultar_metricas.md`](ECU-09_consultar_metricas.md) | Administrador | Administración | Ágil | RF-16 → OBJ-6 |
-| **CU-10** | Habilitar o deshabilitar el chatbot | [`ECU-10_habilitar_deshabilitar_chatbot.md`](ECU-10_habilitar_deshabilitar_chatbot.md) | Administrador | Administración | **Completa** | RF-17, RF-18 → OBJ-6 |
+| **CU-01** | Consultar presentación del servicio | [`ECU-01_consultar_presentacion.md`](ECU-01_consultar_presentacion.md) | Visitante | Acceso y cuenta | Ágil | RF-19 |
+| **CU-02** | Registrar cuenta | [`ECU-02_registrar_cuenta.md`](ECU-02_registrar_cuenta.md) | Visitante | Acceso y cuenta | Ágil | RF-20 |
+| **CU-03** | **Iniciar y cerrar sesión** | [`ECU-03_iniciar_y_cerrar_sesion.md`](ECU-03_iniciar_y_cerrar_sesion.md) | Titular de cuenta | Acceso y cuenta | Ágil | RF-14, RF-21 |
+| **CU-04** | **Eliminar cuenta** | [`ECU-04_eliminar_cuenta.md`](ECU-04_eliminar_cuenta.md) | Usuario adulto | Acceso y cuenta | **Completa** | RF-24 |
+| **CU-05** | **Otorgar consentimiento y crear la cápsula de perfil** | [`ECU-05_otorgar_consentimiento_crear_capsula.md`](ECU-05_otorgar_consentimiento_crear_capsula.md) | Usuario adulto | Acompañamiento | **Completa** | RF-01…RF-05 |
+| **CU-06** | Conversar con el acompañante | [`ECU-06_conversar_con_el_acompanante.md`](ECU-06_conversar_con_el_acompanante.md) | Usuario adulto (secundario: Proveedor LLM) | Acompañamiento | **Completa** | RF-07…RF-10, RF-13, RF-25, RF-26 |
+| **CU-07** | Derivar ante peligro | [`ECU-07_derivar_ante_peligro.md`](ECU-07_derivar_ante_peligro.md) | Usuario adulto (lo dispara el sistema) | Acompañamiento | **Completa** | RF-11 |
+| **CU-08** | Consultar directorio de usuarios | [`ECU-08_consultar_directorio.md`](ECU-08_consultar_directorio.md) | Administrador de plataforma | Administración | Ágil | RF-15 |
+| **CU-09** | Consultar métricas de uso | [`ECU-09_consultar_metricas.md`](ECU-09_consultar_metricas.md) | Administrador de plataforma | Administración | Ágil | RF-16 |
+| **CU-10** | Habilitar o deshabilitar el chatbot | [`ECU-10_habilitar_deshabilitar_chatbot.md`](ECU-10_habilitar_deshabilitar_chatbot.md) | Administrador de plataforma | Administración | **Completa** | RF-17, RF-18 |
+| **CU-11** | **Reiniciar la caracterización** | [`ECU-11_reiniciar_la_caracterizacion.md`](ECU-11_reiniciar_la_caracterizacion.md) | Usuario adulto | Acceso y cuenta | **Completa** | RF-22 |
+| **CU-12** | **Revocar la personalización** | [`ECU-12_revocar_la_personalizacion.md`](ECU-12_revocar_la_personalizacion.md) | Usuario adulto | Acceso y cuenta | **Completa** | RF-23 |
+| **CU-13** | **Cambiar de acompañante** | [`ECU-13_cambiar_de_acompanante.md`](ECU-13_cambiar_de_acompanante.md) | Usuario adulto | Acompañamiento | Ágil | RF-12 |
+| **CU-14** | **Elegir acompañante (Alan o Aura)** | [`ECU-14_elegir_acompanante.md`](ECU-14_elegir_acompanante.md) | Usuario adulto | Acompañamiento | Ágil | RF-06 |
 
-## 2. Convención de identificadores
+**Siete completas** (CU-04, 05, 06, 07, 10, 11, 12) y **siete ágiles** (CU-01, 02, 03, 08, 09, 13, 14). El criterio no es el tamaño sino la sensibilidad al canon: lleva forma completa lo que toca el consentimiento, la minimización, la ruta de seguridad, el borrado irreversible o el *kill switch*.
+
+## 2. Qué cambió en v2.0
+
+El punto 3 de la retroalimentación docente señaló que los requisitos funcionales no se veían reflejados en su totalidad en el diagrama. La auditoría lo confirmó: **13 de los 26 RF no tenían manifestación gráfica** y tres casos de uso absorbían 17. `DCU-01 v2.0` pasó de 10 a 14 casos de uso, y este paquete lo sigue.
+
+| Cambio | De | A |
+|---|---|---|
+| «Gestionar cuenta y datos personales» se estrecha | CU-04 con tres objetivos | **CU-04** «Eliminar cuenta» · **CU-11** «Reiniciar la caracterización» · **CU-12** «Revocar la personalización» |
+| El cambio de personaje sale de un flujo alternativo | dentro de CU-06 | **CU-13** «Cambiar de acompañante», `<<extend>>` |
+| La elección de personaje sale del onboarding | pasos 8-9 de CU-05 | **CU-14** «Elegir acompañante», `<<include>>` |
+| Dos casos de uso se renombran | «Iniciar sesión» · «…caracterizar el perfil» | «Iniciar **y cerrar** sesión» (RF-21 nombra el cierre) · «…**crear la cápsula de perfil**» («perfil» a secas es término prohibido) |
+
+**Decisión de diseño introducida en esta pasada:** el `Consentimiento` se separa en **capa base** (autoriza conversar) y **capa de personalización** (autoriza que los cuatro autorreportes de la cápsula orienten la conversación). La definición canónica vive en `ECU-12` §4.1. Resolvió el hallazgo D-01, que había detectado que «revocar» no decía **qué** se revocaba y que un usuario con el consentimiento retirado entraba al chat sin obstáculo en el modelo.
+
+## 3. Convención de identificadores
 - **Documento:** `DOC-CU-XX`. **Caso de uso:** `CU-XX` (REQ-01 §0 reserva `CU` para la fase 2).
-- **Dentro de cada spec:** `PRE-` (precondición), `FA-` (flujo alternativo), `FE-` (flujo de excepción), `RN-` (regla de negocio), `RE-` (requisito especial), `CA-` (criterio de aceptación), `RA-` (riesgo/ambigüedad). **Trazas:** `RF-`/`OBJ-`/`RN-`/`RC-`/`CP-`/`DR-`/`DS-`.
+- **Dentro de cada especificación:** `PRE-` (precondición), `FA-` (flujo alternativo), `FE-` (flujo de excepción), `RN-` (regla de negocio), `RE-` (requisito especial), `CA-` (criterio de aceptación), `RA-` (riesgo o ambigüedad). **Trazas hacia fuera:** `RF-`, `OBJ-`, `RC-`, `CP-`, `DR-`, `DS-`.
+- **Numeración.** Los diez casos de uso de v1.0 conservan su número; los cuatro nuevos se numeran del 11 al 14 en el orden de la tabla de `DCU-01` §2. No sigue el orden de declaración del `.puml`, y por eso cada especificación registra en su trazabilidad la correspondencia **alias del diagrama ↔ `CU-NN`**.
 
-## 3. Mapa a DCU-01
-- **1:1 con el diagrama:** 4 actores, 10 casos de uso, 3 paquetes, **1 `<<extend>>`** (CU-07 «Derivar ante peligro» → CU-06 «Conversar»), **0 `<<include>>`**.
-- **Equivalencia con el plan §5.3** (`CU-01…06` presupuestados): el plan agrupaba de otro modo (p. ej. «Administrar la plataforma» = un solo CU); aquí se desglosa por trazabilidad en CU-08/09/10. La numeración `CU-01…10` de este paquete es la vigente.
+## 4. Mapa a DCU-01 v2.1
+- **5 actores** (4 concretos más el rol general `Titular de cuenta`), **14 casos de uso**, **3 paquetes**.
+- **1 `<<include>>`:** `CU-05 ..> CU-14`. **2 `<<extend>>`:** `CU-07 ..> CU-06` y `CU-13 ..> CU-06`.
+- `CU-07` y `CU-14` **no cuelgan de ningún actor** en el diagrama, por disciplina de asociación: el primero lo dispara el sistema, el segundo es una subfunción incluida. Ambos sí declaran actor primario en su especificación, porque el validador lo exige y porque alguien ejecuta sus pasos.
 
-## 4. Profundidad (decisión del usuario, 2026-07-16)
-- **Completa (24 secciones, §1–§23):** CU-04, CU-05, CU-06, CU-07, CU-10 — casos canon-sensibles (eliminación en cascada, consentimiento/minimización, conversación gobernada, *fail-safe*, kill switch auditado).
-- **Ágil (núcleo ICONIX / plantilla §23):** CU-01, CU-02, CU-03, CU-08, CU-09 — casos simples de un escenario. Incluyen igual su bloque de trazabilidad y su checklist §22.
-
-## 5. Cobertura de trazabilidad (cero RF huérfanos)
-Los **26 RF** de REQ-01 aparecen en el §19/§Trazabilidad de ≥1 especificación:
+## 5. Cobertura de trazabilidad — 26/26, cero huérfanos
 
 | RF | CU | RF | CU | RF | CU |
 |---|---|---|---|---|---|
 | RF-01 | CU-05 | RF-10 | CU-06 | RF-19 | CU-01 |
 | RF-02 | CU-05 | RF-11 | CU-07 | RF-20 | CU-02 |
-| RF-03 | CU-05 | RF-12 | CU-06 | RF-21 | CU-03 |
-| RF-04 | CU-05 | RF-13 | CU-06 | RF-22 | CU-04 |
-| RF-05 | CU-05 | RF-14 | CU-03 | RF-23 | CU-04 |
-| RF-06 | CU-05 | RF-15 | CU-08 | RF-24 | CU-04 |
+| RF-03 | CU-05 | **RF-12** | **CU-13** | RF-21 | CU-03 |
+| RF-04 | CU-05 | RF-13 | CU-06 | **RF-22** | **CU-11** |
+| RF-05 | CU-05 | RF-14 | CU-03 | **RF-23** | **CU-12** |
+| **RF-06** | **CU-14** | RF-15 | CU-08 | RF-24 | CU-04 |
 | RF-07 | CU-06 | RF-16 | CU-09 | RF-25 | CU-06 |
 | RF-08 | CU-06 | RF-17 | CU-10 | RF-26 | CU-06 |
 | RF-09 | CU-06 | RF-18 | CU-10 | — | — |
 
-→ **26/26 cubiertos, cero huérfanos.** (Poblada la columna CU de `TRZ-01`.)
+**Cada RF lo realiza exactamente un caso de uso.** Cuando una especificación cita un RF que no realiza, lo etiqueta como *cedido*, *relacionado* o *vecino* y dice a quién pertenece: `ECU-04` cede RF-22 y RF-23; `ECU-08` cita RF-14 (lo realiza CU-03); `ECU-07` cita RF-10 (el gate, que vive en CU-06).
 
-## 6. Gate de calidad (verificación documental)
-La skill `use-case-specifier` **no** trae validador ejecutable (a diferencia de MD-01/DCU-01, con `validate_*.py`). La verificación es **documental**: cada spec **embebe su checklist §22 (20 ítems)** como evidencia, y todas pasaron el **loop de auditoría** del orquestador (checklist §22 + rúbrica de severidades + «8 pasos» + traza *backward* concepto∈MD-01 / actor·relación∈DCU-01 / flujo∈MV-01 + matriz de canon §5) **sin hallazgos Crítico/Mayor**. Los borradores mecánicos (CU-01/02/03/08/09) se auditaron antes de incorporarse.
+## 6. Verificación
 
-## 7. Reconciliación RA-01 (cerrada — SD-22)
-- **RA-01 (nº de campos al LLM) — RESUELTA (SD-22):** se adopta la definición del plan §3.4 (`ContextoInicialConversacionalV1`): la cápsula = **5 campos de contenido** (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) **+ 2 metadatos** (`schema_version`, `consent_version`). Se descarta el colapso a 3 campos. Propagado a RN-01.3 (MV-01), RF-04/RF-05 (REQ-01), PRIV-R1 e inventario §2 (PRIV-01), MD-01 §6 y a CU-04/CU-05/CU-06 (§7/§18/§21). **PRIV-R9 (lista de prohibidos al LLM) intacta**; sigue siendo minimización.
+**Comprobado por script.** La skill **sí** trae validador ejecutable, `scripts/validate_use_case_spec.py`. Sobre las **14 especificaciones**: **0 errores y 0 advertencias**.
+
+```bash
+for f in ECU-0[1-9]*.md ECU-1[0-4]*.md; do python .../validate_use_case_spec.py "$f"; done
+```
+
+> **Alcance real de ese 0/0.** El validador tiene **tres clases de error**: campo mínimo ausente, identificador duplicado y referencia cruzada colgante. Todo lo demás —que el caso de uso sea un objetivo de actor, que la traza al dominio sea cierta, que una cita a otro documento exista— **queda fuera de su alcance** y depende del juicio del analista. Un 0/0 no es prueba de calidad por sí solo.
+>
+> **Este índice no se somete al validador.** Es un índice, no una especificación: no tiene actor primario, ni disparador, ni flujo básico, y el validador se los reclamaría. El script no admite exención —ni bandera, ni marcador, ni heurística de nombre—, así que la exclusión se hace no ejecutándolo y declarándola aquí. Convertir el índice en lo que no es sería peor que la advertencia que evita.
+
+**Comprobado a mano, con comando.**
+- **Cobertura de flujos: 76/76.** El 100 % de los flujos alternativos y de excepción de las 14 especificaciones tiene un criterio de aceptación asociado que cita su identificador. Es el criterio de convergencia de la skill y **el validador no lo comprueba**.
+- **Cobertura de RF: 26/26**, sin huérfanos y sin ningún RF realizado por dos casos de uso.
+- Cada especificación registra la correspondencia alias ↔ `CU-NN`.
+
+**Auditoría independiente.** Cada documento pasó por un auditor que no lo escribió y por un escéptico encargado de refutar sus hallazgos. Sobre las cinco especificaciones de la tanda 1: 57 hallazgos, 13 refutados, 44 sostenidos, ninguno crítico superviviente. Sobre las nueve de las tandas 2 a 4: 32 sostenidos, 11 de ellos mayores. Todos los mayores se corrigieron antes de comitear.
+
+> **Lo que la auditoría enseñó, y que gobierna este paquete.** El defecto más frecuente y más caro no fue estructural: fue **afirmar algo sin comprobarlo**. Se citó una declaración de alias inexistente en MV-01, una pantalla inexistente en DIS-00, un diagrama como «planificado» cuando estaba comiteado, y un requisito de privacidad que hablaba de otra cosa. Por eso cada especificación separa ahora **lo comprobado por script** de **lo comprobado a mano**, y declara el alcance de cada comprobación en vez de dar por buena la casilla marcada.
+
+## 7. Qué queda abierto
+
+| Asunto | Dónde | Fase |
+|---|---|---|
+| `DR-05`, `DR-07` y `DR-08` quedaron **desalineados** por estas reescrituras; faltan `DR-11…DR-14` | `docs/07_casos_uso/robustez/` | **D.4** |
+| `PER-01` cita criterios y flujos de `ECU-04` que la renumeración rompió | `PER-01` §104, §170, §176 | D.5 |
+| `DIS-00` afirma que reiniciar la caracterización es «reversible»: es **falso** | `DIS-00` §3 | D.5 |
+| `MV-01` §7.3 y `RF-25` aún dicen 1.500 caracteres por mensaje; el vigente es **2.500** | `MV-01`, `REQ-01` | D.5 |
+| `MV-01` §13.2 llama «vista derivada, no clase» a `EventoOperativo`; `MD-01 v1.4` y `PER-01` lo tratan como entidad | `MV-01` §13.2 | D.5 |
+| `PER-H4`: campos de `ContadorDeUsoDiario` | `PER-01` | abierta |
+| La matriz clase ↔ caso de uso y la tabla de visibilidad RF → CU | `TRZ-01` | D.5 |
 
 ## 8. Siguiente paso ICONIX
-**Análisis de robustez** (`DR-01…DR-10`) por caso de uso, reusando los objetos de frontera/entidad/control ya insinuados en cada flujo; luego diagramas de secuencia (`DS-XX`) y pruebas (`CP-XX`).
+**Análisis de robustez** `DR-01…DR-14`, uno por caso de uso, reusando los objetos de frontera, control y entidad que cada flujo ya nombra. Después, diagramas de secuencia `DS-XX` y casos de prueba `CP-XX`.
 
 **Fin de ECU-00.**
