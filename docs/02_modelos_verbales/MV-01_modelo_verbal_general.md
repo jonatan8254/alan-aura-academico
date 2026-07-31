@@ -256,7 +256,7 @@ Cada cualidad nombra su característica **ISO/IEC 25010:2023** candidata (punter
 `VIS-01 (OBJ) → MV-01 (clases/relaciones/reglas) → [skill uml-domain-modeler → modelo de dominio .puml] → casos de uso → robustez → secuencia → pruebas → GQM → evidencias`. El tramo desde el `.puml` en adelante queda **planificado**, no producido (Q2). Los sustantivos del dominio deben **reaparecer por nombre** en el texto de los casos de uso (columna vertebral de trazabilidad).
 
 ## 11. Disciplina nominal — tabla de alias (rasgo E8-13)
-Un concepto = un nombre. Alias históricos declarados, **no** en uso activo.
+Un concepto = un nombre. Las cuatro primeras filas son **alias históricos**, declarados y **no** en uso activo. La última es distinta: un **alias de producto en uso activo**, que convive con el nombre del dominio de forma deliberada y por eso se declara aquí en vez de prohibirse.
 
 | Nombre activo | Alias históricos (macro) | Uso |
 |---|---|---|
@@ -264,6 +264,7 @@ Un concepto = un nombre. Alias históricos declarados, **no** en uso activo.
 | **Aura** | Pandora | Personaje de calma. |
 | **CapsulaDePerfil** | «PerfilInicialParaLLM» (macro) | Resumen mínimo al LLM. |
 | **EventoDeSeguridad** | «monitor de crisis / triaje» (macro, más amplio) | Aquí: evento del gate binario (SEG-01). |
+| **Personaje** | — · **alias de producto en uso activo: «acompañante»** | Clase de MD-01; se especializa en `Alan` y `Aura`. A diferencia de las filas anteriores, «acompañante» **sí está en uso activo**: nombra tres casos de uso de DCU-01 v2.1 (*Conversar con el acompañante*, *Cambiar de acompañante*, *Elegir acompañante*) y la interfaz, por su calidez. El término trazable al dominio sigue siendo `Personaje`. Declarado en el PDR-01, fase D.3. |
 
 ## 12. Glosario integrado (rasgo E8-14)
 - **Acompañamiento:** apoyo conversacional no clínico (escuchar, validar, orientar, psicoeducar).
