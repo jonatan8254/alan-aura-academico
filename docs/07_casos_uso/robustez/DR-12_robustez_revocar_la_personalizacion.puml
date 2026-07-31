@@ -1,0 +1,121 @@
+@startuml
+' DR-12 — Analisis de robustez de CU-12 «Revocar la personalizacion»
+' Insumos: ECU-12 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-13; destino P-03), PRIV-01, PER-01
+' Nuevo en el PDR-01 fase D.4. Los elementos proceden del flujo alternativo «Revocar
+' personalizacion» de DR-04 v1.0, que salio de alli cuando paso a ser caso de uso propio.
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Usuario adulto" as ACT_Usuario
+
+boundary "Gestion de cuenta (P-13)" as B_GestionCuenta
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
+
+control "Presentar el alcance de la revocacion" as C_PresentarAlcance
+control "Registrar la capa de personalizacion como revocada" as C_RevocarCapaPersonalizacion
+control "Marcar los autorreportes para descarte" as C_MarcarAutorreportesParaDescarte
+control "Confirmar que el chat sigue disponible" as C_ConfirmarChatDisponible
+control "Informar que la personalizacion ya estaba revocada" as C_InformarYaRevocada #LightCoral
+control "Cancelar la revocacion" as C_CancelarRevocacion #LightCoral
+control "Denegar por permiso insuficiente" as C_DenegarPorPermiso #LightCoral
+control "Mostrar mensaje de peticion mal formada" as C_MsgPeticionInvalida #LightCoral
+control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+
+entity "Usuario" as E_Usuario
+entity "Consentimiento" as E_Consentimiento
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "Conversacion" as E_Conversacion
+
+ACT_Usuario -- B_GestionCuenta : 1 elige revocar la personalizacion
+B_GestionCuenta -- C_PresentarAlcance : 1 presenta el alcance del cambio
+C_PresentarAlcance -- E_CapsulaDePerfil : 1 la capsula dejara de orientar la conversacion
+C_PresentarAlcance -- B_GestionCuenta : 1 declara que el chat seguira disponible
+B_GestionCuenta -- C_RevocarCapaPersonalizacion : 2 confirma la revocacion
+C_RevocarCapaPersonalizacion -- E_Usuario : 3 identifica al titular del consentimiento
+C_RevocarCapaPersonalizacion -- E_Consentimiento : 3 marca la capa de personalizacion como revocada con su fecha; la capa base permanece
+C_RevocarCapaPersonalizacion -- C_MarcarAutorreportesParaDescarte : 3 cesa el uso de la capsula
+C_MarcarAutorreportesParaDescarte -- E_CapsulaDePerfil : 3 marca los cuatro autorreportes para descarte; character permanece
+C_MarcarAutorreportesParaDescarte -- C_ConfirmarChatDisponible : 4 revocacion aplicada
+C_ConfirmarChatDisponible -- E_Conversacion : 4 desde el turno siguiente los autorreportes no viajan al Proveedor LLM
+C_ConfirmarChatDisponible -- B_GestionCuenta : 4 confirma que puede seguir conversando
+
+B_GestionCuenta -- C_InformarYaRevocada : FA-01 la capa ya estaba revocada
+C_InformarYaRevocada -- B_GestionCuenta : FA-01 finaliza sin cambios; operacion idempotente
+
+C_PresentarAlcance -- C_ConfirmarChatDisponible : FA-02 la capsula solo tiene character; efecto observable nulo
+B_GestionCuenta -- C_CancelarRevocacion : FA-03 cancela en la confirmacion
+C_CancelarRevocacion -- B_GestionCuenta : FA-03 cancela y vuelve al paso 1 sin modificar el consentimiento
+
+B_GestionCuenta -- C_SolicitarReingreso : FE-01 la sesion expira
+C_SolicitarReingreso -- B_PaginaInicioSesion : FE-01 termina; 401 sin modificar el consentimiento
+B_GestionCuenta -- C_DenegarPorPermiso : FE-02 el rol no esta autorizado
+C_DenegarPorPermiso -- B_GestionCuenta : FE-02 termina; 403 sin cambios
+C_RevocarCapaPersonalizacion -- C_MsgPeticionInvalida : FE-03 peticion mal formada
+C_MsgPeticionInvalida -- B_GestionCuenta : FE-03 reintentar; 400 y no ejecuta la accion
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR12
+  <b>CU-12 - Revocar la personalizacion</b> (ECU-12 v1.0) - actor: Usuario adulto
+  PRE-01 sesion activa. PRE-02 rol usuario validado en servidor. PRE-03 existe un
+  Consentimiento con la capa de personalizacion otorgada. PRE-04 existe una CapsulaDePerfil
+  con al menos un autorreporte (no bloqueante: si solo tiene character, ver FA-02).
+  <b>Disparador</b> El Usuario elige «Revocar la personalizacion» en la Gestion de cuenta.
+
+  <b>Las dos capas del Consentimiento</b> (este documento es la definicion canonica, §4.1)
+  capa base: autoriza conversar. Sin ella no hay conversacion. Se otorga en el paso 5 de CU-05
+    y solo se retira durante el onboarding o al eliminar la cuenta (CU-04).
+  capa personalizacion: autoriza que los CUATRO AUTORREPORTES orienten la conversacion. Se
+    retira <b>aqui</b>, en cualquier momento. character pertenece a la capa BASE (RN-01.6),
+    por eso revocar la personalizacion NO deja al Usuario sin poder conversar.
+
+  <b>Flujo basico</b>
+  1. El Usuario elige revocar la personalizacion. El sistema presenta el alcance del cambio:
+     la capsula dejara de orientar la conversacion y el chat seguira disponible.
+  2. El Usuario confirma la revocacion.
+  3. El sistema marca la capa de personalizacion como revocada con su fecha; la capa base
+     permanece otorgada, y los cuatro autorreportes quedan marcados para descarte (PRIV-R3).
+  4. El sistema confirma que la personalizacion quedo revocada y que puede seguir conversando.
+     Desde el turno siguiente, los autorreportes no viajan al Proveedor LLM.
+
+  <b>Cursos alternativos</b>
+  FA-01 Personalizacion ya revocada (paso 1): informa el estado y no repite el cambio.
+        Finaliza sin cambios; operacion idempotente.
+  FA-02 Capsula sin autorreportes (paso 1): revoca igualmente la capa; el efecto observable es
+        nulo porque no habia nada que dejara de usarse. Finaliza con la capa revocada.
+  FA-03 Cancelar la confirmacion (paso 2): no modifica el Consentimiento. Cancela y vuelve al
+        paso 1.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Sesion ausente (cualquier paso): 401; no modifica el Consentimiento. Termina.
+  FE-02 Permiso insuficiente (paso 1): 403; sin cambios. Termina.
+  FE-03 Entrada invalida (paso 2): 400; no ejecuta la accion. Reintentar.
+
+  <b>Postcondicion</b> La capa de personalizacion queda revocada y la capsula no vuelve a
+  alimentar la conversacion.
+  <b>Invariante (lo esencial)</b> El Usuario SIGUE PUDIENDO CONVERSAR. Revocar la
+  personalizacion no es punitivo.
+  <b>Reglas</b> RN-07, RN-04.3, RN-01.5, RN-01.4, RN-01.6, RN-02. <b>Traza</b> RF-23 -> OBJ-7, OBJ-4.
+  <b>Pantallas</b> P-13 compartida con CU-04 y CU-11; P-03 en FE-01.
+
+  <b>Notas de modelado</b>
+  - <b>Dos controladores, no uno, en el paso 3.</b> Revocar la capa y marcar los autorreportes
+    para descarte son dos funciones distintas: la primera cambia el estado del Consentimiento,
+    la segunda cumple PRIV-R3 sobre la CapsulaDePerfil. Fundirlas ocultaria que el descarte es
+    una obligacion de privacidad y no un efecto colateral.
+  - <b>character no se toca, y eso se dibuja.</b> El arco a CapsulaDePerfil dice
+    explicitamente que character permanece: es lo que distingue este caso de uso de CU-11, que
+    borra la capsula entera. En DR-11 el arco equivalente dice lo contrario.
+  - <b>El controlador "Confirmar que el chat sigue disponible" existe por el canon.</b> No es
+    un mensaje de exito generico: materializa el requisito de uso no punitivo, que exige
+    declarar al Usuario que no pierde el servicio.
+  - <b>La capa base no aparece como objeto propio.</b> Es un estado del Consentimiento, no una
+    clase; MD-01 v1.4 tiene una sola clase Consentimiento con capa entre sus atributos
+    diferidos.
+end note
+
+@enduml

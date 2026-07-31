@@ -1,5 +1,5 @@
 @startuml
-' DR-06 — Analisis de robustez de CU-06 «Conversar con el acompanante»
+' DR-06 (v2.0, PDR-01 fase D.4) — Analisis de robustez de CU-06 «Conversar con el acompanante»
 ' Insumos: ECU-06, MD-01 (incl. §3.9: el LLM vive en robustez como objeto frontera),
 '          DCU-01, DIS-00 (P-10, P-11), SEG-01, PRIV-01, PER-01, contrato conversacional
 left to right direction
@@ -12,6 +12,7 @@ actor "Proveedor LLM (Groq)" as ACT_ProveedorLLM
 boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
 boundary "Chat - error y degradacion (P-11)" as B_EstadosDeError #LightCoral
 boundary "Frontera con el Proveedor LLM" as B_FronteraProveedorLLM
+boundary "Onboarding - consentimiento capa base (P-07)" as B_OnboardingCapaBase #LightCoral
 
 control "Verificar la sesion y el rol del usuario" as C_VerificarSesionYRol
 control "Verificar el consentimiento vigente" as C_VerificarConsentimiento
@@ -27,7 +28,6 @@ control "Aplicar las guardas de salida y limitar a 350 tokens" as C_AplicarGuard
 control "Mostrar la respuesta del personaje" as C_MostrarRespuesta
 control "Cerrar la conversacion y descartar su contenido" as C_CerrarYDescartar
 control "Registrar el evento operativo sin contenido" as C_RegistrarEventoOperativo
-control "Cambiar de personaje sin rehacer el onboarding" as C_CambiarDePersonaje #LightCoral
 control "Informar el limite de la sesion alcanzado" as C_InformarLimiteDeSesion #LightCoral
 control "Sustituir la salida insegura por una respuesta segura" as C_SustituirSalidaInsegura #LightCoral
 control "Solicitar el reingreso por sesion ausente" as C_SolicitarReingreso #LightCoral
@@ -38,6 +38,7 @@ control "Informar el limite de uso y el tiempo de espera" as C_InformarLimiteDeT
 control "Reintentar una vez ante fallo transitorio" as C_ReintentarUnaVez #LightCoral
 control "Informar el fallo del proveedor y ofrecer reintento" as C_InformarFalloDelProveedor #LightCoral
 control "Desviar el turno al flujo de derivacion de CU-07" as C_DesviarADerivacion #LightCoral
+control "Denegar el acceso por capa base revocada" as C_DenegarPorCapaBaseRevocada #LightCoral
 
 entity "Conversacion" as E_Conversacion
 entity "Mensaje" as E_Mensaje
@@ -46,30 +47,33 @@ entity "CapsulaDePerfil" as E_CapsulaDePerfil
 entity "Consentimiento" as E_Consentimiento
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
 entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario #PaleGreen
-entity "EventoOperativo" as E_EventoOperativo #PaleGreen
+entity "EventoOperativo" as E_EventoOperativo
 
 ACT_Usuario -- B_InterfazDeChat : 1 elige personaje e inicia la conversacion
 ACT_ProveedorLLM -- B_FronteraProveedorLLM : 5 responde a la solicitud del sistema con el texto generado
 B_InterfazDeChat -- C_VerificarSesionYRol : 1 solicita iniciar la conversacion
 C_VerificarSesionYRol -- C_VerificarConsentimiento : 1 sesion activa con rol de usuario validado
-C_VerificarConsentimiento -- E_Consentimiento : 1 comprueba que el consentimiento este vigente
-C_VerificarConsentimiento -- C_VerificarDisponibilidad : 1 consentimiento vigente
+C_VerificarConsentimiento -- E_Consentimiento : 1 comprueba la capa base; la de personalizacion no condiciona el acceso
+C_VerificarConsentimiento -- C_VerificarDisponibilidad : 1 capa base vigente
+C_VerificarConsentimiento -- C_DenegarPorCapaBaseRevocada : FE-09 la capa base esta revocada
+C_DenegarPorCapaBaseRevocada -- B_OnboardingCapaBase : FE-09 termina; 403 y redirige a CU-05 sin abrir la conversacion
 C_VerificarDisponibilidad -- E_DisponibilidadDelChatbot : 1 lee el estado global del chatbot
 C_VerificarDisponibilidad -- C_IniciarConversacion : 1 chatbot habilitado
 C_IniciarConversacion -- E_Conversacion : 1 abre la conversacion
 C_IniciarConversacion -- E_Personaje : 1 fija el personaje de la sesion
 C_IniciarConversacion -- B_InterfazDeChat : 1 abre el dialogo con Alan o Aura
 B_InterfazDeChat -- C_VerificarSesionYRol : 2 revalida la sesion y el rol en cada turno
-B_InterfazDeChat -- C_ValidarTurno : 2 escribe y envia un mensaje de hasta 1.500 caracteres
+B_InterfazDeChat -- C_ValidarTurno : 2 escribe y envia un mensaje de hasta 2.500 caracteres
 C_ValidarTurno -- E_Mensaje : 2 registra el turno
 C_ValidarTurno -- C_VerificarLimitesDeTasa : 2 turno bien formado
 C_VerificarLimitesDeTasa -- E_ContadorDeUsoDiario : 2 contrasta 3 por minuto y 30 por dia
 C_VerificarLimitesDeTasa -- C_EvaluarGate : 3 dentro de los limites de tasa
 C_EvaluarGate -- E_Mensaje : 3 examina el mensaje antes de responder
 C_EvaluarGate -- C_ConstruirContextoMinimo : 4 sin peligro explicito
-C_ConstruirContextoMinimo -- E_CapsulaDePerfil : 4 toma la capsula de cinco campos
+C_ConstruirContextoMinimo -- E_CapsulaDePerfil : 4 toma character siempre; los cuatro autorreportes solo con la capa de personalizacion otorgada
 C_ConstruirContextoMinimo -- E_Personaje : 4 toma la persona del personaje
 C_ConstruirContextoMinimo -- E_Mensaje : 4 toma hasta 4 intercambios de la sesion actual y el turno
+C_ConstruirContextoMinimo -- E_Consentimiento : 4 consulta si la capa de personalizacion esta otorgada
 C_ConstruirContextoMinimo -- C_SolicitarGeneracion : 4 contexto minimo armado
 C_SolicitarGeneracion -- B_FronteraProveedorLLM : 4 envia el contexto minimo al proveedor
 C_SolicitarGeneracion -- C_ControlarTiempoDeEspera : 4 vigila el plazo de espera
@@ -82,20 +86,16 @@ C_CerrarYDescartar -- E_Conversacion : 8 marca la conversacion como cerrada
 C_CerrarYDescartar -- E_Mensaje : 8 descarta el contenido sin persistirlo
 C_CerrarYDescartar -- C_RegistrarEventoOperativo : 8 registra solo el evento operativo
 C_RegistrarEventoOperativo -- E_EventoOperativo : 8 guarda latencia, modelo, version y estado
-B_InterfazDeChat -- C_CambiarDePersonaje : FA-01 alterna entre Alan y Aura
-C_CambiarDePersonaje -- E_Personaje : FA-01 cambia el personaje de la sesion
-C_CambiarDePersonaje -- C_ValidarTurno : FA-01 retorna al paso 2
-C_MostrarRespuesta -- C_InformarLimiteDeSesion : FA-02 alcanza los 20 mensajes de la sesion
-C_AplicarGuardas -- C_InformarLimiteDeSesion : FA-02 la salida alcanza los 350 tokens
-C_InformarLimiteDeSesion -- E_Conversacion : FA-02 contrasta el limite de la sesion
-C_InformarLimiteDeSesion -- B_InterfazDeChat : FA-02 informa el estado e invita a cerrar o reiniciar
-C_AplicarGuardas -- C_SustituirSalidaInsegura : FA-03 detecta riesgo o claim clinico en la salida
-C_SustituirSalidaInsegura -- C_MostrarRespuesta : FA-03 sustituye por una respuesta segura
+C_MostrarRespuesta -- C_InformarLimiteDeSesion : FA-01 alcanza los 20 mensajes de la sesion
+C_InformarLimiteDeSesion -- E_Conversacion : FA-01 contrasta el limite de la sesion
+C_InformarLimiteDeSesion -- B_InterfazDeChat : FA-01 finaliza de forma controlada, sin error crudo
+C_AplicarGuardas -- C_SustituirSalidaInsegura : FA-02 detecta riesgo o claim clinico en la salida
+C_SustituirSalidaInsegura -- C_MostrarRespuesta : FA-02 continua en el paso 6 con la respuesta sustituida
 C_VerificarSesionYRol -- C_SolicitarReingreso : FE-01 sesion ausente en los pasos 1 y 2
 C_SolicitarReingreso -- B_EstadosDeError : FE-01 informa y solicita reingresar por CU-03
 C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 rol no autorizado en el paso 1
 C_DenegarPorRol -- B_EstadosDeError : FE-02 sin acceso
-C_ValidarTurno -- C_InformarEntradaInvalida : FE-03 mensaje mal formado o mayor de 1.500 caracteres
+C_ValidarTurno -- C_InformarEntradaInvalida : FE-03 mensaje mal formado o de mas de 2.500 caracteres
 C_InformarEntradaInvalida -- B_EstadosDeError : FE-03 pide corregir sin enviar el turno
 C_VerificarDisponibilidad -- C_InformarIndisponibilidad : FE-04 kill switch activo
 C_InformarIndisponibilidad -- B_EstadosDeError : FE-04 informa la indisponibilidad temporal
@@ -126,7 +126,7 @@ note as N_DR06
   <b>Flujo basico</b>
   1. El Usuario elige personaje (Alan/Aura) e inicia la conversacion. El sistema abre la
      Conversacion con el chatbot habilitado.
-  2. El Usuario escribe y envia un Mensaje de hasta 1.500 caracteres. El sistema valida la
+  2. El Usuario escribe y envia un Mensaje de hasta 2.500 caracteres. El sistema comprueba la
      longitud y la estructura del turno.
   3. El sistema evalua el gate de seguridad determinista sobre el mensaje antes de responder
      y decide entre no-peligro y peligro-explicito.
@@ -140,17 +140,21 @@ note as N_DR06
      registra solo un evento operativo sin contenido.
 
   <b>Cursos alternativos</b>
-  FA-01 Cambiar de personaje (cualquier turno): el Usuario alterna Alan/Aura y continua sin
-        reiniciar el onboarding; retorna al paso 2.
-  FA-02 Limite de sesion alcanzado (paso 7): 20 mensajes / 1.500 caracteres / 350 tokens;
-        el sistema informa el estado e invita a cerrar o reiniciar, sin error crudo.
-  FA-03 Salida insegura del LLM (paso 6): la postvalidacion detecta riesgo o claim clinico;
-        el sistema sustituye la salida por una respuesta segura.
+  FA-01 Limite de mensajes por sesion (paso 7): el Usuario alcanza los 20 mensajes; el sistema
+        informa el estado e invita a cerrar o iniciar otra sesion, sin error crudo. Finaliza
+        de forma controlada.
+  FA-02 Salida insegura del Proveedor LLM (paso 6): la postvalidacion detecta riesgo o claim
+        clinico; el sistema sustituye la salida por una respuesta segura de fallback y
+        continua en el paso 6.
+  El cambio de personaje, que la v1.0 llevaba como FA-01, salio a CU-13 y se dibuja en DR-13.
+  Los otros dos disparadores de limite no son cursos alternativos: el de entrada (2.500
+  caracteres) es FE-03, y el de salida (350 tokens) es un recorte que el paso 6 aplica sin
+  interrumpir el flujo.
 
   <b>Cursos de excepcion</b> (tabla de codigos = plan §4.13; degradacion con gracia = RF-26)
   FE-01 Sesion ausente (pasos 1-2): 401; solicita reingresar. Recuperacion CU-03.
   FE-02 Permiso insuficiente (paso 1): 403; sin acceso.
-  FE-03 Entrada invalida (paso 2): mensaje mal formado o mayor de 1.500; 400; pide corregir.
+  FE-03 Entrada invalida (paso 2): mensaje mal formado o de mas de 2.500; 400. Vuelve al paso 2.
   FE-04 Chat deshabilitado (paso 1): kill switch activo; 409; indisponibilidad temporal.
   FE-05 Limite superado (paso 2): rate limit 3/min o 30/dia; 429; respeta Retry-After.
   FE-06 Proveedor no disponible (paso 5): Groq caido; 502; maximo un reintento a fallos
@@ -158,6 +162,9 @@ note as N_DR06
   FE-07 Timeout (paso 5): sin respuesta en 20 s; 504; informa sin romper la interfaz.
   FE-08 Peligro explicito (paso 3): 200 + safety_fallback; se desvia a CU-07 (Derivar);
         el chat ordinario queda suspendido en la sesion.
+  FE-09 Capa base del consentimiento revocada (paso 1): el Usuario la retiro durante el
+        onboarding y accede al chat directamente; 403, no abre la Conversacion y redirige a
+        CU-05 para otorgarla. Termina.
   Regla transversal: no se retornan errores crudos, stack traces, claves, el prompt ni
   metadatos de razonamiento. Se realiza como la AUSENCIA de todo Controlador que exponga
   esos datos, y porque ninguna rama de error llega a un Borde de interfaz de usuario sin

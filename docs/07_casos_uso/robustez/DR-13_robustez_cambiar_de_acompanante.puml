@@ -1,0 +1,96 @@
+@startuml
+' DR-13 — Analisis de robustez de CU-13 «Cambiar de acompanante»
+' Insumos: ECU-13 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-10 estado «cambiar personaje»), MV-01
+' Nuevo en el PDR-01 fase D.4. Los elementos proceden del flujo alternativo «Cambiar de
+' personaje» de DR-06 v1.0, que salio de alli cuando paso a ser caso de uso propio.
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Usuario adulto" as ACT_Usuario
+
+boundary "Interfaz de chat (P-10)" as B_InterfazChat
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
+
+control "Mostrar el selector de personaje" as C_MostrarSelectorPersonaje
+control "Sustituir el personaje que conduce la conversacion" as C_SustituirPersonaje
+control "Confirmar el cambio sin cerrar la conversacion" as C_ConfirmarCambio
+control "Mantener el personaje en curso" as C_MantenerPersonajeEnCurso #LightCoral
+control "Informar la indisponibilidad temporal" as C_InformarIndisponibilidad #LightCoral
+control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+
+entity "Personaje" as E_Personaje
+entity "Alan" as E_Alan
+entity "Aura" as E_Aura
+entity "Conversacion" as E_Conversacion
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot #LightCoral
+
+ACT_Usuario -- B_InterfazChat : 1 solicita cambiar de acompanante
+B_InterfazChat -- C_MostrarSelectorPersonaje : 1 muestra el selector de personaje
+C_MostrarSelectorPersonaje -- E_Alan : 1 ofrece el personaje de activacion
+C_MostrarSelectorPersonaje -- E_Aura : 1 ofrece el personaje de calma
+B_InterfazChat -- C_SustituirPersonaje : 2 confirma el otro personaje
+C_SustituirPersonaje -- E_Personaje : 2 sustituye el interlocutor de la sesion
+C_SustituirPersonaje -- E_Conversacion : 2 la conversacion sigue abierta
+C_SustituirPersonaje -- E_CapsulaDePerfil : 2 consulta character sin reescribirlo
+C_SustituirPersonaje -- C_ConfirmarCambio : 3 cambio aplicado
+C_ConfirmarCambio -- B_InterfazChat : 3 confirma el cambio; continua en el paso 2 de CU-06
+
+B_InterfazChat -- C_MantenerPersonajeEnCurso : FA-01 elige el personaje que ya conduce la sesion
+C_MantenerPersonajeEnCurso -- B_InterfazChat : FA-01 continua en el paso 2 de CU-06 sin cambio observable
+
+C_SustituirPersonaje -- C_InformarIndisponibilidad : FE-01 el kill switch se activa durante el cambio
+C_InformarIndisponibilidad -- E_DisponibilidadDelChatbot : FE-01 consulta el estado global
+C_InformarIndisponibilidad -- B_InterfazChat : FE-01 termina; 409 y la conversacion se cierra
+
+B_InterfazChat -- C_SolicitarReingreso : FE-02 la sesion expira
+C_SolicitarReingreso -- B_PaginaInicioSesion : FE-02 termina; 401 sin sustituir el personaje
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR13
+  <b>CU-13 - Cambiar de acompanante</b> (ECU-13 v1.0) - actor: Usuario adulto
+  Caso de uso que <b>extiende</b> a CU-06 (<<extend>>). Realiza RF-12 en su mitad «durante».
+  PRE-01 sesion activa. PRE-02 rol usuario validado en servidor. PRE-03 capa base del
+  Consentimiento vigente. PRE-04 chatbot habilitado. PRE-05 existe una Conversacion abierta.
+  <b>Disparador</b> El Usuario solicita cambiar de acompanante en cualquier turno.
+
+  <b>Flujo basico</b>
+  1. El Usuario solicita cambiar de acompanante. El sistema muestra el selector de personaje.
+  2. El Usuario confirma el otro Personaje (Alan a Aura o a la inversa). El sistema sustituye
+     el Personaje que conduce la Conversacion.
+  3. El sistema confirma el cambio sin cerrar la Conversacion. Continua en el paso 2 de CU-06,
+     ahora con el nuevo Personaje modulando el tono.
+
+  <b>Cursos alternativos</b>
+  FA-01 Confirmar el Personaje en curso (paso 2): no altera nada; sin cambio observable de
+        tono. Continua en el paso 2 de CU-06.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Chatbot deshabilitado (paso 2): 409; informa indisponibilidad temporal. Termina y la
+        Conversacion se cierra.
+  FE-02 Sesion ausente (pasos 1-2): 401; no sustituye el Personaje. Termina; reingresar por CU-03.
+
+  <b>Postcondicion</b> La Conversacion sigue abierta y la conduce el Personaje recien elegido.
+  <b>Invariante</b> CapsulaDePerfil.character NO cambia: la sesion usa otro Personaje sin
+  reescribir la capsula (RN-01.6). Ninguna escritura persistida en todo el caso de uso.
+  <b>Reglas</b> RN-02.6, RN-02.4, RN-01.6, RN-02.7. <b>Traza</b> RF-12 -> OBJ-2.
+  <b>Pantallas</b> P-10 compartida con CU-06; P-03 en FE-02.
+
+  <b>Notas de modelado</b>
+  - <b>La capsula se consulta, no se escribe.</b> El arco a CapsulaDePerfil existe para que el
+    invariante sea legible en el diagrama: el controlador la toca y sale sin modificarla. Es
+    la unica frase con contenido verificable que la especificacion de origen tenia, y vivia en
+    ECU-05, la especificacion equivocada.
+  - <b>El gate de seguridad no aparece aqui.</b> Cambiar de Personaje modula el tono, no las
+    reglas de seguridad (RN-02.4): el gate y las guardas de salida pertenecen a CU-06 y se
+    dibujan en DR-06. Que no esten en este diagrama es la afirmacion, no un olvido.
+  - <b>Este caso de uso si cuelga de un actor</b>, a diferencia de CU-14: es una extension que
+    el Usuario pide de forma deliberada, no una subfuncion automatica.
+end note
+
+@enduml
