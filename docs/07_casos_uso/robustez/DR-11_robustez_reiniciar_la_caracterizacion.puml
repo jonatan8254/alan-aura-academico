@@ -23,6 +23,7 @@ control "Cancelar el reinicio" as C_CancelarReinicio #LightCoral
 control "Denegar por permiso insuficiente" as C_DenegarPorPermiso #LightCoral
 control "Informar la confirmacion ausente o la peticion invalida" as C_MsgPeticionInvalida #LightCoral
 control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+control "Deshacer el borrado incompleto" as C_DeshacerBorrado #LightCoral
 
 entity "Usuario" as E_Usuario
 entity "CapsulaDePerfil" as E_CapsulaDePerfil
@@ -54,6 +55,9 @@ B_PaginaGestionCuenta -- C_DenegarPorPermiso : FE-02 el rol no esta autorizado
 C_DenegarPorPermiso -- B_PaginaGestionCuenta : FE-02 termina; 403 sin borrar nada
 C_RecibirConfirmacion -- C_MsgPeticionInvalida : FE-03 llega sin confirmacion explicita o mal formada
 C_MsgPeticionInvalida -- B_PaginaGestionCuenta : FE-03 vuelve al paso 1; 400 sin ejecutar el borrado
+C_BorrarCapsulaCompleta -- C_DeshacerBorrado : FE-04 el sistema no logra completar el borrado
+C_DeshacerBorrado -- E_CapsulaDePerfil : FE-04 deshace lo iniciado; la capsula queda como estaba, con character
+C_DeshacerBorrado -- B_PaginaGestionCuenta : FE-04 vuelve al paso 1; 500 sin estados intermedios
 
 legend right
   <b>Convencion de color</b>
@@ -90,6 +94,9 @@ note as N_DR11
   FE-02 Permiso insuficiente (paso 1): 403; sin cambios. Termina.
   FE-03 Confirmacion ausente o peticion mal formada (paso 2): 400; no ejecuta el borrado.
         Vuelve al paso 1.
+  FE-04 Borrado incompleto (paso 3): el sistema no logra completar el borrado de la
+        CapsulaDePerfil; deshace lo iniciado y la deja como estaba, con character
+        (RE-04, sin estados intermedios). 500; vuelve al paso 1.
 
   <b>Postcondicion</b> La CapsulaDePerfil deja de existir; la cuenta y el Consentimiento
   permanecen; el chat queda inhabilitado hasta rehacer CU-05 desde su paso 6.

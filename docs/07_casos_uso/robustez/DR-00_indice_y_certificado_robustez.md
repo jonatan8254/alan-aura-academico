@@ -21,11 +21,11 @@
 | [DR-08](DR-08_robustez_consultar_directorio.puml) | CU-08 Consultar directorio de usuarios | 12 | 1/1/8/2 | 2 | 2 |
 | [DR-09](DR-09_robustez_consultar_metricas.puml) | CU-09 Consultar métricas de uso | 14 | 1/1/8/4 | 2 | 2 |
 | [DR-10](DR-10_robustez_habilitar_deshabilitar_chatbot.puml) | CU-10 Habilitar o deshabilitar el chatbot | 19 | 1/3/11/4 | 3 | 3 |
-| [**DR-11**](DR-11_robustez_reiniciar_la_caracterizacion.puml) | CU-11 **Reiniciar la caracterización** | 17 | 1/3/10/3 | 3 | 3 |
+| [**DR-11**](DR-11_robustez_reiniciar_la_caracterizacion.puml) | CU-11 **Reiniciar la caracterización** | 18 | 1/3/11/3 | 3 | 4 |
 | [**DR-12**](DR-12_robustez_revocar_la_personalizacion.puml) | CU-12 **Revocar la personalización** | 16 | 1/2/9/4 | 3 | 3 |
 | [**DR-13**](DR-13_robustez_cambiar_de_acompanante.puml) | CU-13 **Cambiar de acompañante** | 15 | 1/2/6/6 | 1 | 2 |
 | [**DR-14**](DR-14_robustez_elegir_acompanante.puml) | CU-14 **Elegir acompañante (Alan o Aura)** | 13 | 1/2/6/4 | 1 | 1 |
-| | **Total** | **260** | **15/38/148/59** | | |
+| | **Total** | **261** | **15/38/149/59** | | |
 
 **Un diagrama por caso de uso, con su curso básico y *todos* sus cursos alternativos y de excepción en el mismo diagrama.** Los objetos que participan solo en un curso alternativo o de excepción van en `#LightCoral`; los compartidos con el básico, sin color.
 
@@ -37,7 +37,7 @@ Los genera [`scripts/generar_svg_robustez.py`](scripts/generar_svg_robustez.py) 
 python scripts/generar_svg_robustez.py
 ```
 
-El generador comprueba su propia correspondencia con los `.puml` y aborta el visto bueno si no cuadra: *«Correspondencia con los .puml: OK (260 elementos, 15/38/148/59)»*.
+El generador comprueba su propia correspondencia con los `.puml` y aborta el visto bueno si no cuadra: *«Correspondencia con los .puml: OK (261 elementos, 15/38/149/59)»*.
 
 ## 3. Qué cambió en v2.0
 
@@ -115,7 +115,7 @@ La correspondencia con el diseño detallado es casi mecánica, y así se consumi
 | **Controlador** | Mensaje en el diagrama de secuencia; más tarde, método de una clase |
 | **Cada controlador** | **Un caso de prueba** (`CP-XX`) |
 
-Con **148 controladores** en los 14 diagramas, esa es la cota inferior de casos de prueba que la fase de pruebas tendrá que cubrir.
+Con **149 controladores** en los 14 diagramas, esa es la cota inferior de casos de prueba que la fase de pruebas tendrá que cubrir.
 
 ## 9. Qué queda abierto
 
@@ -125,5 +125,12 @@ Con **148 controladores** en los 14 diagramas, esa es la cota inferior de casos 
 | Evidencia documental: `RET-01`, `PDR-01`, `SD-28`, `CHANGELOG`, `README` | **D.6** |
 | Diagramas de secuencia `DS-01…DS-14` y casos de prueba `CP-01…CP-14` | posteriores |
 | `PER-H4`: campos de `ContadorDeUsoDiario` | abierta |
+
+
+## 10. Revisión Preliminar del Diseño (RPD-01)
+
+El paquete pasó por la **compuerta ICONIX** entre el análisis y el diseño detallado, con la skill `iconix-pdr-review`. Veredicto: **Aceptado con verificación de retrabajo**. Acta completa: [`RPD-01_revision_preliminar_diseno.md`](../RPD-01_revision_preliminar_diseno.md).
+
+Encontró y corrigió en el acto un defecto real que las auditorías anteriores no habían visto: **`DR-11` no dibujaba `FE-04`** (borrado incompleto de la cápsula), que `ECU-11` sí declara. Ya está corregido: `DR-11` pasó de 17 a 18 elementos.
 
 **Fin de DR-00.**
