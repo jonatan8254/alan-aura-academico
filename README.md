@@ -44,9 +44,10 @@ alan-aura-academico/
 ├── AGENTS.md · CLAUDE.md             Reglas operativas para agentes (canon heredado, sin default de modelo)
 ├── 00_AUDITORIA_PLAN_CODEX.md        Auditoría breve del plan generado con Codex
 ├── 00_PLAN_CODEX_ORIGINAL.md         Fuente primaria (verbatim) del plan de Codex
+├── scripts/                          verificar_coherencia.py (validador de coherencia documental)
 └── docs/
-    ├── 00_gobernanza/                Índice, cápsula de contexto, estado, decisiones, changelog, manifiesto de fuentes
-    ├── 01_vision/                    VIS-01 (visión/alcance) · ADR-001 (decisiones técnicas)
+    ├── 00_gobernanza/                Índice, cápsula, estado, decisiones, changelog, manifiesto, HECHOS_CANONICOS
+    ├── 01_vision/                    VIS-01 (visión/alcance) · ADR-001 · ADR-002 (stack vigente: React + Vercel + AWS)
     ├── 02_modelos_verbales/          MV-01 consolidado (vistas Onboarding·Conversación·Seguridad·Administración) + contrato conversacional (E4 simplificado)
     ├── 03_requisitos/                REQ-01 (RF/RNF/calidad/reglas) · PRIV-01 · SEG-01 · PER-01 (mapa de persistencia)
     ├── 04_trazabilidad/              NORM-01 (puente normativo) · TRZ-01 (trazabilidad)
@@ -69,6 +70,8 @@ alan-aura-academico/
 Paquete documental completo, **repositorio independiente** (SD-18), y **Fase 2 (ICONIX) en curso**: producidos el **modelo de dominio** ([`MD-01 v1.4`](docs/06_dominio/MD-01_modelo_dominio.puml)), el **diagrama de casos de uso** ([`DCU-01 v2.1`](docs/07_casos_uso/DCU-01_casos_uso.puml)), la **especificación textual de los 14 casos de uso** ([`ECU-00…ECU-14`](docs/07_casos_uso/especificaciones/)), el **análisis de robustez** ([`DR-00…DR-14`](docs/07_casos_uso/robustez/)) y la **base de diseño de interfaz** ([`DIS-00`/`DIS-01`](docs/08_diseno/) + 16 mockups de alta fidelidad en claro y oscuro).
 
 La fase 2 pasó por una **primera pasada completa de correcciones** ([`PDR-01`](docs/00_gobernanza/PDR-01_primera_pasada_correcciones.md)), motivada por la retroalimentación docente ([`RET-01`](docs/00_gobernanza/RET-01_retroalimentacion_docente.md)) y por los hallazgos del propio análisis de robustez. Estado medido al cierre: los **cuatro validadores en 0 errores**, las especificaciones también sin advertencias, **76/76 flujos** con criterio de aceptación asociado, **26/26 RF** con caso de uso propio y único, y las **16 clases** del dominio manifestadas en casos de uso y en robustez. Existe un **informe académico** ([`docs/09_informe/`](docs/09_informe/)) para la entrega, pendiente de actualizar a este estado. **Siguiente artefacto ICONIX:** los diagramas de secuencia.
+
+**Arquitectura técnica (2026-08-01, [`ADR-002`](docs/01_vision/ADR-002_reversion_stack_serverless.md)):** la construcción usará **React 19 + Vite + TypeScript** con **Tailwind CSS v4 y shadcn/ui**, desplegado en **Vercel**, y un backend **sin servidor** en AWS — **Lambda** (Node 22) tras **API Gateway**, **DynamoDB** como base operativa y **S3 versionado** para configuración, activos y respaldos—, con **autenticación propia** y **Groq `gpt-oss-20b`** sin cambios como motor conversacional. Supera a `ADR-001-D1/D2/D5` (Django · SQLite · PythonAnywhere), y **ninguna condición de reversa declarada lo disparó**: fue decisión del equipo. La fase 2 de ICONIX **sobrevivió al cambio casi intacta**: los 17 diagramas y las 14 especificaciones no requirieron ningún ajuste, y solo se neutralizaron **dos líneas de prosa** en los anexos de `MD-01` y `DCU-01` — es el rendimiento de haber mantenido el dominio libre de tecnología. Quedan dos hallazgos declarados: `RA-01` de `ECU-03` puede reabrirse, porque cerrar sesión con cookie `httpOnly` exige respuesta del servidor; y **`PER-H5`**, de canon — el respaldo de la base de datos vive en S3 y **escapa al borrado en cascada**, por lo que «eliminar cuenta» no borra el respaldo hasta que se cierre en `ARQ-01`. El **diseño físico** (claves, *endpoints*, inventario de S3) queda para `ARQ-01`, **posterior al diagrama de clases y su CDR**.
 
 ## Licencia y derechos
 

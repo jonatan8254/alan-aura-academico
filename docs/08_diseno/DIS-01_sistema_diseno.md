@@ -1,6 +1,6 @@
 # DIS-01 — Sistema de diseño «Alan & Aura»
-**ID:** DIS-01 · **Familia:** DIS (diseño de interfaz) · **Hogar:** `docs/08_diseno/` · **Fecha:** 2026-07-16 · **Versión:** v1.0 · **Estado:** Propuesto (dirección para validar).
-**Insumos:** VIS-01, MV-01, CONTRATO_conversacional (personalidad P-1…P-8), REQ-01 (RNF-01 español CO, RC-06 usabilidad), PRIV-01 (disclosure/minimización), SEG-01 (derivación), ADR-001 (Django templates + JS mínimo → construible), DCU-01/ECU-00…10 (§17). **Consumidores:** DIS-00 (plan por pantalla), mockups (Fase 5), fase de construcción.
+**ID:** DIS-01 · **Familia:** DIS (diseño de interfaz) · **Hogar:** `docs/08_diseno/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 (SD-29: el gate §7 pasa de «construible con Django templates + JS mínimo» a **React + Tailwind v4 + shadcn/ui** por `ADR-002`; nueva §7.1 sobre materializar los tokens; corregido «ECU-00…10» → «ECU-00…14». **Paleta, tipografía, ritmo, movimiento y componentes sin cambios**: el sistema de diseño es independiente de la tecnología que lo implementa) · **Estado:** Propuesto (dirección para validar).
+**Insumos:** VIS-01, MV-01, CONTRATO_conversacional (personalidad P-1…P-8), REQ-01 (RNF-01 español CO, RC-06 usabilidad), PRIV-01 (disclosure/minimización), SEG-01 (derivación), `ADR-002-D1`/`D2` (React + Tailwind v4 + shadcn/ui → construible; supera a ADR-001), DCU-01/ECU-00…14 (§17). **Consumidores:** DIS-00 (plan por pantalla), mockups (Fase 5), fase de construcción.
 **Naturaleza:** mini-sistema de diseño fundamentado en evidencia. Cada token cita su base (Fase 1).
 
 ---
@@ -105,7 +105,15 @@
 - **Admin — toggle kill switch** con **modal de confirmación** (RN-03.4) y registro de auditoría.
 
 ## 7. Checklist de canon por pantalla (gate de diseño)
-No clínico · *disclosure* de IA antes de capturar datos · sin gamificación agresiva ni dark patterns (seguridad > engagement) · minimización y consentimiento visibles · solo adultos · español (Colombia) · admin sin datos individuales · crisis serena (no alarmista) · AA + reduce-motion · construible con Django templates + JS mínimo.
+No clínico · *disclosure* de IA antes de capturar datos · sin gamificación agresiva ni dark patterns (seguridad > engagement) · minimización y consentimiento visibles · solo adultos · español (Colombia) · admin sin datos individuales · crisis serena (no alarmista) · AA + reduce-motion · construible con **React + Tailwind CSS v4 + shadcn/ui** (`ADR-002-D1`/`D2`).
+
+### 7.1 Primera tarea de construcción: materializar los tokens
+
+Los tokens de §2, §3 y §4 viven hoy como **tablas de valores en este documento**, y los 21 *mockups* los llevan **escritos en línea, sin una sola variable CSS**. Eso fue deliberado —los *mockups* debían abrirse sin dependencias— pero significa que **no existe todavía una fuente única de los tokens**.
+
+La primera tarea de la fase de construcción es convertir §2/§3/§4 en **un archivo único** de tokens (`@theme` de Tailwind v4, que acepta los valores tal cual). Si cuatro personas copian los hexadecimales a mano desde los *mockups*, la paleta habrá divergido antes de la segunda semana.
+
+Dos detalles que la migración debe corregir, no arrastrar: los *mockups* usan bordes de `0.5px` donde §4 pide **1px** —`0.5px` no se renderiza en pantallas de densidad estándar—, y declaran `Figtree` y `Source Serif 4` **sin cargarlas**, de modo que hoy renderizan Segoe UI y Georgia. Al cargar las fuentes reales cambia la métrica y hay que revalidar la escala tipográfica y la medida de ≤66 caracteres.
 
 ## 8. Style-tile y mockups aplicados
 El sistema se ve renderizado en [`mockups/00_style_tile.html`](mockups/00_style_tile.html) (paleta, tipografía, componentes) y aplicado en las 16 pantallas de [`mockups/index.html`](mockups/index.html) — ver el inventario y la traza pantalla → RF/ECU en DIS-00 §2/§6.

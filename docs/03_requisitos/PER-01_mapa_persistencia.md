@@ -1,7 +1,7 @@
 # PER-01 — Mapa de persistencia del MVP «Alan & Aura Académico»
-**ID:** PER-01 · **Familia:** requisitos de datos · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.1 (SD-26: **PER-H1 y PER-H3 resueltas**) · **Estado:** Propuesto.
-**Insumos:** `00_PLAN_CODEX_ORIGINAL.md` §4.14 (almacenamiento y retención) y §4.15 (telemetría) — fuente primaria; PRIV-01 §2/§3 (inventario y requisitos de privacidad); ADR-001-D2 (SQLite); MD-01 (vocabulario de dominio); ECU-02/04/05/06/08/09/10 (qué crea, lee y borra cada caso de uso); REQ-01 (RF-13/18/20/22/23/24, RNF-03/08/09).
-**Consumidores:** análisis de robustez (`DR-XX`), diseño de clases y **modelo de datos** (fase 2 tardía), construcción (migraciones Django), pruebas de privacidad (RC-04), TRZ-01.
+**ID:** PER-01 · **Familia:** requisitos de datos · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-29: **motor SQLite → DynamoDB**, segundo almacén en S3, §1.0 nueva) · **Estado:** Propuesto.
+**Insumos:** `00_PLAN_CODEX_ORIGINAL.md` §4.14 (almacenamiento y retención) y §4.15 (telemetría) — fuente primaria; PRIV-01 §2/§3 (inventario y requisitos de privacidad); **`ADR-002-D5`/`D6` (DynamoDB y S3)**, que superan a ADR-001-D2 (SQLite); MD-01 (vocabulario de dominio); ECU-02/04/05/06/08/09/10 (qué crea, lee y borra cada caso de uso); REQ-01 (RF-13/18/20/22/23/24, RNF-03/08/09).
+**Consumidores:** análisis de robustez (`DR-XX`), diseño de clases y **modelo de datos** (fase 2 tardía), `ARQ-01` (diseño de claves e inventario físico, tras el CDR), construcción, pruebas de privacidad (RC-04), TRZ-01.
 **Naturaleza:** **inventario consolidado de persistencia** — reúne en un solo lugar lo que hoy está disperso entre el plan, PRIV-01 y las ECU. **No es** diseño de esquema físico, ni modelo de clases, ni DDL: no fija tipos, claves, índices, tablas intermedias ni nombres de columnas. Esas decisiones pertenecen a la fase de diseño (CLAUDE.md §6, «no adelantar»). **No introduce requisitos nuevos**: todo lo que afirma está trazado a un artefacto existente.
 **Marcas:** [E1] evidencia literal en un artefacto · [I2] interpretación o derivación del orquestador · [P5] propuesta a decidir.
 **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
@@ -12,6 +12,7 @@
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v1.0 | 2026-07-25 | J. Sánchez | Creación (SD-25). Consolida el inventario de persistencia disperso en plan §4.14/§4.15, PRIV-01 §2 y las ECU; declara 4 hallazgos abiertos (PER-H1…PER-H4). |
+| v1.2 | 2026-08-01 | J. Sánchez | **SD-29: cambio de motor de persistencia** (`ADR-002`). SQLite → **DynamoDB**; aparece un **segundo almacén**, S3 versionado, para configuración, activos y respaldos. Nueva **§1.0 «Dónde vive cada cosa»**, que reparte lo ya inventariado entre los dos almacenes y declara la **caché de conversación como no-objetivo** —guardar pares mensaje→respuesta sería persistir el chat—. `PER-T5` gana instrumento nativo (expiración por tiempo de vida). Actualizada la fila de secretos. **Ninguna entidad nueva: siguen siendo 7 y 6.** `PER-H2` y `PER-H4` **siguen abiertos**: son diseño de esquema y su sitio es `ARQ-01`, posterior al CDR. **Nuevo hallazgo — `PER-H5` (contradicción de canon):** el respaldo en S3 que introduce esta misma versión escapa al borrado en cascada de `PER-T1`; ninguna regla vigente lo alcanza. Abierto, con implicación directa en `RF-24`; debe cerrarse en `ARQ-01` antes de cualquier uso con personas reales. |
 | v1.1 | 2026-07-25 | J. Sánchez | **SD-26:** cierre de **PER-H1** (la cápsula siempre existe con `character` como mínimo; `character` reclasificado como precondición funcional ⇒ nueva **RN-01.6**) y de **PER-H3** (`estado` del directorio ∈ {activo, sin consentimiento vigente}, derivado de `ConsentRecord`). PER-H2 y PER-H4 siguen abiertos por decisión. Propagado a MV-01 v2.5, REQ-01 v1.4, PRIV-01 v1.4, ECU-04 v1.1, ECU-05 v1.1, ECU-08 v1.1. |
 
 ---
@@ -25,7 +26,21 @@ El MVP guarda **7 entidades** y ninguna de ellas contiene lenguaje del usuario. 
 > **Entidades previstas:** `User` · `ConsentRecord` · `InitialConversationProfile` · `PlatformSetting` · `DailyUsageCounter` · `OperationalEvent` · `AdministrativeAction`.
 > **No existirán:** `Conversation` · `Message` · `Diagnosis` · `RiskScore` · `PsychometricResult` · `Intervention`. [E1]
 
-Motor: **SQLite** (ADR-001-D2), justificado precisamente porque el volumen es mínimo y *el chat no se persiste*. La no-persistencia es **requisito** (RF-13, RNF-03, PRIV-R2), no un efecto colateral de la elección de motor. [E1]
+Motor: **DynamoDB** (`ADR-002-D5`), justificado porque el volumen es mínimo, el acceso es siempre por titular de cuenta o clave única, y *el chat no se persiste*. La no-persistencia es **requisito** (RF-13, RNF-03, PRIV-R2), no un efecto colateral de la elección de motor — y por eso **sobrevivió sin cambios** a la sustitución de SQLite por DynamoDB (`ADR-002` supera `ADR-001-D2`). [E1]
+
+### 1.0 Dónde vive cada cosa
+
+El cambio a una arquitectura sin servidor introduce un **segundo almacén**. Ninguna entidad nueva: solo se reparte lo que ya estaba inventariado. [E1]
+
+| Almacén | Qué guarda | Fundamento |
+|---|---|---|
+| **DynamoDB** | Las **7 entidades** de §2, sin excepción ni añadido. Incluye el hash de contraseña (PER-T6). | `ADR-002-D5` |
+| **S3 versionado** | **Configuración y activos, que no son dato de usuario**: plantillas de *system prompt* con su versión, textos de consentimiento y *disclosure* por versión, catálogo de `RecursoDeAyuda` y texto de contención del *fallback*, y banco de casos de evaluación. | `ADR-002-D6`, RNF-05, RC-10 |
+| **S3 — respaldos** | **Sí contienen dato personal**, porque un respaldo de DynamoDB *es* el contenido de las 7 entidades. Se separan a propósito de la fila anterior: **no comparten régimen**. Ver `PER-H5`. | `ADR-002-D6`, PER-T1, PRIV-R11 |
+| **Gestor de secretos / variables de entorno** | Clave de la API del proveedor del LLM y clave de firma de sesión. Nunca en el repositorio ni en el cliente. | RNF-09, PRIV-R12 |
+| **Ningún almacén, nunca** | El contenido de la conversación. **Sin caché de respuestas del LLM**: guardar pares mensaje→respuesta *es* persistir el chat y viola PRIV-R2, RNF-03 y RF-13. Declarado como no-objetivo en `ADR-002-D6` para que no reaparezca en construcción como «optimización». | RF-13, RNF-03, PRIV-R2 |
+
+**Lo que sí puede cachearse** sin tocar el canon: la configuración leída de S3, en la memoria del contenedor de la función entre invocaciones. No contiene dato de usuario y reduce latencia (RC-05). El **historial de la sesión en curso** (≤ 4 intercambios) no es caché ni persistencia: vive en la memoria del navegador y viaja en cada petición (`ADR-002 §2`). [E1]
 
 ### 1.1 Qué es y qué no es este documento
 
@@ -159,7 +174,7 @@ Retención: vigencia del curso + 30 días.
 | Riesgo individual / puntaje de riesgo | «No persistir» (literal del plan §4.14) | PRIV-R4 [E1] |
 | Biomarcadores, diario, ítems clínicos, diagnóstico | Fuera de alcance del MVP | PRIV-R4, VIS-01 §5 [E1] |
 | Recursos de ayuda, textos, *prompts*, parámetros del gate | **Configuración por entorno** | SD-12, MD-01 §3.2, plan §4.16 [E1] |
-| Contraseña en claro, `GROQ_API_KEY`, `DJANGO_SECRET_KEY` | Variables de entorno | RNF-09, PRIV-R12, plan §4.16 [E1] |
+| Contraseña en claro, clave de la API del proveedor del LLM, clave de firma de sesión | Gestor de secretos / variables de entorno | RNF-09, PRIV-R12, plan §4.16, ADR-002-D7 [E1] |
 
 > **Alcance de PRIV-R2:** «no se persiste **en BD ni en logs**». La prohibición cubre el *logging* de aplicación, no solo el modelo de datos. Un `logger.info(mensaje_usuario)` viola PRIV-R2 igual que una tabla `Message`. [E1]
 
@@ -171,11 +186,11 @@ Retención: vigencia del curso + 30 días.
 
 | ID | Regla | Traza |
 |---|---|---|
-| **PER-T1** | **Borrado en cascada:** eliminar `User` suprime `ConsentRecord` + `InitialConversationProfile` + `DailyUsageCounter` de ese usuario. | PRIV-R11, RN-04.4, RF-24, **primer criterio de aceptación de ECU-04 v2.0** —se cita en prosa porque la renumeración del PDR-01 cambió los identificadores— [E1] |
+| **PER-T1** | **Borrado en cascada:** eliminar `User` suprime `ConsentRecord` + `InitialConversationProfile` + `DailyUsageCounter` de ese usuario. **Desde `ADR-002` esta regla tiene un hueco declarado**: no alcanza a los **respaldos** en S3 ni a las versiones anteriores de los objetos versionados — ver `PER-H5`, abierto. | PRIV-R11, RN-04.4, RF-24, **primer criterio de aceptación de ECU-04 v2.0** —se cita en prosa porque la renumeración del PDR-01 cambió los identificadores— [E1] |
 | **PER-T2** | **No reidentificación de la telemetría:** `OperationalEvent` y `AdministrativeAction` no deben permitir reconstruir qué hizo un usuario concreto (no llevan alias ni username; plan §4.15). | plan §4.15, PRIV-R10 [E1] |
 | **PER-T3** | **Segregación del administrador:** ninguna consulta administrativa puede alcanzar `InitialConversationProfile`, contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | PRIV-R7, PRIV-R10, RN-03.5 [E1] |
 | **PER-T4** | **Directorio truncado:** CU-08 expone únicamente alias, **ID truncado**, fecha de registro, **`estado` ∈ {activo, sin consentimiento vigente}** (derivado, no almacenado aparte) y flag de onboarding. | RN-03.2, RF-15, SD-26 [E1] |
-| **PER-T5** | **Purga por ventana:** retenciones heterogéneas (30 días para contadores y eventos; vigencia para cuenta) exigen un mecanismo de purga programada, no solo un campo de fecha. | plan §4.14 [I2] |
+| **PER-T5** | **Purga por ventana:** retenciones heterogéneas (30 días para contadores y eventos; vigencia para cuenta) exigen un mecanismo de purga programada, no solo un campo de fecha. **Desde `ADR-002-D5` existe instrumento nativo** —la expiración por tiempo de vida de DynamoDB—, lo que convierte esta exigencia en configurable en lugar de programable a mano. La regla no cambia; gana mecanismo. | plan §4.14, ADR-002-D5 [I2] |
 | **PER-T6** | **Hash de contraseña** en almacenamiento; jamás en claro, en el cliente ni accesible al admin. | PRIV-R12, RNF-09 [E1] |
 | **PER-T7** | **Reinicio ≠ revocación:** «reiniciar caracterización» (RF-22) **borra** la cápsula; «revocar personalización» (RF-23) hace que **deje de alimentar** la conversación. Son dos operaciones distintas sobre estados distintos. | RN-04.3, RN-07, **ECU-11 y ECU-12** — antes flujos alternativos de ECU-04, hoy casos de uso propios [E1] |
 
@@ -237,6 +252,7 @@ La no-persistencia es una propiedad **de este sistema**; no de la cadena complet
 | **PER-H2** | Ambigüedad | RF-24 exige que tras eliminar la cuenta «no quede dato asociado recuperable», pero plan §4.14 fija «hasta eliminación o cierre **+ 30 días**». Ya registrada como RA-01 en ECU-04 §21. | Define si la eliminación es borrado físico inmediato o borrado lógico con purga diferida — y por tanto si el esquema necesita marca de baja. | **Abierto por decisión (SD-26):** se resuelve en construcción, cuando se sepa si el hosting hace respaldos. No bloquea robustez. |
 | **PER-H3** | Hueco | El campo **`estado`** del usuario aparecía en el directorio administrativo (RN-03.2, RF-15, plan §4.9) pero **su dominio de valores no estaba definido en ningún artefacto**. No se sabía si era {activo, eliminado}, {activo, suspendido} u otra cosa — y el plan excluye explícitamente la suspensión individual (VIS-01 §5). | Sin dominio de valores no se podía mostrar el campo que CU-08 exige. | **Resuelto (SD-26).** `estado` ∈ **{activo, sin consentimiento vigente}**, **derivado** de `ConsentRecord` — **no** es un campo editable, ni almacenado aparte, ni una suspensión. Es lo único operativamente útil para el admin sin exponer dato sensible (compatible con PRIV-R10). Propagado a REQ-01 v1.4 (RF-15), PRIV-01 v1.4 (PRIV-R10), ECU-08 v1.1. |
 | **PER-H4** | Hueco menor | `DailyUsageCounter` está nombrada y acotada (por usuario, diaria, ≤30 días) pero **sus campos y su llave no están especificados** en ningún artefacto. | Detalle de diseño; se resuelve en la fase de modelo de datos, sin decisión de canon. | **Abierto por decisión (SD-26):** puro detalle de diseño. No bloquea robustez. |
+| **PER-H5** | **Contradicción — canon** | `ADR-002-D6` crea un **segundo lugar donde vive el dato personal**: el respaldo exportado en S3. Ninguna regla vigente lo alcanza. `PER-T1` y `PRIV-R11` enumeran el borrado en cascada sobre `ConsentRecord`, `InitialConversationProfile` y `DailyUsageCounter` — escritas cuando no había respaldos—. Y el **versionado**, que `ADR-002-D6` adopta por sus ventajas sobre los textos legales, significa que **borrar un objeto no lo borra**: sobreviven las versiones anteriores. | Define la retención y el borrado de los respaldos, y si el versionado se aplica al mismo contenedor que los datos personales o solo al de configuración. Sin eso, un usuario puede ejercer `RF-24` («no queda dato asociado recuperable») y sus datos **seguir existiendo** en el respaldo. | **ABIERTO — nuevo en SD-29.** Es el hueco de canon que abre esta pasada y **se declara en vez de disimularse**. No bloquea los diagramas de secuencia (no toca comportamiento), pero **debe cerrarse antes de cualquier uso con personas reales**, junto con `V6-b`. Su sitio es `ARQ-01`. |
 
 > **Corrección de un falso hallazgo (honestidad §4.9).** En la conversación que originó este documento se afirmó que «`plan §4.14` no existe en este repositorio» y que el inventario de entidades carecía de fuente verificable. **Es falso:** §4.14 y §4.15 están en [`00_PLAN_CODEX_ORIGINAL.md`](../../00_PLAN_CODEX_ORIGINAL.md), la fuente primaria archivada en **SD-16**. El error vino de buscar en `PLAN-01_plan_proyecto.md`, que es otro artefacto. La regla de independencia (CLAUDE.md §0) **se cumple**: la fuente está dentro del repositorio.
 
@@ -252,11 +268,11 @@ La no-persistencia es una propiedad **de este sistema**; no de la cadena complet
 | Privacidad | PRIV-R1, R2, R3, R4, R6, R7, R10, R11, R12 | Gobiernan qué se guarda, quién lo ve y cuándo se borra |
 | Regla de negocio | RN-01.3, RN-01.4, RN-02.7, RN-02.9, RN-03.2, RN-03.4, RN-03.5, RN-04.1, RN-04.2, RN-04.3, RN-04.4, RN-04.6, RN-07 | Reglas materializadas en el inventario |
 | Requisito de calidad | RC-04 (security/minimización) | Ancla verificable: inspección de BD y logs |
-| Decisión técnica | ADR-001-D2 (SQLite) | Motor de persistencia |
+| Decisión técnica | `ADR-002-D5` (DynamoDB) y `ADR-002-D6` (S3), que superan a ADR-001-D2 | Motor de persistencia y almacén de configuración |
 | Modelo de dominio | MD-01 (`Usuario`, `Consentimiento`, `CapsulaDePerfil`, `DisponibilidadDelChatbot`; `Conversacion`/`Mensaje` **sin** contraparte persistida) | Vocabulario; PER-01 no lo contradice |
 | Casos de uso | ECU-02 (crea `User`), ECU-05 (crea `ConsentRecord` + cápsula), ECU-11 (borra la cápsula entera), ECU-12 (revoca la capa de personalización y marca los autorreportes para descarte), ECU-06 (crea `OperationalEvent`/`DailyUsageCounter`; **no** persiste contenido), ECU-04 (borra/revoca/cascada), ECU-08/09 (leen agregados), ECU-10 (escribe `PlatformSetting` + `AdministrativeAction`) | Quién crea, lee y borra cada entidad |
 | Validación pendiente | **V6-a** (retención/ZDR de Groq) · **V6-b** (frontera legal, Ley 1581) | Fuera del alcance resoluble aquí |
-| Consumidor futuro | Diseño de clases / modelo de datos (fase 2 tardía), migraciones Django (fase 3) | PER-01 es su insumo consolidado |
+| Consumidor futuro | Diseño de clases / modelo de datos (fase 2 tardía), `ARQ-01` y construcción (fase 3) | PER-01 es su insumo consolidado |
 
 **Cadena:** `plan §4.14/§4.15 + PRIV-01 + ECU-XX → PER-01 (este) → modelo de datos → migraciones → pruebas de privacidad (RC-04)`.
 
@@ -289,7 +305,7 @@ La no-persistencia es una propiedad **de este sistema**; no de la cadena complet
 
 - **Confirmado:** 7 entidades persistidas, **ninguna** con contenido conversacional; 3 de ellas con purga a 30 días; 1 sola (`InitialConversationProfile`) alcanza al proveedor LLM. El inventario tiene fuente primaria verificable dentro del repositorio (plan §4.14/§4.15).
 - **Hallazgos cerrados (SD-26):** **PER-H1** — la cápsula siempre existe con `character` como mínimo; cardinalidad `User–InitialConversationProfile` = **1 a 1 tras el onboarding**. **PER-H3** — `estado` ∈ {activo, sin consentimiento vigente}, derivado de `ConsentRecord`. Ambas se resolvieron **antes** del análisis de robustez, para que `DR-04`/`DR-05`/`DR-06` no hereden la contradicción.
-- **Hallazgos abiertos por decisión:** PER-H2 (se resuelve en construcción, con el hosting a la vista) y PER-H4 (detalle de diseño). Ninguno bloquea robustez.
-- **Pendiente (fuera de alcance):** el modelo de datos propiamente dicho, las migraciones y la tabla de endpoints (§4.9 del plan, ya diferida a ARQ-01 en SD-17).
+- **Hallazgos abiertos:** `PER-H2`, `PER-H4` y **`PER-H5`, nuevo**. Sobre `PER-H2`: `ADR-002-D6` resuelve **dónde** viven los respaldos, pero la pregunta de fondo —si la eliminación es borrado físico inmediato o lógico con purga diferida, y por tanto si el esquema necesita marca de baja— **sigue abierta**, y ahora arrastra a `PER-H5`. `PER-H4` (campos y llave de `ContadorDeUsoDiario`) igual. Los tres son diseño de esquema y su sitio es `ARQ-01`; ninguno bloquea los diagramas de secuencia. **`PER-H5` es el único con implicación de canon**: hasta cerrarlo, `RF-24` y `PRIV-R11` no se cumplen de extremo a extremo.
+- **Pendiente (fuera de alcance):** el modelo de datos propiamente dicho, el **diseño de claves de DynamoDB**, el inventario físico de S3 y la tabla de endpoints (§4.9 del plan, diferida a `ARQ-01` desde SD-17). `ARQ-01` llega **después del diagrama de clases de diseño y de su CDR**, no antes: fijar claves mientras el diagrama de clases aún puede mover atributos y operaciones garantiza retrabajo (`ADR-002 §1`).
 
 **Fin de PER-01.**

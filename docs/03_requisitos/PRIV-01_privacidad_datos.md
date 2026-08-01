@@ -1,6 +1,6 @@
 # PRIV-01 — Privacidad y manejo de datos del MVP
-**ID:** PRIV-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.4 (SD-26: la cápsula **siempre existe** tras el onboarding con `character` como mínimo — PER-H1 resuelta; `estado` del directorio acotado en PRIV-R10 — PER-H3 resuelta; SD-22:  cápsula = `ContextoInicialConversacionalV1` de 5 campos + 2 metadatos en el inventario §2 y PRIV-R1; PRIV-R9 intacta; SD-15: cuenta, contadores operativos y qué NO ve el admin; SD-17: inventario mapeado 1:1 a las 7 entidades exactas del plan).
-**Insumos:** canon de dominio; MV-01 §Onboarding y §Cuenta (cápsula/consentimiento/cuenta); ADR-001-D2 (SQLite); plan §3.4 (exclusiones al LLM), §3.7 (qué no ve el admin); Ley 1581/2012 + Decreto 1377/2013 (citadas, no reproducidas).
+**ID:** PRIV-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.5 (SD-29: encargados del tratamiento en §4.1 —tres partes donde había dos—, **región de AWS como pregunta abierta** bajo la Ley 1581, y sesión en cookie firmada. **`PRIV-R11` gana el acotador «alcanzables desde la aplicación»** (mismo texto que `ECU-04 §14`): no cambia qué se exige, precisa dónde se verifica, tras `PER-H5`. El resto, PRIV-R1…R10 y R12, sin cambios. SD-26: la cápsula **siempre existe** tras el onboarding con `character` como mínimo — PER-H1 resuelta; `estado` del directorio acotado en PRIV-R10 — PER-H3 resuelta; SD-22:  cápsula = `ContextoInicialConversacionalV1` de 5 campos + 2 metadatos en el inventario §2 y PRIV-R1; PRIV-R9 intacta; SD-15: cuenta, contadores operativos y qué NO ve el admin; SD-17: inventario mapeado 1:1 a las 7 entidades exactas del plan).
+**Insumos:** canon de dominio; MV-01 §Onboarding y §Cuenta (cápsula/consentimiento/cuenta); **`ADR-002-D5`/`D6`/`D7` (DynamoDB, S3, autenticación propia)**, que superan a ADR-001-D2 (SQLite); plan §3.4 (exclusiones al LLM), §3.7 (qué no ve el admin); Ley 1581/2012 + Decreto 1377/2013 (citadas, no reproducidas).
 **Consumidores:** REQ-01 (RNF-03/04, RC-04), SEG-01, TRZ-01, **PER-01** (mapa de persistencia — consolida este inventario con el plan §4.14/§4.15 y las ECU).
 **Naturaleza:** requisitos de privacidad y minimización. **Honestidad §4.9:** la validación de frontera legal (Ley 1581) es **nivel 6** — se formula, no se resuelve aquí (V6-b).
 
@@ -41,15 +41,28 @@ Mapeado 1:1 a las **entidades exactas del plan** (§4.14): `User` · `ConsentRec
 | PRIV-R8 | *Disclosure* y consentimiento preceden a cualquier captura y a la primera conversación. | RN-09, RF-01 |
 | PRIV-R9 | El LLM **no** recibe: username, alias, ID, rol, contraseña, historial previo a la sesión, puntajes, datos biométricos/laborales/clínicos, campos no respondidos, inferencias, fecha de registro ni métricas. | RN-03, plan §3.4 |
 | PRIV-R10 | El administrador ve solo **agregados** y el **directorio truncado** (alias, ID truncado, **`estado` ∈ {activo, sin consentimiento vigente}** —derivado, no editable—, onboarding); nunca contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | RN-03.2/.3/.5; SD-26 |
-| PRIV-R11 | La **eliminación de cuenta** borra en **cascada** todos los datos asociados (cápsula, consentimiento, contadores del usuario). | RN-04.4 |
+| PRIV-R11 | La **eliminación de cuenta** borra en **cascada** todos los datos asociados (cápsula, consentimiento, contadores del usuario) **alcanzables desde la aplicación**; el respaldo de infraestructura queda fuera de esta cascada como excepción declarada (`PER-H5`), a cerrar en `ARQ-01`. | RN-04.4 |
 | PRIV-R12 | La contraseña se almacena **hasheada**; nunca en claro, en el cliente ni accesible al admin. | RNF-09, plan §3.7 |
 
 ## 4. Seguridad mínima de datos (proporcional al MVP)
 - Autenticación del administrador por **login separado** (RF-14); acceso administrativo limitado a las 3 funciones; rol validado en servidor (RNF-08).
 - **Contraseñas hasheadas** (nunca en claro); claves/tokens fuera del cliente y del repo (RNF-09).
 - Cápsula asociada al usuario, sin datos de contacto innecesarios; **eliminación en cascada** al borrar la cuenta.
-- Transporte HTTPS hacia el LLM; la clave de API vive en configuración por entorno, no en código (ADR-001-D6).
+- Transporte HTTPS hacia el LLM; la clave de API vive en el gestor de secretos del entorno, no en código (ADR-001-D6, ADR-002-D7).
 - Sin analítica de terceros ni *trackers* en el flujo emocional.
+- **Sesión en cookie `httpOnly` y `Secure`**, con la contraseña hasheada mediante Argon2id (ADR-002-D7). El rol **se valida en servidor y nunca se toma del cliente** (RNF-08); cómo se transporta exactamente es contrato de sesión y lo fija `ARQ-01`.
+
+### 4.1 Encargados del tratamiento (nuevo desde `ADR-002`)
+
+Antes y después hay **dos encargados que tratan dato personal** —cambia quién—, más un tercero que en principio no lo trata. Conviene no confundir los papeles:
+
+| Tercero | Qué toca | ¿Datos personales? |
+|---|---|---|
+| **Vercel** | Sirve la interfaz (archivos estáticos) | **No — condicionado [P5].** Con la topología prevista, el navegador habla directamente con la API y Vercel no ve dato alguno. Pero `ADR-002 §3` deja abierta como alternativa que Vercel **intermedie** la API para resolver el origen cruzado; si `ARQ-01` elige esa vía, **todo el tráfico pasaría por él**, credenciales y cápsula incluidas, y esta fila cambiaría a «Sí». No está decidido. |
+| **AWS** (DynamoDB, S3, Lambda) | Custodia las 7 entidades persistidas y ejecuta la lógica | **Sí.** Es el encargado principal. |
+| **Proveedor del LLM** (Groq) | Recibe la cápsula, el turno y hasta 4 intercambios | **Sí**, en el alcance mínimo de PRIV-R1. Retención externa en §7 de `PER-01`. |
+
+> **Pregunta nueva y no resuelta: la región.** Al pasar la custodia a AWS, **dónde residen físicamente los datos** se vuelve una decisión con consecuencias bajo la Ley 1581/2012 y el Decreto 1377/2013, que antes no se planteaba con esta nitidez. **No está decidida** (`ADR-002 §4`, `V6-a`) y su lectura jurídica corresponde a **V6-b** (§5). [P5]
 
 ## 5. Frontera legal (pendiente nivel 6 — V6-b)
 El diseño **se alinea** con los principios de la **Ley 1581/2012** y el **Decreto 1377/2013** (finalidad, consentimiento, datos sensibles, seguridad), pero:

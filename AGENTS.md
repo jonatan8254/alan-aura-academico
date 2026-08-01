@@ -34,8 +34,9 @@ Los artefactos de la Fase 1 (documental) se construyeron consultando `auditoria_
 
 ## §8 — Alcance del pipeline (estado)
 - **Fase 1 (pre-ICONIX) — cerrada:** visión, ADR, MV, RF/RNF, calidad, reglas, privacidad, seguridad, norma, trazabilidad, plan.
-- **Fase 2 (ICONIX) — en curso:** producidos el modelo de dominio (`MD-01`), el diagrama de casos de uso (`DCU-01`) y la especificación textual de casos de uso (`ECU-00…ECU-10`).
-- **No adelantar** análisis de robustez, secuencias, diseño de clases ni código: quedan planificados. **Siguiente artefacto ICONIX: el análisis de robustez.**
+- **Fase 2 (ICONIX) — avanzada:** producidos el modelo de dominio (`MD-01`), el diagrama de casos de uso (`DCU-01`), la especificación textual (`ECU-00…ECU-14`), el análisis de robustez (`DR-00…DR-14`) y la compuerta `RPD-01`.
+- **Arquitectura técnica decidida (`ADR-002`, SD-29):** React + Vite + TypeScript sobre **Vercel**; backend sin servidor en AWS (**Lambda** tras **API Gateway**, **DynamoDB**, **S3**); Tailwind v4 + shadcn/ui; autenticación propia; **Groq se mantiene**. Supera a `ADR-001-D1/D2/D5`. Las cifras que se repiten entre artefactos viven en `docs/00_gobernanza/HECHOS_CANONICOS.md` y las verifica `scripts/verificar_coherencia.py`.
+- **No adelantar** el **diseño físico** —claves de DynamoDB, tabla de *endpoints*, inventario de S3, IAM—: es `ARQ-01` y va **después del diagrama de clases y de su CDR**. Tampoco código. **Siguiente artefacto ICONIX: los diagramas de secuencia (`DS-01…DS-14`)**; en ellos la **capa de infraestructura de la skill no se ejecuta**: se declara como no ejecutada y los participantes se derivan solo de los `DR-XX`.
 
 ## §9 — Grafo de conocimiento y vault de Obsidian (`grafo/`)
 - **`grafo/`** (SD-27, 2026-07-25): capa de navegación derivada de `docs/` + corpus de conocimiento (2.876 nodos: 262 del subproyecto + 2.614 de conocimiento). **No es un entregable de fase** y **no se edita a mano** — ni `graph_subproyecto_final.json` ni las notas de `grafo/vault/`. Correcciones van en `docs/`; el grafo se regenera con `grafo/scripts/` (ver tabla de re-ejecutabilidad en `grafo/README.md`).

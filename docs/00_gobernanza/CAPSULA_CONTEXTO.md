@@ -1,5 +1,5 @@
 # Cápsula de contexto — Subproyecto «Alan & Aura Académico»
-**Objetivo:** entender el subproyecto en 5 minutos. **Naturaleza:** síntesis operativa (no normativa). **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-07-31 (cierre de `PDR-01` + compuerta `RPD-01`).
+**Objetivo:** entender el subproyecto en 5 minutos. **Naturaleza:** síntesis operativa (no normativa). **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-01 (`ADR-002`: reversión del stack a React + Vercel + AWS serverless, SD-29).
 
 ---
 
@@ -21,8 +21,12 @@ Este es un **repositorio independiente**, extraído el 2026-07-12 del macroproye
 - **No persiste el chat.** No maneja menores. No usa sensórica, NMA, federación, dashboards ni triaje S0-S5 completo.
 - No tiene código ni pilotos todavía: la fase 2 (análisis y diseño ICONIX) está en curso: ver «Dónde estamos».
 
-## Stack decidido en el plan (a re-verificar antes del release)
-Django 5.2 LTS · SQLite · Groq API (`gpt-oss-20b`) · GitHub · despliegue PythonAnywhere Free (Render como contingencia). Español (Colombia). Detalle y condiciones de reversa en `ADR-001`.
+## Stack decidido (a re-verificar antes del release)
+**Interfaz:** React 19 + Vite + TypeScript, con Tailwind CSS v4 y shadcn/ui sobre Base UI, desplegada en **Vercel**. **Backend:** sin servidor — AWS Lambda (Node 22 / TypeScript) tras API Gateway, **DynamoDB** como base operativa y **S3** para configuración versionada, activos y respaldos. **Autenticación propia** (Argon2id + sesión en cookie firmada). **Motor conversacional:** Groq API (`gpt-oss-20b`), sin cambios. **Control de versiones:** GitHub. Español (Colombia).
+
+Detalle, alternativas y condiciones de reversa en **`ADR-002`**, que supera a `ADR-001-D1/D2/D5` (Django · SQLite · PythonAnywhere). Ninguna condición de reversa declarada disparó el cambio: fue decisión del equipo (SD-29). El **diseño físico** —claves de DynamoDB, tabla de *endpoints*, inventario de S3— sigue diferido a `ARQ-01`, **posterior al diagrama de clases y su CDR**.
+
+**Hallazgo abierto que este cambio introdujo (`PER-H5`, canon):** el respaldo de la base de datos vive en S3 y **escapa al borrado en cascada** — hasta que se cierre en `ARQ-01`, «eliminar la cuenta» no borra el respaldo. Detalle en `PER-01` §8.
 
 ## Canon heredado (innegociable)
 No sobre-claim clínico · minimización (cápsula, no historial) · consentimiento granular y revocable (dos capas) · uso no punitivo · divulgación mínima · seguridad emocional > engagement · no persistencia del chat · solo adultos con *disclosure*.
