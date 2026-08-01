@@ -25,7 +25,7 @@
 | [**DR-12**](DR-12_robustez_revocar_la_personalizacion.puml) | CU-12 **Revocar la personalización** | 16 | 1/2/9/4 | 3 | 3 |
 | [**DR-13**](DR-13_robustez_cambiar_de_acompanante.puml) | CU-13 **Cambiar de acompañante** | 15 | 1/2/6/6 | 1 | 2 |
 | [**DR-14**](DR-14_robustez_elegir_acompanante.puml) | CU-14 **Elegir acompañante (Alan o Aura)** | 13 | 1/2/6/4 | 1 | 1 |
-| | **Total** | **259** | **15/38/148/58** | | |
+| | **Total** | **260** | **15/38/148/59** | | |
 
 **Un diagrama por caso de uso, con su curso básico y *todos* sus cursos alternativos y de excepción en el mismo diagrama.** Los objetos que participan solo en un curso alternativo o de excepción van en `#LightCoral`; los compartidos con el básico, sin color.
 
@@ -37,7 +37,7 @@ Los genera [`scripts/generar_svg_robustez.py`](scripts/generar_svg_robustez.py) 
 python scripts/generar_svg_robustez.py
 ```
 
-El generador comprueba su propia correspondencia con los `.puml` y aborta el visto bueno si no cuadra: *«Correspondencia con los .puml: OK (259 elementos, 15/38/148/58)»*.
+El generador comprueba su propia correspondencia con los `.puml` y aborta el visto bueno si no cuadra: *«Correspondencia con los .puml: OK (260 elementos, 15/38/148/59)»*.
 
 ## 3. Qué cambió en v2.0
 
