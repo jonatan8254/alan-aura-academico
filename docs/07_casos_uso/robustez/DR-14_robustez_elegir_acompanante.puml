@@ -1,0 +1,93 @@
+@startuml
+' DR-14 — Analisis de robustez de CU-14 «Elegir acompanante (Alan o Aura)»
+' Insumos: ECU-14 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-09; destino P-03), MV-01
+' Nuevo en el PDR-01 fase D.4. Los elementos proceden de los pasos 8 y 9 de DR-05 v1.1,
+' que salieron de alli cuando CU-05 paso a incluir este caso de uso.
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Usuario adulto" as ACT_Usuario
+
+boundary "Onboarding - elegir Alan o Aura (P-09)" as B_PantallaEleccionPersonaje
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
+
+control "Presentar a Alan y a Aura con su rol y su estilo" as C_PresentarPersonajes
+control "Recibir la eleccion de interlocutor" as C_RecibirEleccion
+control "Escribir character en la capsula" as C_EscribirCharacter
+control "Devolver el control a CU-05" as C_DevolverControlAlOnboarding
+control "Sustituir la seleccion presentada" as C_SustituirSeleccion #LightCoral
+control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+
+entity "Personaje" as E_Personaje
+entity "Alan" as E_Alan
+entity "Aura" as E_Aura
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+
+C_PresentarPersonajes -- B_PantallaEleccionPersonaje : 1 presenta la eleccion de interlocutor
+C_PresentarPersonajes -- E_Alan : 1 presenta el personaje de activacion
+C_PresentarPersonajes -- E_Aura : 1 presenta el personaje de calma
+ACT_Usuario -- B_PantallaEleccionPersonaje : 2 confirma con quien desea conversar
+B_PantallaEleccionPersonaje -- C_RecibirEleccion : 2 recibe la eleccion
+C_RecibirEleccion -- E_Personaje : 2 identifica el interlocutor elegido
+C_RecibirEleccion -- C_EscribirCharacter : 3 fija la eleccion
+C_EscribirCharacter -- E_CapsulaDePerfil : 3 escribe character; la capsula queda existente con su contenido minimo
+C_EscribirCharacter -- C_DevolverControlAlOnboarding : 3 finaliza
+C_DevolverControlAlOnboarding -- B_PantallaEleccionPersonaje : 3 devuelve el control a CU-05, que puede habilitar CU-06
+
+B_PantallaEleccionPersonaje -- C_SustituirSeleccion : FA-01 selecciona el otro personaje antes de confirmar
+C_SustituirSeleccion -- B_PantallaEleccionPersonaje : FA-01 continua en el paso 2 sin escribir nada
+
+B_PantallaEleccionPersonaje -- C_SolicitarReingreso : FE-01 la sesion expira durante la presentacion
+C_SolicitarReingreso -- B_PaginaInicioSesion : FE-01 termina; reingresar por CU-03 sin escribir character
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR14
+  <b>CU-14 - Elegir acompanante (Alan o Aura)</b> (ECU-14 v1.0) - actor: Usuario adulto
+  Caso de uso <b>incluido</b> por CU-05 (<<include>>). Realiza RF-06.
+  PRE-01 sesion activa (CU-03). PRE-02 el Usuario otorgo la capa base del Consentimiento en el
+  paso 5 de CU-05. PRE-03 la CapsulaDePerfil esta armada con los autorreportes respondidos,
+  que pueden ser ninguno.
+  <b>Disparador</b> CU-05 alcanza el final de su paso 8 y la capsula aun no tiene character.
+
+  <b>Flujo basico</b>
+  1. El sistema presenta a Alan (activacion) y a Aura (calma) con su rol y su estilo.
+  2. El Usuario confirma el Personaje con quien desea conversar.
+  3. El sistema escribe character en la CapsulaDePerfil; la capsula queda existente con
+     character como contenido minimo. Finaliza y devuelve el control a CU-05.
+
+  <b>Cursos alternativos</b>
+  FA-01 Cambiar la eleccion antes de confirmar (paso 2): el sistema sustituye la seleccion
+        presentada sin escribir nada. Continua en el paso 2, sin rastro de lo descartado.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Sesion ausente (pasos 1-2): 401; no escribe character y la capsula queda como estaba.
+        Termina; el Usuario reingresa por CU-03.
+
+  <b>Postcondicion</b> La CapsulaDePerfil existe y tiene character con el Personaje elegido;
+  CU-05 puede completar su postcondicion de exito.
+  <b>Invariante</b> Lo persistido es la ultima eleccion y actua como predeterminado: la sesion
+  puede usar el otro Personaje sin reescribir la capsula (RN-01.6). Ese cambio en sesion es
+  CU-13, no este caso de uso.
+  <b>Reglas</b> RN-01.6, RN-01.4, RN-02.6. <b>Traza</b> RF-06 -> OBJ-1.
+  <b>Pantallas</b> P-09 propia; P-03 en FE-01.
+
+  <b>Notas de modelado</b>
+  - <b>El actor entra en el paso 2, no en el 1.</b> El paso 1 lo ejecuta el sistema: es el
+    caso de uso base el que dispara este por <<include>>, no el Usuario. Por eso el arco
+    actor-boundary corresponde a la confirmacion y no a la apertura de la pantalla. Esto es
+    coherente con que CU-14 no cuelgue de ningun actor en DCU-01 v2.1.
+  - <b>Alan y Aura como Entidades, y Personaje tambien.</b> El paso 1 los presenta a ambos
+    por nombre y son clases reales de MD-01 v1.4. Este es el unico punto del sistema donde se
+    distinguen como objetos; el paso 2 usa el supertipo Personaje, que es lo que se fija en
+    la capsula.
+  - <b>La invariante de RN-01.6 es de este diagrama, no de DR-05.</b> Que la capsula "siempre
+    exista con character" se cumple aqui: en la ruta FA-01 de CU-05 no se pasa por "Armar la
+    capsula", y aun asi este caso de uso se ejecuta y la escribe.
+end note
+
+@enduml

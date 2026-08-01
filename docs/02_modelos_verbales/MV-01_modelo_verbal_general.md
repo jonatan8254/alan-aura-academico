@@ -99,7 +99,8 @@ Nombres canónicos en español, PascalCase, **un término por concepto** (alias 
 | **RecursoDeAyuda** | Clase secundaria — **borderline** | Referencia de derivación; concepto de dominio estable. |
 | **DisponibilidadDelChatbot** | Clase (estado operativo del servicio) | Estado global habilitado/deshabilitado que el administrador controla (**kill switch**, plan §3.7); condiciona si pueden iniciarse conversaciones. Tiene identidad y ciclo de vida → clase de dominio. |
 | **Configuracion** | **Descartada como clase** (contenedor técnico) | Agrupa recursos/textos/parámetros; en el dominio se descarta (infra). Los recursos se aprovisionan **por entorno**; lo domain-meaningful queda en `RecursoDeAyuda`. |
-| MetricaDeUso / EventoOperativo (cuentas, onboardings, llamadas 7d, tasa éxito/error) | **Vista derivada / diferido** | El admin ve métricas **agregadas** (plan §3.7): reporte sobre datos operativos sin contenido. **No** se modela como clase en la primera pasada (§13). |
+| MetricaDeUso (cuentas, onboardings, llamadas 7d, tasa éxito/error) | **Vista derivada** | El admin ve métricas **agregadas** (plan §3.7): reporte sobre datos operativos sin contenido. **No** se modela como clase (§13.2). |
+| EventoOperativo | **Clase** (desde el PDR-01) | Registro de telemetría de una conversación, **sin contenido**: momento, resultado, latencia, modelo, versión. Es la fuente **de la que** se derivan las métricas, no la métrica. Ver la nota de §13.2. |
 | Cuenta (username, alias, contraseña) | **Atributo de `Usuario` / diferido** | La identidad de acceso son atributos de `Usuario`; no se crea clase `Cuenta` aparte (§13). |
 | edad, `mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`, `schema_version`, `consent_version`, textoDeConsentimiento, textoDeDisclosure, estados | **Atributo / dominio de valor** | **No** son clases → reserva (§13). Los 5 de contenido + 2 metadatos forman `ContextoInicialConversacionalV1` (plan §3.4), que es lo que recibe el LLM. |
 | acompañamiento, derivación, activación, calma | **Etiqueta de relación** | Describen cómo se conectan clases, no son clases. |
@@ -192,7 +193,7 @@ Cada regla: ID · enunciado · **tipo** (Wiegers) · origen · justificación. C
 | RN-02.5 | La conversación se descarta al cerrar; no se reusa entre sesiones. | Restricción | RN-04 |
 | RN-02.6 | El usuario puede cambiar de personaje durante o entre conversaciones. | Habilitador | OBJ-2 |
 | RN-02.7 | No se inicia conversación si el chatbot está deshabilitado globalmente (kill switch). | Restricción | plan §3.7 |
-| RN-02.8 | Una sesión admite hasta **20 mensajes** de usuario, cada uno hasta **1.500 caracteres**; el LLM devuelve hasta **350 tokens**. | Restricción | plan §3.1/§4.9/§4.10 |
+| RN-02.8 | Una sesión admite hasta **20 mensajes** de usuario, cada uno hasta **2.500 caracteres**; el LLM devuelve hasta **350 tokens**. | Restricción | plan §3.1/§4.9/§4.10, **elevado a 2.500 en el PDR-01** |
 | RN-02.9 | Rate limit por usuario: **3 solicitudes/minuto**, **30/día**; timeout de solicitud al LLM: **20 segundos**. | Restricción | plan §4.13 |
 
 ### 7.4 Reglas de la vista Administración (alineadas al plan §3.7 — exactamente tres funciones)
@@ -256,7 +257,7 @@ Cada cualidad nombra su característica **ISO/IEC 25010:2023** candidata (punter
 `VIS-01 (OBJ) → MV-01 (clases/relaciones/reglas) → [skill uml-domain-modeler → modelo de dominio .puml] → casos de uso → robustez → secuencia → pruebas → GQM → evidencias`. El tramo desde el `.puml` en adelante queda **planificado**, no producido (Q2). Los sustantivos del dominio deben **reaparecer por nombre** en el texto de los casos de uso (columna vertebral de trazabilidad).
 
 ## 11. Disciplina nominal — tabla de alias (rasgo E8-13)
-Un concepto = un nombre. Alias históricos declarados, **no** en uso activo.
+Un concepto = un nombre. Las cuatro primeras filas son **alias históricos**, declarados y **no** en uso activo. La última es distinta: un **alias de producto en uso activo**, que convive con el nombre del dominio de forma deliberada y por eso se declara aquí en vez de prohibirse.
 
 | Nombre activo | Alias históricos (macro) | Uso |
 |---|---|---|
@@ -264,6 +265,7 @@ Un concepto = un nombre. Alias históricos declarados, **no** en uso activo.
 | **Aura** | Pandora | Personaje de calma. |
 | **CapsulaDePerfil** | «PerfilInicialParaLLM» (macro) | Resumen mínimo al LLM. |
 | **EventoDeSeguridad** | «monitor de crisis / triaje» (macro, más amplio) | Aquí: evento del gate binario (SEG-01). |
+| **Personaje** | — · **alias de producto en uso activo: «acompañante»** | Clase de MD-01; se especializa en `Alan` y `Aura`. A diferencia de las filas anteriores, «acompañante» **sí está en uso activo**: nombra tres casos de uso de DCU-01 v2.1 (*Conversar con el acompañante*, *Cambiar de acompañante*, *Elegir acompañante*) y la interfaz, por su calidez. El término trazable al dominio sigue siendo `Personaje`. Declarado en el PDR-01, fase D.3. |
 
 ## 12. Glosario integrado (rasgo E8-14)
 - **Acompañamiento:** apoyo conversacional no clínico (escuchar, validar, orientar, psicoeducar).
@@ -280,6 +282,7 @@ Un concepto = un nombre. Alias históricos declarados, **no** en uso activo.
 - **Administrador:** rol de plataforma con 3 funciones (directorio, métricas agregadas, kill switch); no ve datos individuales.
 - **DisponibilidadDelChatbot:** estado global habilitado/deshabilitado del servicio; lo controla el administrador (**kill switch**).
 - **MétricaDeUso:** dato **agregado** de operación (cuentas, onboardings, llamadas 7d, tasa éxito/error), sin contenido; vista derivada, no clase.
+- **EventoOperativo:** registro de telemetría de una `Conversacion`, **sin contenido del diálogo**; es **clase** desde el PDR-01 (ver §13.2).
 - **Visitante:** persona no autenticada que consulta la presentación antes de registrarse.
 - *(Mecanismos —gate, fallback, LLM— y stack se definen en SEG-01/ADR-001; NO son clases de dominio.)*
 
@@ -289,7 +292,9 @@ En modo *academic strict* estos elementos **se difieren** (regla ICONIX «no att
 **13.1 Dominios de valor (atributos candidatos, diferidos):**
 `Usuario.{username, alias, contraseña, edad (≥18), esAdulto (bool), versionDisclosure}` · **`CapsulaDePerfil` = `ContextoInicialConversacionalV1` (plan §3.4):** `mood_self_report ∈ {muy mal, mal, neutral, bien, muy bien, prefiero no responder}` (opcional) · `energy_self_report ∈ {baja, media, alta, prefiero no responder}` (opcional) · `conversation_goal ∈ {sentirme escuchado, calmarme, ordenar ideas, dar un paso pequeño, recibir una sugerencia breve, prefiero no responder}` (opcional) · `response_style ∈ {breve y directo, equilibrado, pausado y reflexivo, sin preferencia}` (opcional) · `character ∈ {alan, aura}` (**obligatorio**, `source: user_choice`) · metadatos `schema_version`, `consent_version`. Cada autorreporte lleva `{value, source: "self_report", collected_at}`. · `Consentimiento.estado ∈ {otorgado, revocado}` · `Conversacion.estado ∈ {activa, cerrada}` · `DisponibilidadDelChatbot.estado ∈ {habilitado, deshabilitado}`. Recursos/textos/parámetros del gate = **configuración por entorno** (no atributos de una clase de dominio).
 
-**13.2 Vista derivada (no clase):** `MétricaDeUso` / `EventoOperativo` = agregados operativos (contadores) que el admin visualiza; se derivan de `Usuario`/`Conversacion`, sin contenido individual.
+**13.2 Vista derivada (no clase):** `MétricaDeUso` = agregado operativo que el admin visualiza; se deriva de `Usuario`, `Conversacion` y `EventoOperativo`, sin contenido individual.
+
+> **Corrección del PDR-01 (hallazgo D-12).** Hasta la fase D.3 esta sección agrupaba `MétricaDeUso` **y** `EventoOperativo` como «vista derivada, no clase», mientras `PER-01` —posterior y más específico— trataba el segundo como **entidad persistida con ocho campos**. Las dos fuentes se contradecían. **Se resuelve a favor de `PER-01`:** `EventoOperativo` es clase, y así figura en `MD-01 v1.4`. La distinción que faltaba es que `EventoOperativo` **es el hecho registrado** y `MétricaDeUso` **es el agregado que se calcula a partir de él**: solo la segunda es vista derivada.
 
 **13.3 Cardinalidades candidatas (diferidas — una ausencia significa "diferida", no "1"):**
 Usuario–Consentimiento (1–1) · Usuario–CapsulaDePerfil (1–0..1) · Usuario–Conversacion (1–0..*) · Conversacion–Mensaje (1–1..*) · Conversacion–Personaje (0..*–1) · Mensaje–EventoDeSeguridad (1–0..1) · EventoDeSeguridad–RecursoDeAyuda (1–1..*) · Administrador–DisponibilidadDelChatbot (1–1) · DisponibilidadDelChatbot–Conversacion (1–0..*).
@@ -309,7 +314,7 @@ Usuario–Consentimiento (1–1) · Usuario–CapsulaDePerfil (1–0..1) · Usua
 
 **Actores (no clases):** `Visitante` (consulta la presentación; sin datos de dominio).
 
-**Descartado / vista derivada (no clases):** `Configuracion` (contenedor técnico; recursos/textos por entorno); `MétricaDeUso`/`EventoOperativo` (agregados operativos = vista derivada, §13.2).
+**Descartado / vista derivada (no clases):** `Configuracion` (contenedor técnico; recursos/textos por entorno); `MétricaDeUso` (agregado operativo = vista derivada, §13.2). **`EventoOperativo` sí es clase** desde el PDR-01.
 
 **Exclusiones (no son clases de dominio):** LLM/Groq, Django, SQLite, PythonAnywhere; módulo, pantalla, formulario, API, servicio, controlador, base de datos; `gate` y `fallback` (mecanismos); onboarding/chat como procesos o UI; registro/login/eliminar-cuenta como **acciones** (van a casos de uso, no a clases); mensajes de éxito/error; multiplicidades y atributos (reserva §13).
 

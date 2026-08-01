@@ -1,0 +1,99 @@
+@startuml
+' DR-09 — Analisis de robustez de CU-09 «Consultar metricas de uso»
+' v2.0 (PDR-01 fase D.4)
+' Insumos: ECU-09, MD-01 (MetricaDeUso = vista derivada, NO clase), DCU-01, DIS-00 (P-15),
+'          PRIV-01, PER-01 (OperationalEvent, fuente de MET-07)
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Administrador de plataforma" as ACT_Administrador
+
+boundary "Metricas de uso (P-15)" as B_MetricasDeUso
+
+control "Verificar la sesion y el rol de administrador" as C_VerificarSesionYRol
+control "Calcular los agregados vigentes de uso" as C_CalcularAgregados
+control "Calcular la tasa tecnica de exito y error" as C_CalcularTasaTecnica
+control "Restringir la vista a cifras agregadas" as C_RestringirACifrasAgregadas
+control "Mostrar los agregados en cero de la ventana" as C_MostrarVentanaSinActividad #LightCoral
+control "Senalar que el chatbot esta deshabilitado" as C_SenalarChatbotDeshabilitado #LightCoral
+control "Denegar el acceso por sesion ausente" as C_DenegarPorSesionAusente #LightCoral
+control "Denegar el acceso por rol insuficiente" as C_DenegarPorRol #LightCoral
+
+entity "Usuario" as E_Usuario
+entity "Conversacion" as E_Conversacion
+entity "EventoOperativo" as E_EventoOperativo
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot #LightCoral
+
+ACT_Administrador -- B_MetricasDeUso : 1 abre la vista de metricas de uso en el panel administrativo
+ACT_Administrador -- B_MetricasDeUso : 2 revisa las cifras agregadas mostradas
+B_MetricasDeUso -- C_VerificarSesionYRol : 1 solicita los agregados
+C_VerificarSesionYRol -- C_CalcularAgregados : 1 sesion con rol de administrador validado en servidor
+C_CalcularAgregados -- E_Usuario : 1 cuenta el total de cuentas y los onboardings completados
+C_CalcularAgregados -- E_Conversacion : 1 cuenta las llamadas al chat de los ultimos 7 dias
+C_CalcularAgregados -- C_CalcularTasaTecnica : 1 calcula peticiones correctas mas fallback sobre el total
+C_CalcularTasaTecnica -- E_EventoOperativo : 1 lee los eventos operativos sin contenido
+C_CalcularAgregados -- C_RestringirACifrasAgregadas : 1 aplica la restriccion de agregados de RN-03.3
+C_RestringirACifrasAgregadas -- B_MetricasDeUso : 1 muestra los agregados vigentes y excluye todo conteo o contenido por usuario
+C_CalcularAgregados -- C_MostrarVentanaSinActividad : FA-01 la ventana de siete dias no tuvo actividad
+C_MostrarVentanaSinActividad -- B_MetricasDeUso : FA-01 continua; muestra ceros como cifra valida, no como error
+C_RestringirACifrasAgregadas -- C_SenalarChatbotDeshabilitado : FA-02 el chatbot esta deshabilitado
+C_SenalarChatbotDeshabilitado -- E_DisponibilidadDelChatbot : FA-02 consulta el estado global
+C_SenalarChatbotDeshabilitado -- B_MetricasDeUso : FA-02 continua; senala el estado junto a los agregados
+C_VerificarSesionYRol -- C_DenegarPorSesionAusente : FE-01 sesion ausente
+C_DenegarPorSesionAusente -- B_MetricasDeUso : FE-01 termina; 401 y no muestra ninguna cifra
+C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 rol validado distinto de administrador
+C_DenegarPorRol -- B_MetricasDeUso : FE-02 termina; 403 y no muestra ninguna cifra
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR09
+  <b>CU-09 - Consultar metricas de uso</b> (ECU-09) - actor: Administrador de plataforma
+  PRE-01 sesion vigente con rol = administrador, validado en el servidor (RNF-08).
+
+  <b>Flujo basico</b>
+  1. El Administrador abre la vista de metricas de uso en el panel administrativo. El sistema
+     muestra los agregados vigentes: total de cuentas, onboardings completados, llamadas al
+     chat en los ultimos 7 dias y tasa tecnica de exito/error.
+  2. El Administrador revisa las cifras agregadas mostradas. El sistema no presenta, en ningun
+     momento de este flujo, datos ni conteos por usuario ni contenido de conversaciones.
+
+  <b>Cursos alternativos</b>
+  No aplica: el MVP ofrece una unica vista de agregados (RN-03.3); no hay filtros, rangos ni
+  variantes de presentacion en esta fase.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Sesion ausente: 401; no muestra ninguna cifra; el caso de uso no se inicia.
+  FE-02 Rol insuficiente: sesion vigente pero rol distinto de administrador; 403; no muestra
+        ninguna cifra.
+
+  <b>Postcondicion</b> El Administrador visualiza las cifras agregadas; el sistema no expone
+  ningun conteo, dato ni contenido por usuario individual.
+  <b>Reglas</b> RN-03.1, RN-03.3, RN-03.5, PRIV-R10. <b>Calidad</b> RC-07 (MET-07, umbral >= 95 %).
+  <b>Traza</b> RF-16 -> OBJ-6. <b>Pantalla</b> P-15.
+
+  <b>Notas de modelado</b>
+  - <b>MetricaDeUso NO se dibuja como Entidad:</b> MD-01 §2 la declara vista derivada y no
+    clase del dominio, y §3.3 insiste en que "ver metricas" no se dibuja como caja ni como
+    linea. Se representa como el calculo (Controlador) sobre las entidades de las que se
+    deriva.
+  - <b>EventoOperativo si se dibuja, en verde, y por que:</b> la tasa tecnica de MET-07 se
+    define sobre peticiones correctas mas fallback dividido por el total, y esa telemetria es
+    una entidad persistida en PER-01 §3 (`OperationalEvent`, 8 campos), creada en el paso 8 de
+    CU-06. Es un descubrimiento propuesto a MD-01, no una clase existente.
+    <b>Hallazgo reportado:</b> MV-01 §13.2 agrupa `MetricaDeUso` y `EventoOperativo` como
+    "vista derivada (no clase)", mientras PER-01 (posterior, SD-25) trata `OperationalEvent`
+    como entidad persistida. Las dos fuentes se contradicen; aqui se sigue PER-01 y la
+    contradiccion queda reportada. ECU-09 tampoco lo menciona.
+  - <b>La prohibicion del paso 2 se dibuja en positivo</b>, igual que en DR-08: RN-03.3 esta
+    formulada como "las metricas visualizadas son agregadas", de modo que restringir la vista
+    es comportamiento real, no una no-accion.
+  - <b>Administrador no aparece como Entidad</b> aqui (si en DR-10). Criterio del paquete: se
+    dibuja como Entidad solo cuando se persiste como dato — la autoria de la auditoria en
+    CU-10 —; en CU-08 y CU-09 basta el actor.
+end note
+
+@enduml

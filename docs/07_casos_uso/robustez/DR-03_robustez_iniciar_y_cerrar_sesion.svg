@@ -1,0 +1,241 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="963" viewBox="0 0 1000 963" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>DR-03 — Analisis de robustez de CU-03 «Iniciar y cerrar sesion»</title>
+<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-03 «Iniciar y cerrar sesion». 1 actor(es), 5 objeto(s) tipo Borde, 12 Controlador(es) y 5 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
+
+<rect x="0" y="0" width="1000" height="963" fill="#FFFFFF"/>
+
+<text x="24" y="26" font-size="14" font-weight="500" fill="#2C2C2A">DR-03 · Analisis de robustez de CU-03 «Iniciar y cerrar sesion»</text>
+<g font-size="11" font-weight="500" fill="#5F5E5A" text-anchor="middle">
+<text x="72" y="56">Actor</text>
+<text x="248" y="56">Objeto tipo Borde</text>
+<text x="562" y="56">Controlador</text>
+<text x="882" y="56">Entidad</text>
+</g>
+<line x1="24" y1="64" x2="965" y2="64" stroke="#B4B2A9" stroke-width="1"/>
+
+<g fill="none" stroke="#8a8a8a" stroke-width="1">
+<polyline points="84,92 124,92 124,93 150,93"/>
+<polyline points="345,86 352,86 352,115 425,115"/>
+<polyline points="700,97 744,97 744,89 800,89"/>
+<polyline points="345,100 364,100 364,163 425,163"/>
+<polyline points="700,155 752,155 752,98 800,98"/>
+<polyline points="700,172 708,172 708,224 700,224"/>
+<polyline points="700,218 760,218 760,150 800,150"/>
+<polyline points="700,230 715,230 715,276 700,276"/>
+<polyline points="700,289 722,289 722,355 700,355"/>
+<polyline points="700,338 768,338 768,200 800,200"/>
+<polyline points="700,346 776,346 776,252 800,252"/>
+<polyline points="700,364 729,364 729,420 700,420"/>
+<polyline points="345,167 376,167 376,407 425,407"/>
+<polyline points="84,98 131,98 131,156 150,156"/>
+<polyline points="345,177 388,177 388,468 425,468"/>
+<polyline points="700,453 784,453 784,108 800,108"/>
+<polyline points="345,106 400,106 400,461 425,461"/>
+<polyline points="700,372 708,372 708,522 700,522"/>
+<polyline points="345,238 352,238 352,509 425,509" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="84,104 139,104 139,291 150,291"/>
+<polyline points="345,304 364,304 364,181 425,181"/>
+<polyline points="700,237 744,237 744,302 800,302"/>
+<polyline points="700,302 715,302 715,560 700,560"/>
+<polyline points="345,379 376,379 376,573 425,573" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="345,361 388,361 388,476 425,476"/>
+<polyline points="700,189 722,189 722,625 700,625"/>
+<polyline points="345,112 400,112 400,612 425,612"/>
+<polyline points="345,317 352,317 352,638 425,638" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,243 729,243 729,700 700,700"/>
+<polyline points="345,119 364,119 364,682 425,682"/>
+<polyline points="345,188 376,188 376,766 425,766"/>
+<polyline points="345,126 388,126 388,748 425,748"/>
+</g>
+
+<g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="72.0" cy="92" r="9"/><line x1="72.0" y1="101" x2="72.0" y2="123"/><line x1="60.0" y1="110" x2="84.0" y2="110"/><line x1="72.0" y1="123" x2="62.0" y2="138"/><line x1="72.0" y1="123" x2="82.0" y2="138"/></g>
+<g font-size="11" text-anchor="middle" fill="#2C2C2A">
+<text x="72" y="154">Titular de</text>
+<text x="72" y="167">cuenta</text>
+</g>
+<rect x="150" y="80" width="195" height="52" rx="4" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="160" y1="100.0" x2="160" y2="112.0"/><line x1="160" y1="106.0" x2="164" y2="106.0"/><circle cx="169" cy="106.0" r="5"/></g>
+<g font-size="11" fill="#0C447C">
+<text x="182" y="102">Inicio de sesion de</text>
+<text x="182" y="117">usuario (P-03)</text>
+</g>
+<rect x="150" y="146" width="195" height="52" rx="4" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="160" y1="166.0" x2="160" y2="178.0"/><line x1="160" y1="172.0" x2="164" y2="172.0"/><circle cx="169" cy="172.0" r="5"/></g>
+<g font-size="11" fill="#0C447C">
+<text x="182" y="168">Chat con el acompanante</text>
+<text x="182" y="183">(P-10)</text>
+</g>
+<rect x="150" y="212" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="160" y1="232.0" x2="160" y2="244.0"/><line x1="160" y1="238.0" x2="164" y2="238.0"/><circle cx="169" cy="238.0" r="5"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="182" y="234">Onboarding - disclosure de</text>
+<text x="182" y="249">IA (P-05)</text>
+</g>
+<rect x="150" y="278" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="160" y1="298.0" x2="160" y2="310.0"/><line x1="160" y1="304.0" x2="164" y2="304.0"/><circle cx="169" cy="304.0" r="5"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="182" y="300">Inicio de sesion de</text>
+<text x="182" y="315">administracion (P-04)</text>
+</g>
+<rect x="150" y="344" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="160" y1="364.0" x2="160" y2="376.0"/><line x1="160" y1="370.0" x2="164" y2="370.0"/><circle cx="169" cy="370.0" r="5"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="182" y="366">Directorio de usuarios</text>
+<text x="182" y="381">(P-14)</text>
+</g>
+<rect x="425" y="80" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="106.0" r="5.5"/><polyline points="440.5,98.5 444.5,100.8 440.2,103.2"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="102">Solicitar username y contrasena, sin</text>
+<text x="457" y="117">seleccion de rol</text>
+</g>
+<rect x="425" y="146" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="172.0" r="5.5"/><polyline points="440.5,164.5 444.5,166.8 440.2,169.2"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="168">Contrastar las credenciales con la</text>
+<text x="457" y="183">cuenta registrada</text>
+</g>
+<rect x="425" y="212" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="230.5" r="5.5"/><polyline points="440.5,223.0 444.5,225.3 440.2,227.7"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="234">Determinar el rol en el servidor</text>
+</g>
+<rect x="425" y="263" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="289.0" r="5.5"/><polyline points="440.5,281.5 444.5,283.8 440.2,286.2"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="285">Establecer la sesion con el rol</text>
+<text x="457" y="300">determinado</text>
+</g>
+<rect x="425" y="329" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="355.0" r="5.5"/><polyline points="440.5,347.5 444.5,349.8 440.2,352.2"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="351">Comprobar si el Usuario completo el</text>
+<text x="457" y="366">onboarding</text>
+</g>
+<rect x="425" y="395" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="413.5" r="5.5"/><polyline points="440.5,406.0 444.5,408.3 440.2,410.7"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="417">Dirigir a la conversacion</text>
+</g>
+<rect x="425" y="446" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="464.5" r="5.5"/><polyline points="440.5,457.0 444.5,459.3 440.2,461.7"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="468">Invalidar la sesion en el servidor</text>
+</g>
+<rect x="425" y="497" width="275" height="37" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="515.5" r="5.5"/><polyline points="440.5,508.0 444.5,510.3 440.2,512.7"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="519">Dirigir al onboarding pendiente</text>
+</g>
+<rect x="425" y="548" width="275" height="37" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="566.5" r="5.5"/><polyline points="440.5,559.0 444.5,561.3 440.2,563.7"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="570">Dirigir al panel administrativo</text>
+</g>
+<rect x="425" y="599" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="625.0" r="5.5"/><polyline points="440.5,617.5 444.5,619.8 440.2,622.2"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="621">Mostrar mensaje generico de</text>
+<text x="457" y="636">credenciales incorrectas</text>
+</g>
+<rect x="425" y="665" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="691.0" r="5.5"/><polyline points="440.5,683.5 444.5,685.8 440.2,688.2"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="687">Denegar el acceso a la ruta</text>
+<text x="457" y="702">administrativa</text>
+</g>
+<rect x="425" y="731" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="757.0" r="5.5"/><polyline points="440.5,749.5 444.5,751.8 440.2,754.2"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="753">Solicitar autenticacion en funcion</text>
+<text x="457" y="768">protegida</text>
+</g>
+<rect x="800" y="80" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="97.0" r="5.5"/><line x1="810.5" y1="104.5" x2="823.5" y2="104.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="102">TitularDeCuenta</text>
+</g>
+<rect x="800" y="131" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="148.0" r="5.5"/><line x1="810.5" y1="155.5" x2="823.5" y2="155.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="153">Usuario</text>
+</g>
+<rect x="800" y="182" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="199.0" r="5.5"/><line x1="810.5" y1="206.5" x2="823.5" y2="206.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="204">Consentimiento</text>
+</g>
+<rect x="800" y="233" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="250.0" r="5.5"/><line x1="810.5" y1="257.5" x2="823.5" y2="257.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="255">CapsulaDePerfil</text>
+</g>
+<rect x="800" y="284" width="165" height="37" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="817" cy="301.0" r="5.5"/><line x1="810.5" y1="308.5" x2="823.5" y2="308.5"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="832" y="306">Administrador</text>
+</g>
+
+<g font-size="9" text-anchor="middle">
+<rect x="90" y="85" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="98" y="95" fill="#5F5E5A">1</text>
+<rect x="351" y="80" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="90" fill="#5F5E5A">1</text>
+<rect x="706" y="90" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="100" fill="#5F5E5A">1</text>
+<rect x="351" y="108" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="118" fill="#5F5E5A">2</text>
+<rect x="706" y="148" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="158" fill="#5F5E5A">2</text>
+<rect x="706" y="165" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="175" fill="#5F5E5A">2</text>
+<rect x="706" y="211" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="221" fill="#5F5E5A">2</text>
+<rect x="706" y="238" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="248" fill="#5F5E5A">3</text>
+<rect x="706" y="282" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="292" fill="#5F5E5A">4</text>
+<rect x="706" y="331" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="341" fill="#5F5E5A">4</text>
+<rect x="706" y="354" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="364" fill="#5F5E5A">4</text>
+<rect x="706" y="372" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="382" fill="#5F5E5A">4</text>
+<rect x="351" y="160" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="170" fill="#5F5E5A">4</text>
+<rect x="90" y="106" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="98" y="116" fill="#5F5E5A">5</text>
+<rect x="351" y="185" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="195" fill="#5F5E5A">5</text>
+<rect x="706" y="446" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="456" fill="#5F5E5A">5</text>
+<rect x="351" y="129" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="139" fill="#5F5E5A">5</text>
+<rect x="706" y="395" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="405" fill="#5F5E5A">FA-01</text>
+<rect x="351" y="231" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="241" fill="#4A1B0C">FA-01</text>
+<rect x="90" y="127" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="107" y="137" fill="#5F5E5A">FA-02</text>
+<rect x="351" y="297" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="307" fill="#5F5E5A">FA-02</text>
+<rect x="706" y="260" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="270" fill="#5F5E5A">FA-02</text>
+<rect x="706" y="310" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="320" fill="#5F5E5A">FA-02</text>
+<rect x="351" y="372" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="382" fill="#4A1B0C">FA-02</text>
+<rect x="351" y="354" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="364" fill="#5F5E5A">FA-02</text>
+<rect x="706" y="182" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="192" fill="#5F5E5A">FE-01</text>
+<rect x="351" y="210" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="220" fill="#5F5E5A">FE-01</text>
+<rect x="351" y="325" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="335" fill="#4A1B0C">FE-01</text>
+<rect x="706" y="131" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="141" fill="#5F5E5A">FE-02</text>
+<rect x="351" y="247" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="257" fill="#5F5E5A">FE-02</text>
+<rect x="351" y="271" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="281" fill="#5F5E5A">FE-03</text>
+<rect x="351" y="388" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="398" fill="#5F5E5A">FE-03</text>
+</g>
+
+<line x1="24" y1="809" x2="965" y2="809" stroke="#B4B2A9" stroke-width="1"/>
+<text x="24" y="825" font-size="11" font-weight="500" fill="#5F5E5A">Cursos alternativos y de excepcion</text>
+<g font-size="10">
+<rect x="24" y="837" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="846" text-anchor="middle" fill="#4A1B0C">FA-01</text><text x="74" y="846" fill="#5F5E5A">Onboarding pendiente (paso 4)</text>
+<rect x="504" y="837" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="846" text-anchor="middle" fill="#4A1B0C">FA-02</text><text x="554" y="846" fill="#5F5E5A">Acceso separado de administracion (paso 1)</text>
+<rect x="24" y="853" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="862" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="74" y="862" fill="#5F5E5A">Credenciales invalidas (paso 2 y FA-02)</text>
+<rect x="504" y="853" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="862" text-anchor="middle" fill="#4A1B0C">FE-02</text><text x="554" y="862" fill="#5F5E5A">Rol insuficiente en ruta administrativa (paso 4 y FA-02)</text>
+<rect x="24" y="869" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="878" text-anchor="middle" fill="#4A1B0C">FE-03</text><text x="74" y="878" fill="#5F5E5A">Sesion ausente (paso 5 y toda funcion protegida)</text>
+</g>
+
+<line x1="24" y1="895" x2="965" y2="895" stroke="#B4B2A9" stroke-width="1"/>
+<g font-size="11">
+<rect x="24" y="906" width="13" height="13" rx="2" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="23.5" y1="906.5" x2="23.5" y2="918.5"/><line x1="23.5" y1="912.5" x2="27.5" y2="912.5"/><circle cx="32.5" cy="912.5" r="5"/></g>
+<text x="44" y="916" fill="#5F5E5A">Objeto tipo Borde</text>
+<rect x="155.4" y="906" width="13" height="13" rx="2" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="161.9" cy="912.5" r="5.5"/><polyline points="160.4,905.0 164.4,907.3 160.1,909.7"/></g>
+<text x="175.4" y="916" fill="#5F5E5A">Controlador</text>
+<rect x="249.60000000000002" y="906" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="256.1" cy="911.0" r="5.5"/><line x1="249.60000000000002" y1="918.5" x2="262.6" y2="918.5"/></g>
+<text x="269.6" y="916" fill="#5F5E5A">Entidad</text>
+</g>
+<g font-size="11">
+<rect x="24" y="928" width="13" height="13" rx="2" fill="#FAECE7" stroke="#993C1D"/><text x="44" y="938" fill="#5F5E5A">Participa solo en un curso alternativo o de excepcion</text>
+<rect x="384" y="928" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/><text x="404" y="938" fill="#5F5E5A">Entidad descubierta, ausente de MD-01</text>
+<line x1="694" y1="935" x2="724" y2="935" stroke="#8a8a8a" stroke-width="1"/><text x="732" y="938" fill="#5F5E5A">Asociacion de comunicacion (sin direccion)</text>
+</g>
+</svg>

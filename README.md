@@ -52,7 +52,7 @@ alan-aura-academico/
     ├── 04_trazabilidad/              NORM-01 (puente normativo) · TRZ-01 (trazabilidad)
     ├── 05_plan/                      PLAN-01 (plan de proyecto de 1 mes)
     ├── 06_dominio/                   MD-01 (modelo de dominio, PlantUML)
-    ├── 07_casos_uso/                 DCU-01 (diagrama de casos de uso) + especificaciones/ ECU-00…ECU-10
+    ├── 07_casos_uso/                 DCU-01 (diagrama de casos de uso) · especificaciones/ ECU-00…ECU-14 · robustez/ DR-00…DR-14
     ├── 08_diseno/                    DIS-00 (inventario + plan) · DIS-01 (sistema de diseño) + 16 mockups de alta fidelidad
     └── 09_informe/                   Informe académico (.docx) para revisión del profesor
 ```
@@ -66,7 +66,9 @@ alan-aura-academico/
 
 ## Estado
 
-Paquete documental completo, **repositorio independiente** (SD-18), y **Fase 2 (ICONIX) en curso**: producidos el **modelo de dominio** ([`MD-01`](docs/06_dominio/MD-01_modelo_dominio.puml)), el **diagrama de casos de uso** ([`DCU-01`](docs/07_casos_uso/DCU-01_casos_uso.puml)), la **especificación textual de los 10 casos de uso** ([`ECU-00…ECU-10`](docs/07_casos_uso/especificaciones/)) y la **base de diseño de interfaz** ([`DIS-00`/`DIS-01`](docs/08_diseno/) + 16 mockups de alta fidelidad en claro y oscuro). Los **26 RF** quedan trazados sin huérfanos, y existe un **informe académico** ([`docs/09_informe/`](docs/09_informe/)) para la entrega. **Siguiente artefacto ICONIX:** análisis de robustez. **Grafo de conocimiento y vault propios ya producidos** (SD-27, 2026-07-25) — ver [`grafo/`](grafo/) y [`GUIA_USO_GRAFO_Y_VAULT.md`](GUIA_USO_GRAFO_Y_VAULT.md). **Fuera de alcance por ahora** (planificados, no producidos): robustez, secuencias, código.
+Paquete documental completo, **repositorio independiente** (SD-18), y **Fase 2 (ICONIX) en curso**: producidos el **modelo de dominio** ([`MD-01 v1.4`](docs/06_dominio/MD-01_modelo_dominio.puml)), el **diagrama de casos de uso** ([`DCU-01 v2.1`](docs/07_casos_uso/DCU-01_casos_uso.puml)), la **especificación textual de los 14 casos de uso** ([`ECU-00…ECU-14`](docs/07_casos_uso/especificaciones/)), el **análisis de robustez** ([`DR-00…DR-14`](docs/07_casos_uso/robustez/)) y la **base de diseño de interfaz** ([`DIS-00`/`DIS-01`](docs/08_diseno/) + 16 mockups de alta fidelidad en claro y oscuro).
+
+La fase 2 pasó por una **primera pasada completa de correcciones** ([`PDR-01`](docs/00_gobernanza/PDR-01_primera_pasada_correcciones.md)), motivada por la retroalimentación docente ([`RET-01`](docs/00_gobernanza/RET-01_retroalimentacion_docente.md)) y por los hallazgos del propio análisis de robustez. Estado medido al cierre: los **cuatro validadores en 0 errores**, las especificaciones también sin advertencias, **76/76 flujos** con criterio de aceptación asociado, **26/26 RF** con caso de uso propio y único, y las **16 clases** del dominio manifestadas en casos de uso y en robustez. Existe un **informe académico** ([`docs/09_informe/`](docs/09_informe/)) para la entrega, pendiente de actualizar a este estado. **Siguiente artefacto ICONIX:** los diagramas de secuencia.
 
 ## Licencia y derechos
 

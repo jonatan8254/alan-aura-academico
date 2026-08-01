@@ -19,13 +19,13 @@
 | RF-03 | OBJ-1 | Usuario | MV-01 §Onboarding | RN-02, RN-07, RN-01.5 | RC-04 | Security | Otorgar/revocar consentimiento | CU-05 |
 | RF-04 | OBJ-1 | Usuario | MV-01 §Onboarding | RN-01.3, RN-01.4, RN-01.6 | RC-04 | Security | Completar dejando los 4 autorreportes vacíos; `character` obligatorio | CU-05 |
 | RF-05 | OBJ-1/OBJ-4 | Usuario | MV-01 §Onboarding | RN-03, RN-01.6 | RC-04 | Security | Inspección: la cápsula = 5 campos + metadatos (`ContextoInicialConversacionalV1`); **siempre existe** tras el onboarding (mínimo `character`) | CU-05 |
-| RF-06 | OBJ-1 | Usuario | MV-01 §Conversación | — | RC-06 | §3.4 | Presentación de Alan y Aura visible | CU-05 |
+| RF-06 | OBJ-1 | Usuario | MV-01 §Conversación | — | RC-06 | §3.4 | Presentación de Alan y Aura visible | **CU-14** |
 | RF-07 | OBJ-2 | Usuario | MV-01 §Conversación | RN-02.6 | RC-08 | Func. suitability | Iniciar con personaje elegido | CU-06 |
 | RF-08 | OBJ-2 | Usuario / LLM | MV-01 §Conversación | RN-02.2 | RC-05, RC-08 | Perf. / Func. | Intercambio de turnos coherentes | CU-06 |
 | RF-09 | OBJ-2/OBJ-4 | LLM (gobernado) | MV-01 §Conversación | RN-02.2, RN-03 | RC-04 | Security | Inspección del *payload* al LLM | CU-06 |
 | RF-10 | OBJ-3 | Sistema | MV-01 §Conversación | RN-02.1, RN-05 | RC-02 | §3.9.2 | Gate evaluado en cada mensaje | CU-06 |
 | RF-11 | OBJ-3 | Sistema | MV-01 §Conversación/SEG-01 | RN-05, RN-11 | RC-01, RC-03 | §3.9.3/.1 | Fallback con LLM deshabilitado | **CU-07** |
-| RF-12 | OBJ-2 | Usuario | MV-01 §Conversación | RN-02.6 | RC-08 | Func. suitability | Cambio de personaje | CU-06 |
+| RF-12 | OBJ-2 | Usuario | MV-01 §Conversación | RN-02.6 | RC-08 | Func. suitability | Cambio de personaje | **CU-13** |
 | RF-13 | OBJ-4 | Sistema | MV-01 §Conversación | RN-04, RN-02.5 | RC-04 | Security | No hay registro tras cerrar | CU-06 |
 | RF-14 | OBJ-6 | Administrador | MV-01 §Administración | RN-03.7 | RC-04 | Security | Usuario en ruta admin → 403; rol validado en servidor | CU-03 |
 | RF-15 | OBJ-6 | Administrador | MV-01 §Administración | RN-03.1, RN-03.2 | RC-04 | Security | Directorio muestra solo campos mínimos (ID truncado) | CU-08 |
@@ -35,13 +35,13 @@
 | RF-19 | OBJ-7 | Visitante | MV-01 §Cuenta | RN-04.5 | RC-06 | §3.4 | Landing visible sin autenticar; sin acceso a chat/datos | CU-01 |
 | RF-20 | OBJ-7 | Usuario | MV-01 §Cuenta | RN-04.1 | RC-04 | Security | Registro pide solo username/alias/contraseña | CU-02 |
 | RF-21 | OBJ-7 | Usuario | MV-01 §Cuenta | RN-03.7, RN-04.6 | RC-04 | Security | Login/logout; rol no seleccionable desde cliente | CU-03 |
-| RF-22 | OBJ-7 | Usuario | MV-01 §Cuenta | RN-04.3 | RC-04 | Security | Borrar perfil elimina la cápsula | CU-04 |
-| RF-23 | OBJ-7/OBJ-4 | Usuario | MV-01 §Cuenta | RN-04.3, RN-07 | RC-04 | Security | Revocada la personalización, la cápsula no alimenta | CU-04 |
+| RF-22 | OBJ-7 | Usuario | MV-01 §Cuenta | RN-04.3 | RC-04 | Security | Borrar perfil elimina la cápsula | **CU-11** |
+| RF-23 | OBJ-7/OBJ-4 | Usuario | MV-01 §Cuenta | RN-04.3, RN-07 | RC-04 | Security | Revocada la personalización, la cápsula no alimenta | **CU-12** |
 | RF-24 | OBJ-7 | Usuario | MV-01 §Cuenta | RN-04.4 | RC-04 | Security | Eliminar cuenta → borrado en cascada, sin remanentes | CU-04 |
-| RF-25 | OBJ-2 | Sistema | MV-01 §Conversación | RN-02.8 | RC-07 | Reliability | Alcanzados 20 mensajes/1.500 caracteres/350 tokens, invita a cerrar sin error | CU-06 |
+| RF-25 | OBJ-2 | Sistema | MV-01 §Conversación | RN-02.8 | RC-07 | Reliability | Alcanzados 20 mensajes/2.500 caracteres/350 tokens, invita a cerrar sin error | CU-06 |
 | RF-26 | OBJ-2 | Sistema | MV-01 §Conversación | RN-02.9, plan §2.4/§4.13 | RC-07 | Reliability | Solicitud 4/min y 31/día → `429`; timeout 20s → `504`, sin romper la UI | CU-06 |
 
-> **Columna CU poblada (SD-21):** cada RF traza a su especificación `ECU-0X`. Los **26 RF** quedan cubiertos por los 10 casos de uso, **cero huérfanos**. (Detalle inverso RF→CU en `../07_casos_uso/especificaciones/ECU-00_indice_especificaciones.md` §5.)
+> **Columna CU poblada (SD-21; actualizada en el PDR-01):** cada RF traza a su especificación `ECU-NN`. Los **26 RF** quedan cubiertos por los **14** casos de uso, **cero huérfanos** y **ningún RF realizado por dos casos de uso**. Cuatro cambiaron de dueño al desglosarse el diagrama: RF-06 → CU-14, RF-12 → CU-13, RF-22 → CU-11, RF-23 → CU-12. (Detalle inverso RF→CU en `../07_casos_uso/especificaciones/ECU-00_indice_especificaciones.md` §5.)
 
 ## 3. Cobertura de requisitos de calidad (RC → RF)
 | RC | Cubierto por | ¿≥1 RF? |
@@ -77,9 +77,52 @@
 
 > **Resultado: cero requisitos huérfanos.** La columna **CU** ya está poblada (cada RF → su `ECU-0X`) y el **Dominio** existe (MD-01); la única casilla abierta es `Prueba ejecutada`, ⏳ por diseño (fase 4).
 
+## 5.1 Matriz clase del dominio ↔ caso de uso (punto 4 de la retroalimentación docente)
+
+El profesor pidió **verificar que los objetos del dominio se vean reflejados en los casos de uso**. La comprobación se publica aquí, contra `MD-01 v1.4` (16 clases) y `DCU-01 v2.1` (14 casos de uso). La columna «Robustez» es la evidencia más fuerte: es donde cada clase aparece como **objeto tipo Entidad**, con un arco a un controlador concreto.
+
+| Clase (MD-01 v1.4) | Casos de uso que la manipulan | Robustez |
+|---|---|---|
+| `Visitante` | CU-01, CU-02, CU-04 (destino tras eliminar) | DR-01, DR-02, DR-04 |
+| `TitularDeCuenta` | CU-02, CU-03 | DR-02, DR-03 |
+| `Usuario` | CU-03, CU-04, CU-05, CU-08, CU-09, CU-11, CU-12 | DR-02, DR-03, DR-04, DR-05, DR-08, DR-09, DR-11, DR-12 |
+| `Administrador` | CU-03, CU-10 | DR-03, DR-10 |
+| `Consentimiento` | CU-05, CU-06, CU-08, CU-11, CU-12, CU-04 | DR-03, DR-04, DR-05, DR-06, DR-08, DR-11, DR-12 |
+| `CapsulaDePerfil` | CU-05, CU-06, CU-11, CU-12, CU-13, CU-14, CU-04, CU-03 | DR-03, DR-04, DR-05, DR-06, DR-11, DR-12, DR-13, DR-14 |
+| `Conversacion` | CU-06, CU-07, CU-09, CU-12, CU-13, CU-04 | DR-04, DR-06, DR-07, DR-09, DR-10, DR-12, DR-13 |
+| `Mensaje` | CU-06, CU-07 | DR-06, DR-07 |
+| `Personaje` | CU-06, CU-13, CU-14 | DR-06, DR-13, DR-14 |
+| `Alan` | CU-13, CU-14 | DR-13, DR-14 |
+| `Aura` | CU-13, CU-14 | DR-13, DR-14 |
+| `EventoDeSeguridad` | CU-06, CU-07 | DR-06, DR-07 |
+| `RecursoDeAyuda` | CU-07 | DR-07 |
+| `DisponibilidadDelChatbot` | CU-06, CU-09, CU-10, CU-13, CU-07 | DR-06, DR-07, DR-09, DR-10, DR-13 |
+| `ContadorDeUsoDiario` | CU-06, CU-04 | DR-04, DR-06 |
+| `EventoOperativo` | CU-06, CU-09 | DR-06, DR-09 |
+
+**Las 16 clases aparecen en al menos un caso de uso y en al menos un diagrama de robustez. Cero clases sin usar.**
+
+> `Alan` y `Aura` eran, antes del PDR-01, las únicas clases sin manifestación en el diagrama de casos de uso. Extraer **CU-14 «Elegir acompañante (Alan o Aura)»** fue precisamente lo que las trajo, y es la razón por la que ese `<<include>>` supera su compuerta pese a que solo lo usa un caso de uso base.
+
+## 5.2 Visibilidad RF → caso de uso
+
+Los **26 RF** tienen ahora **caso de uso propio y único**. Antes del PDR-01, trece no tenían manifestación gráfica y tres casos de uso absorbían diecisiete.
+
+| Caso de uso | RF que realiza | | Caso de uso | RF que realiza |
+|---|---|---|---|---|
+| CU-01 | RF-19 | | CU-08 | RF-15 |
+| CU-02 | RF-20 | | CU-09 | RF-16 |
+| CU-03 | RF-14, RF-21 | | CU-10 | RF-17, RF-18 |
+| CU-04 | RF-24 | | **CU-11** | **RF-22** |
+| CU-05 | RF-01…RF-05 | | **CU-12** | **RF-23** |
+| CU-06 | RF-07…RF-10, RF-13, RF-25, RF-26 | | **CU-13** | **RF-12** |
+| CU-07 | RF-11 | | **CU-14** | **RF-06** |
+
+Cuando una especificación cita un RF que **no** realiza, lo etiqueta como *cedido*, *relacionado* o *vecino* y dice a quién pertenece — por ejemplo `ECU-08` cita RF-14 aclarando que lo realiza CU-03, y `ECU-07` cita RF-10 aclarando que el gate vive en CU-06.
+
 ## 6. Cierre
-- **Confirmadas:** cobertura completa objetivo↔RF↔RC↔norma; **columna CU poblada** (RF → `ECU-0X`), cero huérfanos.
-- **Recomendaciones:** al abrir fase 4, ejecutar las pruebas planificadas (`CP-XX`) y medir umbrales; encadenar cada `ECU-0X` con su robustez (`DR-XX`) y secuencia (`DS-XX`).
+- **Confirmadas:** cobertura completa objetivo↔RF↔RC↔norma; **columna CU poblada** (RF → `ECU-NN`), cero huérfanos, **16/16 clases del dominio manifestadas en casos de uso** (§5.1) y **26/26 RF con caso de uso propio y único** (§5.2).
+- **Recomendaciones:** al abrir fase 4, ejecutar las pruebas planificadas (`CP-XX`) y medir umbrales; encadenar cada `ECU-NN` con su robustez (`DR-NN`, ya producida: 14 diagramas) y secuencia (`DS-XX`).
 - **Pendientes:** columna `Prueba ejecutada` ⏳ (fase 4).
 
 **Fin de TRZ-01.**

@@ -1,7 +1,7 @@
 # ECU-06 — Especificación de caso de uso: «Conversar con el acompañante» (CU-06)
-**ID documento:** DOC-CU-06 · **Caso de uso:** CU-06 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-16 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-06 · **Caso de uso:** CU-06 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Alias en DCU-01:** `CU_Chat` · **Fecha:** 2026-07-30 · **Versión:** v2.0 · **Estado:** Propuesto.
 **Forma:** **completa** (§1–§23) — caso de uso **central y canon-sensible** (conversación gobernada, minimización, no persistencia, gate de seguridad).
-**Insumos:** DCU-01, MV-01 §Vista Conversación, MD-01, REQ-01 (RF-07…13/25/26), contrato conversacional, SEG-01, PRIV-01, plan §3.4/§4.9/§4.10/§4.11/§4.13. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
+**Insumos:** DCU-01 v2.1, MV-01 §Vista Conversación, MD-01 v1.4, REQ-01 (RF-07…RF-11, RF-13, RF-25, RF-26), contrato conversacional, SEG-01, PRIV-01, plan §3.4/§4.9/§4.10/§4.11/§4.13. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
 ---
 
@@ -11,29 +11,30 @@
 | Nombre del proyecto | Alan & Aura Académico |
 | Nombre del sistema | Aplicación de acompañamiento conversacional «Alan & Aura Académico» |
 | ID del documento | DOC-CU-06 |
-| Versión | v1.0 |
+| Versión | v2.0 |
 | Autor(es) | Jonatan Estiven Sánchez Vargas (redacción) · Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil |
 | Fecha de creación | 2026-07-16 |
-| Fecha de última actualización | 2026-07-16 |
+| Fecha de última actualización | 2026-07-30 |
 | Estado | Propuesto |
 
 **Historial de cambios**
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v2.0 | 2026-07-30 | J. Sánchez | **PDR-01, fase D.3, tanda 1.** El flujo alternativo «Cambiar de personaje» sale a **CU-13** vía `<<extend>>`, y los dos restantes se renumeran. Se añade **FE-09** para la capa base del consentimiento retirada, que cierra el hallazgo D-01. El límite por mensaje pasa de 1.500 a **2.500 caracteres** y el criterio que lo verificaba se parte en dos, uno por disparador (D-08). Se declara `Consentimiento` como concepto del dominio de este CU, y se define localmente toda regla citada. |
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
 
 ## 2. Entradas esperadas
 | Insumo | Descripción | Estado |
 |---|---|---|
-| Modelo verbal | MV-01 §Vista Conversación (RN-02.x) | Disponible |
-| Modelo de dominio | MD-01 (Conversacion, Mensaje, Personaje, CapsulaDePerfil, DisponibilidadDelChatbot, EventoDeSeguridad) | Disponible |
-| Diagrama de casos de uso | DCU-01 (CU «Conversar con el acompañante») | Disponible |
+| Modelo verbal | MV-01 §Vista Conversación (familia RN-02.1…RN-02.9) | Disponible |
+| Modelo de dominio | MD-01 v1.4 (`Conversacion`, `Mensaje`, `Personaje`, `CapsulaDePerfil`, `Consentimiento`, `DisponibilidadDelChatbot`, `EventoDeSeguridad`) | Disponible |
+| Diagrama de casos de uso | DCU-01 v2.1, alias `CU_Chat` | Disponible |
 | Caso de uso seleccionado | CU-06 | Disponible |
 | Actor principal | Usuario adulto | Disponible |
 | Actor secundario | Proveedor LLM (Groq), sistema externo | Disponible |
-| Reglas de negocio | RN-02.1…RN-02.9, RN-03, RN-04, RN-05; contrato C-1…C-10 | Disponible |
-| Requisitos funcionales | RF-07…RF-13, RF-25, RF-26 | Disponible |
+| Reglas de negocio | Familia RN-02.1…RN-02.9; RN-05; RN-07; contrato C-1…C-10. Las familias de administración y de cuenta se consultan pero **no gobiernan** este CU | Disponible |
+| Requisitos funcionales | RF-07…RF-11, RF-13, RF-25, RF-26 (RF-12 pasa a CU-13) | Disponible |
 | Requisitos especiales | RNF-03/04/06/08/09/10, RC-04/05/07/08, PRIV-R1/R2/R9 | Disponible |
 | Restricciones | Canon: minimización, no persistencia, seguridad > engagement | Disponible |
 | Prototipos / GUI | Interfaz de chat | [Pendiente] (fase de construcción) |
@@ -83,7 +84,9 @@
 | Personaje (Alan, Aura) | Estilo de acompañamiento | Conduce la conversación | — | Conversacion–Personaje (acompañada por) |
 | CapsulaDePerfil | Resumen mínimo (`ContextoInicialConversacionalV1`) | Orienta la conversación (vía LLM) | mood_self_report, energy_self_report, conversation_goal, response_style, character (+ schema_version, consent_version) | CapsulaDePerfil–Conversacion (orienta) |
 | DisponibilidadDelChatbot | Estado global habilitado/deshabilitado | Condiciona el inicio | estado | DisponibilidadDelChatbot–Conversacion (condiciona) |
-| EventoDeSeguridad | Ocurrencia de peligro explícito | Puede originarse de un Mensaje | — | Mensaje–EventoDeSeguridad (origina) |
+| `EventoDeSeguridad` | Ocurrencia de peligro explícito | Documenta lo detectado en un `Mensaje` | — | `Mensaje -- EventoDeSeguridad : se documenta con` |
+| `Consentimiento` | Aceptación granular por capas y revocable | **Se consulta**: la capa base condiciona el acceso; la de personalización, si los autorreportes orientan | capa ∈ {base, personalizacion}, estado | `Usuario -- Consentimiento : otorga` |
+| `EventoOperativo` | Telemetría de la conversación **sin contenido** | Se **crea** al cerrar (paso 8) | momento, resultado, latencia, modelo, versión | `Conversacion -- EventoOperativo : se documenta con` |
 
 **Control terminológico**
 
@@ -92,13 +95,17 @@
 | Conversacion | Sesión efímera; **no** persiste | «chat guardado», «historial» | RF-13 |
 | CapsulaDePerfil | Contexto mínimo al LLM | «historial bruto», «perfil completo» | PRIV-R1 |
 | Gate de seguridad | Filtro determinista de peligro explícito | «clasificador clínico» | Mecanismo (SEG-01), **no** clase de dominio |
+| Acompañante | **Alias de producto en uso activo** de `Personaje`, declarado en la tabla de alias de MV-01 §11 (fila añadida por el PDR-01, fase D.3) | — | Se usa por calidez en el nombre de este caso de uso y en la interfaz; el término trazable al dominio es `Personaje` |
+| Capa del `Consentimiento` | `base` o `personalizacion` | prohibido: «consentimiento» a secas al hablar de revocar | La **base** habilita conversar; la de **personalización**, que la cápsula oriente |
 
 ## 8. Relaciones con otros casos de uso
 | Tipo de relación | Caso de uso relacionado | Dirección | Justificación |
 |---|---|---|---|
 | `<<extend>>` | CU-07 Derivar ante peligro | Es extendido por | Ante peligro explícito, el flujo se **desvía** al *fallback* determinista (condicional, puede no ocurrir, observable). Coherente con DCU-01. |
-| Dependencia funcional | CU-05 Otorgar consentimiento y caracterizar el perfil | Depende de | Requiere consentimiento vigente y cápsula. |
+| Dependencia funcional | CU-05 «Otorgar consentimiento y crear la cápsula de perfil» | Depende de | Requiere la capa base del consentimiento y una cápsula con `character`. |
 | Dependencia funcional | CU-10 Habilitar/deshabilitar el chatbot | Condicionado por | Si el chatbot está deshabilitado, no se inicia (409). |
+| `<<extend>>` | CU-13 «Cambiar de acompañante» | **Es extendido por** | Comportamiento **opcional que el Usuario pide deliberadamente**; este CU se completa sin él; el cambio de tono es observable; y extraerlo hace visible RF-12, que estaba sepultado como flujo alternativo. |
+| Dependencia funcional | CU-12 «Revocar la personalización» | Consume su efecto | Si la capa de personalización está revocada, la cápsula **no orienta** la conversación y este CU sigue funcionando. |
 | `<<include>>` | — | — | Ninguno. El gate, la construcción del contexto y la invocación al LLM son **comportamiento interno**, no subservicios observables compartidos (DCU-01). |
 
 ## 9. Precondiciones
@@ -106,7 +113,8 @@
 |---|---|---|---|
 | PRE-01 | El Usuario tiene sesión activa. | Autorización | Sí (si no → 401) |
 | PRE-02 | El rol es «usuario» validado en servidor. | Autorización | Sí (si no → 403) |
-| PRE-03 | El Usuario es adulto y tiene **consentimiento vigente** (no revocado). | Negocio | Sí |
+| PRE-03 | El Usuario es adulto y tiene vigente la **capa base** del `Consentimiento`. | Negocio | Sí (si no → `FE-09`) |
+| PRE-03.1 | La **capa de personalización** puede estar otorgada o revocada. **No condiciona el acceso**: si está revocada, la conversación transcurre sin que la cápsula la oriente. | Negocio | Sí |
 | PRE-04 | El chatbot está **habilitado** (kill switch, DisponibilidadDelChatbot). | Negocio | Sí (si no → 409) |
 | PRE-05 | El Usuario no ha superado los límites de tasa (3/min, 30/día). | Datos | Sí (si no → 429) |
 
@@ -123,9 +131,9 @@
 | Paso | Responsable | Acción (voz activa) | Concepto de dominio | Respuesta del sistema / resultado | Interfaz |
 |---|---|---|---|---|---|
 | 1 | Usuario | Elige personaje (Alan/Aura) e inicia la conversación | Conversacion, Personaje | Abre la `Conversacion` (chatbot habilitado) | Interfaz de chat |
-| 2 | Usuario | Escribe y envía un `Mensaje` (≤1.500 caracteres) | Mensaje | Valida longitud y estructura del turno | Interfaz de chat |
-| 3 | Sistema | Evalúa el **gate de seguridad determinista** sobre el mensaje **antes** de responder | EventoDeSeguridad (posible) | Decide {no-peligro / peligro-explícito} | — |
-| 4 | Sistema | (no-peligro) Construye el **contexto mínimo** (cápsula + persona + hasta 4 intercambios de la sesión actual + turno) y lo solicita al Proveedor LLM | CapsulaDePerfil | Envía el contexto mínimo al LLM | Frontera con el Proveedor LLM |
+| 2 | Usuario | Escribe y envía un `Mensaje` (≤2.500 caracteres) | `Mensaje` | Comprueba la longitud y la estructura del turno | Interfaz de chat |
+| 3 | Sistema | Evalúa el **gate de seguridad determinista** sobre el `Mensaje` **antes** de responder | EventoDeSeguridad (posible) | Decide {no-peligro / peligro-explícito} | — |
+| 4 | Sistema | (no-peligro) Construye el **contexto mínimo** —`character` siempre, los **cuatro autorreportes** de la cápsula solo si la capa de personalización está otorgada, persona, hasta 4 intercambios de la sesión actual y el turno— y lo solicita al Proveedor LLM | `CapsulaDePerfil`, `Consentimiento` | Envía el contexto mínimo al Proveedor LLM | Frontera con el Proveedor LLM |
 | 5 | Proveedor LLM | Genera el texto de la respuesta | — | Devuelve el texto al sistema | Frontera con el Proveedor LLM |
 | 6 | Sistema | Aplica las **guardas de salida** (no riesgo, no claim clínico) y limita a 350 tokens | — | Muestra la respuesta del personaje | Interfaz de chat |
 | 7 | Usuario | Intercambia turnos (repite 2–6), hasta 20 mensajes de usuario | Mensaje | Mantiene la conversación coherente de personaje | Interfaz de chat |
@@ -134,23 +142,25 @@
 ## 12. Flujos alternativos
 | ID | Nombre | Punto | Condición | Resultado | Retorno | Reglas |
 |---|---|---|---|---|---|---|
-| FA-01 | Cambiar de personaje | Cualquier turno | El Usuario alterna Alan/Aura | Continúa sin reiniciar el onboarding | Al paso 2 | RN-02.6, RF-12 |
-| FA-02 | Límite de sesión alcanzado | Paso 7 | 20 mensajes / 1.500 caracteres / 350 tokens | El sistema informa el estado e invita a cerrar/reiniciar (sin error crudo) | Fin controlado | RN-02.8, RF-25 |
-| FA-03 | Salida insegura del LLM | Paso 6 | La postvalidación detecta salida de riesgo/claim clínico | El sistema **sustituye** la salida por una respuesta segura/fallback | Al paso 6 | RN-02.3, RC-03, C-3 |
+| FA-01 | Límite de mensajes por sesión | Paso 7 | El Usuario alcanza los 20 mensajes de la sesión | Informa el estado e invita a cerrar o iniciar otra sesión, sin error crudo | **Finaliza** de forma controlada | RN-02.8, RF-25 |
+| FA-02 | Salida insegura del Proveedor LLM | Paso 6 | La postvalidación detecta salida de riesgo o *claim* clínico | **Sustituye** la salida por una respuesta segura de *fallback* | **Continúa** en el paso 6 con la respuesta sustituida | RN-02.3, RC-03, C-3 |
+
+> **El flujo alternativo «Cambiar de personaje» de v1.0 salió a CU-13** (`<<extend>>`), y los dos restantes se renumeraron. Los otros dos disparadores de límite —2.500 caracteres por mensaje y 350 *tokens* de salida— **no son flujos alternativos**: el de entrada es la excepción `FE-03` y el de salida es un recorte que el paso 6 aplica sin interrumpir el flujo. Agruparlos en un solo flujo con tres disparadores era el hallazgo **D-08**.
 
 ## 13. Flujos de excepción
 > Tabla de códigos = plan §4.13; degradación con gracia = RF-26.
 
 | ID | Error o evento | Punto | Causa | Respuesta del sistema | Estado final | Recuperación |
 |---|---|---|---|---|---|---|
-| FE-01 | Sesión ausente | Paso 1–2 | Sin sesión | `401`; solicita reingresar | Sin conversación | CU-03 |
-| FE-02 | Permiso insuficiente | Paso 1 | Rol no autorizado | `403` | Sin acceso | — |
-| FE-03 | Entrada inválida | Paso 2 | Mensaje mal formado o >1.500 | `400`; pide corregir | Turno no enviado | Reintentar |
-| FE-04 | Chat deshabilitado | Paso 1 | Kill switch activo | `409`; informa indisponibilidad temporal | Sin conversación | Reintentar luego |
-| FE-05 | Límite superado | Paso 2 | Rate limit (3/min, 30/día) | `429`; respeta `Retry-After`, reintento manual | Turno no procesado | Esperar/reintentar |
-| FE-06 | Proveedor no disponible | Paso 5 | Groq caído | `502`; informa y permite reintento (máx. 1 reintento a fallos transitorios) | Sin respuesta del LLM | Reintento manual |
-| FE-07 | Timeout | Paso 5 | Sin respuesta en 20 s | `504`; informa sin romper la UI | Sin respuesta | Reintento manual |
-| FE-08 | Peligro explícito | Paso 3 | Mensaje con peligro manifiesto | `200` + `safety_fallback` → **se desvía a CU-07 (Derivar)** | Chat ordinario suspendido en la sesión | Iniciar nueva sesión |
+| FE-01 | Sesión ausente | Paso 1–2 | Sin sesión | `401`; solicita reingresar | Sin conversación | **Termina**; reingresar por CU-03 |
+| FE-02 | Permiso insuficiente | Paso 1 | Rol no autorizado | `403` | Sin acceso | **Termina** |
+| FE-03 | Entrada inválida | Paso 2 | `Mensaje` mal formado o de más de 2.500 caracteres | `400`; pide corregir | Turno no enviado | **Vuelve** al paso 2 |
+| FE-04 | Chat deshabilitado | Paso 1 | *Kill switch* activo | `409`; informa indisponibilidad temporal | Sin conversación | **Termina**; reintentar más tarde |
+| FE-05 | Límite de tasa superado | Paso 2 | Rate limit (3/min, 30/día) | `429`; respeta `Retry-After` | Turno no procesado | **Vuelve** al paso 2 tras la espera |
+| FE-06 | Proveedor no disponible | Paso 5 | El Proveedor LLM no responde | `502`; informa y permite reintento (máx. 1 reintento ante fallos transitorios) | Sin respuesta del Proveedor LLM | **Vuelve** al paso 4 |
+| FE-07 | *Timeout* | Paso 5 | Sin respuesta en 20 s | `504`; informa sin romper la interfaz | Sin respuesta | **Vuelve** al paso 4 |
+| FE-08 | Peligro explícito | Paso 3 | `Mensaje` con peligro manifiesto | `200` + `safety_fallback`; el flujo se **desvía a CU-07** | Chat ordinario suspendido en la sesión | **Termina** la sesión; iniciar otra |
+| **FE-09** | **Capa base del consentimiento revocada** | **Paso 1** | El Usuario retiró la capa base durante el onboarding (flujo alternativo de CU-05) y accede al chat directamente | `403`; **no abre la `Conversacion`** y redirige a CU-05 para otorgarla | Sin conversación | **Termina**; rehacer CU-05 |
 
 > Regla de excepción transversal: no se retornan errores crudos ni *stack traces*, claves, el *prompt* ni metadatos de razonamiento (plan §4.13).
 
@@ -160,7 +170,7 @@
 | Éxito | El usuario recibió respuestas coherentes de personaje | Observación / rúbrica (RC-08) |
 | Fallo controlado | Ante error del LLM, la UI informa el estado y permite reintento; no se rompe | Prueba de fallos (RF-26) |
 | Datos creados | Ninguno de contenido; solo evento operativo sin contenido (latencia, modelo, versión, estado) | Inspección |
-| Datos consultados | `CapsulaDePerfil` (para orientar), estado del kill switch | Inspección |
+| Datos consultados | `CapsulaDePerfil`: `character` **siempre**, los cuatro autorreportes solo con la capa de personalización otorgada; estado de las capas del `Consentimiento`; `DisponibilidadDelChatbot` | Inspección |
 | Datos eliminados | **El contenido de la conversación se descarta al cerrar** (no persistencia) | Inspección de BD/logs = sin contenido |
 | Cambios de estado | `Conversacion` → cerrada | Traza |
 | Efectos visibles | Sin registro recuperable del diálogo | Inspección (RF-13) |
@@ -170,31 +180,34 @@
 |---|---|---|---|---|
 | RN-02.1 | Todo mensaje pasa el gate antes de generar respuesta del LLM. | Habilitador | Paso 3 | MV-01 §7.3 |
 | RN-02.2 | El LLM recibe cápsula + persona + hasta 4 intercambios de la sesión actual + turno; nunca historial de sesiones previas. | Restricción | Paso 4 | MV-01 §7.3, plan §3.4 |
-| RN-02.3 | La respuesta del LLM se filtra por guardas (no riesgo, no claim clínico). | Restricción | Paso 6, FA-03 | MV-01 §7.3 |
+| RN-02.3 | El Sistema filtra la respuesta del Proveedor LLM con las guardas de salida (no riesgo, no *claim* clínico). | Restricción | Paso 6, FA-02 | MV-01 §7.3 |
 | RN-02.4 | La personalidad (Alan/Aura) modula el tono, no las reglas de seguridad. | Restricción | Paso 6 | MV-01 §7.3 |
 | RN-02.5 | La conversación se descarta al cerrar; no se reúsa entre sesiones. | Restricción | Paso 8 | MV-01 §7.3 |
-| RN-02.6 | El usuario puede cambiar de personaje durante o entre conversaciones. | Habilitador | FA-01 | MV-01 §7.3 |
+| RN-02.6 | El usuario puede cambiar de `Personaje` durante o entre conversaciones. El cambio **en sesión** es CU-13; aquí gobierna la elección con la que se abre la conversación en el paso 1. | Habilitador | Paso 1 | MV-01 §7.3 |
 | RN-02.7 | No se inicia conversación si el chatbot está deshabilitado. | Restricción | PRE-04, FE-04 | MV-01 §7.3 |
-| RN-02.8 | Hasta 20 mensajes/sesión, 1.500 caracteres/mensaje, 350 tokens de salida. | Restricción | FA-02, FE-03 | MV-01 §7.3 |
-| RN-02.9 | Rate limit 3/min, 30/día; timeout 20 s. | Restricción | PRE-05, FE-05/FE-07 | MV-01 §7.3 |
+| RN-02.8 | Hasta 20 mensajes por sesión, **2.500 caracteres** por mensaje y 350 *tokens* de salida. | Restricción | FA-01, FE-03, paso 6 | MV-01 §7.3 **modificado por el PDR-01**: la fuente aguas arriba aún dice 1.500, igual que RF-25 en REQ-01. La divergencia es **deliberada y está declarada** en `RA-07`; propagarla a MV-01 y REQ-01 es la fase D.5 |
+| RN-02.9 | Rate limit 3/min, 30/día; *timeout* 20 s. | Restricción | PRE-05, FE-05, FE-07 | MV-01 §7.3 |
+| RN-07 | El consentimiento es revocable; al revocarlo cesa el uso de la cápsula. Aplicado por capas: sin la **base** no hay conversación; sin la de **personalización** se conversa sin que la cápsula oriente. | Restricción | PRE-03, PRE-03.1, FE-09, paso 4 | MV-01 §7.1 |
 | RN-05 | Ante peligro explícito, responde el *fallback*, no el LLM. | Habilitador | Paso 3, FE-08 | MV-01 §7.1, SEG-01 |
 | C-1…C-10 | Cláusulas del contrato conversacional (disclosure, no claim clínico, minimización, no persistencia, no instrucciones de riesgo…). | Restricción | Todo el flujo | CONTRATO |
 
 ## 16. Requisitos especiales
 | ID | Categoría | Requisito | Criterio verificable |
 |---|---|---|---|
-| RE-01 | Privacidad | Minimización: el LLM solo recibe cápsula + turno + ≤4 intercambios; nunca username/alias/ID/rol/contraseña/historial previo (PRIV-R1/R9, RNF-04). | Inspección de *payload*: 0 campos prohibidos (RC-04) |
+| RE-01 | Privacidad | Minimización: el Proveedor LLM solo recibe cápsula + turno + ≤4 intercambios; nunca username, alias, identificador, rol, contraseña ni historial previo (PRIV-R1/R9, RNF-04). **Si la capa de personalización está revocada, tampoco recibe los cuatro autorreportes** — pero sí `character`, sin el cual no habría `Personaje` que conduzca la conversación. | Inspección de *payload*: 0 campos prohibidos (RC-04) |
 | RE-02 | Privacidad | El contenido del chat no se persiste en BD ni logs (RNF-03). | Inspección: sin contenido en BD/logs |
 | RE-03 | Seguridad (safety) | La ruta de seguridad opera aunque el LLM falle (RNF-06). | *Fallback* con LLM deshabilitado (RC-01 = 100 %) |
 | RE-04 | Rendimiento | Respuesta en tiempo aceptable pese al servicio externo. | p95 ≤ 5 s (RC-05) [dependiente del LLM] |
 | RE-05 | Fiabilidad | Degradación con gracia ante indisponibilidad/timeout/cuota. | ≥95 % de peticiones OK o *fallback* (RC-07) |
 | RE-06 | Seguridad | Rol en servidor; claves/tokens fuera del cliente y del repo (RNF-08/09). | Inspección |
-| RE-07 | Auditoría | Se registra evento operativo (latencia, modelo, versión, estado) **sin contenido**. | Inspección de eventos |
+| RE-07 | Auditoría | El Sistema registra un `EventoOperativo` (latencia, modelo, versión, estado) **sin contenido**. | Inspección de eventos |
 
 ## 17. Prototipos, GUI o referencias de interfaz
 | Elemento | Nombre explícito | Propósito | Campos principales | Acciones | Pasos |
 |---|---|---|---|---|---|
-| Página | Interfaz de chat | Conversar con Alan/Aura | mensaje, selector de personaje | Enviar, Cambiar personaje, Cerrar | 1–8 |
+| Página | **Interfaz de chat** (P-10, P-11) | Conversar con `Alan` o `Aura` | mensaje, selector de `Personaje` | Enviar, Cerrar | 1–8 |
+
+> El selector de `Personaje` y la acción de alternar viven en la misma pantalla, pero pertenecen a **CU-13**, que extiende a este.
 | Endpoint visible | `POST /api/chat/` | Ejecutar una conversación (ChatRequestV1 → ChatResponseV1) | character, message, history (≤4), client_request_id | Enviar | 2–6 |
 
 > `ChatRequestV1` no acepta perfil ni *prompt* desde el cliente, ni roles `system`/`developer`; el historial es entrada no confiable (plan §4.9). **Diseño de alta fidelidad producido (SD-23):** ver `../../08_diseno/DIS-00_inventario_y_plan.md` (pantallas P-10 y P-11) y `DIS-01_sistema_diseno.md` (sistema de diseño: tokens, doble voz Alan/Aura, componentes). Mockups renderizados en claro y oscuro con estados no-felices. Los prototipos gráficos de producción quedan pendientes de la fase de construcción.
@@ -203,33 +216,43 @@
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |
 |---|---|---|---|---|
 | Conversacion | estado | Crear / Cancelar | Paso 1, 8 | Efímera; se descarta al cerrar (RF-13) |
-| Mensaje | contenido del turno | Crear / Validar | Paso 2 | ≤1.500 caracteres; no se persiste |
-| CapsulaDePerfil | 5 campos de contenido + metadatos (`ContextoInicialConversacionalV1`) | Consultar | Paso 4 | Solo esos campos viajan al LLM |
+| `Mensaje` | contenido del turno | Crear / Comprobar | Paso 2 | ≤2.500 caracteres; no persiste |
+| `CapsulaDePerfil` | `character` (siempre) + los 4 autorreportes (solo con la capa de personalización otorgada) + metadatos | Consultar | Paso 4 | Solo esos campos viajan al Proveedor LLM. **`character` no depende de la capa de personalización**: por `RN-01.6` es precondición funcional y lo cubre la capa base |
+| `Consentimiento` | capa, estado | Consultar | Paso 1, paso 4 | La capa base condiciona el acceso (`FE-09`); la de personalización, si los autorreportes orientan |
+| `EventoOperativo` | momento, resultado, latencia, modelo, versión | Crear | Paso 8 | **Sin contenido del diálogo** (`RE-07`, RNF-03) |
 | Contexto al LLM (`ContextoInicialConversacionalV1`) | cápsula (5 campos, incluye `character`) + system prompt de personalidad + ≤4 intercambios + turno | Construir / Enviar | Paso 4 | Sin datos identificatorios (PRIV-R9) |
 | EventoDeSeguridad | señal de peligro | Validar | Paso 3 | Determinista; deriva a CU-07 |
 
 ## 19. Trazabilidad
 | Tipo de elemento | Referencia | Relación |
 |---|---|---|
-| Requisito funcional | RF-07, RF-08, RF-09, RF-10, RF-12, RF-13, RF-25, RF-26 | Realizados por este CU |
+| **Alias del diagrama ↔ ID** | `CU_Chat` (DCU-01 v2.1) ↔ **CU-06** | Correspondencia explícita; el número sigue el orden de declaración del diagrama |
+| Requisito funcional | RF-07, RF-08, RF-09, RF-10, RF-13, RF-25, RF-26 | Realizados por este CU, exactamente los que le asigna DCU-01 v2.1 §2. **RF-12 pasa a CU-13**; **RF-11 es de CU-07**, que extiende a este pero lo realiza él |
 | Objetivo de negocio | OBJ-2, OBJ-4 | Conversación gobernada; minimización/no persistencia |
-| Regla de negocio | RN-02.1…2.9, RN-05; C-1…C-10 | Gobiernan el flujo |
+| Regla de negocio | Familia RN-02.1…RN-02.9; RN-05; RN-07; contrato C-1…C-10 | Gobiernan el flujo. Toda regla citada queda **definida en §15**: v1.0 invocaba las familias de administración y de cuenta sin definirlas |
 | Requisito de calidad | RC-04, RC-05, RC-07, RC-08 | Anclas de calidad |
-| Modelo de dominio | Conversacion, Mensaje, Personaje/Alan/Aura, CapsulaDePerfil, DisponibilidadDelChatbot, EventoDeSeguridad | Conceptos manipulados |
-| Diagrama de casos de uso | DCU-01 «Conversar con el acompañante» (+ `<<extend>>` CU-07) | Origen |
+| Modelo de dominio | `Conversacion`, `Mensaje`, `Personaje`/`Alan`/`Aura`, `CapsulaDePerfil`, `Consentimiento`, `DisponibilidadDelChatbot`, `EventoDeSeguridad`, `EventoOperativo` | Conceptos manipulados. Las tres últimas familias faltaban en v1.0 pese a usarse en el flujo |
+| Diagrama de casos de uso | `CU_Deriv ..> CU_Chat` y `CU_Cambiar ..> CU_Chat`, ambos `<<extend>>` | Origen de las relaciones |
+| Caso de uso que lo extiende | CU-07 «Derivar ante peligro»; CU-13 «Cambiar de acompañante» | **Es extendido por** ambos |
+| Caso de uso relacionado | CU-12 «Revocar la personalización» | Produce el estado que el paso 4 consulta |
 | Caso de prueba | CP-06 | Planificado |
 | Robustez / secuencia | DR-06 / DS-06 | Planificados (DS-06 detalla los 18 pasos) |
-| Criterio de aceptación | CA-01…CA-06 | Verificación |
+| Criterio de aceptación | CA-01…CA-11 | Verificación. v1.0 declaraba «CA-01…CA-06»; los tres criterios que añade esta tanda quedaban fuera de la trazabilidad |
 
 ## 20. Criterios de aceptación
 | ID | Criterio (Dado/Cuando/Entonces) | Flujo | Evidencia |
 |---|---|---|---|
 | CA-01 | Dado un usuario con consentimiento vigente, cuando envía un mensaje, entonces el sistema evalúa el gate antes de responder. | Flujo básico (paso 3) | Traza técnica |
 | CA-02 | Dado un turno sin peligro, cuando el sistema invoca al LLM, entonces el *payload* contiene solo cápsula + persona + ≤4 intercambios + turno (0 campos prohibidos). | Flujo básico (paso 4) | Inspección de *payload* (RC-04) |
-| CA-03 | Dado un mensaje de peligro explícito de prueba, cuando pasa el gate, entonces responde el *fallback* (CU-07), aunque el LLM esté deshabilitado. | FE-08 / CU-07 | Prueba fail-safe (RC-01) |
+| CA-03 | Dado un mensaje de peligro explícito de prueba, cuando pasa el gate, entonces responde el *fallback* (CU-07), aunque el Proveedor LLM esté deshabilitado. | FE-08 / CU-07 | Prueba *fail-safe* (RC-01) |
+| CA-08 | Dado un usuario con la **capa base** del consentimiento revocada, cuando intenta abrir una conversación, entonces recibe `403` y el sistema lo redirige a CU-05, sin abrir la `Conversacion`. | FE-09 | Prueba de acceso con la capa base revocada |
+| CA-09 | Dado un usuario con la **capa de personalización** revocada, cuando envía un mensaje, entonces **puede conversar**, el *payload* al Proveedor LLM **no contiene ningún autorreporte** y **sí contiene `character`**. | PRE-03.1, paso 4 | Inspección de *payload* |
 | CA-04 | Dada una conversación cerrada, cuando se inspecciona BD/logs, entonces no hay registro recuperable del diálogo. | Postcondición (RF-13) | Inspección |
-| CA-05 | Dado un usuario que alcanza 20 mensajes/1.500 caracteres, cuando lo supera, entonces el sistema informa el estado sin error crudo. | FA-02 (RF-25) | Prueba de límites |
-| CA-06 | Dado un fallo del LLM (401/403/400/409/429/502/504), cuando ocurre, entonces la UI muestra estado y permite reintento sin romperse. | §13 (RF-26) | Prueba de fallos simulados |
+| CA-05 | Dado un usuario que alcanza los **20 mensajes** de la sesión, cuando lo supera, entonces el sistema informa el estado sin error crudo y la sesión finaliza de forma controlada. | FA-01 (RF-25) | Prueba de límite de sesión |
+| CA-07 | Dado un mensaje de más de **2.500 caracteres**, cuando el usuario lo envía, entonces el sistema responde `400` y el turno no llega al Proveedor LLM. | FE-03 | Prueba de límite de entrada |
+| CA-06 | Dado cualquiera de los fallos de sesión, permiso, indisponibilidad, tasa o proveedor, cuando ocurre, entonces la interfaz muestra el estado y permite reintento sin romperse ni exponer el error crudo. | FE-01, FE-02, FE-04, FE-05, FE-06, FE-07 (RF-26) | Prueba de fallos simulados, uno por código |
+| CA-10 | Dada una salida del Proveedor LLM que la postvalidación marca como insegura, cuando el sistema la sustituye, entonces el Usuario recibe la respuesta segura y **nunca** la original. | FA-02 | Prueba con salida insegura inyectada |
+| CA-11 | Dada una respuesta del Proveedor LLM más larga que el límite, cuando el sistema la entrega, entonces queda recortada a 350 *tokens* sin cortar el sentido de la última frase. | Paso 6 (`RN-02.8`, tercer disparador) | Prueba de límite de salida |
 
 ## 21. Riesgos, ambigüedades y decisiones pendientes
 | ID | Tipo | Descripción | Impacto | Decisión | Estado |
@@ -238,6 +261,9 @@
 | RA-02 | Riesgo | El gate binario no detecta peligro **implícito** (limitación declarada, SEG-01 §2). | Alcance de seguridad | Declarado con honestidad; solo se garantiza el explícito. | Aceptado |
 | RA-03 | Riesgo | Latencia del LLM podría incumplir RC-05 (p95 ≤ 5 s). | Rendimiento | Medir en construcción; umbral revisable [N6]. | Abierto (R-6) |
 | RA-04 | Riesgo | Disponibilidad de Groq `gpt-oss-20b`/free tier (V6-a). | Operación | Diseño agnóstico de proveedor (ADR-001-D3). | Abierto |
+| RA-05 | Contradicción (hallazgo **D-01**) | La precondición de «consentimiento vigente (no revocado)» estaba marcada «Verificable: Sí» **sin ningún curso de excepción asociado**, mientras las otras cuatro sí lo tenían. Un usuario con el consentimiento retirado **entraba al chat sin obstáculo** en el modelo. | Coherencia del canon de privacidad | **Resuelto:** el `Consentimiento` se separa en capas (CU-12 §4.1); la base gana `FE-09` con `403` y redirección a CU-05; la de personalización pasa a `PRE-03.1`, que **no** bloquea. | **Resuelto** |
+| RA-06 | Ambigüedad (hallazgo **D-08**) | Un solo flujo alternativo declaraba **tres disparadores** de límite —20 mensajes, caracteres por mensaje y *tokens* de salida— y pedía informar «sin error crudo», lo que chocaba con el `400` de la excepción de entrada. | Verificabilidad de RF-25 | **Resuelto:** el límite de sesión se queda en `FA-01`; el de entrada es `FE-03` con su `400`; el de salida es un recorte del paso 6. El criterio que los agrupaba se parte en dos. | **Resuelto** |
+| RA-07 | Decisión aplicada | El límite por mensaje sube de 1.500 a **2.500 caracteres**. | Alcance de la entrada | Decisión del líder del proyecto en la primera pasada del PDR. Propagada a `RN-02.8`, `FE-03`, §18 y `CA-07`. | **Aplicada** |
 
 ## 22. Checklist de revisión metodológica (§22)
 | # | Criterio | Cumple | Observación |
@@ -247,8 +273,8 @@
 | 3 | Actor primario identificado | ✅ | Usuario adulto |
 | 4 | Actores externos al sistema | ✅ | Proveedor LLM en la frontera |
 | 5 | Flujo básico = escenario de éxito completo | ✅ | 8 pasos observables |
-| 6 | Flujos alternativos suficientes | ✅ | FA-01…FA-03 |
-| 7 | Flujos de excepción relevantes | ✅ | Tabla completa 401…504 + peligro |
+| 6 | Flujos alternativos suficientes | ✅ | FA-01 y FA-02; el tercero de v1.0 salió a CU-13 |
+| 7 | Flujos de excepción relevantes | ✅ | 401, 403, 400, 409, 429, 502, 504, peligro y **capa base revocada** |
 | 8 | Términos del dominio (MD-01) usados | ✅ | Conversacion, Mensaje, Personaje… |
 | 9 | Sin sinónimos ambiguos | ✅ | Control terminológico §7 |
 | 10 | Interfaces nombradas donde aplica | ✅ | Interfaz de chat + `/api/chat/` |
@@ -261,7 +287,7 @@
 | 17 | Criterios en Dado/Cuando/Entonces | ✅ | §20 |
 | 18 | Base para robustez y secuencia | ✅ | DR-06/DS-06 |
 | 19 | Comprensible por usuarios/analistas/desarrolladores | ✅ | — |
-| 20 | Coherente con DCU-01 y canon §5 | ✅ | `<<extend>>` CU-07; minimización; no persistencia |
+| 20 | Coherente con DCU-01 y canon §5 | ✅ | `<<extend>>` de CU-07 y de CU-13; minimización; no persistencia |
 
 ## 23. Versión resumida
 | Campo | Valor |
@@ -269,14 +295,14 @@
 | Actor primario | Usuario adulto (sistema externo: Proveedor LLM) |
 | Objetivo | Conversar con Alan/Aura, LLM gobernado, gate por mensaje, sin persistencia. |
 | Disparador | El usuario envía un mensaje al personaje. |
-| Precondiciones | Sesión, rol usuario, consentimiento vigente, chatbot habilitado, dentro de límites. |
+| Precondiciones | Sesión, rol usuario, **capa base** del consentimiento vigente, chatbot habilitado, dentro de límites. |
 | Conceptos del dominio | Conversacion, Mensaje, Personaje/Alan/Aura, CapsulaDePerfil, DisponibilidadDelChatbot, EventoDeSeguridad. |
 | Flujo básico | Gate → contexto mínimo → LLM → guardas → respuesta; repetir; cerrar y descartar. |
-| Flujos alternativos | Cambiar personaje; límite de sesión; sustituir salida insegura. |
-| Flujos de excepción | 401/403/400/409/429/502/504; peligro → CU-07. |
+| Flujos alternativos | Límite de mensajes por sesión; sustituir salida insegura. |
+| Flujos de excepción | 401/403/400/409/429/502/504; peligro → CU-07; capa base revocada → CU-05. |
 | Postcondición de éxito | Diálogo coherente; contenido descartado al cerrar. |
-| Reglas de negocio | RN-02.1…2.9, RN-05, C-1…C-10. |
-| Criterios de aceptación | CA-01…CA-06. |
-| Casos relacionados | CU-05 (precede), CU-07 (`<<extend>>`), CU-10 (condiciona). |
+| Reglas de negocio | Familia RN-02.1…RN-02.9; RN-05; RN-07; contrato C-1…C-10. |
+| Criterios de aceptación | CA-01…CA-11. |
+| Casos relacionados | CU-05 (precede), CU-07 y CU-13 (`<<extend>>`), CU-10 (condiciona), CU-12 (produce el estado del paso 4). |
 
 **Fin de ECU-06.**

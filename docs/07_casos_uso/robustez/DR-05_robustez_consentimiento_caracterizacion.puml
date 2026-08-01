@@ -1,0 +1,159 @@
+@startuml
+' DR-05 — Analisis de robustez de CU-05 «Otorgar consentimiento y crear la capsula de perfil»
+' Insumos: ECU-05 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-05..P-08; destino P-03), PRIV-01, MV-01
+' v2.0 (PDR-01 fase D.4): el flujo baja de 9 a 8 pasos; la eleccion de personaje sale a DR-14
+' via <<include>>; el Consentimiento se separa en capa base y capa de personalizacion.
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Usuario adulto" as ACT_Usuario
+
+boundary "Onboarding - disclosure de IA (P-05)" as B_PantallaDisclosure
+boundary "Onboarding - declaracion de edad (P-06)" as B_PantallaEdad
+boundary "Onboarding - consentimiento capa base (P-07)" as B_PantallaConsentimiento
+boundary "Onboarding - caracterizacion y capa de personalizacion (P-08)" as B_PantallaCaracterizacion
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
+
+control "Presentar el disclosure de IA" as C_PresentarDisclosure
+control "Solicitar la declaracion de mayoria de edad" as C_SolicitarDeclaracionEdad
+control "Registrar la declaracion de mayoria de edad" as C_RegistrarDeclaracionEdad
+control "Presentar la capa base del consentimiento" as C_PresentarCapaBase
+control "Registrar la capa base otorgada" as C_RegistrarCapaBase
+control "Ofrecer la capa de personalizacion y los cuatro autorreportes" as C_OfrecerPersonalizacion
+control "Registrar la capa de personalizacion otorgada" as C_RegistrarCapaPersonalizacion
+control "Armar la capsula con los autorreportes respondidos" as C_ArmarCapsula
+control "Invocar la eleccion de acompanante (CU-14)" as C_InvocarEleccionAcompanante
+control "Omitir la caracterizacion y la capa de personalizacion" as C_OmitirCaracterizacion #LightCoral
+control "Retirar la capa base en el onboarding" as C_RetirarCapaBase #LightCoral
+control "Retirar la capa de personalizacion en el onboarding" as C_RetirarCapaPersonalizacion #LightCoral
+control "Cerrar la sesion por minoria de edad" as C_CerrarSesionPorMinoriaDeEdad #LightCoral
+control "Impedir el avance sin la capa base" as C_ImpedirAvanceSinCapaBase #LightCoral
+control "Mostrar mensaje 'Revisa tus respuestas'" as C_MsgDatosInvalidos #LightCoral
+control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+
+entity "Usuario" as E_Usuario
+entity "Consentimiento" as E_Consentimiento
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+
+ACT_Usuario -- B_PantallaDisclosure : 1 inicia el onboarding
+B_PantallaDisclosure -- C_PresentarDisclosure : 1 mostrar que se conversa con una IA de acompanamiento
+B_PantallaDisclosure -- C_SolicitarDeclaracionEdad : 2 lee el disclosure y continua
+C_SolicitarDeclaracionEdad -- B_PantallaEdad : 2 solicita la declaracion de mayoria de edad
+B_PantallaEdad -- C_RegistrarDeclaracionEdad : 3 declara ser mayor de 18 anos
+C_RegistrarDeclaracionEdad -- E_Usuario : 3 registra la declaracion booleana y la version de disclosure
+C_RegistrarDeclaracionEdad -- C_PresentarCapaBase : 3 habilita el consentimiento
+C_PresentarCapaBase -- B_PantallaConsentimiento : 4 muestra el alcance de la capa base
+B_PantallaConsentimiento -- C_RegistrarCapaBase : 5 otorga la capa base
+C_RegistrarCapaBase -- E_Consentimiento : 5 crea el consentimiento con la capa base otorgada
+C_RegistrarCapaBase -- C_OfrecerPersonalizacion : 6 capa base registrada
+C_OfrecerPersonalizacion -- B_PantallaCaracterizacion : 6 ofrece la capa de personalizacion, animo, energia, objetivo y estilo
+B_PantallaCaracterizacion -- C_RegistrarCapaPersonalizacion : 7 otorga la capa de personalizacion
+C_RegistrarCapaPersonalizacion -- E_Consentimiento : 7 anade la capa de personalizacion otorgada
+C_RegistrarCapaPersonalizacion -- C_ArmarCapsula : 7 habilita los autorreportes
+B_PantallaCaracterizacion -- C_ArmarCapsula : 8 responde u omite cada autorreporte
+C_ArmarCapsula -- E_CapsulaDePerfil : 8 arma la capsula con schema_version y consent_version; FA-02 solo con lo respondido, sin defaults
+C_ArmarCapsula -- C_InvocarEleccionAcompanante : 8 invoca CU-14 para completar la capsula con character
+C_InvocarEleccionAcompanante -- E_CapsulaDePerfil : 8 la capsula queda existente con character, que siempre existe
+
+B_PantallaCaracterizacion -- C_OmitirCaracterizacion : FA-01 no otorga la personalizacion y rechaza la caracterizacion
+C_OmitirCaracterizacion -- E_Consentimiento : FA-01 el consentimiento conserva solo la capa base
+C_OmitirCaracterizacion -- C_InvocarEleccionAcompanante : FA-01 continua al paso 8 sin autorreportes
+
+
+B_PantallaConsentimiento -- C_RetirarCapaBase : FA-03 retira en el paso 5 la capa base que acababa de otorgar
+C_RetirarCapaBase -- E_Consentimiento : FA-03 deja la capa base en estado revocado
+C_RetirarCapaBase -- B_PantallaConsentimiento : FA-03 finaliza el onboarding sin conversacion y sin capsula
+
+B_PantallaCaracterizacion -- C_RetirarCapaPersonalizacion : FA-04 retira en el paso 7 la capa de personalizacion
+C_RetirarCapaPersonalizacion -- E_Consentimiento : FA-04 deja la personalizacion revocada y la base otorgada
+C_RetirarCapaPersonalizacion -- C_ArmarCapsula : FA-04 continua al paso 8
+
+C_RegistrarDeclaracionEdad -- C_CerrarSesionPorMinoriaDeEdad : FE-01 declara ser menor de 18
+C_CerrarSesionPorMinoriaDeEdad -- E_Usuario : FE-01 no crea consentimiento ni capsula
+C_CerrarSesionPorMinoriaDeEdad -- B_PantallaEdad : FE-01 solo para personas adultas; el sistema cierra la sesion
+
+C_RegistrarCapaBase -- C_ImpedirAvanceSinCapaBase : FE-02 no otorga la capa base
+C_ImpedirAvanceSinCapaBase -- B_PantallaConsentimiento : FE-02 vuelve al paso 4 para otorgarla
+
+C_ArmarCapsula -- C_MsgDatosInvalidos : FE-03 autorreportes mal formados
+C_MsgDatosInvalidos -- B_PantallaCaracterizacion : FE-03 vuelve al paso 8 sin perder lo valido
+
+B_PantallaConsentimiento -- C_SolicitarReingreso : FE-04 la sesion expira
+B_PantallaCaracterizacion -- C_SolicitarReingreso : FE-04 la sesion expira
+C_SolicitarReingreso -- B_PaginaInicioSesion : FE-04 termina; reingresar por CU-03, sin cambios confirmados
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR05
+  <b>CU-05 - Otorgar consentimiento y crear la capsula de perfil</b> (ECU-05 v2.0) - actor: Usuario adulto
+  PRE-01 sesion activa (CU-03). PRE-02 no ha completado el onboarding o desea rehacerlo.
+  PRE-03 el onboarding no depende del kill switch (solo la conversacion lo hace).
+
+  <b>Las dos capas del Consentimiento</b> (definicion canonica en ECU-12 §4.1)
+  capa base: autoriza procesar lo minimo para conversar (edad, character, el turno). Sin ella
+    no hay conversacion. Se otorga en el paso 5.
+  capa personalizacion: autoriza que los CUATRO AUTORREPORTES orienten la conversacion. Sin
+    ella se conversa igual. Se otorga en el paso 7 y se retira despues en CU-12.
+  character pertenece a la capa BASE, no a la de personalizacion (RN-01.6).
+
+  <b>Flujo basico</b>
+  1. El sistema presenta el disclosure de IA antes de pedir cualquier dato.
+  2. El Usuario lee y continua. El sistema solicita la declaracion de mayoria de edad.
+  3. El Usuario declara ser mayor de 18 anos. El sistema registra la declaracion booleana
+     mas la version de disclosure y habilita el consentimiento.
+  4. El sistema presenta la capa base del consentimiento.
+  5. El Usuario otorga la capa base. El sistema crea el Consentimiento con esa capa otorgada.
+  6. El sistema ofrece la capa de personalizacion junto con la caracterizacion opcional de
+     cuatro autorreportes (animo, energia, objetivo, estilo).
+  7. El Usuario otorga la capa de personalizacion. El sistema la anade al Consentimiento.
+  8. El Usuario responde u omite cada autorreporte. El sistema arma la CapsulaDePerfil con lo
+     respondido, sin defaults, e invoca CU-14 (<<include>>) para completarla con character.
+
+  <b>Cursos alternativos</b>
+  FA-01 Omitir la caracterizacion (paso 6): no otorga la capa de personalizacion y rechaza la
+        caracterizacion; la capsula queda sin autorreportes. Continua en el paso 8.
+  FA-02 Respuestas parciales (paso 8): la capsula se arma solo con lo respondido, sin defaults.
+        Continua en el paso 8, que invoca CU-14.
+  FA-03 Retirar la capa base en el onboarding (paso 5): la capa base queda revocada; no se
+        habilita el chat y la capsula no llega a armarse. Finaliza sin conversacion.
+  FA-04 Retirar solo la personalizacion en el onboarding (paso 7): los autorreportes dejan de
+        orientar; la capa base sigue otorgada. Continua en el paso 8.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Menor de edad (paso 3): no continua ni crea Consentimiento ni CapsulaDePerfil; el
+        sistema cierra la sesion sin esperar accion del Usuario. Termina.
+  FE-02 Capa base no otorgada (paso 5): no permite avanzar. Vuelve al paso 4.
+  FE-03 Entrada invalida (paso 8): 400; pide corregir sin perder lo valido. Vuelve al paso 8.
+  FE-04 Sesion ausente (cualquier paso): 401; termina y reingresa por CU-03, sin cambios
+        confirmados.
+
+  <b>Postcondicion</b> Existe un Consentimiento con su capa base otorgada y siempre una
+  CapsulaDePerfil (4 autorreportes opcionales; character obligatorio, escrito por CU-14, mas
+  metadatos); el Usuario puede iniciar CU-06.
+  <b>Reglas</b> RN-01, RN-02, RN-09, RN-10, RN-01.1..RN-01.6, RN-04.2, RN-07.
+  <b>Traza</b> RF-01..RF-05 -> OBJ-1. RF-06 lo realiza CU-14.
+  <b>Pantallas</b> P-05..P-08 propias; P-03 en FE-04.
+
+  <b>Notas de modelado</b>
+  - <b>Cuatro objetos tipo Borde, no uno.</b> La §17 de la ECU declara una sola "Pagina
+    Onboarding (multipaso)", pero esa es la agrupacion de ruta (/onboarding/). DIS-00 §2
+    inventaria las pantallas reales y la columna Interfaz del flujo basico nombra cuatro. La
+    quinta pantalla del onboarding, P-09, ya no pertenece a este caso de uso: es la interfaz
+    de CU-14 y vive en DR-14.
+  - <b>La eleccion de acompanante salio a CU-14.</b> Los pasos 8 y 9 de la v1.1 se
+    extrajeron; aqui queda el controlador que invoca el caso de uso incluido. Alan, Aura y
+    Personaje ya no son entidades de este diagrama: se dibujan en DR-14.
+  - <b>Otorgar la personalizacion es un paso propio (7).</b> En la primera redaccion de la
+    v2.0 iba escondido como condicional dentro de la respuesta del sistema al paso 6, lo que
+    ocultaba el acto que crea la capa; la auditoria lo elevo a paso con responsable Usuario.
+  - <b>FA-03 y FA-04 son dos flujos, no uno.</b> La v1.1 tenia un solo "Revocar en el
+    onboarding" anclado a "Paso 5+", que no es un paso concreto (hallazgo D-06). Al separar
+    el consentimiento en capas, retirar la base y retirar la personalizacion son acciones con
+    efectos opuestos: la primera finaliza el onboarding, la segunda lo continua.
+end note
+
+@enduml

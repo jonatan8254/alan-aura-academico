@@ -1,0 +1,130 @@
+@startuml
+' DR-10 — Analisis de robustez de CU-10 «Habilitar o deshabilitar el chatbot»
+' v2.0 (PDR-01 fase D.4)
+' Insumos: ECU-10, MD-01, DCU-01, DIS-00 (P-16; destino P-04), PER-01 (AdministrativeAction), REQ-01
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Administrador de plataforma" as ACT_Administrador
+
+boundary "Kill switch - control de disponibilidad (P-16)" as B_ControlDisponibilidad
+boundary "Dialogo de confirmacion del cambio" as B_DialogoConfirmacion
+boundary "Inicio de sesion de administracion (P-04)" as B_LoginAdmin #LightCoral
+
+control "Verificar la sesion y el rol de administrador" as C_VerificarSesionYRol
+control "Mostrar el estado actual de disponibilidad" as C_MostrarEstadoActual
+control "Solicitar la confirmacion del cambio" as C_SolicitarConfirmacion
+control "Cambiar el estado global del chatbot" as C_CambiarEstadoGlobal
+control "Registrar la accion administrativa" as C_RegistrarAccion
+control "Aplicar el nuevo estado a las conversaciones" as C_AplicarNuevoEstado
+control "Cancelar el cambio" as C_CancelarCambio #LightCoral
+control "Informar que el estado elegido ya rige" as C_InformarEstadoYaVigente #LightCoral
+control "Rechazar la confirmacion mal formada" as C_RechazarConfirmacionInvalida #LightCoral
+control "Solicitar el reingreso por sesion ausente" as C_SolicitarReingreso #LightCoral
+control "Denegar el acceso por rol insuficiente" as C_DenegarPorRol #LightCoral
+
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
+entity "Administrador" as E_Administrador
+entity "AccionAdministrativa" as E_AccionAdministrativa #PaleGreen
+entity "Conversacion" as E_Conversacion
+
+ACT_Administrador -- B_ControlDisponibilidad : 1 abre el control de disponibilidad
+ACT_Administrador -- B_DialogoConfirmacion : 3 confirma o no confirma el cambio
+B_ControlDisponibilidad -- C_VerificarSesionYRol : 1 solicita el control de disponibilidad
+C_VerificarSesionYRol -- C_MostrarEstadoActual : 1 sesion con rol de administrador validado en servidor
+C_MostrarEstadoActual -- E_DisponibilidadDelChatbot : 1 lee el estado global
+C_MostrarEstadoActual -- B_ControlDisponibilidad : 1 muestra el estado actual, habilitado o deshabilitado
+B_ControlDisponibilidad -- C_SolicitarConfirmacion : 2 elige deshabilitar el chatbot
+B_ControlDisponibilidad -- C_SolicitarConfirmacion : FA-01 elige habilitar el chatbot y continua en el paso 3
+C_SolicitarConfirmacion -- B_DialogoConfirmacion : 2 solicita confirmacion de la accion
+B_DialogoConfirmacion -- C_CambiarEstadoGlobal : 3 el Administrador confirma
+C_CambiarEstadoGlobal -- E_DisponibilidadDelChatbot : 3 cambia el estado global
+C_CambiarEstadoGlobal -- C_RegistrarAccion : 3 registra la accion junto con el cambio
+C_RegistrarAccion -- E_AccionAdministrativa : 3 guarda autor y fecha, sin datos de usuario
+C_RegistrarAccion -- E_Administrador : 3 identifica al autor del cambio
+C_CambiarEstadoGlobal -- C_AplicarNuevoEstado : 3 aplica el nuevo estado de inmediato
+C_AplicarNuevoEstado -- B_ControlDisponibilidad : 3 refleja el estado vigente en el panel
+C_AplicarNuevoEstado -- E_Conversacion : 4 deshabilitado, ningun usuario inicia conversacion; habilitado, CU-06 vuelve a estar disponible
+B_DialogoConfirmacion -- C_CancelarCambio : FA-02 el Administrador no confirma
+C_CancelarCambio -- B_ControlDisponibilidad : FA-02 cancela y vuelve al paso 1; el estado no cambia
+C_SolicitarConfirmacion -- C_InformarEstadoYaVigente : FA-03 el estado elegido ya es el vigente
+C_InformarEstadoYaVigente -- E_DisponibilidadDelChatbot : FA-03 contrasta con el estado global
+C_InformarEstadoYaVigente -- B_ControlDisponibilidad : FA-03 finaliza sin cambiar nada ni registrar accion
+C_CambiarEstadoGlobal -- C_RechazarConfirmacionInvalida : FE-03 la confirmacion llega mal formada
+C_RechazarConfirmacionInvalida -- B_ControlDisponibilidad : FE-03 vuelve al paso 1; 400 y el estado no cambia
+C_VerificarSesionYRol -- C_SolicitarReingreso : FE-01 sesion ausente
+C_SolicitarReingreso -- B_LoginAdmin : FE-01 termina; reingresar por CU-03, estado sin cambios
+C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 rol no administrador aunque manipule el cliente
+C_DenegarPorRol -- B_LoginAdmin : FE-02 termina; sin acceso, redireccion segura
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+  #PaleGreen = entidad descubierta en robustez, ausente de MD-01 (ver delta de object discovery)
+endlegend
+
+note as N_DR10
+  <b>CU-10 - Habilitar o deshabilitar el chatbot</b> (ECU-10) - actor: Administrador de plataforma
+  Disparador: el Administrador decide habilitar o deshabilitar el chatbot; el sistema muestra
+  el estado actual de disponibilidad.
+  PRE-01 sesion con rol=admin validado en servidor (si no, 401/403).
+  PRE-02 el acceso administrativo es por login separado (RN-03.7).
+
+  <b>Flujo basico</b> (escenario: deshabilitar)
+  1. El Administrador abre el control de disponibilidad. El sistema muestra el estado actual
+     (habilitado/deshabilitado).
+  2. El Administrador elige deshabilitar el chatbot. El sistema solicita confirmacion de la
+     accion.
+  3. El Administrador confirma. El sistema cambia el estado global y registra la accion
+     (autor y fecha).
+  4. El sistema aplica el nuevo estado: con el chatbot deshabilitado, ningun usuario inicia
+     conversacion (409).
+
+  <b>Cursos alternativos</b>
+  FA-01 Habilitar el chatbot (paso 2): el Administrador elige habilitar; cambia a habilitado
+        con confirmacion y registro; CU-06 vuelve a estar disponible; continua en el paso 3.
+  FA-02 Cancelar el cambio: el Administrador no confirma; el estado no cambia; vuelve al
+        paso 1.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Sesion ausente (cualquier paso): 401; solicita reingresar; estado sin cambios.
+        Recuperacion CU-03.
+  FE-02 Permiso insuficiente (paso 1): rol no-admin aunque manipule el cliente; 403 o
+        redireccion segura; sin acceso.
+
+  <b>Postcondicion</b> El estado global de DisponibilidadDelChatbot queda cambiado; se crea
+  una AccionAdministrativa (autor, fecha) sin datos de usuario; con el chatbot deshabilitado
+  los usuarios reciben indisponibilidad (409) al intentar conversar.
+  <b>Reglas</b> RN-03.1, RN-03.4, RN-03.7, RN-02.7. <b>Calidad</b> RC-07.
+  <b>Traza</b> RF-17, RF-18 -> OBJ-6. <b>Pantallas</b> P-16 propia; P-04 como destino de
+  FE-01 y FE-02.
+
+  <b>Notas de modelado</b>
+  - <b>AccionAdministrativa se dibuja como Entidad, y por que:</b> el paso 3 la CREA y la
+    persiste (autor, fecha), §18 declara la operacion "Crear" y RF-18/CA-02 la verifican por
+    inspeccion de auditoria. Un registro que se crea y se guarda es una Entidad; el
+    Controlador es "Registrar la accion administrativa". ECU-10 §21 RA-01 la califica de
+    "registro operativo, no de dominio". Va en verde porque esta AUSENTE de MD-01, que es lo
+    que declara la leyenda. NO se propone como clase de dominio: RA-01 esta cerrada y
+    aceptada, y PER-01 §3 la fija como entidad de construccion. Lo que si queda reportado es
+    la tension: un objeto que el texto crea y persiste tiene que aparecer en robustez, pero
+    el modelo de dominio decidio no incluirlo.
+    <b>Alias:</b> `AccionAdministrativa` = `AdministrativeAction` (PER-01 / plan §4.14). Se
+    castellaniza para respetar la regla de MD-01 §1 (espanol, un termino por concepto).
+  - <b>FA-02 se ancla en el dialogo de confirmacion.</b> ECU-10 §12 lo declara en el paso 2 y
+    §11 asigna el dialogo a ese mismo paso 2, asi que el anclaje del diagrama es coherente con
+    la ECU: no hay discrepancia que reportar. Mismo criterio que DR-04 aplica a su curso de
+    cancelacion de la eliminacion.
+  - <b>FE-01 aplica a "cualquier paso"</b> segun ECU-10 §13, pero se dibuja colgando del
+    Controlador de verificacion por convencion de legibilidad: es el punto unico por el que
+    pasa toda peticion al control de disponibilidad.
+  - <b>FA-01 no necesita Controlador propio:</b> habilitar y deshabilitar comparten la misma
+    cadena (confirmacion, cambio de estado, registro y aplicacion). Dibujar un controlador
+    "Habilitar el chatbot" que solo reenviara a la solicitud de confirmacion habria sido una
+    pasarela sin responsabilidad propia.
+  - El paso 4 no tiene interfaz propia en ECU-10 §11: su efecto sobre las conversaciones se
+    dibuja contra la Entidad, y el retorno visual al panel pertenece al paso 3.
+end note
+
+@enduml

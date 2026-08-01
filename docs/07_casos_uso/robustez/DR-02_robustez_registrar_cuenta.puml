@@ -1,0 +1,82 @@
+@startuml
+' DR-02 — Analisis de robustez de CU-02 «Registrar cuenta»
+' v2.0 (PDR-01 fase D.4)
+' Insumos: ECU-02 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-02; continuacion P-03), REQ-01, PRIV-01
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Visitante" as ACT_Visitante
+
+boundary "Registro (P-02)" as B_FormularioRegistro
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+
+control "Mostrar el formulario de registro" as C_MostrarFormularioRegistro
+control "Validar el formato de los campos" as C_ValidarFormatoDeCampos
+control "Verificar la unicidad del username" as C_VerificarUnicidadDeUsername
+control "Crear la cuenta de Usuario" as C_CrearCuentaDeUsuario
+control "Confirmar el registro e invitar a iniciar sesion" as C_ConfirmarRegistro
+control "Indicar que el username ya esta en uso" as C_MsgUsernameEnUso #LightCoral
+control "Mostrar el error de validacion de los campos" as C_MsgEntradaInvalida #LightCoral
+
+entity "Visitante" as E_Visitante
+entity "TitularDeCuenta" as E_TitularDeCuenta
+entity "Usuario" as E_Usuario
+
+ACT_Visitante -- B_FormularioRegistro : 1 abre el formulario de registro
+B_FormularioRegistro -- C_MostrarFormularioRegistro : 1 pide unicamente username, alias y contrasena
+C_MostrarFormularioRegistro -- E_Visitante : 1 quien registra aun no tiene cuenta
+B_FormularioRegistro -- C_ValidarFormatoDeCampos : 2 envia username, alias y contrasena
+C_ValidarFormatoDeCampos -- C_VerificarUnicidadDeUsername : 2 formato valido
+C_VerificarUnicidadDeUsername -- E_TitularDeCuenta : 2 comprueba que ningun titular tenga tomado ese username
+C_VerificarUnicidadDeUsername -- C_CrearCuentaDeUsuario : 3 username disponible
+C_CrearCuentaDeUsuario -- E_Usuario : 3 crea la cuenta con contrasena hasheada y rol de usuario
+C_CrearCuentaDeUsuario -- C_ConfirmarRegistro : 3 cuenta creada
+C_ConfirmarRegistro -- B_FormularioRegistro : 3 confirma el alta sobre P-02; su estado de exito no esta declarado en DIS-00 (RA-01)
+C_ConfirmarRegistro -- B_PaginaInicioSesion : 3 invita a iniciar sesion, continua en CU-03
+C_VerificarUnicidadDeUsername -- C_MsgUsernameEnUso : FA-01 el username propuesto ya existe
+C_MsgUsernameEnUso -- B_FormularioRegistro : FA-01 solicita otro y retorna al paso 2
+C_ValidarFormatoDeCampos -- C_MsgEntradaInvalida : FE-01 campos incompletos o con formato incorrecto
+C_MsgEntradaInvalida -- B_FormularioRegistro : FE-01 retorna al paso 2; explica el rechazo sin crear la cuenta
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR02
+  <b>CU-02 - Registrar cuenta</b> (ECU-02 v2.0) - actor: Visitante (pasa a TitularDeCuenta al crear la cuenta)
+  PRE-01 el Visitante no tiene sesion activa. PRE-02 el username propuesto no esta en uso.
+
+  <b>Flujo basico</b>
+  1. El Visitante abre el formulario de registro. El sistema muestra el formulario con los
+     campos username, alias y contrasena.
+  2. El Visitante ingresa username, alias y contrasena y lo envia. El sistema valida el
+     formato de los campos y la unicidad del username.
+  3. El sistema crea la cuenta de Usuario con la contrasena protegida (hasheada) y el rol
+     de usuario asignado en el servidor; confirma el registro e invita a iniciar sesion.
+
+  <b>Cursos alternativos</b>
+  FA-01 Username ya en uso: en el paso 2 el username propuesto ya existe; el sistema indica
+        que esta en uso y solicita otro; el flujo retorna al paso 2.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Entrada invalida: campos incompletos o con formato incorrecto en el paso 2; el
+        sistema responde 400 y muestra el error de validacion sin crear la cuenta.
+
+  <b>Postcondicion</b> Se crea un Usuario con username, alias y contrasena hasheada, con
+  rol=user asignado en el servidor; aun sin Consentimiento ni CapsulaDePerfil asociados.
+  <b>Reglas</b> RN-04.1, RN-04.6, RNF-08, RNF-09, PRIV-R12.
+  <b>Traza</b> RF-20 -> OBJ-7. <b>Pantallas</b> P-02 propia; P-03 como destino de la invitacion.
+
+  <b>Notas de modelado</b>
+  - El hasheo de la contrasena (PRIV-R12) y la asignacion del rol en el servidor (RNF-08)
+    son restricciones sobre "Crear la cuenta de Usuario", no responsabilidades separadas:
+    nombrarlas en el objeto habria metido mecanismo y capa de despliegue en un diagrama
+    conceptual.
+  - <b>Hallazgo de trazabilidad (para la ECU / DIS-00):</b> el paso 3 confirma el registro,
+    pero DIS-00 §2 no declara ningun estado de exito para P-02 ("vacio / error 400 /
+    username en uso") ni para P-03. La confirmacion no tiene pantalla real inventariada.
+end note
+
+@enduml

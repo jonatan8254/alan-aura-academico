@@ -61,7 +61,7 @@
 ### Sesión y robustez (transversal)
 | ID | Requisito | Origen | Criterio de aceptación |
 |---|---|---|---|
-| RF-25 | Limitar la sesión de chat a **20 mensajes** de usuario, **1.500 caracteres** por mensaje y **350 tokens** de salida del LLM. | RN-02.8 | Alcanzado cualquier límite, la sesión responde con estado claro (no error crudo) e invita a cerrar/reiniciar. |
+| RF-25 | Limitar la sesión de chat a **20 mensajes** de usuario, **2.500 caracteres** por mensaje y **350 tokens** de salida del LLM. | RN-02.8 | Alcanzado cualquier límite, la sesión responde con estado claro (no error crudo) e invita a cerrar/reiniciar. |
 | RF-26 | Manejar **indisponibilidad, timeout (20 s), cuota (3/min, 30/día) y respuesta bloqueada** del LLM sin romper la interfaz. | plan §2.4/§4.13, RN-02.9, RC-07 | Ante cada fallo simulado (401/403/400/409/429/502/504), la UI muestra estado y permite reintento manual; no se rompe. |
 
 ## 2. Requisitos no funcionales (RNF)

@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="601" viewBox="0 0 1000 601" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>DR-02 — Analisis de robustez de CU-02 «Registrar cuenta»</title>
+<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-02 «Registrar cuenta». 1 actor(es), 2 objeto(s) tipo Borde, 7 Controlador(es) y 3 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
+
+<rect x="0" y="0" width="1000" height="601" fill="#FFFFFF"/>
+
+<text x="24" y="26" font-size="14" font-weight="500" fill="#2C2C2A">DR-02 · Analisis de robustez de CU-02 «Registrar cuenta»</text>
+<g font-size="11" font-weight="500" fill="#5F5E5A" text-anchor="middle">
+<text x="72" y="56">Actor</text>
+<text x="248" y="56">Objeto tipo Borde</text>
+<text x="562" y="56">Controlador</text>
+<text x="882" y="56">Entidad</text>
+</g>
+<line x1="24" y1="64" x2="965" y2="64" stroke="#B4B2A9" stroke-width="1"/>
+
+<g fill="none" stroke="#8a8a8a" stroke-width="1">
+<polyline points="84,98 124,98 124,91 150,91"/>
+<polyline points="345,85 352,85 352,92 425,92"/>
+<polyline points="700,105 744,105 744,98 800,98"/>
+<polyline points="345,96 364,96 364,140 425,140"/>
+<polyline points="700,150 708,150 708,189 700,189"/>
+<polyline points="700,197 752,197 752,150 800,150"/>
+<polyline points="700,204 715,204 715,242 700,242"/>
+<polyline points="700,252 760,252 760,200 800,200"/>
+<polyline points="700,261 722,261 722,323 700,323"/>
+<polyline points="345,101 376,101 376,297 425,297"/>
+<polyline points="345,157 388,157 388,310 425,310"/>
+<polyline points="700,212 729,212 729,375 700,375"/>
+<polyline points="345,106 400,106 400,362 425,362"/>
+<polyline points="700,159 708,159 708,436 700,436"/>
+<polyline points="345,112 352,112 352,418 425,418"/>
+</g>
+
+<g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="72.0" cy="92" r="9"/><line x1="72.0" y1="101" x2="72.0" y2="123"/><line x1="60.0" y1="110" x2="84.0" y2="110"/><line x1="72.0" y1="123" x2="62.0" y2="138"/><line x1="72.0" y1="123" x2="82.0" y2="138"/></g>
+<g font-size="11" text-anchor="middle" fill="#2C2C2A">
+<text x="72" y="154">Visitante</text>
+</g>
+<rect x="150" y="80" width="195" height="37" rx="4" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="160" y1="92.5" x2="160" y2="104.5"/><line x1="160" y1="98.5" x2="164" y2="98.5"/><circle cx="169" cy="98.5" r="5"/></g>
+<g font-size="11" fill="#0C447C">
+<text x="182" y="102">Registro (P-02)</text>
+</g>
+<rect x="150" y="131" width="195" height="52" rx="4" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="160" y1="151.0" x2="160" y2="163.0"/><line x1="160" y1="157.0" x2="164" y2="157.0"/><circle cx="169" cy="157.0" r="5"/></g>
+<g font-size="11" fill="#0C447C">
+<text x="182" y="153">Inicio de sesion de</text>
+<text x="182" y="168">usuario (P-03)</text>
+</g>
+<rect x="425" y="80" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="98.5" r="5.5"/><polyline points="440.5,91.0 444.5,93.3 440.2,95.7"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="102">Mostrar el formulario de registro</text>
+</g>
+<rect x="425" y="131" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="149.5" r="5.5"/><polyline points="440.5,142.0 444.5,144.3 440.2,146.7"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="153">Validar el formato de los campos</text>
+</g>
+<rect x="425" y="182" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="200.5" r="5.5"/><polyline points="440.5,193.0 444.5,195.3 440.2,197.7"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="204">Verificar la unicidad del username</text>
+</g>
+<rect x="425" y="233" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="251.5" r="5.5"/><polyline points="440.5,244.0 444.5,246.3 440.2,248.7"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="255">Crear la cuenta de Usuario</text>
+</g>
+<rect x="425" y="284" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="310.0" r="5.5"/><polyline points="440.5,302.5 444.5,304.8 440.2,307.2"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="306">Confirmar el registro e invitar a</text>
+<text x="457" y="321">iniciar sesion</text>
+</g>
+<rect x="425" y="350" width="275" height="37" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="368.5" r="5.5"/><polyline points="440.5,361.0 444.5,363.3 440.2,365.7"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="372">Indicar que el username ya esta en uso</text>
+</g>
+<rect x="425" y="401" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="427.0" r="5.5"/><polyline points="440.5,419.5 444.5,421.8 440.2,424.2"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="423">Mostrar el error de validacion de los</text>
+<text x="457" y="438">campos</text>
+</g>
+<rect x="800" y="80" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="97.0" r="5.5"/><line x1="810.5" y1="104.5" x2="823.5" y2="104.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="102">Visitante</text>
+</g>
+<rect x="800" y="131" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="148.0" r="5.5"/><line x1="810.5" y1="155.5" x2="823.5" y2="155.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="153">TitularDeCuenta</text>
+</g>
+<rect x="800" y="182" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="199.0" r="5.5"/><line x1="810.5" y1="206.5" x2="823.5" y2="206.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="204">Usuario</text>
+</g>
+
+<g font-size="9" text-anchor="middle">
+<rect x="90" y="91" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="98" y="101" fill="#5F5E5A">1</text>
+<rect x="351" y="78" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="88" fill="#5F5E5A">1</text>
+<rect x="706" y="98" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="108" fill="#5F5E5A">1</text>
+<rect x="351" y="104" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="114" fill="#5F5E5A">2</text>
+<rect x="706" y="142" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="152" fill="#5F5E5A">2</text>
+<rect x="706" y="190" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="200" fill="#5F5E5A">2</text>
+<rect x="706" y="212" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="222" fill="#5F5E5A">3</text>
+<rect x="706" y="244" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="254" fill="#5F5E5A">3</text>
+<rect x="706" y="269" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="279" fill="#5F5E5A">3</text>
+<rect x="351" y="124" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="134" fill="#5F5E5A">3</text>
+<rect x="351" y="150" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="160" fill="#5F5E5A">3</text>
+<rect x="706" y="175" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="185" fill="#5F5E5A">FA-01</text>
+<rect x="351" y="174" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="184" fill="#5F5E5A">FA-01</text>
+<rect x="706" y="122" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="132" fill="#5F5E5A">FE-01</text>
+<rect x="351" y="195" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="205" fill="#5F5E5A">FE-01</text>
+</g>
+
+<line x1="24" y1="479" x2="965" y2="479" stroke="#B4B2A9" stroke-width="1"/>
+<text x="24" y="495" font-size="11" font-weight="500" fill="#5F5E5A">Cursos alternativos y de excepcion</text>
+<g font-size="10">
+<rect x="24" y="507" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="516" text-anchor="middle" fill="#4A1B0C">FA-01</text><text x="74" y="516" fill="#5F5E5A">Username ya en uso</text>
+<rect x="504" y="507" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="516" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="554" y="516" fill="#5F5E5A">Entrada invalida</text>
+</g>
+
+<line x1="24" y1="533" x2="965" y2="533" stroke="#B4B2A9" stroke-width="1"/>
+<g font-size="11">
+<rect x="24" y="544" width="13" height="13" rx="2" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="23.5" y1="544.5" x2="23.5" y2="556.5"/><line x1="23.5" y1="550.5" x2="27.5" y2="550.5"/><circle cx="32.5" cy="550.5" r="5"/></g>
+<text x="44" y="554" fill="#5F5E5A">Objeto tipo Borde</text>
+<rect x="155.4" y="544" width="13" height="13" rx="2" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="161.9" cy="550.5" r="5.5"/><polyline points="160.4,543.0 164.4,545.3 160.1,547.7"/></g>
+<text x="175.4" y="554" fill="#5F5E5A">Controlador</text>
+<rect x="249.60000000000002" y="544" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="256.1" cy="549.0" r="5.5"/><line x1="249.60000000000002" y1="556.5" x2="262.6" y2="556.5"/></g>
+<text x="269.6" y="554" fill="#5F5E5A">Entidad</text>
+</g>
+<g font-size="11">
+<rect x="24" y="566" width="13" height="13" rx="2" fill="#FAECE7" stroke="#993C1D"/><text x="44" y="576" fill="#5F5E5A">Participa solo en un curso alternativo o de excepcion</text>
+<rect x="384" y="566" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/><text x="404" y="576" fill="#5F5E5A">Entidad descubierta, ausente de MD-01</text>
+<line x1="694" y1="573" x2="724" y2="573" stroke="#8a8a8a" stroke-width="1"/><text x="732" y="576" fill="#5F5E5A">Asociacion de comunicacion (sin direccion)</text>
+</g>
+</svg>

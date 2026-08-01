@@ -38,6 +38,9 @@
 | **NORM-01** | `04_trazabilidad/NORM-01_puente_normativo.md` | D6-bis (cláusulas verificadas), REQ-01 | TRZ-01, evaluación (fase 4) |
 | **TRZ-01** | `04_trazabilidad/TRZ-01_trazabilidad.md` | VIS-01, MV-01, REQ-01, SEG-01, NORM-01 | Verificación de cobertura, fase 2/4 |
 | **PLAN-01** | `05_plan/PLAN-01_plan_proyecto.md` | Todos los anteriores | Ejecución del subproyecto |
+| **RET-01** | `00_gobernanza/RET-01_retroalimentacion_docente.md` | Retroalimentación del profesor sobre la fase 2 | Revisión docente, informe académico |
+| **PDR-01** | `00_gobernanza/PDR-01_primera_pasada_correcciones.md` | RET-01, DR-00 (15 hallazgos), skills actualizadas | Revisión docente, informe académico, fases posteriores |
+| **DR-00…DR-14** | `07_casos_uso/robustez/` (`.puml` + `.svg` + certificados) | ECU-01…ECU-14, MD-01, DCU-01, DIS-00, SEG-01 | Diagramas de secuencia, casos de prueba |
 | **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, clases (fase 2+) |
 | **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez |
 | **ECU-00…10** | `07_casos_uso/especificaciones/ECU-00_indice…ECU-10_*.md` | DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato, plan | Robustez (DR), secuencia (DS), pruebas (CP) |
@@ -55,5 +58,5 @@ Fase 2 ICONIX: `MV-01 → MD-01 (dominio) → DCU-01 (casos de uso) → [especif
 - **NORM-01:** filas [V-cláusula] reusadas de D6-bis; 3 niveles de verificación.
 - **TRZ-01:** objetivo → actor → RF/RN → calidad → norma → prueba-planeada; cero huérfanos.
 - **MD-01:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); 11 clases, sin atributos/multiplicidades; validador 0/0.
-- **DCU-01:** diagrama de casos de uso PlantUML (skill `uml-use-case-diagram`); 4 actores, 10 casos de uso, 3 paquetes, 1 `<<extend>>`, 0 `<<include>>`; validador 0 errores.
+- **DCU-01 v2.1:** diagrama de casos de uso PlantUML (skill `uml-use-case-diagram`); **5 actores** (4 concretos + el rol general `Titular de cuenta`), **14 casos de uso**, 3 paquetes, **2 `<<extend>>` y 1 `<<include>>`**; validador 0 errores y compuertas de la skill superadas.
 - **PER-01:** inventario consolidado de persistencia (7 entidades del plan §4.14 + telemetría §4.15); marcas [E1]/[I2], reglas transversales `PER-T1…T7`, hallazgos abiertos `PER-H1…H4`. **No** es diseño de esquema: sin tipos, claves ni DDL.

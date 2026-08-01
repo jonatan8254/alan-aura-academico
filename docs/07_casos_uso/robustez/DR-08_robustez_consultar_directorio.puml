@@ -1,0 +1,89 @@
+@startuml
+' DR-08 — Analisis de robustez de CU-08 «Consultar directorio de usuarios»
+' v2.0 (PDR-01 fase D.4)
+' Insumos: ECU-08, MD-01, DCU-01, DIS-00 (P-14), PRIV-01, PER-01 (PER-H3 / SD-26)
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Administrador de plataforma" as ACT_Administrador
+
+boundary "Directorio de usuarios (P-14)" as B_DirectorioDeUsuarios
+
+control "Verificar la sesion y el rol de administrador" as C_VerificarSesionYRol
+control "Reunir los datos del directorio" as C_ReunirDatosDelDirectorio
+control "Derivar el estado de consentimiento vigente" as C_DerivarEstadoConsentimiento
+control "Restringir la consulta al conjunto minimo de campos" as C_RestringirAlConjuntoMinimo
+control "Informar que aun no hay cuentas registradas" as C_InformarDirectorioVacio #LightCoral
+control "Marcar la cuenta como sin consentimiento vigente" as C_MarcarSinConsentimiento #LightCoral
+control "Denegar el acceso por sesion ausente" as C_DenegarPorSesionAusente #LightCoral
+control "Denegar el acceso por rol insuficiente" as C_DenegarPorRol #LightCoral
+
+entity "Usuario" as E_Usuario
+entity "Consentimiento" as E_Consentimiento
+
+ACT_Administrador -- B_DirectorioDeUsuarios : 1 abre la vista de directorio en el panel administrativo
+ACT_Administrador -- B_DirectorioDeUsuarios : 2 revisa la lista del directorio
+B_DirectorioDeUsuarios -- C_VerificarSesionYRol : 1 solicita el directorio
+C_VerificarSesionYRol -- C_ReunirDatosDelDirectorio : 1 sesion con rol de administrador validado en servidor
+C_ReunirDatosDelDirectorio -- E_Usuario : 1 lee alias, identificador truncado, fecha de registro y onboarding
+C_ReunirDatosDelDirectorio -- C_DerivarEstadoConsentimiento : 1 calcula activo o sin consentimiento vigente
+C_DerivarEstadoConsentimiento -- E_Consentimiento : 1 deriva el estado del registro de consentimiento
+C_ReunirDatosDelDirectorio -- C_RestringirAlConjuntoMinimo : 1 aplica el conjunto minimo de RN-03.2
+C_RestringirAlConjuntoMinimo -- B_DirectorioDeUsuarios : 1 muestra el directorio minimo y excluye username completo, encuesta, capsula, mensajes y personaje
+C_ReunirDatosDelDirectorio -- C_InformarDirectorioVacio : FA-01 no hay ninguna cuenta registrada
+C_InformarDirectorioVacio -- B_DirectorioDeUsuarios : FA-01 finaliza mostrando el directorio vacio, sin error
+C_DerivarEstadoConsentimiento -- C_MarcarSinConsentimiento : FA-02 la cuenta no tiene consentimiento vigente
+C_MarcarSinConsentimiento -- B_DirectorioDeUsuarios : FA-02 continua; la fila se muestra con ese estado, sin excluirla
+C_VerificarSesionYRol -- C_DenegarPorSesionAusente : FE-01 sesion ausente
+C_DenegarPorSesionAusente -- B_DirectorioDeUsuarios : FE-01 termina; 401 y no muestra el directorio
+C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 autenticado pero sin rol de administrador
+C_DenegarPorRol -- B_DirectorioDeUsuarios : FE-02 termina; 403 y no muestra el directorio
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR08
+  <b>CU-08 - Consultar directorio de usuarios</b> (ECU-08) - actor: Administrador de plataforma
+  PRE-01 el Administrador tiene sesion con rol=admin validado en servidor, obtenida por el
+  acceso separado de administracion (CU-03).
+
+  <b>Flujo basico</b>
+  1. El Administrador abre la vista de directorio en el panel administrativo. El sistema
+     muestra el directorio minimo: alias, ID truncado, fecha de registro, estado en
+     {activo, sin consentimiento vigente} (derivado del Consentimiento) y si completo el
+     onboarding.
+  2. El Administrador revisa la lista del directorio. El sistema mantiene ocultos el username
+     completo, las respuestas de encuesta, la CapsulaDePerfil, los Mensajes y el personaje
+     elegido.
+
+  <b>Cursos alternativos</b>
+  No aplica: vista unica en el MVP. El directorio no pagina ni filtra (una sola vista, sin
+  variantes). La especificacion declara cero cursos alternativos.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Sesion ausente: quien intenta abrir el directorio no esta autenticado; 401; no
+        muestra el directorio.
+  FE-02 Rol insuficiente: autenticado pero sin rol=admin; 403; no muestra el directorio.
+
+  <b>Postcondicion</b> El Administrador ve la lista con campos minimos; no se expone
+  contenido individual.
+  <b>Reglas</b> RN-03.1, RN-03.2, RN-03.5, PRIV-R10, RNF-08.
+  <b>Traza</b> RF-15 -> OBJ-6. <b>Pantalla</b> P-14.
+
+  <b>Notas de modelado</b>
+  - <b>La prohibicion del paso 2 se dibuja en positivo:</b> RN-03.2 esta formulada como
+    "el directorio muestra unicamente...", de modo que recortar el conjunto de campos es
+    comportamiento real del sistema (una proyeccion), no una no-accion. La etiqueta de
+    salida restituye literalmente la exclusion del texto.
+  - <b>Alias de nomenclatura:</b> ECU-08 y PER-01 escriben `ConsentRecord` (nombre de
+    persistencia del plan §4.14); aqui se usa `Consentimiento`, que es el termino de MD-01.
+    Son el mismo concepto. Discrepancia reportada para unificar en la ECU.
+  - Las ramas FE-01/FE-02 retornan a P-14 porque DIS-00 §2 declara 401 y 403 entre los
+    estados clave de esa pantalla: el Borde representa la pantalla, no el contenido servido.
+  - Sin cursos alternativos: la ausencia es fiel al texto, que la declara explicitamente.
+end note
+
+@enduml
