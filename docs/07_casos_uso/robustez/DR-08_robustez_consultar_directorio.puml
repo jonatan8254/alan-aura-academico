@@ -1,5 +1,6 @@
 @startuml
 ' DR-08 — Analisis de robustez de CU-08 «Consultar directorio de usuarios»
+' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-08, MD-01, DCU-01, DIS-00 (P-14), PRIV-01, PER-01 (PER-H3 / SD-26)
 left to right direction
 skinparam linetype ortho
@@ -13,6 +14,8 @@ control "Verificar la sesion y el rol de administrador" as C_VerificarSesionYRol
 control "Reunir los datos del directorio" as C_ReunirDatosDelDirectorio
 control "Derivar el estado de consentimiento vigente" as C_DerivarEstadoConsentimiento
 control "Restringir la consulta al conjunto minimo de campos" as C_RestringirAlConjuntoMinimo
+control "Informar que aun no hay cuentas registradas" as C_InformarDirectorioVacio #LightCoral
+control "Marcar la cuenta como sin consentimiento vigente" as C_MarcarSinConsentimiento #LightCoral
 control "Denegar el acceso por sesion ausente" as C_DenegarPorSesionAusente #LightCoral
 control "Denegar el acceso por rol insuficiente" as C_DenegarPorRol #LightCoral
 
@@ -28,10 +31,14 @@ C_ReunirDatosDelDirectorio -- C_DerivarEstadoConsentimiento : 1 calcula activo o
 C_DerivarEstadoConsentimiento -- E_Consentimiento : 1 deriva el estado del registro de consentimiento
 C_ReunirDatosDelDirectorio -- C_RestringirAlConjuntoMinimo : 1 aplica el conjunto minimo de RN-03.2
 C_RestringirAlConjuntoMinimo -- B_DirectorioDeUsuarios : 1 muestra el directorio minimo y excluye username completo, encuesta, capsula, mensajes y personaje
+C_ReunirDatosDelDirectorio -- C_InformarDirectorioVacio : FA-01 no hay ninguna cuenta registrada
+C_InformarDirectorioVacio -- B_DirectorioDeUsuarios : FA-01 finaliza mostrando el directorio vacio, sin error
+C_DerivarEstadoConsentimiento -- C_MarcarSinConsentimiento : FA-02 la cuenta no tiene consentimiento vigente
+C_MarcarSinConsentimiento -- B_DirectorioDeUsuarios : FA-02 continua; la fila se muestra con ese estado, sin excluirla
 C_VerificarSesionYRol -- C_DenegarPorSesionAusente : FE-01 sesion ausente
-C_DenegarPorSesionAusente -- B_DirectorioDeUsuarios : FE-01 no muestra el directorio
+C_DenegarPorSesionAusente -- B_DirectorioDeUsuarios : FE-01 termina; 401 y no muestra el directorio
 C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 autenticado pero sin rol de administrador
-C_DenegarPorRol -- B_DirectorioDeUsuarios : FE-02 no muestra el directorio
+C_DenegarPorRol -- B_DirectorioDeUsuarios : FE-02 termina; 403 y no muestra el directorio
 
 legend right
   <b>Convencion de color</b>

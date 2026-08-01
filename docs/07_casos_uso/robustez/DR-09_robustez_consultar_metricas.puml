@@ -1,5 +1,6 @@
 @startuml
 ' DR-09 — Analisis de robustez de CU-09 «Consultar metricas de uso»
+' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-09, MD-01 (MetricaDeUso = vista derivada, NO clase), DCU-01, DIS-00 (P-15),
 '          PRIV-01, PER-01 (OperationalEvent, fuente de MET-07)
 left to right direction
@@ -14,12 +15,15 @@ control "Verificar la sesion y el rol de administrador" as C_VerificarSesionYRol
 control "Calcular los agregados vigentes de uso" as C_CalcularAgregados
 control "Calcular la tasa tecnica de exito y error" as C_CalcularTasaTecnica
 control "Restringir la vista a cifras agregadas" as C_RestringirACifrasAgregadas
+control "Mostrar los agregados en cero de la ventana" as C_MostrarVentanaSinActividad #LightCoral
+control "Senalar que el chatbot esta deshabilitado" as C_SenalarChatbotDeshabilitado #LightCoral
 control "Denegar el acceso por sesion ausente" as C_DenegarPorSesionAusente #LightCoral
 control "Denegar el acceso por rol insuficiente" as C_DenegarPorRol #LightCoral
 
 entity "Usuario" as E_Usuario
 entity "Conversacion" as E_Conversacion
-entity "EventoOperativo" as E_EventoOperativo #PaleGreen
+entity "EventoOperativo" as E_EventoOperativo
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot #LightCoral
 
 ACT_Administrador -- B_MetricasDeUso : 1 abre la vista de metricas de uso en el panel administrativo
 ACT_Administrador -- B_MetricasDeUso : 2 revisa las cifras agregadas mostradas
@@ -31,15 +35,19 @@ C_CalcularAgregados -- C_CalcularTasaTecnica : 1 calcula peticiones correctas ma
 C_CalcularTasaTecnica -- E_EventoOperativo : 1 lee los eventos operativos sin contenido
 C_CalcularAgregados -- C_RestringirACifrasAgregadas : 1 aplica la restriccion de agregados de RN-03.3
 C_RestringirACifrasAgregadas -- B_MetricasDeUso : 1 muestra los agregados vigentes y excluye todo conteo o contenido por usuario
+C_CalcularAgregados -- C_MostrarVentanaSinActividad : FA-01 la ventana de siete dias no tuvo actividad
+C_MostrarVentanaSinActividad -- B_MetricasDeUso : FA-01 continua; muestra ceros como cifra valida, no como error
+C_RestringirACifrasAgregadas -- C_SenalarChatbotDeshabilitado : FA-02 el chatbot esta deshabilitado
+C_SenalarChatbotDeshabilitado -- E_DisponibilidadDelChatbot : FA-02 consulta el estado global
+C_SenalarChatbotDeshabilitado -- B_MetricasDeUso : FA-02 continua; senala el estado junto a los agregados
 C_VerificarSesionYRol -- C_DenegarPorSesionAusente : FE-01 sesion ausente
-C_DenegarPorSesionAusente -- B_MetricasDeUso : FE-01 no muestra ninguna cifra
+C_DenegarPorSesionAusente -- B_MetricasDeUso : FE-01 termina; 401 y no muestra ninguna cifra
 C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 rol validado distinto de administrador
-C_DenegarPorRol -- B_MetricasDeUso : FE-02 no muestra ninguna cifra
+C_DenegarPorRol -- B_MetricasDeUso : FE-02 termina; 403 y no muestra ninguna cifra
 
 legend right
   <b>Convencion de color</b>
   #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
-  #PaleGreen = entidad descubierta en robustez, ausente de MD-01 (ver delta de object discovery)
 endlegend
 
 note as N_DR09

@@ -1,5 +1,6 @@
 @startuml
 ' DR-10 — Analisis de robustez de CU-10 «Habilitar o deshabilitar el chatbot»
+' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-10, MD-01, DCU-01, DIS-00 (P-16; destino P-04), PER-01 (AdministrativeAction), REQ-01
 left to right direction
 skinparam linetype ortho
@@ -18,6 +19,8 @@ control "Cambiar el estado global del chatbot" as C_CambiarEstadoGlobal
 control "Registrar la accion administrativa" as C_RegistrarAccion
 control "Aplicar el nuevo estado a las conversaciones" as C_AplicarNuevoEstado
 control "Cancelar el cambio" as C_CancelarCambio #LightCoral
+control "Informar que el estado elegido ya rige" as C_InformarEstadoYaVigente #LightCoral
+control "Rechazar la confirmacion mal formada" as C_RechazarConfirmacionInvalida #LightCoral
 control "Solicitar el reingreso por sesion ausente" as C_SolicitarReingreso #LightCoral
 control "Denegar el acceso por rol insuficiente" as C_DenegarPorRol #LightCoral
 
@@ -44,11 +47,16 @@ C_CambiarEstadoGlobal -- C_AplicarNuevoEstado : 3 aplica el nuevo estado de inme
 C_AplicarNuevoEstado -- B_ControlDisponibilidad : 3 refleja el estado vigente en el panel
 C_AplicarNuevoEstado -- E_Conversacion : 4 deshabilitado, ningun usuario inicia conversacion; habilitado, CU-06 vuelve a estar disponible
 B_DialogoConfirmacion -- C_CancelarCambio : FA-02 el Administrador no confirma
-C_CancelarCambio -- B_ControlDisponibilidad : FA-02 vuelve al paso 1 y el estado no cambia
+C_CancelarCambio -- B_ControlDisponibilidad : FA-02 cancela y vuelve al paso 1; el estado no cambia
+C_SolicitarConfirmacion -- C_InformarEstadoYaVigente : FA-03 el estado elegido ya es el vigente
+C_InformarEstadoYaVigente -- E_DisponibilidadDelChatbot : FA-03 contrasta con el estado global
+C_InformarEstadoYaVigente -- B_ControlDisponibilidad : FA-03 finaliza sin cambiar nada ni registrar accion
+C_CambiarEstadoGlobal -- C_RechazarConfirmacionInvalida : FE-03 la confirmacion llega mal formada
+C_RechazarConfirmacionInvalida -- B_ControlDisponibilidad : FE-03 vuelve al paso 1; 400 y el estado no cambia
 C_VerificarSesionYRol -- C_SolicitarReingreso : FE-01 sesion ausente
-C_SolicitarReingreso -- B_LoginAdmin : FE-01 solicita reingresar por CU-03, estado sin cambios
+C_SolicitarReingreso -- B_LoginAdmin : FE-01 termina; reingresar por CU-03, estado sin cambios
 C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 rol no administrador aunque manipule el cliente
-C_DenegarPorRol -- B_LoginAdmin : FE-02 sin acceso, redireccion segura
+C_DenegarPorRol -- B_LoginAdmin : FE-02 termina; sin acceso, redireccion segura
 
 legend right
   <b>Convencion de color</b>

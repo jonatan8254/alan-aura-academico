@@ -1,5 +1,6 @@
 @startuml
-' DR-02 (v2.0, PDR-01 fase D.4) — Analisis de robustez de CU-02 «Registrar cuenta»
+' DR-02 — Analisis de robustez de CU-02 «Registrar cuenta»
+' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-02 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-02; continuacion P-03), REQ-01, PRIV-01
 left to right direction
 skinparam linetype ortho

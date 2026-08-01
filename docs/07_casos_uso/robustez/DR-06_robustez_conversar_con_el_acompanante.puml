@@ -1,5 +1,6 @@
 @startuml
-' DR-06 (v2.0, PDR-01 fase D.4) — Analisis de robustez de CU-06 «Conversar con el acompanante»
+' DR-06 — Analisis de robustez de CU-06 «Conversar con el acompanante»
+' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-06, MD-01 (incl. §3.9: el LLM vive en robustez como objeto frontera),
 '          DCU-01, DIS-00 (P-10, P-11), SEG-01, PRIV-01, PER-01, contrato conversacional
 left to right direction
@@ -46,7 +47,7 @@ entity "Personaje" as E_Personaje
 entity "CapsulaDePerfil" as E_CapsulaDePerfil
 entity "Consentimiento" as E_Consentimiento
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
-entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario #PaleGreen
+entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario
 entity "EventoOperativo" as E_EventoOperativo
 
 ACT_Usuario -- B_InterfazDeChat : 1 elige personaje e inicia la conversacion
@@ -112,7 +113,6 @@ C_DesviarADerivacion -- B_InterfazDeChat : FE-08 devuelve safety_fallback, CU-07
 legend right
   <b>Convencion de color</b>
   #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
-  #PaleGreen = entidad descubierta en robustez, ausente de MD-01 (ver delta de object discovery)
 endlegend
 
 note as N_DR06

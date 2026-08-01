@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genera los SVG acompanantes de los diagramas de robustez DR-01..DR-10.
+"""Genera los SVG acompanantes de los diagramas de robustez DR-01..DR-14.
 
 Los `.puml` son la FUENTE DE VERDAD (los valida `validate_robustness_puml.py`).
 Este script produce la VISTA DERIVADA en SVG, con el mismo sistema visual que
@@ -8,7 +8,7 @@ Este script produce la VISTA DERIVADA en SVG, con el mismo sistema visual que
 `<defs>` ni `<style>` ni `<marker>`, agrupacion por color en triadas
 (relleno pastel / borde saturado / texto oscuro) y leyenda de notacion.
 
-Por que un generador y no 10 SVG a mano: son 179 elementos y ~260 arcos en 10
+Por que un generador y no 14 SVG a mano: son 259 elementos y ~350 arcos en 14
 diagramas; un generador garantiza que los 10 comparten exactamente la misma
 retica y hace el resultado reproducible, igual que `grafo/scripts/`.
 
@@ -573,12 +573,12 @@ def main(argv: list[str]) -> int:
     total = sum(tot.values())
     print(f"\nTOTAL: {total} elementos "
           f"({tot['actor']}/{tot['boundary']}/{tot['control']}/{tot['entity']})")
-    esperado = (12, 31, 102, 34)
+    esperado = (15, 38, 148, 58)
     real = (tot["actor"], tot["boundary"], tot["control"], tot["entity"])
-    if real == esperado and total == 179:
-        print("Correspondencia con los .puml: OK (179 elementos, 12/31/102/34)")
+    if real == esperado and total == 259:
+        print("Correspondencia con los .puml: OK (259 elementos, 15/38/148/58)")
         return 0
-    print(f"AVISO: se esperaba 179 elementos {esperado} y se obtuvo {total} {real}")
+    print(f"AVISO: se esperaba 259 elementos {esperado} y se obtuvo {total} {real}")
     return 1
 
 

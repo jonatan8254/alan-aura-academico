@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="601" viewBox="0 0 1000 601" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title>DR-02 — Analisis de robustez de CU-02 «Registrar cuenta»</title>
-<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-02 «Registrar cuenta». 1 actor(es), 2 objeto(s) tipo Borde, 7 Controlador(es) y 1 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
+<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-02 «Registrar cuenta». 1 actor(es), 2 objeto(s) tipo Borde, 7 Controlador(es) y 3 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
 
 <rect x="0" y="0" width="1000" height="601" fill="#FFFFFF"/>
 
@@ -15,12 +15,13 @@
 
 <g fill="none" stroke="#8a8a8a" stroke-width="1">
 <polyline points="84,98 124,98 124,91 150,91"/>
-<polyline points="345,85 352,85 352,98 425,98"/>
+<polyline points="345,85 352,85 352,92 425,92"/>
+<polyline points="700,105 744,105 744,98 800,98"/>
 <polyline points="345,96 364,96 364,140 425,140"/>
-<polyline points="700,150 708,150 708,197 700,197"/>
-<polyline points="700,189 744,189 744,92 800,92"/>
-<polyline points="700,204 715,204 715,252 700,252"/>
-<polyline points="700,242 752,242 752,105 800,105"/>
+<polyline points="700,150 708,150 708,189 700,189"/>
+<polyline points="700,197 752,197 752,150 800,150"/>
+<polyline points="700,204 715,204 715,242 700,242"/>
+<polyline points="700,252 760,252 760,200 800,200"/>
 <polyline points="700,261 722,261 722,323 700,323"/>
 <polyline points="345,101 376,101 376,297 425,297"/>
 <polyline points="345,157 388,157 388,310 425,310"/>
@@ -85,23 +86,34 @@
 <rect x="800" y="80" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
 <g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="97.0" r="5.5"/><line x1="810.5" y1="104.5" x2="823.5" y2="104.5"/></g>
 <g font-size="11" fill="#26215C">
-<text x="832" y="102">Usuario</text>
+<text x="832" y="102">Visitante</text>
+</g>
+<rect x="800" y="131" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="148.0" r="5.5"/><line x1="810.5" y1="155.5" x2="823.5" y2="155.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="153">TitularDeCuenta</text>
+</g>
+<rect x="800" y="182" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="199.0" r="5.5"/><line x1="810.5" y1="206.5" x2="823.5" y2="206.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="204">Usuario</text>
 </g>
 
 <g font-size="9" text-anchor="middle">
 <rect x="90" y="91" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="98" y="101" fill="#5F5E5A">1</text>
 <rect x="351" y="78" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="88" fill="#5F5E5A">1</text>
+<rect x="706" y="98" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="108" fill="#5F5E5A">1</text>
 <rect x="351" y="104" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="114" fill="#5F5E5A">2</text>
 <rect x="706" y="142" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="152" fill="#5F5E5A">2</text>
-<rect x="706" y="182" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="192" fill="#5F5E5A">2</text>
-<rect x="706" y="197" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="207" fill="#5F5E5A">3</text>
-<rect x="706" y="235" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="245" fill="#5F5E5A">3</text>
-<rect x="706" y="254" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="264" fill="#5F5E5A">3</text>
+<rect x="706" y="190" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="200" fill="#5F5E5A">2</text>
+<rect x="706" y="212" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="222" fill="#5F5E5A">3</text>
+<rect x="706" y="244" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="254" fill="#5F5E5A">3</text>
+<rect x="706" y="269" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="279" fill="#5F5E5A">3</text>
 <rect x="351" y="124" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="134" fill="#5F5E5A">3</text>
 <rect x="351" y="150" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="160" fill="#5F5E5A">3</text>
-<rect x="706" y="220" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="230" fill="#5F5E5A">FA-01</text>
+<rect x="706" y="175" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="185" fill="#5F5E5A">FA-01</text>
 <rect x="351" y="174" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="184" fill="#5F5E5A">FA-01</text>
-<rect x="706" y="167" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="177" fill="#5F5E5A">FE-01</text>
+<rect x="706" y="122" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="132" fill="#5F5E5A">FE-01</text>
 <rect x="351" y="195" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="205" fill="#5F5E5A">FE-01</text>
 </g>
 

@@ -1,28 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="632" viewBox="0 0 1000 632" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title>DR-01 — Analisis de robustez de CU-01 «Consultar presentacion del servicio»</title>
-<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-01 «Consultar presentacion del servicio». 1 actor(es), 3 objeto(s) tipo Borde, 5 Controlador(es) y 0 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
+<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-01 «Consultar presentacion del servicio». 1 actor(es), 3 objeto(s) tipo Borde, 7 Controlador(es) y 1 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
 
-<rect x="0" y="0" width="1000" height="500" fill="#FFFFFF"/>
+<rect x="0" y="0" width="1000" height="632" fill="#FFFFFF"/>
 
 <text x="24" y="26" font-size="14" font-weight="500" fill="#2C2C2A">DR-01 · Analisis de robustez de CU-01 «Consultar presentacion del servicio»</text>
 <g font-size="11" font-weight="500" fill="#5F5E5A" text-anchor="middle">
 <text x="72" y="56">Actor</text>
 <text x="248" y="56">Objeto tipo Borde</text>
 <text x="562" y="56">Controlador</text>
+<text x="882" y="56">Entidad</text>
 </g>
 <line x1="24" y1="64" x2="965" y2="64" stroke="#B4B2A9" stroke-width="1"/>
 
 <g fill="none" stroke="#8a8a8a" stroke-width="1">
-<polyline points="84,98 124,98 124,95 150,95"/>
-<polyline points="345,87 352,87 352,89 425,89"/>
-<polyline points="700,98 708,98 708,148 700,148"/>
-<polyline points="345,102 364,102 364,166 425,166"/>
-<polyline points="345,110 376,110 376,209 425,209"/>
-<polyline points="345,117 388,117 388,260 425,260"/>
-<polyline points="345,164 400,164 400,222 425,222" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="345,223 352,223 352,273 425,273" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,108 715,108 715,311 700,311"/>
-<polyline points="345,125 364,125 364,324 425,324"/>
+<polyline points="84,98 124,98 124,93 150,93"/>
+<polyline points="345,86 352,86 352,95 425,95"/>
+<polyline points="700,102 708,102 708,148 700,148"/>
+<polyline points="345,100 364,100 364,166 425,166"/>
+<polyline points="345,106 376,106 376,209 425,209"/>
+<polyline points="345,112 388,112 388,260 425,260"/>
+<polyline points="345,158 400,158 400,222 425,222" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="345,214 352,214 352,273 425,273" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,87 744,87 744,92 800,92"/>
+<polyline points="345,119 364,119 364,334 425,334"/>
+<polyline points="700,316 752,316 752,105 800,105"/>
+<polyline points="345,232 376,232 376,400 425,400" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="345,171 388,171 388,382 425,382" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,110 715,110 715,443 700,443"/>
+<polyline points="345,126 400,126 400,456 425,456"/>
 </g>
 
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="72.0" cy="92" r="9"/><line x1="72.0" y1="101" x2="72.0" y2="123"/><line x1="60.0" y1="110" x2="84.0" y2="110"/><line x1="72.0" y1="123" x2="62.0" y2="138"/><line x1="72.0" y1="123" x2="82.0" y2="138"/></g>
@@ -67,48 +73,70 @@
 <g font-size="11" fill="#4A1B0C">
 <text x="457" y="270">Dirigir al acceso de inicio de sesion</text>
 </g>
-<rect x="425" y="299" width="275" height="37" rx="4" fill="#FAECE7" stroke="#993C1D"/>
-<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="317.5" r="5.5"/><polyline points="440.5,310.0 444.5,312.3 440.2,314.7"/></g>
+<rect x="425" y="299" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="325.0" r="5.5"/><polyline points="440.5,317.5 444.5,319.8 440.2,322.2"/></g>
 <g font-size="11" fill="#4A1B0C">
-<text x="457" y="321">Mostrar el estado de indisponibilidad</text>
+<text x="457" y="321">Dejar la presentacion sin crear sesion</text>
+<text x="457" y="336">ni rastro</text>
+</g>
+<rect x="425" y="365" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="391.0" r="5.5"/><polyline points="440.5,383.5 444.5,385.8 440.2,388.2"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="387">Exigir cuenta para alcanzar el</text>
+<text x="457" y="402">acompanamiento</text>
+</g>
+<rect x="425" y="431" width="275" height="37" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="449.5" r="5.5"/><polyline points="440.5,442.0 444.5,444.3 440.2,446.7"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="453">Mostrar el estado de indisponibilidad</text>
+</g>
+<rect x="800" y="80" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="97.0" r="5.5"/><line x1="810.5" y1="104.5" x2="823.5" y2="104.5"/></g>
+<g font-size="11" fill="#26215C">
+<text x="832" y="102">Visitante</text>
 </g>
 
 <g font-size="9" text-anchor="middle">
 <rect x="90" y="91" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="98" y="101" fill="#5F5E5A">1</text>
 <rect x="351" y="80" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="90" fill="#5F5E5A">1</text>
-<rect x="706" y="92" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="102" fill="#5F5E5A">2</text>
-<rect x="351" y="95" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="105" fill="#5F5E5A">2</text>
-<rect x="351" y="118" width="44" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="373" y="128" fill="#5F5E5A">3 FA-01</text>
-<rect x="351" y="140" width="44" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="373" y="150" fill="#5F5E5A">3 FA-02</text>
-<rect x="351" y="158" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="168" fill="#4A1B0C">FA-01</text>
-<rect x="351" y="216" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="226" fill="#4A1B0C">FA-02</text>
-<rect x="706" y="116" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="126" fill="#5F5E5A">FE-01</text>
-<rect x="351" y="178" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="188" fill="#5F5E5A">FE-01</text>
+<rect x="706" y="95" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="105" fill="#5F5E5A">2</text>
+<rect x="351" y="108" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="118" fill="#5F5E5A">2</text>
+<rect x="351" y="129" width="44" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="373" y="139" fill="#5F5E5A">3 FA-01</text>
+<rect x="351" y="150" width="44" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="373" y="160" fill="#5F5E5A">3 FA-02</text>
+<rect x="351" y="166" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="176" fill="#4A1B0C">FA-01</text>
+<rect x="351" y="207" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="217" fill="#4A1B0C">FA-02</text>
+<rect x="706" y="80" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="90" fill="#5F5E5A">1</text>
+<rect x="351" y="187" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="197" fill="#5F5E5A">FA-03</text>
+<rect x="706" y="309" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="319" fill="#5F5E5A">FA-03</text>
+<rect x="351" y="225" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="235" fill="#4A1B0C">FE-02</text>
+<rect x="351" y="239" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="249" fill="#4A1B0C">FE-02</text>
+<rect x="706" y="118" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="128" fill="#5F5E5A">FE-01</text>
+<rect x="351" y="254" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="264" fill="#5F5E5A">FE-01</text>
 </g>
 
-<line x1="24" y1="362" x2="965" y2="362" stroke="#B4B2A9" stroke-width="1"/>
-<text x="24" y="378" font-size="11" font-weight="500" fill="#5F5E5A">Cursos alternativos y de excepcion</text>
+<line x1="24" y1="494" x2="965" y2="494" stroke="#B4B2A9" stroke-width="1"/>
+<text x="24" y="510" font-size="11" font-weight="500" fill="#5F5E5A">Cursos alternativos y de excepcion</text>
 <g font-size="10">
-<rect x="24" y="390" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="399" text-anchor="middle" fill="#4A1B0C">FA-01</text><text x="74" y="399" fill="#5F5E5A">Continuar a registro</text>
-<rect x="504" y="390" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="399" text-anchor="middle" fill="#4A1B0C">FA-02</text><text x="554" y="399" fill="#5F5E5A">Continuar a inicio de sesion</text>
-<rect x="24" y="406" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="415" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="74" y="415" fill="#5F5E5A">Pagina de presentacion no disponible</text>
+<rect x="24" y="522" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="531" text-anchor="middle" fill="#4A1B0C">FA-01</text><text x="74" y="531" fill="#5F5E5A">Continuar a registro</text>
+<rect x="504" y="522" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="531" text-anchor="middle" fill="#4A1B0C">FA-02</text><text x="554" y="531" fill="#5F5E5A">Continuar a inicio de sesion</text>
+<rect x="24" y="538" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="547" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="74" y="547" fill="#5F5E5A">Pagina de presentacion no disponible</text>
 </g>
 
-<line x1="24" y1="432" x2="965" y2="432" stroke="#B4B2A9" stroke-width="1"/>
+<line x1="24" y1="564" x2="965" y2="564" stroke="#B4B2A9" stroke-width="1"/>
 <g font-size="11">
-<rect x="24" y="443" width="13" height="13" rx="2" fill="#E6F1FB" stroke="#185FA5"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="23.5" y1="443.5" x2="23.5" y2="455.5"/><line x1="23.5" y1="449.5" x2="27.5" y2="449.5"/><circle cx="32.5" cy="449.5" r="5"/></g>
-<text x="44" y="453" fill="#5F5E5A">Objeto tipo Borde</text>
-<rect x="155.4" y="443" width="13" height="13" rx="2" fill="#E1F5EE" stroke="#0F6E56"/>
-<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="161.9" cy="449.5" r="5.5"/><polyline points="160.4,442.0 164.4,444.3 160.1,446.7"/></g>
-<text x="175.4" y="453" fill="#5F5E5A">Controlador</text>
-<rect x="249.60000000000002" y="443" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="256.1" cy="448.0" r="5.5"/><line x1="249.60000000000002" y1="455.5" x2="262.6" y2="455.5"/></g>
-<text x="269.6" y="453" fill="#5F5E5A">Entidad</text>
+<rect x="24" y="575" width="13" height="13" rx="2" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="23.5" y1="575.5" x2="23.5" y2="587.5"/><line x1="23.5" y1="581.5" x2="27.5" y2="581.5"/><circle cx="32.5" cy="581.5" r="5"/></g>
+<text x="44" y="585" fill="#5F5E5A">Objeto tipo Borde</text>
+<rect x="155.4" y="575" width="13" height="13" rx="2" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="161.9" cy="581.5" r="5.5"/><polyline points="160.4,574.0 164.4,576.3 160.1,578.7"/></g>
+<text x="175.4" y="585" fill="#5F5E5A">Controlador</text>
+<rect x="249.60000000000002" y="575" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="256.1" cy="580.0" r="5.5"/><line x1="249.60000000000002" y1="587.5" x2="262.6" y2="587.5"/></g>
+<text x="269.6" y="585" fill="#5F5E5A">Entidad</text>
 </g>
 <g font-size="11">
-<rect x="24" y="465" width="13" height="13" rx="2" fill="#FAECE7" stroke="#993C1D"/><text x="44" y="475" fill="#5F5E5A">Participa solo en un curso alternativo o de excepcion</text>
-<rect x="384" y="465" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/><text x="404" y="475" fill="#5F5E5A">Entidad descubierta, ausente de MD-01</text>
-<line x1="694" y1="472" x2="724" y2="472" stroke="#8a8a8a" stroke-width="1"/><text x="732" y="475" fill="#5F5E5A">Asociacion de comunicacion (sin direccion)</text>
+<rect x="24" y="597" width="13" height="13" rx="2" fill="#FAECE7" stroke="#993C1D"/><text x="44" y="607" fill="#5F5E5A">Participa solo en un curso alternativo o de excepcion</text>
+<rect x="384" y="597" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/><text x="404" y="607" fill="#5F5E5A">Entidad descubierta, ausente de MD-01</text>
+<line x1="694" y1="604" x2="724" y2="604" stroke="#8a8a8a" stroke-width="1"/><text x="732" y="607" fill="#5F5E5A">Asociacion de comunicacion (sin direccion)</text>
 </g>
 </svg>

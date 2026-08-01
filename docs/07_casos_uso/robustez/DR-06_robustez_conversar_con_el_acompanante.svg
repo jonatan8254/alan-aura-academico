@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1869" viewBox="0 0 1000 1869" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title>DR-06 — Analisis de robustez de CU-06 «Conversar con el acompanante»</title>
-<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-06 «Conversar con el acompanante». 2 actor(es), 3 objeto(s) tipo Borde, 25 Controlador(es) y 8 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
+<desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-06 «Conversar con el acompanante». 2 actor(es), 4 objeto(s) tipo Borde, 25 Controlador(es) y 8 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
 
 <rect x="0" y="0" width="1000" height="1869" fill="#FFFFFF"/>
 
@@ -14,66 +14,65 @@
 <line x1="24" y1="64" x2="965" y2="64" stroke="#B4B2A9" stroke-width="1"/>
 
 <g fill="none" stroke="#8a8a8a" stroke-width="1">
-<polyline points="84,98 124,98 124,93 150,93"/>
+<polyline points="84,98 124,98 124,94 150,94"/>
 <polyline points="84,186 131,186 131,156 150,156"/>
-<polyline points="345,84 352,84 352,89 425,89"/>
-<polyline points="700,106 708,106 708,164 700,164"/>
-<polyline points="700,155 744,155 744,98 800,98"/>
-<polyline points="700,174 715,174 715,212 700,212"/>
+<polyline points="345,85 352,85 352,89 425,89"/>
+<polyline points="700,106 708,106 708,161 700,161"/>
+<polyline points="700,153 744,153 744,92 800,92"/>
+<polyline points="700,168 715,168 715,212 700,212"/>
+<polyline points="700,176 722,176 722,265 700,265"/>
+<polyline points="345,246 364,246 364,283 425,283" stroke="#993C1D" stroke-dasharray="5 3"/>
 <polyline points="700,204 752,204 752,150 800,150"/>
-<polyline points="700,219 722,219 722,279 700,279"/>
-<polyline points="700,269 760,269 760,191 800,191"/>
-<polyline points="700,290 768,290 768,242 800,242"/>
-<polyline points="345,97 364,97 364,258 425,258"/>
-<polyline points="345,89 376,89 376,97 425,97"/>
-<polyline points="345,102 388,102 388,321 425,321"/>
-<polyline points="700,336 776,336 776,291 800,291"/>
-<polyline points="700,344 729,344 729,390 700,390"/>
-<polyline points="700,401 784,401 784,354 800,354"/>
-<polyline points="700,411 708,411 708,467 700,467"/>
-<polyline points="700,456 744,456 744,299 800,299"/>
-<polyline points="700,477 715,477 715,537 700,537"/>
-<polyline points="700,530 752,530 752,404 800,404"/>
-<polyline points="700,518 760,518 760,252 800,252"/>
-<polyline points="700,524 768,524 768,306 800,306"/>
-<polyline points="700,543 722,543 722,584 700,584"/>
-<polyline points="345,167 400,167 400,573 425,573"/>
-<polyline points="700,594 729,594 729,646 700,646"/>
-<polyline points="345,177 352,177 352,705 425,705"/>
-<polyline points="700,716 708,716 708,776 700,776"/>
-<polyline points="345,110 364,110 364,768 425,768"/>
-<polyline points="345,106 376,106 376,329 425,329"/>
-<polyline points="345,115 388,115 388,822 425,822"/>
-<polyline points="700,833 776,833 776,200 800,200"/>
-<polyline points="700,843 784,843 784,314 800,314"/>
-<polyline points="700,854 715,854 715,913 700,913"/>
-<polyline points="700,895 744,895 744,456 800,456"/>
-<polyline points="345,119 400,119 400,957 425,957"/>
-<polyline points="700,970 752,970 752,261 800,261"/>
-<polyline points="700,983 722,983 722,351 700,351"/>
-<polyline points="700,783 729,783 729,1052 700,1052"/>
-<polyline points="700,726 708,726 708,1041 700,1041"/>
-<polyline points="700,1031 760,1031 760,210 800,210"/>
-<polyline points="345,123 352,123 352,1020 425,1020"/>
-<polyline points="700,737 715,737 715,1093 700,1093"/>
-<polyline points="700,1111 722,1111 722,791 700,791"/>
-<polyline points="700,115 729,115 729,1159 700,1159"/>
-<polyline points="345,219 364,219 364,1177 425,1177" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,123 708,123 708,1225 700,1225"/>
-<polyline points="345,227 376,227 376,1243 425,1243" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,359 715,359 715,1299 700,1299"/>
-<polyline points="345,234 388,234 388,1286 425,1286" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,227 722,227 722,1342 700,1342"/>
-<polyline points="345,242 400,242 400,1360 425,1360" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,422 729,422 729,1426 700,1426"/>
-<polyline points="345,249 352,249 352,1408 425,1408" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,605 708,605 708,1483 700,1483"/>
+<polyline points="700,219 729,219 729,345 700,345"/>
+<polyline points="700,335 760,335 760,191 800,191"/>
+<polyline points="700,356 768,356 768,245 800,245"/>
+<polyline points="345,99 376,99 376,324 425,324"/>
+<polyline points="345,89 388,89 388,97 425,97"/>
+<polyline points="345,104 400,104 400,389 425,389"/>
+<polyline points="700,406 776,406 776,291 800,291"/>
+<polyline points="700,415 708,415 708,467 700,467"/>
+<polyline points="700,456 784,456 784,354 800,354"/>
+<polyline points="700,477 715,477 715,533 700,533"/>
+<polyline points="700,522 744,522 744,299 800,299"/>
+<polyline points="700,543 722,543 722,604 700,604"/>
+<polyline points="700,599 752,599 752,404 800,404"/>
+<polyline points="700,589 760,589 760,258 800,258"/>
+<polyline points="700,594 768,594 768,306 800,306"/>
+<polyline points="700,583 776,583 776,105 800,105"/>
+<polyline points="700,610 729,610 729,650 700,650"/>
+<polyline points="345,167 352,167 352,639 425,639"/>
+<polyline points="700,660 708,660 708,712 700,712"/>
+<polyline points="345,177 364,177 364,774 425,774"/>
+<polyline points="700,787 715,787 715,842 700,842"/>
+<polyline points="345,113 376,113 376,834 425,834"/>
+<polyline points="345,108 388,108 388,397 425,397"/>
+<polyline points="345,118 400,118 400,888 425,888"/>
+<polyline points="700,899 784,899 784,200 800,200"/>
+<polyline points="700,909 744,909 744,314 800,314"/>
+<polyline points="700,920 722,920 722,979 700,979"/>
+<polyline points="700,961 752,961 752,456 800,456"/>
+<polyline points="700,849 729,849 729,1049 700,1049"/>
+<polyline points="700,1036 760,1036 760,210 800,210"/>
+<polyline points="345,123 352,123 352,1023 425,1023"/>
+<polyline points="700,800 708,800 708,1093 700,1093"/>
+<polyline points="700,1111 715,1111 715,857 700,857"/>
+<polyline points="700,115 722,115 722,1159 700,1159"/>
+<polyline points="345,300 364,300 364,1177 425,1177" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,123 729,123 729,1225 700,1225"/>
+<polyline points="345,308 376,308 376,1243 425,1243" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,423 708,423 708,1299 700,1299"/>
+<polyline points="345,315 388,315 388,1286 425,1286" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,227 715,227 715,1342 700,1342"/>
+<polyline points="345,323 400,323 400,1360 425,1360" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,488 722,488 722,1426 700,1426"/>
+<polyline points="345,330 352,330 352,1408 425,1408" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,671 729,671 729,1483 700,1483"/>
 <polyline points="345,188 364,188 364,1470 425,1470"/>
-<polyline points="700,1496 715,1496 715,1562 700,1562" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,664 722,664 722,1549 700,1549"/>
-<polyline points="345,257 376,257 376,1536 425,1536" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,488 729,488 729,1624 700,1624"/>
-<polyline points="345,128 388,128 388,1606 425,1606"/>
+<polyline points="700,1496 708,1496 708,1562 700,1562" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,730 715,730 715,1549 700,1549"/>
+<polyline points="345,338 376,338 376,1536 425,1536" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,554 722,554 722,1624 700,1624"/>
+<polyline points="345,127 388,127 388,1606 425,1606"/>
 </g>
 
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="72.0" cy="92" r="9"/><line x1="72.0" y1="101" x2="72.0" y2="123"/><line x1="60.0" y1="110" x2="84.0" y2="110"/><line x1="72.0" y1="123" x2="62.0" y2="138"/><line x1="72.0" y1="123" x2="82.0" y2="138"/></g>
@@ -97,11 +96,18 @@
 <text x="182" y="168">Frontera con el Proveedor</text>
 <text x="182" y="183">LLM</text>
 </g>
-<rect x="150" y="212" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
-<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="160" y1="232.0" x2="160" y2="244.0"/><line x1="160" y1="238.0" x2="164" y2="238.0"/><circle cx="169" cy="238.0" r="5"/></g>
+<rect x="150" y="212" width="195" height="67" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="160" y1="239.5" x2="160" y2="251.5"/><line x1="160" y1="245.5" x2="164" y2="245.5"/><circle cx="169" cy="245.5" r="5"/></g>
 <g font-size="11" fill="#4A1B0C">
-<text x="182" y="234">Chat - error y degradacion</text>
-<text x="182" y="249">(P-11)</text>
+<text x="182" y="234">Onboarding -</text>
+<text x="182" y="249">consentimiento capa base</text>
+<text x="182" y="264">(P-07)</text>
+</g>
+<rect x="150" y="293" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="160" y1="313.0" x2="160" y2="325.0"/><line x1="160" y1="319.0" x2="164" y2="319.0"/><circle cx="169" cy="319.0" r="5"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="182" y="315">Chat - error y degradacion</text>
+<text x="182" y="330">(P-11)</text>
 </g>
 <rect x="425" y="80" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="106.0" r="5.5"/><polyline points="440.5,98.5 444.5,100.8 440.2,103.2"/></g>
@@ -119,75 +125,75 @@
 <g font-size="11" fill="#04342C">
 <text x="457" y="219">Verificar la disponibilidad del chatbot</text>
 </g>
-<rect x="425" y="248" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
-<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="274.0" r="5.5"/><polyline points="440.5,266.5 444.5,268.8 440.2,271.2"/></g>
-<g font-size="11" fill="#04342C">
-<text x="457" y="270">Iniciar la conversacion con el</text>
-<text x="457" y="285">personaje elegido</text>
+<rect x="425" y="248" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="274.0" r="5.5"/><polyline points="440.5,266.5 444.5,268.8 440.2,271.2"/></g>
+<g font-size="11" fill="#4A1B0C">
+<text x="457" y="270">Denegar el acceso por capa base</text>
+<text x="457" y="285">revocada</text>
 </g>
 <rect x="425" y="314" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="340.0" r="5.5"/><polyline points="440.5,332.5 444.5,334.8 440.2,337.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="336">Validar la longitud y la estructura del</text>
-<text x="457" y="351">turno</text>
+<text x="457" y="336">Iniciar la conversacion con el</text>
+<text x="457" y="351">personaje elegido</text>
 </g>
 <rect x="425" y="380" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="406.0" r="5.5"/><polyline points="440.5,398.5 444.5,400.8 440.2,403.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="402">Verificar los limites de tasa del</text>
-<text x="457" y="417">usuario</text>
+<text x="457" y="402">Validar la longitud y la estructura del</text>
+<text x="457" y="417">turno</text>
 </g>
 <rect x="425" y="446" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="472.0" r="5.5"/><polyline points="440.5,464.5 444.5,466.8 440.2,469.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="468">Evaluar el gate de seguridad sobre el</text>
-<text x="457" y="483">mensaje</text>
+<text x="457" y="468">Verificar los limites de tasa del</text>
+<text x="457" y="483">usuario</text>
 </g>
-<rect x="425" y="512" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
-<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="530.5" r="5.5"/><polyline points="440.5,523.0 444.5,525.3 440.2,527.7"/></g>
+<rect x="425" y="512" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="538.0" r="5.5"/><polyline points="440.5,530.5 444.5,532.8 440.2,535.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="534">Construir el contexto minimo</text>
+<text x="457" y="534">Evaluar el gate de seguridad sobre el</text>
+<text x="457" y="549">mensaje</text>
 </g>
-<rect x="425" y="563" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
-<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="589.0" r="5.5"/><polyline points="440.5,581.5 444.5,583.8 440.2,586.2"/></g>
+<rect x="425" y="578" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="596.5" r="5.5"/><polyline points="440.5,589.0 444.5,591.3 440.2,593.7"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="585">Solicitar la generacion del texto al</text>
-<text x="457" y="600">proveedor</text>
+<text x="457" y="600">Construir el contexto minimo</text>
 </g>
 <rect x="425" y="629" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="655.0" r="5.5"/><polyline points="440.5,647.5 444.5,649.8 440.2,652.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="651">Controlar el plazo de espera de 20</text>
-<text x="457" y="666">segundos</text>
+<text x="457" y="651">Solicitar la generacion del texto al</text>
+<text x="457" y="666">proveedor</text>
 </g>
 <rect x="425" y="695" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="721.0" r="5.5"/><polyline points="440.5,713.5 444.5,715.8 440.2,718.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="717">Aplicar las guardas de salida y limitar</text>
-<text x="457" y="732">a 350 tokens</text>
+<text x="457" y="717">Controlar el plazo de espera de 20</text>
+<text x="457" y="732">segundos</text>
 </g>
-<rect x="425" y="761" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
-<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="779.5" r="5.5"/><polyline points="440.5,772.0 444.5,774.3 440.2,776.7"/></g>
+<rect x="425" y="761" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="787.0" r="5.5"/><polyline points="440.5,779.5 444.5,781.8 440.2,784.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="783">Mostrar la respuesta del personaje</text>
+<text x="457" y="783">Aplicar las guardas de salida y limitar</text>
+<text x="457" y="798">a 350 tokens</text>
 </g>
-<rect x="425" y="812" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
-<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="838.0" r="5.5"/><polyline points="440.5,830.5 444.5,832.8 440.2,835.2"/></g>
+<rect x="425" y="827" width="275" height="37" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="845.5" r="5.5"/><polyline points="440.5,838.0 444.5,840.3 440.2,842.7"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="834">Cerrar la conversacion y descartar su</text>
-<text x="457" y="849">contenido</text>
+<text x="457" y="849">Mostrar la respuesta del personaje</text>
 </g>
 <rect x="425" y="878" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="904.0" r="5.5"/><polyline points="440.5,896.5 444.5,898.8 440.2,901.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="900">Registrar el evento operativo sin</text>
+<text x="457" y="900">Cerrar la conversacion y descartar su</text>
 <text x="457" y="915">contenido</text>
 </g>
-<rect x="425" y="944" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
-<g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="970.0" r="5.5"/><polyline points="440.5,962.5 444.5,964.8 440.2,967.2"/></g>
-<g font-size="11" fill="#4A1B0C">
-<text x="457" y="966">Cambiar de personaje sin rehacer el</text>
-<text x="457" y="981">onboarding</text>
+<rect x="425" y="944" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="970.0" r="5.5"/><polyline points="440.5,962.5 444.5,964.8 440.2,967.2"/></g>
+<g font-size="11" fill="#04342C">
+<text x="457" y="966">Registrar el evento operativo sin</text>
+<text x="457" y="981">contenido</text>
 </g>
 <rect x="425" y="1010" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
 <g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="442" cy="1036.0" r="5.5"/><polyline points="440.5,1028.5 444.5,1030.8 440.2,1033.2"/></g>
@@ -273,7 +279,7 @@
 <g font-size="11" fill="#26215C">
 <text x="832" y="306">Mensaje</text>
 </g>
-<rect x="800" y="335" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/>
+<rect x="800" y="335" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
 <g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="352.0" r="5.5"/><line x1="810.5" y1="359.5" x2="823.5" y2="359.5"/></g>
 <g font-size="11" fill="#26215C">
 <text x="832" y="357">ContadorDeUsoDiario</text>
@@ -283,7 +289,7 @@
 <g font-size="11" fill="#26215C">
 <text x="832" y="408">CapsulaDePerfil</text>
 </g>
-<rect x="800" y="437" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/>
+<rect x="800" y="437" width="165" height="37" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
 <g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="817" cy="454.0" r="5.5"/><line x1="810.5" y1="461.5" x2="823.5" y2="461.5"/></g>
 <g font-size="11" fill="#26215C">
 <text x="832" y="459">EventoOperativo</text>
@@ -292,80 +298,79 @@
 <g font-size="9" text-anchor="middle">
 <rect x="90" y="91" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="98" y="101" fill="#5F5E5A">1</text>
 <rect x="90" y="179" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="98" y="189" fill="#5F5E5A">5</text>
-<rect x="351" y="77" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="87" fill="#5F5E5A">1</text>
+<rect x="351" y="78" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="88" fill="#5F5E5A">1</text>
 <rect x="706" y="99" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="109" fill="#5F5E5A">1</text>
-<rect x="706" y="148" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="158" fill="#5F5E5A">1</text>
-<rect x="706" y="167" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="177" fill="#5F5E5A">1</text>
-<rect x="706" y="197" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="207" fill="#5F5E5A">1</text>
+<rect x="706" y="146" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="156" fill="#5F5E5A">1</text>
+<rect x="706" y="161" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="171" fill="#5F5E5A">1</text>
+<rect x="706" y="184" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="194" fill="#5F5E5A">FE-09</text>
+<rect x="351" y="238" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="248" fill="#4A1B0C">FE-09</text>
 <rect x="706" y="212" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="222" fill="#5F5E5A">1</text>
-<rect x="706" y="262" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="272" fill="#5F5E5A">1</text>
-<rect x="706" y="283" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="293" fill="#5F5E5A">1</text>
-<rect x="351" y="105" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="115" fill="#5F5E5A">1</text>
+<rect x="706" y="227" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="237" fill="#5F5E5A">1</text>
+<rect x="706" y="328" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="338" fill="#5F5E5A">1</text>
+<rect x="706" y="349" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="359" fill="#5F5E5A">1</text>
+<rect x="351" y="92" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="102" fill="#5F5E5A">1</text>
+<rect x="351" y="112" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="122" fill="#5F5E5A">2</text>
 <rect x="351" y="127" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="137" fill="#5F5E5A">2</text>
-<rect x="351" y="155" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="165" fill="#5F5E5A">2</text>
-<rect x="706" y="329" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="339" fill="#5F5E5A">2</text>
-<rect x="706" y="352" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="362" fill="#5F5E5A">2</text>
-<rect x="706" y="394" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="404" fill="#5F5E5A">2</text>
-<rect x="706" y="419" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="429" fill="#5F5E5A">3</text>
-<rect x="706" y="449" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="459" fill="#5F5E5A">3</text>
-<rect x="706" y="470" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="480" fill="#5F5E5A">4</text>
-<rect x="706" y="524" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="534" fill="#5F5E5A">4</text>
-<rect x="706" y="496" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="506" fill="#5F5E5A">4</text>
-<rect x="706" y="547" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="557" fill="#5F5E5A">4</text>
-<rect x="706" y="566" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="576" fill="#5F5E5A">4</text>
-<rect x="351" y="175" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="185" fill="#5F5E5A">4</text>
-<rect x="706" y="587" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="597" fill="#5F5E5A">4</text>
-<rect x="351" y="200" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="210" fill="#5F5E5A">5</text>
-<rect x="706" y="709" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="719" fill="#5F5E5A">6</text>
-<rect x="351" y="223" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="233" fill="#5F5E5A">6</text>
-<rect x="351" y="249" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="259" fill="#5F5E5A">7</text>
-<rect x="351" y="273" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="283" fill="#5F5E5A">8</text>
-<rect x="706" y="826" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="836" fill="#5F5E5A">8</text>
-<rect x="706" y="851" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="861" fill="#5F5E5A">8</text>
-<rect x="706" y="877" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="887" fill="#5F5E5A">8</text>
-<rect x="706" y="903" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="913" fill="#5F5E5A">8</text>
-<rect x="351" y="292" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="302" fill="#5F5E5A">FA-01</text>
-<rect x="706" y="963" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="973" fill="#5F5E5A">FA-01</text>
-<rect x="706" y="991" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1001" fill="#5F5E5A">FA-01</text>
-<rect x="706" y="776" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="786" fill="#5F5E5A">FA-02</text>
-<rect x="706" y="734" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="744" fill="#5F5E5A">FA-02</text>
-<rect x="706" y="1024" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1034" fill="#5F5E5A">FA-02</text>
-<rect x="351" y="311" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="321" fill="#5F5E5A">FA-02</text>
-<rect x="706" y="760" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="770" fill="#5F5E5A">FA-03</text>
-<rect x="706" y="1104" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1114" fill="#5F5E5A">FA-03</text>
+<rect x="706" y="399" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="409" fill="#5F5E5A">2</text>
+<rect x="706" y="423" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="433" fill="#5F5E5A">2</text>
+<rect x="706" y="449" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="459" fill="#5F5E5A">2</text>
+<rect x="706" y="470" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="480" fill="#5F5E5A">3</text>
+<rect x="706" y="515" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="525" fill="#5F5E5A">3</text>
+<rect x="706" y="536" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="546" fill="#5F5E5A">4</text>
+<rect x="706" y="592" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="602" fill="#5F5E5A">4</text>
+<rect x="706" y="567" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="577" fill="#5F5E5A">4</text>
+<rect x="706" y="617" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="627" fill="#5F5E5A">4</text>
+<rect x="706" y="636" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="646" fill="#5F5E5A">4</text>
+<rect x="706" y="663" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="673" fill="#5F5E5A">4</text>
+<rect x="351" y="160" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="170" fill="#5F5E5A">4</text>
+<rect x="706" y="683" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="693" fill="#5F5E5A">4</text>
+<rect x="351" y="185" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="195" fill="#5F5E5A">5</text>
+<rect x="706" y="780" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="790" fill="#5F5E5A">6</text>
+<rect x="351" y="211" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="221" fill="#5F5E5A">6</text>
+<rect x="351" y="266" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="276" fill="#5F5E5A">7</text>
+<rect x="351" y="141" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="151" fill="#5F5E5A">8</text>
+<rect x="706" y="892" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="902" fill="#5F5E5A">8</text>
+<rect x="706" y="917" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="927" fill="#5F5E5A">8</text>
+<rect x="706" y="943" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="953" fill="#5F5E5A">8</text>
+<rect x="706" y="969" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="979" fill="#5F5E5A">8</text>
+<rect x="706" y="842" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="852" fill="#5F5E5A">FA-01</text>
+<rect x="706" y="1029" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1039" fill="#5F5E5A">FA-01</text>
+<rect x="351" y="281" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="291" fill="#5F5E5A">FA-01</text>
+<rect x="706" y="808" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="818" fill="#5F5E5A">FA-02</text>
+<rect x="706" y="1104" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1114" fill="#5F5E5A">FA-02</text>
 <rect x="706" y="123" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="133" fill="#5F5E5A">FE-01</text>
-<rect x="351" y="332" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="342" fill="#4A1B0C">FE-01</text>
-<rect x="706" y="236" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="246" fill="#5F5E5A">FE-02</text>
-<rect x="351" y="355" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="365" fill="#4A1B0C">FE-02</text>
-<rect x="706" y="367" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="377" fill="#5F5E5A">FE-03</text>
-<rect x="351" y="377" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="387" fill="#4A1B0C">FE-03</text>
-<rect x="706" y="310" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="320" fill="#5F5E5A">FE-04</text>
-<rect x="351" y="400" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="410" fill="#4A1B0C">FE-04</text>
-<rect x="706" y="610" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="620" fill="#5F5E5A">FE-05</text>
-<rect x="351" y="422" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="432" fill="#4A1B0C">FE-05</text>
-<rect x="706" y="628" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="638" fill="#5F5E5A">FE-06</text>
-<rect x="351" y="451" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="461" fill="#5F5E5A">FE-06</text>
+<rect x="351" y="308" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="318" fill="#4A1B0C">FE-01</text>
+<rect x="706" y="251" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="261" fill="#5F5E5A">FE-02</text>
+<rect x="351" y="331" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="341" fill="#4A1B0C">FE-02</text>
+<rect x="706" y="371" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="381" fill="#5F5E5A">FE-03</text>
+<rect x="351" y="353" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="363" fill="#4A1B0C">FE-03</text>
+<rect x="706" y="280" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="290" fill="#5F5E5A">FE-04</text>
+<rect x="351" y="376" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="386" fill="#4A1B0C">FE-04</text>
+<rect x="706" y="496" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="506" fill="#5F5E5A">FE-05</text>
+<rect x="351" y="398" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="408" fill="#4A1B0C">FE-05</text>
+<rect x="706" y="709" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="719" fill="#5F5E5A">FE-06</text>
+<rect x="351" y="421" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="431" fill="#5F5E5A">FE-06</text>
 <rect x="706" y="1489" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1499" fill="#4A1B0C">FE-06</text>
-<rect x="706" y="657" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="667" fill="#5F5E5A">FE-07</text>
-<rect x="351" y="475" width="50" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="376" y="485" fill="#4A1B0C">FE-06/07</text>
-<rect x="706" y="676" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="686" fill="#5F5E5A">FE-08</text>
-<rect x="351" y="496" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="506" fill="#5F5E5A">FE-08</text>
+<rect x="706" y="723" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="733" fill="#5F5E5A">FE-07</text>
+<rect x="351" y="436" width="50" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="376" y="446" fill="#4A1B0C">FE-06/07</text>
+<rect x="706" y="742" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="752" fill="#5F5E5A">FE-08</text>
+<rect x="351" y="450" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="460" fill="#5F5E5A">FE-08</text>
 </g>
 
 <line x1="24" y1="1667" x2="965" y2="1667" stroke="#B4B2A9" stroke-width="1"/>
 <text x="24" y="1683" font-size="11" font-weight="500" fill="#5F5E5A">Cursos alternativos y de excepcion</text>
 <g font-size="10">
-<rect x="24" y="1695" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1704" text-anchor="middle" fill="#4A1B0C">FA-01</text><text x="74" y="1704" fill="#5F5E5A">Cambiar de personaje (cualquier turno)</text>
-<rect x="504" y="1695" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1704" text-anchor="middle" fill="#4A1B0C">FA-02</text><text x="554" y="1704" fill="#5F5E5A">Limite de sesion alcanzado (paso 7)</text>
-<rect x="24" y="1711" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1720" text-anchor="middle" fill="#4A1B0C">FA-03</text><text x="74" y="1720" fill="#5F5E5A">Salida insegura del LLM (paso 6)</text>
-<rect x="504" y="1711" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1720" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="554" y="1720" fill="#5F5E5A">Sesion ausente (pasos 1-2)</text>
-<rect x="24" y="1727" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1736" text-anchor="middle" fill="#4A1B0C">FE-02</text><text x="74" y="1736" fill="#5F5E5A">Permiso insuficiente (paso 1)</text>
-<rect x="504" y="1727" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1736" text-anchor="middle" fill="#4A1B0C">FE-03</text><text x="554" y="1736" fill="#5F5E5A">Entrada invalida (paso 2)</text>
-<rect x="24" y="1743" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1752" text-anchor="middle" fill="#4A1B0C">FE-04</text><text x="74" y="1752" fill="#5F5E5A">Chat deshabilitado (paso 1)</text>
-<rect x="504" y="1743" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1752" text-anchor="middle" fill="#4A1B0C">FE-05</text><text x="554" y="1752" fill="#5F5E5A">Limite superado (paso 2)</text>
-<rect x="24" y="1759" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1768" text-anchor="middle" fill="#4A1B0C">FE-06</text><text x="74" y="1768" fill="#5F5E5A">Proveedor no disponible (paso 5)</text>
-<rect x="504" y="1759" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1768" text-anchor="middle" fill="#4A1B0C">FE-07</text><text x="554" y="1768" fill="#5F5E5A">Timeout (paso 5)</text>
-<rect x="24" y="1775" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1784" text-anchor="middle" fill="#4A1B0C">FE-08</text><text x="74" y="1784" fill="#5F5E5A">Peligro explicito (paso 3)</text>
+<rect x="24" y="1695" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1704" text-anchor="middle" fill="#4A1B0C">FA-01</text><text x="74" y="1704" fill="#5F5E5A">Limite de mensajes por sesion (paso 7)</text>
+<rect x="504" y="1695" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1704" text-anchor="middle" fill="#4A1B0C">FA-02</text><text x="554" y="1704" fill="#5F5E5A">Salida insegura del Proveedor LLM (paso 6)</text>
+<rect x="24" y="1711" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1720" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="74" y="1720" fill="#5F5E5A">Sesion ausente (pasos 1-2)</text>
+<rect x="504" y="1711" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1720" text-anchor="middle" fill="#4A1B0C">FE-02</text><text x="554" y="1720" fill="#5F5E5A">Permiso insuficiente (paso 1)</text>
+<rect x="24" y="1727" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1736" text-anchor="middle" fill="#4A1B0C">FE-03</text><text x="74" y="1736" fill="#5F5E5A">Entrada invalida (paso 2)</text>
+<rect x="504" y="1727" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1736" text-anchor="middle" fill="#4A1B0C">FE-04</text><text x="554" y="1736" fill="#5F5E5A">Chat deshabilitado (paso 1)</text>
+<rect x="24" y="1743" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1752" text-anchor="middle" fill="#4A1B0C">FE-05</text><text x="74" y="1752" fill="#5F5E5A">Limite superado (paso 2)</text>
+<rect x="504" y="1743" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1752" text-anchor="middle" fill="#4A1B0C">FE-06</text><text x="554" y="1752" fill="#5F5E5A">Proveedor no disponible (paso 5)</text>
+<rect x="24" y="1759" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1768" text-anchor="middle" fill="#4A1B0C">FE-07</text><text x="74" y="1768" fill="#5F5E5A">Timeout (paso 5)</text>
+<rect x="504" y="1759" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="1768" text-anchor="middle" fill="#4A1B0C">FE-08</text><text x="554" y="1768" fill="#5F5E5A">Peligro explicito (paso 3)</text>
+<rect x="24" y="1775" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1784" text-anchor="middle" fill="#4A1B0C">FE-09</text><text x="74" y="1784" fill="#5F5E5A">Capa base del consentimiento revocada (paso 1)</text>
 </g>
 
 <line x1="24" y1="1801" x2="965" y2="1801" stroke="#B4B2A9" stroke-width="1"/>

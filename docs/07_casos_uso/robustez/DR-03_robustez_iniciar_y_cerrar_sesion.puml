@@ -1,5 +1,6 @@
 @startuml
-' DR-03 (v2.0, PDR-01 fase D.4) — Analisis de robustez de CU-03 «Iniciar y cerrar sesion»
+' DR-03 — Analisis de robustez de CU-03 «Iniciar y cerrar sesion»
+' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-03 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-03, P-04; destinos P-05, P-10, P-14), REQ-01
 ' v2.0: el actor pasa a ser el rol general «Titular de cuenta»; el cierre de sesion entra al
 ' flujo basico (RF-21, que el nombre viejo omitia); la bifurcacion del paso 4 declara su criterio.
