@@ -38,6 +38,9 @@
 | **NORM-01** | `04_trazabilidad/NORM-01_puente_normativo.md` | D6-bis (cláusulas verificadas), REQ-01 | TRZ-01, evaluación (fase 4) |
 | **TRZ-01** | `04_trazabilidad/TRZ-01_trazabilidad.md` | VIS-01, MV-01, REQ-01, SEG-01, NORM-01 | Verificación de cobertura, fase 2/4 |
 | **PLAN-01** | `05_plan/PLAN-01_plan_proyecto.md` | Todos los anteriores | Ejecución del subproyecto |
+| **RET-01** | `00_gobernanza/RET-01_retroalimentacion_docente.md` | Retroalimentación del profesor sobre la fase 2 | Revisión docente, informe académico |
+| **PDR-01** | `00_gobernanza/PDR-01_primera_pasada_correcciones.md` | RET-01, DR-00 (15 hallazgos), skills actualizadas | Revisión docente, informe académico, fases posteriores |
+| **DR-00…DR-14** | `07_casos_uso/robustez/` (`.puml` + `.svg` + certificados) | ECU-01…ECU-14, MD-01, DCU-01, DIS-00, SEG-01 | Diagramas de secuencia, casos de prueba |
 | **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, clases (fase 2+) |
 | **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez |
 | **ECU-00…10** | `07_casos_uso/especificaciones/ECU-00_indice…ECU-10_*.md` | DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato, plan | Robustez (DR), secuencia (DS), pruebas (CP) |

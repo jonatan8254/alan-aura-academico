@@ -3,6 +3,18 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-07-31 — v0.15.0 · PDR-01, primera pasada de correcciones de la fase 2 (SD-28)
+- **Detonantes:** los **4 puntos de la retroalimentación docente** sobre el modelo de dominio y el diagrama de casos de uso, y los **15 hallazgos de desambiguación** que el propio análisis de robustez había producido. Registro completo en `PDR-01_primera_pasada_correcciones.md`; evidencia por punto en `RET-01_retroalimentacion_docente.md`.
+- **`MD-01` v1.2 → v1.4:** 12 → **16 clases** y 12 → **17 relaciones**. Entra el supertipo `TitularDeCuenta` con `Usuario` y `Administrador` como especializaciones (punto 1), y `Visitante` pasa a ser clase (punto 2). En v1.4, cuatro etiquetas de relación se reescriben como relaciones estables de dominio al ejecutar por primera vez las compuertas de la skill.
+- **`DCU-01` v1.0 → v2.1:** de 4 actores y **10 casos de uso** a 5 actores y **14**, con 1 `<<include>>` y 2 `<<extend>>`. Responde al punto 3: **13 de los 26 RF no tenían manifestación gráfica**; ahora los 26 tienen caso de uso propio y único.
+- **Especificaciones 10 → 14 + índice:** de **18 errores y 50 advertencias** del validador a **0 y 0**, con el **100 % de sus 76 flujos** cubiertos por un criterio de aceptación asociado. Dos renombradas: «Iniciar **y cerrar** sesión» y «…**crear la cápsula de perfil**».
+- **Robustez 10 → 14 diagramas:** los diez anteriores derivaban de un texto que dejó de existir. **260 elementos**, 0 errores, cobertura de flujos completa, 14 SVG regenerados y `DR-00` reescrito.
+- **Propagado y verificado aguas arriba:** `MV-01` (2.500 caracteres; `EventoOperativo` reclasificado como clase), `REQ-01`, `TRZ-01` (**§5.1 matriz clase ↔ caso de uso** y **§5.2 visibilidad RF → CU**, que responden al punto 4), `PER-01` (tabla de correspondencia persistencia ↔ dominio), `PRIV-01` (las dos capas del consentimiento), `DIS-00` (dos afirmaciones falsas retiradas).
+- **Decisiones nuevas:** el `Consentimiento` se separa en **capa base** y **capa de personalización**; el límite por mensaje sube a **2.500 caracteres**; «acompañante» se declara **alias de producto en uso activo** de `Personaje`.
+- **Reversiones declaradas, no disimuladas:** `Visitante` como clase, contra el criterio de MV-01 §3/§14; y `EventoOperativo` como clase, contra MV-01 §13.2.
+- **Auditoría:** cada documento pasó por un auditor independiente y un escéptico refutador. 146 hallazgos, 70 refutados, **76 sostenidos**; ningún crítico sobrevivió. Los once mayores eran todos la misma falta: **afirmar más de lo que la fuente sostiene**.
+- **Actualizado:** `INDICE_MAESTRO`, `ESTADO_PIPELINE`, `REGISTRO_DECISIONES` (SD-28), `README`.
+
 ## 2026-07-25 — v0.14.0 · Grafo de conocimiento propio del subproyecto (SD-27)
 - **Añadido:** `grafo/` — grafo de conocimiento **propio del subproyecto**, aislado del macroproyecto (`README.md`, `graph_subproyecto_final.json`, `vault/`, `scripts/`). Cierra/ejecuta el diferido de SD-11.
 - **Origen:** construido en el proyecto principal (`SmartAID/grafo_subproyecto/`) sobre **copias**; los artefactos originales del macro (`graphify-out/`, `vault_obsidian/`) nunca se modificaron — verificado por hash SHA256 antes y después de cada etapa.
