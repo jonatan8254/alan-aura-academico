@@ -16,7 +16,7 @@
 | [DR-03](DR-03_robustez_iniciar_y_cerrar_sesion.puml) | CU-03 **Iniciar y cerrar sesión** | 23 | 1/5/12/5 | 2 | 3 |
 | [DR-04](DR-04_robustez_eliminar_cuenta.puml) | CU-04 **Eliminar cuenta** | 21 | 1/3/11/6 | 3 | 4 |
 | [DR-05](DR-05_robustez_consentimiento_caracterizacion.puml) | CU-05 **Otorgar consentimiento y crear la cápsula de perfil** | 25 | 1/5/16/3 | 4 | 4 |
-| [DR-06](DR-06_robustez_conversar_con_el_acompanante.puml) | CU-06 Conversar con el acompañante | 39 | 2/4/25/8 | 2 | 9 |
+| [DR-06](DR-06_robustez_conversar_con_el_acompanante.puml) | CU-06 Conversar con el acompañante | 40 | 2/4/25/9 | 2 | 9 |
 | [DR-07](DR-07_robustez_derivar_ante_peligro.puml) | CU-07 Derivar ante peligro | 20 | 1/2/12/5 | 3 | 3 |
 | [DR-08](DR-08_robustez_consultar_directorio.puml) | CU-08 Consultar directorio de usuarios | 12 | 1/1/8/2 | 2 | 2 |
 | [DR-09](DR-09_robustez_consultar_metricas.puml) | CU-09 Consultar métricas de uso | 14 | 1/1/8/4 | 2 | 2 |
@@ -83,7 +83,7 @@ Tres defectos los cazó el validador o el renderizado, no la lectura:
 
 **E-1 · Racimos controlador-controlador.** La skill avisa a partir de 3 enlaces porque «suele indicar lógica no distribuida». En `DR-06` (23), `DR-07` (12) y `DR-05` (9) **no lo es**: son cadenas por naturaleza —una tubería de chat, una ruta de seguridad y un asistente multipaso— y esa forma está literalmente en el texto. Distribuirla inventaría estructura que el texto no tiene.
 
-**E-2 · `DR-06` tiene 39 elementos (umbral 25).** El criterio de la propia skill para partir un caso de uso es que *«los cursos alternativos tengan sus propios subalternos»*. Los de CU-06 no los tienen: el tamaño viene de sus **nueve flujos de excepción**, que son la tabla de códigos HTTP del plan §4.13 y responden a RF-26. Partir CU-06 rompería el caso de uso central del MVP para satisfacer un umbral.
+**E-2 · `DR-06` tiene 40 elementos (umbral 25).** El criterio de la propia skill para partir un caso de uso es que *«los cursos alternativos tengan sus propios subalternos»*. Los de CU-06 no los tienen: el tamaño viene de sus **nueve flujos de excepción**, que son la tabla de códigos HTTP del plan §4.13 y responden a RF-26. Partir CU-06 rompería el caso de uso central del MVP para satisfacer un umbral.
 
 **E-3 · `DR-04` concentra 8 conexiones en el controlador de la cascada.** **Cuatro de las ocho son las entidades que suprime**, y suprimirlas juntas *es* su definición y un solo paso del texto. Partirlo rompería la atomicidad, que es la invariante del caso de uso.
 
