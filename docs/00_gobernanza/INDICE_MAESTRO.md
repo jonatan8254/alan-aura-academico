@@ -1,5 +1,5 @@
 # Índice maestro — Subproyecto «Alan & Aura Académico»
-**Propósito:** qué es cada artefacto, su ID, sus insumos y consumidores. **Fecha:** 2026-07-12.
+**Propósito:** qué es cada artefacto, su ID, sus insumos y consumidores. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-07-31.
 **Convención de IDs:** `RF/RNF/RC/RN/CU/PR/MET` con **guion único** (`RF-01`). Documentos con prefijo semántico (`VIS`, `ADR`, `MV`, `REQ`, `PRIV`, `SEG`, `NORM`, `TRZ`, `PLAN`, `SD`).
 
 ---
@@ -40,16 +40,17 @@
 | **PLAN-01** | `05_plan/PLAN-01_plan_proyecto.md` | Todos los anteriores | Ejecución del subproyecto |
 | **RET-01** | `00_gobernanza/RET-01_retroalimentacion_docente.md` | Retroalimentación del profesor sobre la fase 2 | Revisión docente, informe académico |
 | **PDR-01** | `00_gobernanza/PDR-01_primera_pasada_correcciones.md` | RET-01, DR-00 (15 hallazgos), skills actualizadas | Revisión docente, informe académico, fases posteriores |
-| **DR-00…DR-14** | `07_casos_uso/robustez/` (`.puml` + `.svg` + certificados) | ECU-01…ECU-14, MD-01, DCU-01, DIS-00, SEG-01 | Diagramas de secuencia, casos de prueba |
-| **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, clases (fase 2+) |
-| **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez |
-| **ECU-00…10** | `07_casos_uso/especificaciones/ECU-00_indice…ECU-10_*.md` | DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato, plan | Robustez (DR), secuencia (DS), pruebas (CP) |
-| **DIS-00 / DIS-01** | `08_diseno/DIS-00_inventario_y_plan.md`, `08_diseno/DIS-01_sistema_diseno.md` | DCU-01, ECU-00…10, VIS-01, MV-01, REQ-01, PRIV-01, SEG-01, ADR-001; evidencia (Fase 1) | Mockups, §17 de las ECU, fase de construcción |
-| **Informe académico** | `09_informe/Informe_Academico_Alan_Aura.docx` | Todos los artefactos del proyecto | Entrega académica del curso (revisión del profesor) |
+| **RPD-01** | `07_casos_uso/RPD-01_revision_preliminar_diseno.md` | MD-01, DCU-01, ECU-00…14, DR-00…14 (compuerta ICONIX, skill `iconix-pdr-review`) | Diagramas de secuencia (autoriza el paso a diseño detallado) |
+| **DR-00…DR-14** | `07_casos_uso/robustez/` (`.puml` + `.svg` + certificados `CERT-D4-tanda1/2/3.md`) | ECU-01…ECU-14, MD-01, DCU-01, DIS-00, SEG-01 | `RPD-01`, diagramas de secuencia, casos de prueba |
+| **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, `RPD-01`, clases (fase 2+) |
+| **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez, `RPD-01` |
+| **ECU-00…14** | `07_casos_uso/especificaciones/ECU-00_indice…ECU-14_*.md` | DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato, plan | Robustez (DR), `RPD-01`, secuencia (DS), pruebas (CP) |
+| **DIS-00 / DIS-01** | `08_diseno/DIS-00_inventario_y_plan.md`, `08_diseno/DIS-01_sistema_diseno.md` | DCU-01, ECU-00…14, VIS-01, MV-01, REQ-01, PRIV-01, SEG-01, ADR-001; evidencia (Fase 1) | Mockups, §17 de las ECU, fase de construcción |
+| **Informe académico** | `09_informe/Informe_Academico_Alan_Aura.docx` | Todos los artefactos del proyecto | Entrega académica del curso (revisión del profesor). **Pendiente:** aún refleja el estado anterior a `PDR-01`/`RPD-01` |
 
 ## Cadena de dependencia (resumen)
 `VIS-01 → ADR-001 → MV-01 (vistas: Onboarding · Conversación (+contrato) · Seguridad · Administración) → REQ-01 → {PRIV-01, SEG-01} → NORM-01 → TRZ-01 → PLAN-01`
-Fase 2 ICONIX: `MV-01 → MD-01 (dominio) → DCU-01 (casos de uso) → [especificación textual → robustez → secuencia → clases]`
+Fase 2 ICONIX: `MV-01 → MD-01 (dominio) ✅ → DCU-01 (casos de uso) ✅ → especificación textual ✅ → robustez ✅ → RPD-01 (compuerta) ✅ → secuencia (siguiente) → clases`
 
 ## Estándares por artefacto
 - **MV-01 (consolidado):** E8, 11 rasgos {1,2,3,6,7,12,13,14,15,16,17} + checklist único; apto para extracción de dominio (§14 Handoff, modo *academic strict*).
@@ -57,6 +58,9 @@ Fase 2 ICONIX: `MV-01 → MD-01 (dominio) → DCU-01 (casos de uso) → [especif
 - **SEG-01:** gate binario + fallback determinista; mapeo de procedencia a S0-S5 (E3).
 - **NORM-01:** filas [V-cláusula] reusadas de D6-bis; 3 niveles de verificación.
 - **TRZ-01:** objetivo → actor → RF/RN → calidad → norma → prueba-planeada; cero huérfanos.
-- **MD-01:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); 11 clases, sin atributos/multiplicidades; validador 0/0.
+- **MD-01 v1.4:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); **16 clases, 17 relaciones** (4 generalizaciones + 1 composición + 12 asociaciones), sin atributos/multiplicidades; validador 0/0 y compuertas de la skill (*Final Quality Gates*) superadas.
 - **DCU-01 v2.1:** diagrama de casos de uso PlantUML (skill `uml-use-case-diagram`); **5 actores** (4 concretos + el rol general `Titular de cuenta`), **14 casos de uso**, 3 paquetes, **2 `<<extend>>` y 1 `<<include>>`**; validador 0 errores y compuertas de la skill superadas.
-- **PER-01:** inventario consolidado de persistencia (7 entidades del plan §4.14 + telemetría §4.15); marcas [E1]/[I2], reglas transversales `PER-T1…T7`, hallazgos abiertos `PER-H1…H4`. **No** es diseño de esquema: sin tipos, claves ni DDL.
+- **ECU-00…14:** especificación textual (skill `use-case-specifier`); 7 completas + 7 ágiles; validador **0 errores y 0 advertencias** en las 14; **100 % de sus 76 flujos** con criterio de aceptación asociado.
+- **DR-00…14:** análisis de robustez (skill `uml-robustness-diagram`); **261 elementos** (15 actores / 38 borde / 149 control / 59 entidad); validador 0 errores con `--domain MD-01`; cobertura de flujos completa.
+- **RPD-01:** compuerta ICONIX (skill `iconix-pdr-review`) entre análisis y diseño detallado; veredicto **Aceptado con verificación de retrabajo**.
+- **PER-01:** inventario consolidado de persistencia (7 entidades del plan §4.14 + telemetría §4.15); marcas [E1]/[I2], reglas transversales `PER-T1…T7`, hallazgos abiertos `PER-H2`/`PER-H4`. **No** es diseño de esquema: sin tipos, claves ni DDL.

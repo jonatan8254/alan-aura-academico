@@ -1,12 +1,14 @@
 # Estado del subproyecto — «Alan & Aura Académico»
-**Propósito:** decir en qué fase está el subproyecto y qué sigue. Es el primer archivo a leer al rehidratar contexto. **Fecha:** 2026-07-12 · **Versión:** v1.0.
+**Propósito:** decir en qué fase está el subproyecto y qué sigue. Es el primer archivo a leer al rehidratar contexto. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-07-31 · **Versión:** v1.2.
 
 ---
 
 ## Dónde estamos
-Fase **1 cerrada** y **Fase 2 (ICONIX) en curso** (act. 2026-07-31): el paquete documental está completo y ya se produjeron **cuatro** artefactos ICONIX — el **modelo de dominio `MD-01`** (`docs/06_dominio/`), el **diagrama de casos de uso `DCU-01 v2.1`** (`docs/07_casos_uso/`), la **especificación textual de los 14 casos de uso `ECU-00…ECU-14`** (`docs/07_casos_uso/especificaciones/`) y el **análisis de robustez `DR-00…DR-14`** (`docs/07_casos_uso/robustez/`).
+Fase **1 cerrada** y **Fase 2 (ICONIX) avanzada**: producidos y verificados los cinco primeros artefactos — el **modelo de dominio `MD-01 v1.4`** (`docs/06_dominio/`, 16 clases), el **diagrama de casos de uso `DCU-01 v2.1`** (`docs/07_casos_uso/`, 14 casos de uso), la **especificación textual `ECU-00…ECU-14`** (`docs/07_casos_uso/especificaciones/`), el **análisis de robustez `DR-00…DR-14`** (`docs/07_casos_uso/robustez/`, 261 elementos) y la **compuerta ICONIX `RPD-01`** entre análisis y diseño detallado (`docs/07_casos_uso/RPD-01_revision_preliminar_diseno.md`).
 
-Estado medido tras la primera pasada de correcciones (**PDR-01**): los **tres validadores en 0 errores** — MD-01 v1.4, DCU-01 v2.1, las 14 especificaciones (0 errores y 0 advertencias) y los 14 diagramas de robustez. Las especificaciones cubren el **100 % de sus 76 flujos** con un criterio de aceptación asociado; los diagramas de robustez suman **259 elementos** y su cobertura de flujos es completa. Los **26 RF** tienen caso de uso propio y único, y las **16 clases** del dominio se manifiestan en casos de uso y en robustez (`TRZ-01` §5.1 y §5.2). No hay código ni pilotos, por diseño. Siguiente artefacto ICONIX: **diagramas de secuencia**.
+Ese conjunto pasó por una **primera pasada completa de correcciones** — `PDR-01` (`docs/00_gobernanza/PDR-01_primera_pasada_correcciones.md`), motivada por la retroalimentación docente de 4 puntos (`RET-01`) y los 15 hallazgos de desambiguación del certificado de robustez v1 — y luego por la **Revisión Preliminar del Diseño** propiamente dicha (`RPD-01`, skill `iconix-pdr-review`), cuyo veredicto es **Aceptado con verificación de retrabajo** (un hallazgo mayor real, corregido en la misma sesión; el resto, moderado o menor, ya cerrado o declarado). **No confundir los dos "PDR":** `PDR-01` es el registro de gobernanza de la pasada de correcciones; `RPD-01` es el acta formal de la compuerta ICONIX (*Preliminary Design Review*) — el acrónimo coincide por casualidad y cada documento lo aclara en su cabecera.
+
+**Estado medido y reproducible:** los **cuatro validadores en 0 errores** (`MD-01`, `DCU-01`, las 14 especificaciones —también 0 advertencias—, los 14 diagramas de robustez con `--domain MD-01`). Las especificaciones cubren el **100 % de sus 76 flujos** con un criterio de aceptación asociado. Los **26 RF** tienen caso de uso propio y único, y las **16 clases** del dominio se manifiestan en al menos un caso de uso y en al menos un diagrama de robustez (`TRZ-01` §5.1 y §5.2, verificado por script contra los `.puml`, 0 discrepancias). No hay código ni pilotos, por diseño. La rama de correcciones (`pdr-01-correcciones`) ya está fusionada y publicada en `main`. Siguiente artefacto ICONIX: **diagramas de secuencia** (`DS-XX`, skill `uml-sequence-diagram`, ya disponible).
 
 ## Fases del subproyecto
 
@@ -14,9 +16,23 @@ Estado medido tras la primera pasada de correcciones (**PDR-01**): los **tres va
 |---|---|---|
 | 0 | Delimitación de alcance (plan generado con Codex) | ✅ cerrada (insumo externo) |
 | 1 | **Auditoría del plan + artefactos documentales mínimos** (esta fase) | ✅ **cerrada (2026-07-12)** |
-| 2 | Análisis y diseño ICONIX (dominio → CU → especificación → robustez → secuencia → clases) | 🟩 **en curso** — `MD-01` (dominio) ✅ · `DCU-01` (casos de uso) ✅ · `ECU-00…10` (especificación textual) ✅ (2026-07-16); **robustez** pendiente |
+| 2 | Análisis y diseño ICONIX (dominio → CU → especificación → robustez → **RPD** → secuencia → clases) | 🟩 **avanzada** — `MD-01` ✅ · `DCU-01` ✅ · `ECU-00…14` ✅ · `DR-00…14` ✅ · `RPD-01` ✅ (2026-07-31, aceptado con verificación de retrabajo); **secuencia** pendiente |
 | 3 | Construcción del MVP (Django/LLM/gate de seguridad) | ⬜ planificada |
 | 4 | Verificación, despliegue académico y entrega | ⬜ planificada |
+
+## Primera pasada de correcciones (`PDR-01`) y compuerta `RPD-01` — resumen (2026-07-31)
+
+Detalle completo en `PDR-01_primera_pasada_correcciones.md` y `RPD-01_revision_preliminar_diseno.md` (`docs/07_casos_uso/`); evidencia punto por punto de la retroalimentación docente en `RET-01_retroalimentacion_docente.md`.
+
+| Artefacto | Antes | Después |
+|---|---|---|
+| `MD-01` | v1.2, 12 clases, 12 relaciones | **v1.4**, 16 clases, 17 relaciones |
+| `DCU-01` | v1.0, 4 actores, 10 casos de uso | **v2.1**, 5 actores, 14 casos de uso |
+| Especificaciones | 10 + índice, 18 errores de validador | **14 + índice, 0 errores y 0 advertencias** |
+| Robustez | 10 diagramas, 179 elementos | **14 diagramas, 261 elementos**, 0 errores |
+| Compuerta ICONIX | no ejecutada | **`RPD-01`: aceptado con verificación de retrabajo** |
+
+Decisiones nuevas que introdujo: el `Consentimiento` se separa en **capa base** y **capa de personalización**; el límite por mensaje sube de 1.500 a **2.500 caracteres**; «acompañante» se declara alias de producto en uso activo de `Personaje`. Reversiones declaradas (no disimuladas): `Visitante` pasa a ser clase de dominio; `EventoOperativo` deja de ser «vista derivada, no clase».
 
 ## Entregables de la Fase 1 (esta ejecución)
 
@@ -74,16 +90,20 @@ Leyenda: ✅ afirmado/cumplido · ➖ no aplica al artefacto.
 
 *(Ver `CHANGELOG.md` para el registro del hito.)*
 
-## Qué sigue (después de la Fase 1)
-1. Revisión del usuario de VIS-01/ADR-001/REQ-01 (validaciones nivel 6: servicios externos y frontera legal).
-2. Fase 2 (ICONIX) **en curso**: `MD-01` (dominio) ✅, `DCU-01` (casos de uso) ✅ y `ECU-00…10` (especificación textual) ✅ producidos con las skills `uml-domain-modeler`, `uml-use-case-diagram` y `use-case-specifier`. Los 26 RF quedan trazados a su CU (columna CU de TRZ-01 poblada), cero huérfanos. Siguiente: **análisis de robustez** (`DR-XX`) por caso de uso, reusando frontera/entidad/control de cada spec.
-3. **Diseño de interfaz (SD-23):** base visual producida — `docs/08_diseno/DIS-00` (inventario de 16 pantallas + plan) y `DIS-01` (sistema de diseño con contraste AA, doble voz Alan/Aura, semilla teal/ámbar), más **16 mockups de alta fidelidad** (claro/oscuro, estados no-felices, contención) renderizados y fundamentados en evidencia. Base para poblar el §17 de las ECU y guiar la construcción.
-4. **Mapa de persistencia (SD-25, 2026-07-25):** `docs/03_requisitos/PER-01_mapa_persistencia.md` consolida qué se guarda en la BD (7 entidades del plan §4.14), qué nunca se persiste, las reglas transversales del esquema (`PER-T1…T7`) y la frontera de retención del proveedor LLM. **Insumo directo del modelo de datos**, que sigue fuera de alcance.
-5. **Hallazgos de persistencia cerrados (SD-26, 2026-07-25):** `PER-H1` — la cápsula **siempre existe** con `character` como mínimo (`character` = precondición funcional, no autorreporte; +RN-01.6, cardinalidad 1 a 1 tras el onboarding). `PER-H3` — `estado` del directorio ∈ {activo, sin consentimiento vigente}, derivado de `ConsentRecord`. Resueltos **antes** de robustez para que los `DR-XX` no hereden la contradicción. `PER-H2` y `PER-H4` quedan **abiertos por decisión** (construcción y detalle de diseño); no bloquean.
-6. Diferido explícito: repo git separado (✅ ejecutado, SD-18).
-7. **Grafo de conocimiento propio del subproyecto (SD-27, 2026-07-25):** ejecutado el diferido de grafo/vault. Nueva carpeta `grafo/` — 2.876 nodos (262 del subproyecto + 2.614 de conocimiento, sin nodos de Smart-AID/TalentTrack), extraídos con Opus en `--mode deep`, con vault de Obsidian trazable a cada documento fuente. Aislado del macroproyecto (copias, hashes verificados). Detalle en `CHANGELOG.md` (v0.14.0) y `REGISTRO_DECISIONES.md` (SD-27). **Instructivo de uso añadido el 2026-07-27:** `GUIA_USO_GRAFO_Y_VAULT.md` (raíz) — qué es, cómo consultarlo por terminal, estructura del vault, licencia del corpus de conocimiento y trampas de `graphify` verificadas.
+## Qué sigue
+1. **Diagramas de secuencia `DS-01…DS-14`** (siguiente artefacto ICONIX): la skill `uml-sequence-diagram` ya está disponible. Convierte cada controlador de robustez en un mensaje, asigna operaciones a las clases del dominio y produce el delta de operaciones + los casos de prueba que consume. Con **149 controladores** en los 14 diagramas de robustez, esa es la cota inferior de casos de prueba (`CP-XX`) que resultarán.
+2. **Propagación pendiente de `RPD-01`** (no bloquea, pero está declarada): dos hallazgos menores de la compuerta quedaron abiertos sin acción propia — dos defectos documentados en el validador `validate_pdr.py` de la skill `iconix-pdr-review` (fuera del alcance de este subproyecto: se reportan para quien mantenga la skill) y la guía #4 (participación técnica y no técnica), que exige una sesión con más de un rol y no se pudo ejercer en esta pasada.
+3. **Informe académico** (`docs/09_informe/Informe_Academico_Alan_Aura.docx`): sigue reflejando el estado anterior a `PDR-01`/`RPD-01`; pendiente de actualizar antes de la próxima entrega al profesor.
+4. Revisión del usuario de VIS-01/ADR-001/REQ-01 (validaciones nivel 6: servicios externos y frontera legal) — sigue abierta desde la Fase 1.
+5. **Diseño de interfaz (SD-23, cerrado):** base visual producida — `docs/08_diseno/DIS-00` (inventario de 16 pantallas + plan) y `DIS-01` (sistema de diseño con contraste AA, doble voz Alan/Aura, semilla teal/ámbar), más **16 mockups de alta fidelidad** (claro/oscuro, estados no-felices, contención). `PDR-01` reasignó tres pantallas a los casos de uso nuevos (P-13 → CU-04/11/12, P-09 → CU-14, P-10 → +CU-13); el resto del inventario sigue vigente.
+6. **Mapa de persistencia (SD-25, cerrado):** `docs/03_requisitos/PER-01_mapa_persistencia.md` consolida qué se guarda en la BD, qué nunca se persiste y las reglas transversales del esquema (`PER-T1…T7`). `PDR-01` le añadió la tabla de correspondencia nombre de persistencia ↔ clase del dominio y reparó las citas que la renumeración de casos de uso rompió. **Insumo directo del modelo de datos**, que sigue fuera de alcance.
+7. **Hallazgos de persistencia:** `PER-H1` y `PER-H3` (cerrados en SD-26, antes de robustez). `PER-H2` sigue abierto por decisión (detalle de diseño); `PER-H4` (campos de `ContadorDeUsoDiario`) sigue abierto, no bloquea.
+8. **`AccionAdministrativa`** permanece deliberadamente fuera de `MD-01` (auditoría de operación, no concepto del problema) — decisión reafirmada en `RPD-01` H-02, marcada en `DR-10` para que siga siendo discutible.
+9. Diferido explícito: repo git separado (✅ ejecutado, SD-18).
+10. **Grafo de conocimiento propio del subproyecto (SD-27, cerrado 2026-07-25):** `grafo/` — 2.876 nodos, vault de Obsidian trazable. **No se ha regenerado** desde entonces: no incluye `MD-01 v1.4`, `DCU-01 v2.1`, las 14 ECU, los 14 DR, ni `PDR-01`/`RET-01`/`RPD-01`. Instructivo de uso: `GUIA_USO_GRAFO_Y_VAULT.md` (raíz).
 
 ## Invariantes que no se relajan
-- Aislamiento: cambios solo bajo `subproyecto_academico_alan_aura/`.
+- **Independencia** (SD-18): el subproyecto no depende del macroproyecto; toda mención a él es cita de procedencia histórica, nunca una referencia funcional viva.
 - Canon de dominio en cada artefacto; cero requisitos huérfanos; umbral+GQM por requisito de calidad.
-- Sin default de modelo de razonamiento; subagentes solo para lo mecánico, auditados.
+- Sin default de modelo de razonamiento; subagentes solo para lo mecánico, auditados por el orquestador antes de incorporarse.
+- **Trinquete:** no degradar lo ya construido y verificado. Corregir con evidencia (validador o comando), no por afirmación.
