@@ -7,11 +7,20 @@ __pycache__/
 *.egg-info/
 node_modules/
 
-# ── Django (para cuando empiece la construcción) ──
-db.sqlite3
+# ── Construcción: React/Vite en Vercel + backend serverless AWS (ADR-002) ──
+dist/
+build/
+.vite/
+.vercel/
 *.log
-staticfiles/
-media/
+# Infraestructura como código y empaquetado de funciones
+cdk.out/
+.aws-sam/
+.serverless/
+# Cobertura y artefactos de prueba
+coverage/
+playwright-report/
+test-results/
 
 # ── Secretos ──
 .env

@@ -1,5 +1,5 @@
 # VIS-01 — Visión, objetivos y alcance del subproyecto «Alan & Aura Académico»
-**ID:** VIS-01 · **Hogar:** `docs/01_vision/` · **Fecha:** 2026-07-12 · **Estado:** v1.1 (alineada al plan de Codex — gestión de cuenta y admin de plataforma restaurados, SD-15).
+**ID:** VIS-01 · **Hogar:** `docs/01_vision/` · **Fecha:** 2026-07-12 · **Versión:** v1.2 (SD-29: supuestos de servicios externos realineados a `ADR-002`) · **Estado:** vigente.
 **Insumos:** `00_AUDITORIA_PLAN_CODEX.md`; canon del macro (`../../CLAUDE.md`); doc 8 (plan metodológico v1.1, Releases 0.1/0.2); D22 (arquitectura LLM v2.0).
 **Consumidores:** ADR-001, MV-01, REQ-01, PLAN-01, TRZ-01 (objetivos como raíz de la trazabilidad).
 **Naturaleza:** documento de encuadre. **Marcas:** [E1]/[I2]/[P5]. **Nomenclatura:** Alan / Aura.
@@ -56,7 +56,7 @@ Construir y documentar un MVP conversacional (Alan/Aura) que complete el flujo *
 | **Recursos de derivación** | Líneas/servicios de ayuda configurables por entorno a los que apunta el fallback de seguridad. |
 
 ## 7. Supuestos y restricciones
-- **Supuestos:** el usuario es adulto y consiente; los servicios externos (LLM, hosting) están disponibles según el plan (a re-verificar, V6-a). [I2]
+- **Supuestos:** el usuario es adulto y consiente; los servicios externos (proveedor del LLM, alojamiento del frontend e infraestructura serverless) están disponibles en su capa gratuita según `ADR-001-D3` y `ADR-002` (a re-verificar, V6-a). [I2]
 - **Restricciones:** ~1 mes de desarrollo; equipo académico; *free tiers*; español (Colombia); sin presupuesto de infraestructura. [E1]
 
 ## 8. Definición de «MVP terminado» (Definition of Done del producto)

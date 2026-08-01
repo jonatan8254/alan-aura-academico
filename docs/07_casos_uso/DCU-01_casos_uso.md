@@ -1,5 +1,5 @@
 # DCU-01 — Diagrama de casos de uso del MVP «Alan & Aura Académico»
-**ID:** DCU-01 · **Familia:** DCU (casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-07-30 · **Versión:** v2.1 (PDR-01 tanda 0: compuertas y catálogo de antipatrones de la skill ejecutados por primera vez sobre este artefacto — **sin cambios en el `.puml`**; el resultado se registra en §5). v2.0: 10 → 14 casos de uso, responde al punto 3 de la retroalimentación docente.
+**ID:** DCU-01 · **Familia:** DCU (casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-07-30 · **Versión:** v2.2 (SD-29: **solo anexo** — la nota «no son actores» deja de nombrar productos concretos («GitHub/PythonAnywhere/SQLite») y pasa a excluir por categoría el repositorio, la plataforma de despliegue y el motor de persistencia. **El `.puml` no se toca**: mismos 5 actores y 14 casos de uso, validador en 0 errores. PDR-01 tanda 0: compuertas y catálogo de antipatrones de la skill ejecutados por primera vez sobre este artefacto — **sin cambios en el `.puml`**; el resultado se registra en §5). v2.0: 10 → 14 casos de uso, responde al punto 3 de la retroalimentación docente.
 **Artefacto ejecutable:** [`DCU-01_casos_uso.puml`](DCU-01_casos_uso.puml) (**fuente de verdad**). **Render acompañante:** [`DCU-01_casos_uso.svg`](DCU-01_casos_uso.svg), regenerable desde el `.puml`.
 **Insumos:** MV-01, **MD-01 v1.3** (vocabulario controlado — **no** se copian clases; de ahí sale el rol general `Titular de cuenta`), VIS-01, REQ-01 (RF-01…26), contrato conversacional, SEG-01, plan §5.3, **retroalimentación docente** (se registrará en `RET-01`, fase D.6).
 **Consumidores:** `ECU-01…ECU-14`, robustez (`DR-01…DR-14`), secuencia, pruebas.
@@ -19,7 +19,7 @@
 
 > **Generalización de actores (v2.0).** `Usuario adulto` y `Administrador de plataforma` estaban ambos asociados a «Iniciar y cerrar sesión», es decir, **compartían comportamiento** — que es la condición que la skill exige para generalizar («*a general role is explicit or clearly inferable and multiple specialized actors share behavior*»). Extraer `Titular de cuenta` elimina esa asociación duplicada y **hace visible en el diagrama la relación entre usuario y administrador** que el punto 1 de la retroalimentación docente pedía, en coherencia con el supertipo `TitularDeCuenta` del dominio.
 
-> **No son actores:** los recursos de derivación (son una **salida** del sistema al usuario), ni GitHub/PythonAnywhere/SQLite (infraestructura, fuera del límite funcional).
+> **No son actores:** los recursos de derivación (son una **salida** del sistema al usuario), ni el repositorio, la plataforma de despliegue o el motor de persistencia —cualesquiera que sean— (infraestructura, fuera del límite funcional).
 
 ## 2. Casos de uso (14) y RF que realizan
 

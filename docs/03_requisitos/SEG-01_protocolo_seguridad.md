@@ -1,5 +1,5 @@
 # SEG-01 — Protocolo de seguridad del MVP (gate binario + fallback determinista)
-**ID:** SEG-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-12 · **Versión:** v1.1 (SD-17: plantilla de fallback citada del plan §3.8, RN-02.9 rate limits).
+**ID:** SEG-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-12 · **Versión:** v1.2 (SD-29: se precisa qué significa «local» para el fallback bajo la arquitectura sin servidor de `ADR-002`; SEG-R1…R6 sin cambios. SD-17: plantilla de fallback citada del plan §3.8, RN-02.9 rate limits).
 **Insumos:** MV-01 §Conversación, contrato conversacional (C-3, C-7), D22 (fallback determinista de crisis), E3 del macro (escala S0-S5, **procedencia**), ISO/IEC 25010:2023 §3.9 *safety* (vía NORM-01/D6-bis), `00_PLAN_CODEX_ORIGINAL.md` §3.8 (plantilla de fallback, citada).
 **Consumidores:** REQ-01 (RF-10/11, RC-01/02/03, RNF-06), TRZ-01, NORM-01.
 **Naturaleza:** protocolo de seguridad, artefacto propio y auditable. **Honestidad §4.9:** este gate **no es** detección clínica ni exhaustiva; su alcance se declara explícitamente.
@@ -46,7 +46,8 @@ Turno mostrado                                    Mensaje de contención + deriv
                                                   Recurso(s) de ayuda (config por entorno)
 ```
 - El gate se evalúa **antes** de invocar al LLM (RF-10) → si hay peligro, el LLM **no** genera el turno (RN-05, C-3).
-- El fallback es **determinista y local**: no requiere LLM ni red hacia Groq (RNF-06, RC-01) → opera aunque el LLM esté caído.
+- El fallback es **determinista y local**: no requiere LLM ni red hacia el proveedor del modelo (RNF-06, RC-01) → opera aunque el LLM esté caído. Desde `ADR-002`, «local» significa **dentro de la propia función que atiende la petición**.
+- **Dependencia nueva que `ADR-002` introduce y hay que acotar [I2].** El texto de contención y el catálogo de `RecursoDeAyuda` se leen de la configuración por entorno, que `ADR-002-D6` sitúa en S3. Leer de S3 **es una llamada de red**, y ponerla en el camino crítico de la contención debilitaría `RNF-06` y `RC-01`, que exigen cobertura del **100 %**. Restricción que la construcción debe respetar: **la configuración se carga al inicializar la función y se retiene en memoria; la ruta de fallback nunca hace una lectura remota**, y si la carga falló, responde con un valor de último recurso empaquetado con el código antes que no responder. La derivación a recursos concretos puede degradarse; **la contención, no**. Registrado como riesgo en `PLAN-01`.
 
 ## 5. Contenido del fallback (parametrizable, no *hardcodeado*)
 El mensaje de fallback y los recursos se leen de **configuración por entorno** (RF-17, SD-12):

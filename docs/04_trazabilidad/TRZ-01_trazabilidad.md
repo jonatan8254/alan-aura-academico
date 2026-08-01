@@ -1,5 +1,5 @@
 # TRZ-01 — Matriz de trazabilidad del MVP
-**ID:** TRZ-01 · **Hogar:** `docs/04_trazabilidad/` · **Fecha:** 2026-07-25 · **Versión:** v1.5 (SD-26: **RN-01.6** trazada desde RF-04/RF-05 — la cápsula siempre existe con `character` como mínimo; cero reglas huérfanas · SD-22:  RF-04/05 coherentes con la cápsula de 5 campos = `ContextoInicialConversacionalV1` · SD-21: **columna CU poblada** — cada RF trazado a su especificación `ECU-0X`; dimensión CU cerrada · SD-15: +RF-19…26 cuenta/acceso y sesión; admin realineado; MD-01 disponible · SD-17: RF-25/26 con límites de tasa exactos y RN-02.9).
+**ID:** TRZ-01 · **Hogar:** `docs/04_trazabilidad/` · **Fecha:** 2026-07-25 · **Versión:** v1.6 (SD-29: `RNF-02` y `RC-09` reapuntados a `ADR-002`; **la estructura de la trazabilidad no cambia** —el cambio de stack no crea ni destruye requisitos, y los conteos de §5 siguen siendo 26 RF y 16 clases—. SD-26: **RN-01.6** trazada desde RF-04/RF-05 — la cápsula siempre existe con `character` como mínimo; cero reglas huérfanas · SD-22:  RF-04/05 coherentes con la cápsula de 5 campos = `ContextoInicialConversacionalV1` · SD-21: **columna CU poblada** — cada RF trazado a su especificación `ECU-0X`; dimensión CU cerrada · SD-15: +RF-19…26 cuenta/acceso y sesión; admin realineado; MD-01 disponible · SD-17: RF-25/26 con límites de tasa exactos y RN-02.9).
 **Insumos:** VIS-01 (OBJ-1…OBJ-7), MV-01 (vistas), contrato, REQ-01 (RF-01…26/RNF/RC/RN), PRIV-01, SEG-01, NORM-01, MD-01 (dominio).
 **Consumidores:** verificación de cobertura; fase 2 (CU/dominio) y fase 4 (pruebas).
 **Criterio de cierre:** **cero requisitos huérfanos** — todo RF traza a ≥1 objetivo, ≥1 regla y ≥1 prueba planificada; todo objetivo tiene ≥1 RF; todo RC tiene ≥1 RF **o RNF**.
@@ -54,7 +54,7 @@
 | RC-06 interaction capability | RF-01/06/19 | ✅ |
 | RC-07 reliability | RF-08/11/16/17/25/26 | ✅ |
 | RC-08 func. suitability | RF-07/08/12 | ✅ |
-| RC-09 flexibility | RNF-02 (despliegue) | ✅ |
+| RC-09 flexibility | RNF-02 (despliegue en capa gratuita, `ADR-002`) | ✅ |
 | RC-10 maintainability | RNF-05 (recursos/textos por entorno) | ✅ |
 
 ## 4. Cobertura de objetivos (OBJ → RF)

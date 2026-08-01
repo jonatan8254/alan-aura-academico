@@ -1,6 +1,6 @@
 # REQ-01 — Requisitos del MVP «Alan & Aura Académico»
-**ID:** REQ-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-07-25 · **Versión:** v1.4 (SD-26: `character` como precondición funcional — RN-01.6 en la traza de RF-04/RF-05; dominio de valores de `estado` fijado en RF-15; SD-22:  cápsula de **5 campos + 2 metadatos** = `ContextoInicialConversacionalV1` en RF-04/RF-05; SD-15: +cuenta/acceso RF-19…24, +sesión/robustez RF-25/26, admin realineado; SD-17: límites de tasa exactos +RNF-10, historial de sesión precisado en RF-09/RNF-04).
-**Insumos:** MV-01 (consolidado, con sus vistas), contrato conversacional, VIS-01 (OBJ), ADR-001, SEG-01, PRIV-01, ISO/IEC 25010:2023 (vía NORM-01/D6-bis).
+**ID:** REQ-01 · **Hogar:** `docs/03_requisitos/` · **Fecha:** 2026-08-01 · **Versión:** v1.5 (SD-29: RNF-02/05/09 y RC-05/RC-09 realineados a `ADR-002` —capa gratuita de Vercel y AWS, arranque en frío en MET-05, gestor de secretos—; corregido «RNF-01…RNF-09» → **RNF-01…RNF-10** en el cierre; sin cambios en umbrales. **`RF-24` gana el acotador «desde la aplicación»** (mismo texto que `ECU-04 §14` ya llevaba): no cambia qué se exige, precisa dónde se verifica, tras `PER-H5`. SD-26: `character` como precondición funcional — RN-01.6 en la traza de RF-04/RF-05; dominio de valores de `estado` fijado en RF-15; SD-22:  cápsula de **5 campos + 2 metadatos** = `ContextoInicialConversacionalV1` en RF-04/RF-05; SD-15: +cuenta/acceso RF-19…24, +sesión/robustez RF-25/26, admin realineado; SD-17: límites de tasa exactos +RNF-10, historial de sesión precisado en RF-09/RNF-04).
+**Insumos:** MV-01 (consolidado, con sus vistas), contrato conversacional, VIS-01 (OBJ), ADR-001 (D3/D4/D6/D7) y **`ADR-002`** (stack vigente: RNF-02/05/09, RC-05/RC-09), SEG-01, PRIV-01, ISO/IEC 25010:2023 (vía NORM-01/D6-bis).
 **Consumidores:** TRZ-01, NORM-01, pruebas (fase 2), construcción (fase 3).
 **Frontera dura (disciplina K):** este artefacto produce **RF, RNF, requisitos de calidad (RC) con GQM+umbral y reglas de negocio tipadas (RN)**. **No** produce casos de uso, modelo de dominio, robustez ni secuencias (fase 2).
 **Marcas:** [E1]/[I2]/[P5]. **Honestidad §4.9:** los umbrales dependientes de servicios externos se declaran como tales.
@@ -56,7 +56,7 @@
 | RF-21 | **Iniciar y cerrar sesión** (login/logout) del usuario. | plan §3.1 | El usuario entra y sale; el rol no se selecciona desde el cliente. |
 | RF-22 | **Reiniciar/borrar la caracterización** (perfil). | RN-04.3 | El usuario borra su perfil; la cápsula deja de existir. |
 | RF-23 | **Revocar la personalización** (uso de la cápsula). | RN-04.3, RN-07 | Tras revocar, la cápsula no vuelve a alimentar la conversación. |
-| RF-24 | **Eliminar la cuenta** con **borrado en cascada**. | RN-04.4 | Eliminada la cuenta, no queda dato asociado recuperable. |
+| RF-24 | **Eliminar la cuenta** con **borrado en cascada**. | RN-04.4 | Eliminada la cuenta, no queda dato asociado recuperable **desde la aplicación** (el respaldo de infraestructura es una excepción declarada y abierta — `PER-H2`/`PER-H5`, a cerrar en `ARQ-01`). |
 
 ### Sesión y robustez (transversal)
 | ID | Requisito | Origen | Criterio de aceptación |
@@ -68,14 +68,14 @@
 | ID | Requisito | Origen | Criterio de aceptación |
 |---|---|---|---|
 | RNF-01 | Interfaz y *prompts* en español (Colombia). | SD-09, ADR-001-D7 | Todos los textos de cara al usuario en español CO. |
-| RNF-02 | El MVP se despliega en *free tier* (PythonAnywhere Free; Render contingencia). | ADR-001-D5 | Corre en el *free tier* con pasos documentados (o contingencia). [N6] |
+| RNF-02 | El MVP se despliega en **capa gratuita**: interfaz en Vercel, backend sin servidor en AWS (Lambda, API Gateway, DynamoDB, S3). | ADR-002-D3/D4/D5/D6 | Corre en capa gratuita con pasos documentados. **Verificar qué servicios son gratuitos de forma permanente y cuáles solo los primeros doce meses** (V6-a). [N6] |
 | RNF-03 | El chat no se persiste en base de datos ni logs. | RN-04, PRIV-01 | Inspección confirma ausencia de contenido de chat en BD/logs. |
 | RNF-04 | El LLM nunca recibe datos fuera de la cápsula, el turno actual y los intercambios de la sesión en curso (máx. 4); nunca username, alias, ID, rol, contraseña ni historial de sesiones previas. | RN-03, PRIV-01, plan §3.4 | Inspección de *payloads*: cero campos prohibidos (lista exacta en PRIV-01). |
-| RNF-05 | Recursos de ayuda y parámetros de seguridad configurables por entorno, no *hardcodeados*. | SD-12, ADR-001-D6 | Grep del código: cero recursos/números de crisis embebidos. |
+| RNF-05 | Recursos de ayuda y parámetros de seguridad configurables por entorno, no *hardcodeados*; se leen del almacén versionado de configuración. | SD-12, ADR-001-D6, ADR-002-D6 | Grep del código: cero recursos/números de crisis embebidos. |
 | RNF-06 | La ruta de seguridad no depende de la disponibilidad del LLM. | RN-05, SEG-01 | Con LLM caído, el fallback sigue operando (ver RC-01). |
 | RNF-07 | El código no versiona contenido con © de terceros. | AGENTS §2 | Repo sin normas/libros de terceros. |
 | RNF-08 | El rol (usuario/administrador) se determina y valida en el **servidor**; no seleccionable ni alterable desde el cliente. | RN-03.7, plan §2.6 | Manipular el cliente no cambia el rol; rutas admin protegidas (403). |
-| RNF-09 | Las claves/tokens (LLM, sesión) no llegan al navegador ni al repositorio. | canon, plan §2.6 | Inspección: sin secretos en el cliente ni en el repo. |
+| RNF-09 | Las claves/tokens (LLM, firma de sesión) no llegan al navegador ni al repositorio: viven en el gestor de secretos del entorno. | canon, plan §2.6, ADR-002-D7 | Inspección: sin secretos en el cliente ni en el repo. |
 | RNF-10 | Rate limit configurable por entorno: **3 solicitudes/min y 30/día por usuario**; timeout de LLM **20 s**; máx. **4 intercambios** de historial de sesión enviados al LLM. | RN-02.9, plan §4.13 | Prueba automatizada confirma que la solicitud 4/min y la 31/día del mismo usuario responden `429`. |
 
 ## 3. Requisitos de calidad (RC) — SQuaRE / ISO-IEC 25010:2023 con GQM y umbral
@@ -87,14 +87,14 @@ Cada RC: **característica 25010:2023** · **GQM** (meta → pregunta → **mét
 | **RC-02** | Safety §3.9.2 *risk identification* | Detectar el peligro **explícito** del conjunto de prueba. | ¿Qué *recall* alcanza el gate sobre un set definido de frases de peligro explícito? | MET-02: verdaderos positivos / total del set. | **≥ 0,90** sobre el set definido (honesto: explícito, no clínico) |
 | **RC-03** | Safety §3.9.1 *operational constraint* | Las guardas impiden salidas de riesgo del LLM. | ¿Qué % de *prompts* adversarios de prueba producen salida bloqueada/segura? | MET-03: salidas seguras / *prompts* adversarios. | **≥ 0,95** |
 | **RC-04** | Security (confidencialidad) | Minimización: el LLM solo recibe la cápsula. | ¿Cuántos *payloads* inspeccionados contienen campos prohibidos? | MET-04: *payloads* con fuga / *payloads* inspeccionados. | **0 fugas (100 % limpios)** |
-| **RC-05** | Performance efficiency (tiempo) | Respuesta conversacional en tiempo aceptable. | ¿Cuál es el p95 del tiempo de respuesta? | MET-05: p95 de latencia extremo a extremo. | **p95 ≤ 5 s** [N6] |
+| **RC-05** | Performance efficiency (tiempo) | Respuesta conversacional en tiempo aceptable. | ¿Cuál es el p95 del tiempo de respuesta? | MET-05: p95 de latencia extremo a extremo, **arranque en frío incluido**. | **p95 ≤ 5 s** [N6] |
 | **RC-06** | Interaction capability §3.4 | Onboarding usable sin ayuda. | ¿Qué % de usuarios de prueba completan el onboarding sin asistencia? | MET-06: usuarios que completan / total (n≥5). | **≥ 80 %** |
 | **RC-07** | Reliability (disponibilidad en demo) | El MVP responde o degrada con gracia. | ¿Qué % de peticiones de la demo terminan con éxito o *fallback*? | MET-07: peticiones OK+fallback / totales. | **≥ 95 %** |
 | **RC-08** | Functional suitability (corrección) | Coherencia de personaje (Alan/Aura). | ¿Qué puntúa el diálogo en la rúbrica de coherencia de persona? | MET-08: promedio de rúbrica 1–5 (n≥10 diálogos). | **≥ 4,0 / 5** |
-| **RC-09** | Flexibility (instalabilidad) | Desplegable en *free tier* de forma reproducible. | ¿El despliegue sigue los pasos documentados sin intervención extra? | MET-09: despliegue reproducible (sí/no) según runbook. | **Sí, 1 corrida documentada** [N6] |
+| **RC-09** | Flexibility (instalabilidad) | Desplegable en **capa gratuita** de forma reproducible. | ¿El despliegue sigue los pasos documentados sin intervención extra? | MET-09: despliegue reproducible (sí/no) según runbook. | **Sí, 1 corrida documentada** [N6] |
 | **RC-10** | Maintainability (modificabilidad) | Cambiar recursos/textos sin tocar código. | ¿Qué % de cambios de recursos/textos se hacen por **configuración de entorno** sin desplegar código? | MET-10: cambios por configuración de entorno / cambios totales. | **100 %** |
 
-> **Nota de honestidad (§4.9):** RC-02 mide *recall* sobre un **conjunto de prueba de frases explícitas** definido por el equipo; **no** es una garantía de detección clínica ni de casos implícitos (ver SEG-01). RC-05/RC-09 dependen de servicios externos [N6].
+> **Nota de honestidad (§4.9):** RC-02 mide *recall* sobre un **conjunto de prueba de frases explícitas** definido por el equipo; **no** es una garantía de detección clínica ni de casos implícitos (ver SEG-01). RC-05/RC-09 dependen de servicios externos [N6]. Desde `ADR-002`, **RC-05 incorpora un factor nuevo que antes no existía**: el arranque en frío de las funciones sin servidor. Su magnitud real **no se ha medido** y puede comprometer el umbral de 5 s; está registrada como riesgo en `PLAN-01` R-6 y como verificación en `V6-a`.
 
 ## 4. Reglas de negocio tipadas (RN) — consolidado
 Taxonomía Wiegers: término / hecho / restricción / habilitador de acción / inferencia / cálculo. Las reglas raíz (RN-01…RN-11) viven en MV-01 §7.1; las de vista (RN-01.x onboarding, RN-02.x conversación, RN-03.x administración, RN-04.x cuenta/acceso) en MV-01 §7.2–§7.5. Consolidado por tipo:
@@ -114,7 +114,7 @@ Taxonomía Wiegers: término / hecho / restricción / habilitador de acción / i
 Cada RF/RNF/RC entra en TRZ-01 con su objetivo, MV de origen, regla, requisito de calidad, norma (NORM-01) y prueba planificada. **Cero requisitos huérfanos** es criterio de cierre.
 
 ## 6. Cierre
-- **Decisiones confirmadas:** RF-01…RF-26, RNF-01…RNF-09, RC-01…RC-10 con umbral (SD-15: cuenta/acceso y admin de plataforma alineados al plan de Codex).
+- **Decisiones confirmadas:** RF-01…RF-26, RNF-01…RNF-10, RC-01…RC-10 con umbral (SD-15: cuenta/acceso y admin de plataforma alineados al plan de Codex).
 - **Recomendaciones:** fijar el *set* de prueba de RC-02 antes de construcción; congelar umbrales [N6] tras verificar servicios (V6-a).
 - **Supuestos:** los umbrales de latencia/instalabilidad se cumplen en el *free tier* elegido (a verificar).
 - **Pendientes:** V6-a (servicios), V6-b (frontera legal, PRIV-01).

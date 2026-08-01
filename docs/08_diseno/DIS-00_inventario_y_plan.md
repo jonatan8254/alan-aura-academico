@@ -1,6 +1,6 @@
 # DIS-00 — Inventario de pantallas y plan de diseño del MVP
-**ID:** DIS-00 · **Familia:** DIS (diseño de interfaz) · **Hogar:** `docs/08_diseno/` · **Fecha:** 2026-07-16 · **Versión:** v1.0 · **Estado:** Propuesto (dirección para validar).
-**Insumos:** DCU-01 (10 CU), ECU-00…10 (flujos §11), REQ-01 (RF-01…26), plan §3.1/§3.2/§4.9 (rutas), VIS-01 (OBJ), PRIV-01, SEG-01. **Sistema:** DIS-01. **Consumidores:** mockups (Fase 5), fase de construcción; puebla el §17 de las ECU.
+**ID:** DIS-00 · **Familia:** DIS (diseño de interfaz) · **Hogar:** `docs/08_diseno/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 (SD-29: procedencia de la columna de rutas precisada; **las 16 pantallas y sus rutas no cambian** — son independientes del stack) · **Estado:** Propuesto (dirección para validar).
+**Insumos:** DCU-01 (14 CU), ECU-00…14 (flujos §11), REQ-01 (RF-01…26), plan §3.1/§3.2/§4.9 (rutas — su **tabla formal** sigue diferida a `ARQ-01`, posterior al CDR), VIS-01 (OBJ), PRIV-01, SEG-01. **Sistema:** DIS-01. **Consumidores:** mockups (Fase 5), fase de construcción; puebla el §17 de las ECU.
 
 ---
 
