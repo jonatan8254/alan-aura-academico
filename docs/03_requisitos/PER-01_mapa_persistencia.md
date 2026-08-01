@@ -39,11 +39,15 @@ Motor: **SQLite** (ADR-001-D2), justificado precisamente porque el volumen es m�
 
 ## 2. Mapa general — las 7 entidades
 
+> **Correspondencia con el modelo de dominio (añadida en el PDR-01).** Los nombres de esta columna son de **persistencia**, no del dominio, y **no** deben usarse en las especificaciones de casos de uso, que hablan el vocabulario de `MD-01 v1.4`:
+> `User` = `Usuario` · `ConsentRecord` = `Consentimiento` · `InitialConversationProfile` = `CapsulaDePerfil` · `PlatformSetting` = `DisponibilidadDelChatbot` · `DailyUsageCounter` = `ContadorDeUsoDiario` · `OperationalEvent` = `EventoOperativo` · `AdministrativeAction` = **sin clase de dominio**, por decisión declarada (auditoría de operación, no concepto del problema).
+> Usar `ConsentRecord` en una especificación fue el hallazgo **D-11**, corregido en `ECU-08`.
+
 | # | Entidad | Qué guarda | Origen (CU que la crea) | Va al LLM | Retención |
 |---|---|---|---|---|---|
 | 1 | `User` | Cuenta, rol, declaración de adultez | CU-02 «Registrar cuenta» | **No** | Hasta eliminación o cierre **+ 30 días** [E1] |
-| 2 | `ConsentRecord` | Consentimiento otorgado/revocado | CU-05 «Otorgar consentimiento…» | **No** | Igual que la cuenta [E1] |
-| 3 | `InitialConversationProfile` | La **cápsula** (`ContextoInicialConversacionalV1`) | CU-05 (paso 7) | **Sí** (único) | Hasta reinicio, revocación o eliminación [E1] |
+| 2 | `ConsentRecord` | Consentimiento otorgado/revocado, **por capas** (base y personalización) | CU-05; **CU-12** revoca la de personalización | **No** | Igual que la cuenta [E1] |
+| 3 | `InitialConversationProfile` | La **cápsula** (`ContextoInicialConversacionalV1`) | CU-05 (paso 8) + **CU-14** escribe `character` | **Sí** (único) | Hasta reinicio, revocación o eliminación [E1] |
 | 4 | `PlatformSetting` | Estado del kill switch | CU-10 «Habilitar/deshabilitar…» | **No** | Vigencia [E1] |
 | 5 | `DailyUsageCounter` | Llamadas/día por usuario (cuota) | CU-06 (efecto lateral) | **No** | **Máx. 30 días** [E1] |
 | 6 | `OperationalEvent` | Telemetría técnica **sin contenido** | CU-06 (efecto lateral) | **No** | **30 días** [E1] |
@@ -101,7 +105,7 @@ Reglas que el almacenamiento debe respetar:
 - **Sin *defaults*** para los campos omitidos: la cápsula se arma solo con lo respondido (RN-01.3, FA-01/FA-02 de ECU-05). Un campo omitido **no se guarda**; no se guarda vacío ni con valor por defecto. Omitir los 4 autorreportes deja la cápsula con **un solo campo de contenido**. [E1]
 - **Ningún autorreporte es obligatorio** (RN-01.4, precisada en SD-26): el usuario puede omitir los cuatro sin perder el acceso al chat.
 - El valor persistido de `character` es la **última elección** y actúa como predeterminado; el personaje es **cambiable por sesión** (RN-02.6) sin reescribir la cápsula. [E1]
-- **Reiniciar la caracterización borra también `character`** ⇒ el usuario queda sin poder conversar hasta rehacer CU-05 (FA-01 de ECU-04, RF-22). Consecuencia deliberada de RN-01.6. [E1]
+- **Reiniciar la caracterización borra también `character`** ⇒ el usuario queda sin poder conversar hasta rehacer CU-05 (**CU-11**, que en el PDR-01 dejó de ser un flujo alternativo de ECU-04 y pasó a caso de uso propio; RF-22). Consecuencia deliberada de RN-01.6. [E1]
 - Es el **único** origen de datos que viaja al proveedor LLM (PRIV-R1).
 - El administrador **no** puede alcanzarla por ninguna vía (PRIV-R7, RN-03.5).
 
@@ -167,13 +171,13 @@ Retención: vigencia del curso + 30 días.
 
 | ID | Regla | Traza |
 |---|---|---|
-| **PER-T1** | **Borrado en cascada:** eliminar `User` suprime `ConsentRecord` + `InitialConversationProfile` + `DailyUsageCounter` de ese usuario. | PRIV-R11, RN-04.4, RF-24, CA-01 de ECU-04 [E1] |
+| **PER-T1** | **Borrado en cascada:** eliminar `User` suprime `ConsentRecord` + `InitialConversationProfile` + `DailyUsageCounter` de ese usuario. | PRIV-R11, RN-04.4, RF-24, **primer criterio de aceptación de ECU-04 v2.0** —se cita en prosa porque la renumeración del PDR-01 cambió los identificadores— [E1] |
 | **PER-T2** | **No reidentificación de la telemetría:** `OperationalEvent` y `AdministrativeAction` no deben permitir reconstruir qué hizo un usuario concreto (no llevan alias ni username; plan §4.15). | plan §4.15, PRIV-R10 [E1] |
 | **PER-T3** | **Segregación del administrador:** ninguna consulta administrativa puede alcanzar `InitialConversationProfile`, contenido, respuestas de encuesta, personaje elegido ni conteos por usuario. | PRIV-R7, PRIV-R10, RN-03.5 [E1] |
 | **PER-T4** | **Directorio truncado:** CU-08 expone únicamente alias, **ID truncado**, fecha de registro, **`estado` ∈ {activo, sin consentimiento vigente}** (derivado, no almacenado aparte) y flag de onboarding. | RN-03.2, RF-15, SD-26 [E1] |
 | **PER-T5** | **Purga por ventana:** retenciones heterogéneas (30 días para contadores y eventos; vigencia para cuenta) exigen un mecanismo de purga programada, no solo un campo de fecha. | plan §4.14 [I2] |
 | **PER-T6** | **Hash de contraseña** en almacenamiento; jamás en claro, en el cliente ni accesible al admin. | PRIV-R12, RNF-09 [E1] |
-| **PER-T7** | **Reinicio ≠ revocación:** «reiniciar caracterización» (RF-22) **borra** la cápsula; «revocar personalización» (RF-23) hace que **deje de alimentar** la conversación. Son dos operaciones distintas sobre estados distintos. | RN-04.3, RN-07, FA-01/FA-02 de ECU-04 [E1] |
+| **PER-T7** | **Reinicio ≠ revocación:** «reiniciar caracterización» (RF-22) **borra** la cápsula; «revocar personalización» (RF-23) hace que **deje de alimentar** la conversación. Son dos operaciones distintas sobre estados distintos. | RN-04.3, RN-07, **ECU-11 y ECU-12** — antes flujos alternativos de ECU-04, hoy casos de uso propios [E1] |
 
 ---
 
@@ -250,7 +254,7 @@ La no-persistencia es una propiedad **de este sistema**; no de la cadena complet
 | Requisito de calidad | RC-04 (security/minimización) | Ancla verificable: inspección de BD y logs |
 | Decisión técnica | ADR-001-D2 (SQLite) | Motor de persistencia |
 | Modelo de dominio | MD-01 (`Usuario`, `Consentimiento`, `CapsulaDePerfil`, `DisponibilidadDelChatbot`; `Conversacion`/`Mensaje` **sin** contraparte persistida) | Vocabulario; PER-01 no lo contradice |
-| Casos de uso | ECU-02 (crea `User`), ECU-05 (crea `ConsentRecord` + cápsula), ECU-06 (crea `OperationalEvent`/`DailyUsageCounter`; **no** persiste contenido), ECU-04 (borra/revoca/cascada), ECU-08/09 (leen agregados), ECU-10 (escribe `PlatformSetting` + `AdministrativeAction`) | Quién crea, lee y borra cada entidad |
+| Casos de uso | ECU-02 (crea `User`), ECU-05 (crea `ConsentRecord` + cápsula), ECU-11 (borra la cápsula entera), ECU-12 (revoca la capa de personalización y marca los autorreportes para descarte), ECU-06 (crea `OperationalEvent`/`DailyUsageCounter`; **no** persiste contenido), ECU-04 (borra/revoca/cascada), ECU-08/09 (leen agregados), ECU-10 (escribe `PlatformSetting` + `AdministrativeAction`) | Quién crea, lee y borra cada entidad |
 | Validación pendiente | **V6-a** (retención/ZDR de Groq) · **V6-b** (frontera legal, Ley 1581) | Fuera del alcance resoluble aquí |
 | Consumidor futuro | Diseño de clases / modelo de datos (fase 2 tardía), migraciones Django (fase 3) | PER-01 es su insumo consolidado |
 

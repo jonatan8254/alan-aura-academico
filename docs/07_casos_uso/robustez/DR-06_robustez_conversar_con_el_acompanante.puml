@@ -48,6 +48,7 @@ entity "CapsulaDePerfil" as E_CapsulaDePerfil
 entity "Consentimiento" as E_Consentimiento
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
 entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario
+entity "EventoDeSeguridad" as E_EventoDeSeguridad
 entity "EventoOperativo" as E_EventoOperativo
 
 ACT_Usuario -- B_InterfazDeChat : 1 elige personaje e inicia la conversacion
@@ -70,6 +71,7 @@ C_ValidarTurno -- C_VerificarLimitesDeTasa : 2 turno bien formado
 C_VerificarLimitesDeTasa -- E_ContadorDeUsoDiario : 2 contrasta 3 por minuto y 30 por dia
 C_VerificarLimitesDeTasa -- C_EvaluarGate : 3 dentro de los limites de tasa
 C_EvaluarGate -- E_Mensaje : 3 examina el mensaje antes de responder
+C_EvaluarGate -- E_EventoDeSeguridad : 3 ante peligro explicito lo documenta; el evento se materializa en CU-07
 C_EvaluarGate -- C_ConstruirContextoMinimo : 4 sin peligro explicito
 C_ConstruirContextoMinimo -- E_CapsulaDePerfil : 4 toma character siempre; los cuatro autorreportes solo con la capa de personalizacion otorgada
 C_ConstruirContextoMinimo -- E_Personaje : 4 toma la persona del personaje
@@ -201,14 +203,13 @@ note as N_DR06
     "Validar la longitud y la estructura del turno"). Dibujar un atajo desde la pantalla de
     error hacia la solicitud al proveedor habria creado un camino que alcanza el LLM
     saltandose el gate de seguridad (RN-02.1) y el verificador de limites de tasa (RN-02.9).
-  - <b>Hallazgos de trazabilidad reportados (no se corrigen aqui):</b> (a) `Consentimiento`
-    se usa por PRE-03 y es clase de MD-01, pero ECU-06 §7 y §18 no lo listan entre los
-    conceptos del CU; (b) ECU-06 §18 asigna a este CU la operacion "Validar" sobre
-    `EventoDeSeguridad` en el paso 3, pero el evento se origina en CU-07: aqui esa fila se
-    realiza como la evaluacion del gate sobre el Mensaje mas el desvio; (c) DIS-00 se
-    contradice sobre el limite de sesion — §2 lo lista en P-10 y §3 lo repite en P-11; este
-    diagrama sigue §2, que es la tabla de inventario.
-  - <b>Tamano:</b> 38 elementos. No procede partir el caso de uso: los 11 cursos no basicos
+  - <b>Los tres hallazgos de trazabilidad que la v1.0 reportaba estan cerrados.</b> (a)
+    `Consentimiento` ya figura en §7 y §18 de ECU-06 v2.0, y aqui es entidad. (b)
+    `EventoDeSeguridad` tambien: el gate lo documenta en el paso 3, aunque quien lo
+    materializa y lo usa es CU-07 — por eso el arco dice "se documenta", no "crea". (c) La
+    contradiccion de DIS-00 sobre el limite de sesion (hallazgo D-13) se resolvio en la fase
+    D.5 a favor de §2, que es la tabla de inventario y la que este diagrama ya seguia.
+  - <b>Tamano:</b> 40 elementos. No procede partir el caso de uso: los 11 cursos no basicos
     son todos de un solo nivel (sin subalternos), hay un unico actor primario y un unico
     objetivo. El volumen viene de la anchura de la tabla de codigos (RF-26) y de la carga de
     canon (gate, guardas, minimizacion, no persistencia).

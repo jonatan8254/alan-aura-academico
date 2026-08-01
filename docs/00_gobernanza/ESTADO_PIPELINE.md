@@ -4,7 +4,9 @@
 ---
 
 ## Dónde estamos
-Fase **1 cerrada** y **Fase 2 (ICONIX) en curso** (act. 2026-07-16): el paquete documental está completo y ya se produjeron **tres** artefactos ICONIX — el **modelo de dominio `MD-01`** (`docs/06_dominio/`), el **diagrama de casos de uso `DCU-01`** (`docs/07_casos_uso/`) y la **especificación textual de los 10 casos de uso `ECU-00…ECU-10`** (`docs/07_casos_uso/especificaciones/`). MD-01 y DCU-01 llevan validador de la skill en 0 errores; las ECU pasaron el gate documental (checklist §22 embebido + auditoría, sin hallazgos Crítico/Mayor). No hay código ni pilotos, por diseño. Siguiente artefacto ICONIX: **análisis de robustez**.
+Fase **1 cerrada** y **Fase 2 (ICONIX) en curso** (act. 2026-07-31): el paquete documental está completo y ya se produjeron **cuatro** artefactos ICONIX — el **modelo de dominio `MD-01`** (`docs/06_dominio/`), el **diagrama de casos de uso `DCU-01 v2.1`** (`docs/07_casos_uso/`), la **especificación textual de los 14 casos de uso `ECU-00…ECU-14`** (`docs/07_casos_uso/especificaciones/`) y el **análisis de robustez `DR-00…DR-14`** (`docs/07_casos_uso/robustez/`).
+
+Estado medido tras la primera pasada de correcciones (**PDR-01**): los **tres validadores en 0 errores** — MD-01 v1.4, DCU-01 v2.1, las 14 especificaciones (0 errores y 0 advertencias) y los 14 diagramas de robustez. Las especificaciones cubren el **100 % de sus 76 flujos** con un criterio de aceptación asociado; los diagramas de robustez suman **259 elementos** y su cobertura de flujos es completa. Los **26 RF** tienen caso de uso propio y único, y las **16 clases** del dominio se manifiestan en casos de uso y en robustez (`TRZ-01` §5.1 y §5.2). No hay código ni pilotos, por diseño. Siguiente artefacto ICONIX: **diagramas de secuencia**.
 
 ## Fases del subproyecto
 
@@ -36,7 +38,7 @@ Fase **1 cerrada** y **Fase 2 (ICONIX) en curso** (act. 2026-07-16): el paquete 
 ## Fuente primaria archivada y reconciliada (SD-16/SD-17, 2026-07-12)
 `00_PLAN_CODEX_ORIGINAL.md` — texto completo verbatim del plan de Codex. **Reconciliación APLICADA** (SD-17) contra los 5 puntos identificados al comparar con la reconstrucción forense previa:
 1. ✅ Historial de sesión (hasta 4 intercambios, no "cero historial") — MV-01 RN-02.2/RN-03, REQ-01 RF-09/RNF-04, PRIV-01 PRIV-R1, CONTRATO C-4/CA-4.
-2. ✅ Límites de tasa exactos (3/min, 30/día, 20s timeout, 1.500 caracteres, 350 tokens) — MV-01 RN-02.8/RN-02.9, REQ-01 RF-25/26/RNF-10, TRZ-01.
+2. ✅ Límites de tasa exactos (3/min, 30/día, 20s timeout, **2.500 caracteres**, 350 tokens) — MV-01 RN-02.8/RN-02.9, REQ-01 RF-25/26/RNF-10, TRZ-01. El límite por mensaje se elevó de 1.500 a 2.500 en el PDR-01.
 3. ✅ Inventario de PRIV-01 mapeado 1:1 a las 7 entidades del plan (`User`/`ConsentRecord`/`InitialConversationProfile`/`PlatformSetting`/`DailyUsageCounter`/`OperationalEvent`/`AdministrativeAction`).
 4. ✅ Tabla de personajes del contrato enriquecida (P-1..P-8: función/tono/respuesta típica/preguntas/sugerencias/longitud/límites).
 5. ✅ Plantilla del fallback citada en SEG-01 §5 (sin números fijos, respeta SD-12).
