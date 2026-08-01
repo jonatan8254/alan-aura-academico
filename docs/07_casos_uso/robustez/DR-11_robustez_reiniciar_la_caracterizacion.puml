@@ -1,0 +1,116 @@
+@startuml
+' DR-11 — Analisis de robustez de CU-11 «Reiniciar la caracterizacion»
+' Insumos: ECU-11 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-13; destinos P-08, P-03), PRIV-01, PER-01
+' Nuevo en el PDR-01 fase D.4. Los elementos proceden del flujo alternativo «Reiniciar
+' caracterizacion» de DR-04 v1.0, que salio de alli cuando paso a ser caso de uso propio.
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Usuario adulto" as ACT_Usuario
+
+boundary "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta
+boundary "Onboarding - caracterizacion (P-08)" as B_PantallaCaracterizacion
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
+
+control "Presentar la advertencia de borrado irreversible" as C_PresentarAdvertencia
+control "Recibir la confirmacion explicita del reinicio" as C_RecibirConfirmacion
+control "Borrar la capsula completa, incluido character" as C_BorrarCapsulaCompleta
+control "Declarar que la cuenta y el consentimiento siguen intactos" as C_DeclararAlcanceDelBorrado
+control "Ofrecer rehacer la caracterizacion desde CU-05" as C_OfrecerRehacerCaracterizacion
+control "Informar que no hay caracterizacion que reiniciar" as C_InformarSinCaracterizacion #LightCoral
+control "Cancelar el reinicio" as C_CancelarReinicio #LightCoral
+control "Denegar por permiso insuficiente" as C_DenegarPorPermiso #LightCoral
+control "Informar la confirmacion ausente o la peticion invalida" as C_MsgPeticionInvalida #LightCoral
+control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+
+entity "Usuario" as E_Usuario
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "Consentimiento" as E_Consentimiento
+
+ACT_Usuario -- B_PaginaGestionCuenta : 1 elige reiniciar la caracterizacion
+B_PaginaGestionCuenta -- C_PresentarAdvertencia : 1 solicita el reinicio
+C_PresentarAdvertencia -- E_CapsulaDePerfil : 1 enumera que el borrado alcanza tambien character
+C_PresentarAdvertencia -- B_PaginaGestionCuenta : 1 advierte que es irreversible y que perdera el acceso al chat
+B_PaginaGestionCuenta -- C_RecibirConfirmacion : 2 confirma el reinicio de forma explicita
+C_RecibirConfirmacion -- C_BorrarCapsulaCompleta : 3 confirmacion recibida
+C_BorrarCapsulaCompleta -- E_CapsulaDePerfil : 3 borra los cuatro autorreportes, character y los metadatos; la capsula deja de existir
+C_BorrarCapsulaCompleta -- C_DeclararAlcanceDelBorrado : 4 borrado ejecutado
+C_DeclararAlcanceDelBorrado -- E_Usuario : 4 la cuenta permanece
+C_DeclararAlcanceDelBorrado -- E_Consentimiento : 4 el consentimiento permanece con sus dos capas
+C_DeclararAlcanceDelBorrado -- B_PaginaGestionCuenta : 4 declara que el chat queda inhabilitado
+C_DeclararAlcanceDelBorrado -- C_OfrecerRehacerCaracterizacion : 5 alcance declarado
+C_OfrecerRehacerCaracterizacion -- B_PantallaCaracterizacion : 5 abre el acceso a rehacer CU-05 desde su paso 6
+
+B_PaginaGestionCuenta -- C_InformarSinCaracterizacion : FA-01 no existe capsula porque ya se reinicio antes
+C_InformarSinCaracterizacion -- B_PaginaGestionCuenta : FA-01 finaliza sin cambios; operacion idempotente
+C_PresentarAdvertencia -- C_BorrarCapsulaCompleta : FA-02 la capsula solo tiene character y sus metadatos
+B_PaginaGestionCuenta -- C_CancelarReinicio : FA-03 el Usuario cancela la advertencia
+C_CancelarReinicio -- B_PaginaGestionCuenta : FA-03 cancela; la capsula queda completa y el chat sigue disponible
+
+B_PaginaGestionCuenta -- C_SolicitarReingreso : FE-01 la sesion expira
+C_SolicitarReingreso -- B_PaginaInicioSesion : FE-01 termina; 401 y la capsula sigue completa
+B_PaginaGestionCuenta -- C_DenegarPorPermiso : FE-02 el rol no esta autorizado
+C_DenegarPorPermiso -- B_PaginaGestionCuenta : FE-02 termina; 403 sin borrar nada
+C_RecibirConfirmacion -- C_MsgPeticionInvalida : FE-03 llega sin confirmacion explicita o mal formada
+C_MsgPeticionInvalida -- B_PaginaGestionCuenta : FE-03 vuelve al paso 1; 400 sin ejecutar el borrado
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR11
+  <b>CU-11 - Reiniciar la caracterizacion</b> (ECU-11 v1.0) - actor: Usuario adulto
+  PRE-01 sesion activa. PRE-02 rol usuario validado en servidor. PRE-03 existe una
+  CapsulaDePerfil (si no, ver FA-01).
+  <b>Disparador</b> El Usuario elige «Reiniciar la caracterizacion» en la Gestion de cuenta.
+
+  <b>Flujo basico</b>
+  1. El Usuario elige reiniciar la caracterizacion. El sistema presenta la advertencia: el
+     borrado es irreversible, alcanza tambien character, y perdera el acceso al chat hasta
+     rehacer la caracterizacion.
+  2. El Usuario confirma el reinicio de forma explicita.
+  3. El sistema borra la CapsulaDePerfil completa: los cuatro autorreportes, character,
+     schema_version y consent_version. La capsula deja de existir.
+  4. El sistema declara que la cuenta y el Consentimiento siguen intactos y que el chat queda
+     inhabilitado.
+  5. El sistema ofrece rehacer la caracterizacion desde el paso 6 de CU-05.
+
+  <b>Cursos alternativos</b>
+  FA-01 Caracterizacion ya reiniciada (paso 1): no existe capsula; informa y no repite el
+        borrado. Finaliza sin cambios; operacion idempotente.
+  FA-02 Capsula con solo character (paso 2): el Usuario omitio los cuatro autorreportes en el
+        onboarding; el borrado alcanza igualmente character y sus metadatos. Continua.
+  FA-03 Cancelar la confirmacion (paso 2): no borra nada; la capsula queda completa y el chat
+        sigue disponible. Cancela.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Sesion ausente (cualquier paso): 401; no borra la capsula. Termina.
+  FE-02 Permiso insuficiente (paso 1): 403; sin cambios. Termina.
+  FE-03 Confirmacion ausente o peticion mal formada (paso 2): 400; no ejecuta el borrado.
+        Vuelve al paso 1.
+
+  <b>Postcondicion</b> La CapsulaDePerfil deja de existir; la cuenta y el Consentimiento
+  permanecen; el chat queda inhabilitado hasta rehacer CU-05 desde su paso 6.
+  <b>Reglas</b> RN-04.3, RN-01.6. <b>Traza</b> RF-22 -> OBJ-7.
+  <b>Pantallas</b> P-13 compartida con CU-04 y CU-12; P-08 al ofrecer rehacer; P-03 en FE-01.
+
+  <b>Notas de modelado</b>
+  - <b>Reiniciar no es revocar, y el diagrama lo dice.</b> Aqui el arco a CapsulaDePerfil borra
+    la capsula ENTERA, character incluido, y por RN-01.6 eso inhabilita el chat. En DR-12 el
+    arco equivalente conserva character y el Usuario sigue conversando. Los dos casos de uso
+    comparten pantalla y se confundian cuando ambos eran flujos alternativos de "Gestionar
+    cuenta"; separarlos hace visible que sus postcondiciones son opuestas.
+  - <b>La advertencia es un controlador propio, no un mensaje.</b> Materializa el requisito de
+    confirmacion que la v1.1 de ECU-04 solo exigia para eliminar la cuenta, dejando este
+    borrado -igual de irreversible- sin ninguno. Era el hallazgo D-02.
+  - <b>El paso 5 no ejecuta CU-05: abre su acceso.</b> Por eso el controlador se llama
+    "Ofrecer rehacer" y termina en la pantalla P-08, sin arrastrar CU-05 al diagrama. Rehacer
+    el onboarding es una decision posterior del Usuario, no un paso de este caso de uso.
+  - <b>El Consentimiento aparece aunque no se modifique.</b> El paso 4 declara explicitamente
+    que permanece: es parte del alcance que el Usuario necesita conocer, y omitirlo dejaria
+    sin objeto la frase del texto que lo afirma.
+end note
+
+@enduml

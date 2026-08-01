@@ -1,0 +1,131 @@
+@startuml
+' DR-03 (v2.0, PDR-01 fase D.4) — Analisis de robustez de CU-03 «Iniciar y cerrar sesion»
+' Insumos: ECU-03 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-03, P-04; destinos P-05, P-10, P-14), REQ-01
+' v2.0: el actor pasa a ser el rol general «Titular de cuenta»; el cierre de sesion entra al
+' flujo basico (RF-21, que el nombre viejo omitia); la bifurcacion del paso 4 declara su criterio.
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Titular de cuenta" as ACT_Titular
+
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+boundary "Inicio de sesion de administracion (P-04)" as B_PaginaInicioSesionAdmin #LightCoral
+boundary "Onboarding - disclosure de IA (P-05)" as B_PantallaDisclosure #LightCoral
+boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
+boundary "Directorio de usuarios (P-14)" as B_DirectorioDeUsuarios #LightCoral
+
+control "Solicitar username y contrasena, sin seleccion de rol" as C_SolicitarCredenciales
+control "Contrastar las credenciales con la cuenta registrada" as C_VerificarCredenciales
+control "Determinar el rol en el servidor" as C_DeterminarRolEnElServidor
+control "Establecer la sesion con el rol determinado" as C_EstablecerSesion
+control "Comprobar si el Usuario completo el onboarding" as C_ComprobarOnboardingCompleto
+control "Dirigir a la conversacion" as C_DirigirAConversacion
+control "Invalidar la sesion en el servidor" as C_CerrarSesion
+control "Dirigir al onboarding pendiente" as C_DirigirAlOnboarding #LightCoral
+control "Dirigir al panel administrativo" as C_DirigirAlPanelAdministrativo #LightCoral
+control "Mostrar mensaje generico de credenciales incorrectas" as C_MsgCredencialesIncorrectas #LightCoral
+control "Denegar el acceso a la ruta administrativa" as C_DenegarAccesoAdministrativo #LightCoral
+control "Solicitar autenticacion en funcion protegida" as C_SolicitarAutenticacion #LightCoral
+
+entity "TitularDeCuenta" as E_TitularDeCuenta
+entity "Usuario" as E_Usuario
+entity "Administrador" as E_Administrador #LightCoral
+entity "Consentimiento" as E_Consentimiento
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+
+ACT_Titular -- B_PaginaInicioSesion : 1 abre el inicio de sesion
+B_PaginaInicioSesion -- C_SolicitarCredenciales : 1 solicita username y contrasena
+C_SolicitarCredenciales -- E_TitularDeCuenta : 1 no ofrece seleccion de rol
+B_PaginaInicioSesion -- C_VerificarCredenciales : 2 escribe sus credenciales y las envia
+C_VerificarCredenciales -- E_TitularDeCuenta : 2 contrasta con la cuenta registrada
+C_VerificarCredenciales -- C_DeterminarRolEnElServidor : 2 credenciales validas
+C_DeterminarRolEnElServidor -- E_Usuario : 2 determina el rol en el servidor, sin intervencion del cliente
+C_DeterminarRolEnElServidor -- C_EstablecerSesion : 3 rol determinado
+C_EstablecerSesion -- C_ComprobarOnboardingCompleto : 4 sesion activa con el rol determinado
+C_ComprobarOnboardingCompleto -- E_Consentimiento : 4 comprueba que exista la capa base otorgada
+C_ComprobarOnboardingCompleto -- E_CapsulaDePerfil : 4 comprueba que exista con character
+C_ComprobarOnboardingCompleto -- C_DirigirAConversacion : 4 onboarding completo
+C_DirigirAConversacion -- B_InterfazDeChat : 4 dirige a la conversacion
+ACT_Titular -- B_InterfazDeChat : 5 elige cerrar la sesion
+B_InterfazDeChat -- C_CerrarSesion : 5 solicita el cierre de sesion
+C_CerrarSesion -- E_TitularDeCuenta : 5 deja de reconocer al titular
+C_CerrarSesion -- B_PaginaInicioSesion : 5 finaliza; invalida la sesion en el servidor
+
+C_ComprobarOnboardingCompleto -- C_DirigirAlOnboarding : FA-01 falta la capa base o la capsula con character
+C_DirigirAlOnboarding -- B_PantallaDisclosure : FA-01 continua en CU-05, no en la conversacion
+
+ACT_Titular -- B_PaginaInicioSesionAdmin : FA-02 entra por el acceso separado de administracion
+B_PaginaInicioSesionAdmin -- C_VerificarCredenciales : FA-02 envia credenciales por la ruta administrativa
+C_DeterminarRolEnElServidor -- E_Administrador : FA-02 determina el rol de administrador en el servidor
+C_EstablecerSesion -- C_DirigirAlPanelAdministrativo : FA-02 el servidor confirma el rol de administrador
+C_DirigirAlPanelAdministrativo -- B_DirectorioDeUsuarios : FA-02 continua en el panel, sin pasar por el onboarding
+B_DirectorioDeUsuarios -- C_CerrarSesion : FA-02 el Administrador tambien cierra la sesion por el paso 5
+
+C_VerificarCredenciales -- C_MsgCredencialesIncorrectas : FE-01 las credenciales no coinciden
+C_MsgCredencialesIncorrectas -- B_PaginaInicioSesion : FE-01 vuelve al paso 1 sin revelar que campo fallo ni crear sesion
+C_MsgCredencialesIncorrectas -- B_PaginaInicioSesionAdmin : FE-01 mismo mensaje generico en el acceso de administracion
+C_DeterminarRolEnElServidor -- C_DenegarAccesoAdministrativo : FE-02 rol de usuario pidiendo una ruta administrativa
+C_DenegarAccesoAdministrativo -- B_PaginaInicioSesion : FE-02 termina; no concede privilegios de administrador
+B_InterfazDeChat -- C_SolicitarAutenticacion : FE-03 opera una funcion protegida sin sesion activa
+C_SolicitarAutenticacion -- B_PaginaInicioSesion : FE-03 termina; 401, no cierra nada y pide reingresar
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR03
+  <b>CU-03 - Iniciar y cerrar sesion</b> (ECU-03 v2.0) - actor: Titular de cuenta
+  PRE-01 el Titular tiene una cuenta creada (CU-02). PRE-02 no tiene sesion activa.
+  <b>Disparador</b> El Titular de cuenta abre el inicio de sesion.
+
+  <b>Flujo basico</b>
+  1. El Titular abre Iniciar sesion (P-03). El sistema solicita username y contrasena, sin
+     ofrecer seleccion de rol.
+  2. El Titular escribe sus credenciales y las envia. El sistema las contrasta con la cuenta
+     registrada y determina el rol en el servidor.
+  3. El sistema establece la sesion con el rol que acaba de determinar; el cliente no interviene.
+  4. El sistema comprueba si el Usuario completo el onboarding -existen un Consentimiento con
+     la capa base otorgada y una CapsulaDePerfil con character- y lo dirige a la conversacion.
+  5. El Titular elige cerrar la sesion. El sistema la invalida en el servidor y deja de
+     reconocer al titular. Finaliza.
+
+  <b>Cursos alternativos</b>
+  FA-01 Onboarding pendiente (paso 4): falta la capa base otorgada o la capsula con character;
+        el sistema dirige a CU-05 en vez de a la conversacion. Continua alli.
+  FA-02 Acceso separado de administracion (paso 1): el Titular entra por P-04; con el rol de
+        administrador el sistema lo dirige al panel, sin pasar por el onboarding. El cierre de
+        sesion del paso 5 le aplica igual.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Credenciales invalidas (paso 2 y FA-02): texto generico que no revela que campo fallo;
+        no crea sesion. Vuelve al paso 1.
+  FE-02 Rol insuficiente en ruta administrativa (paso 4 y FA-02): no concede privilegios.
+        Termina.
+  FE-03 Sesion ausente (paso 5 y toda funcion protegida): 401; no cierra nada y pide
+        reingresar. Termina.
+
+  <b>Postcondicion</b> Existe una sesion activa con el rol determinado en el servidor; tras el
+  paso 5, esa sesion queda invalidada y el Titular deja de ser reconocido.
+  <b>Reglas</b> RN-04.1, RN-03.7. <b>Traza</b> RF-14, RF-21 -> OBJ-6, OBJ-7.
+  <b>Pantallas</b> P-03 propia; P-04 en FA-02; P-05 en FA-01; P-10 y P-14 como destinos.
+
+  <b>Notas de modelado</b>
+  - <b>Un solo actor, no dos.</b> DCU-01 v2.1 extrajo el rol general «Titular de cuenta»
+    porque Usuario y Administrador compartian exactamente esta meta. La v1.0 del diagrama
+    dibujaba los dos actores concretos, duplicando la asociacion que la generalizacion vino a
+    eliminar. Usuario y Administrador siguen presentes como <b>entidades</b>, que es lo que
+    son en MD-01 v1.4.
+  - <b>El cierre de sesion es el paso 5, no un flujo alternativo.</b> RF-21 lo exige y el
+    nombre viejo del caso de uso lo omitia. Ponerlo en el flujo basico es lo que hace que el
+    nombre «Iniciar y cerrar sesion» sea cierto.
+  - <b>La bifurcacion del paso 4 declara su criterio.</b> La v1.0 tenia un unico controlador
+    «Dirigir al area correspondiente» que se ramificaba sin decir segun que (hallazgo D-03).
+    Ahora hay un controlador que <b>comprueba</b> el onboarding contra dos entidades concretas,
+    y la rama es visible: completo va a la conversacion, pendiente va a CU-05.
+  - <b>«Sesion» y «rol» no son entidades.</b> El control terminologico de la especificacion los
+    declara fuera del modelo de dominio; son estado de la aplicacion, no conceptos del problema.
+end note
+
+@enduml

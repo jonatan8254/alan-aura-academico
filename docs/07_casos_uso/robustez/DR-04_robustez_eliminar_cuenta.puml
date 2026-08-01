@@ -1,0 +1,129 @@
+@startuml
+' DR-04 (v2.0, PDR-01 fase D.4) — Analisis de robustez de CU-04 «Eliminar cuenta»
+' Insumos: ECU-04 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-13; destinos P-01, P-03), PRIV-01, PER-01
+' v2.0: el caso de uso se estrecha a un solo objetivo. Reiniciar la caracterizacion salio a
+' DR-11 y revocar la personalizacion a DR-12; con ellos, el paso 1 deja de ser un menu.
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Usuario adulto" as ACT_Usuario
+
+boundary "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta
+boundary "Presentacion / landing (P-01)" as B_PaginaPresentacion
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
+
+control "Verificar la sesion y el rol de usuario" as C_VerificarSesionYRol
+control "Presentar el alcance de la supresion" as C_PresentarAlcanceSupresion
+control "Comprobar en servidor que quien confirma es el titular" as C_ComprobarTitularidad
+control "Suprimir la cuenta y ejecutar el borrado en cascada" as C_EliminarEnCascada
+control "Cerrar la sesion y confirmar la supresion" as C_CerrarSesionYConfirmar
+control "Cerrar la conversacion abierta y descartar su contenido" as C_CerrarConversacionAbierta #LightCoral
+control "Cancelar la eliminacion" as C_CancelarEliminacion #LightCoral
+control "Deshacer la cascada interrumpida" as C_DeshacerCascada #LightCoral
+control "Denegar por permiso insuficiente" as C_DenegarPorPermiso #LightCoral
+control "Informar la peticion invalida" as C_MsgPeticionInvalida #LightCoral
+control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+
+entity "Usuario" as E_Usuario
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "Consentimiento" as E_Consentimiento
+entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario
+entity "Conversacion" as E_Conversacion #LightCoral
+entity "Visitante" as E_Visitante
+
+ACT_Usuario -- B_PaginaGestionCuenta : 1 solicita eliminar su cuenta
+B_PaginaGestionCuenta -- C_VerificarSesionYRol : 1 solicita la eliminacion
+C_VerificarSesionYRol -- C_PresentarAlcanceSupresion : 1 sesion activa con rol de usuario validado
+C_PresentarAlcanceSupresion -- E_Usuario : 1 enumera que registros desapareceran
+C_PresentarAlcanceSupresion -- B_PaginaGestionCuenta : 1 advierte que la accion es irreversible
+B_PaginaGestionCuenta -- C_ComprobarTitularidad : 2 confirma explicitamente la eliminacion
+C_ComprobarTitularidad -- E_Usuario : 2 comprueba en servidor que quien confirma es el titular
+C_ComprobarTitularidad -- C_EliminarEnCascada : 3 titularidad comprobada
+C_EliminarEnCascada -- E_Usuario : 3 suprime la cuenta; FA-01 si nunca hubo onboarding, no hay mas que borrar
+C_EliminarEnCascada -- E_CapsulaDePerfil : 3 suprime la capsula
+C_EliminarEnCascada -- E_Consentimiento : 3 suprime el consentimiento con sus dos capas
+C_EliminarEnCascada -- E_ContadorDeUsoDiario : 3 suprime los contadores del usuario
+C_EliminarEnCascada -- C_CerrarSesionYConfirmar : 4 borrado en cascada completado
+C_CerrarSesionYConfirmar -- E_Visitante : 4 la persona queda en la condicion de Visitante
+C_CerrarSesionYConfirmar -- B_PaginaPresentacion : 4 cierra la sesion y confirma que no queda dato recuperable
+
+C_EliminarEnCascada -- C_CerrarConversacionAbierta : FA-02 hay una conversacion en curso al confirmar
+C_CerrarConversacionAbierta -- E_Conversacion : FA-02 cierra la conversacion y descarta su contenido
+B_PaginaGestionCuenta -- C_CancelarEliminacion : FA-03 el Usuario no confirma y cancela
+C_CancelarEliminacion -- B_PaginaGestionCuenta : FA-03 cancela; la cuenta y sus registros quedan intactos
+
+B_PaginaGestionCuenta -- C_SolicitarReingreso : FE-01 la sesion expira
+C_SolicitarReingreso -- B_PaginaInicioSesion : FE-01 termina; 401 y la cuenta queda integra
+C_ComprobarTitularidad -- C_DenegarPorPermiso : FE-02 rol no autorizado o solicitud sobre una cuenta ajena
+C_DenegarPorPermiso -- B_PaginaGestionCuenta : FE-02 termina; 403 sin suprimir nada
+C_ComprobarTitularidad -- C_MsgPeticionInvalida : FE-03 solicitud mal formada o sin confirmacion explicita
+C_MsgPeticionInvalida -- B_PaginaGestionCuenta : FE-03 vuelve al paso 1; 400 sin ejecutar la supresion
+C_EliminarEnCascada -- C_DeshacerCascada : FE-04 el almacenamiento falla a mitad de la cascada
+C_DeshacerCascada -- E_Usuario : FE-04 deshace lo suprimido; la cuenta queda como estaba
+C_DeshacerCascada -- B_PaginaGestionCuenta : FE-04 termina; no confirma la eliminacion e informa que no se completo
+
+legend right
+  <b>Convencion de color</b>
+  #LightCoral = objeto que participa solo en un curso alternativo (FA) o de excepcion (FE)
+endlegend
+
+note as N_DR04
+  <b>CU-04 - Eliminar cuenta</b> (ECU-04 v2.0) - actor: Usuario adulto
+  PRE-01 sesion activa. PRE-02 rol usuario validado en servidor. PRE-03 el Usuario es el
+  titular de la cuenta que solicita suprimir.
+  <b>Disparador</b> El Usuario solicita eliminar su cuenta desde la Gestion de cuenta.
+
+  <b>Flujo basico</b>
+  1. El Usuario solicita eliminar su cuenta. El sistema presenta el alcance de la supresion
+     -enumera que registros desapareceran- y advierte que la accion es irreversible.
+  2. El Usuario confirma explicitamente. El sistema comprueba en servidor que quien confirma
+     es el titular de esa cuenta.
+  3. El sistema suprime el Usuario y ejecuta el borrado en cascada de su CapsulaDePerfil, su
+     Consentimiento y su ContadorDeUsoDiario.
+  4. El sistema cierra la sesion y confirma que su cuenta y sus registros desaparecieron. La
+     persona queda sin sesion y sin cuenta, en la condicion de Visitante.
+
+  <b>Cursos alternativos</b>
+  FA-01 Cuenta sin capsula ni Consentimiento (paso 3): el Usuario nunca completo el
+        onboarding; no hay nada que borrar en cascada. Continua en el paso 4.
+  FA-02 Conversacion abierta al eliminar (paso 3): el sistema la cierra y descarta su
+        contenido antes de suprimir. Continua en el paso 4.
+  FA-03 Cancelar la eliminacion (paso 2): no suprime nada; la cuenta queda intacta. Cancela.
+
+  <b>Cursos de excepcion</b>
+  FE-01 Sesion ausente (cualquier paso): 401; no suprime nada. Termina; reingresar por CU-03.
+  FE-02 Permiso insuficiente (paso 2): 403; ninguna cuenta se toca. Termina.
+  FE-03 Entrada invalida (paso 2): 400; no ejecuta la supresion. Vuelve al paso 1.
+  FE-04 Cascada interrumpida (paso 3): el almacenamiento falla a mitad; deshace lo suprimido
+        y NO confirma la eliminacion. Termina informando que la accion no se completo.
+
+  <b>Postcondicion (lo esencial)</b> Ningun registro asociado a la cuenta queda recuperable
+  desde la aplicacion (RF-24, PRIV-R11).
+  <b>Invariante</b> El borrado en cascada es ATOMICO: si no puede completarse, el sistema no
+  deja registros a medio suprimir ni confirma la eliminacion (FE-04).
+  <b>Reglas</b> RN-04.4, RN-04.1. <b>Traza</b> RF-24 -> OBJ-7.
+  <b>Pantallas</b> P-13 compartida con CU-11 y CU-12; P-01 al terminar; P-03 en FE-01.
+
+  <b>Notas de modelado</b>
+  - <b>El paso 1 ya no es un menu.</b> La v1.0 empezaba con "mostrar las opciones: reiniciar,
+    revocar, eliminar", que con los otros dos objetivos fuera seria navegacion de interfaz y
+    no un paso de caso de uso. Ahora el flujo empieza por la intencion real del actor.
+  - <b>Visitante como Entidad de destino.</b> El paso 4 deja a la persona en esa condicion, y
+    Visitante es clase de MD-01 v1.4 desde el PDR-01. Dibujarlo hace legible que la relacion
+    "Visitante precede a TitularDeCuenta" tambien se recorre en sentido inverso.
+  - <b>El dialogo de confirmacion dejo de ser un objeto tipo Borde propio.</b> La v1.0 lo
+    modelaba aparte; DIS-00 lo inventaria como un estado de P-13, no como pantalla. Un
+    dialogo dentro de una pantalla esta por debajo del nivel de granularidad de este
+    diagrama, igual que un boton.
+  - <b>La comprobacion de titularidad es un controlador propio.</b> No basta con el rol: FE-02
+    cubre tambien la solicitud que apunta a una cuenta ajena, y eso es una funcion distinta de
+    verificar la sesion.
+  - <b>FA-01 se etiqueta sobre el arco a Usuario, sin objeto propio.</b> Es la ausencia de dos
+    entidades, no la presencia de una nueva: no hay ningun objeto exclusivo que colorear.
+  - <b>FE-04 es nuevo y no estaba exigido en ningun artefacto previo.</b> Sin el, "no queda
+    dato recuperable" no seria verificable ante un fallo a mitad de camino. Se declara como
+    decision de la especificacion, no como requisito heredado.
+end note
+
+@enduml

@@ -1,6 +1,6 @@
 @startuml
-' DR-02 — Analisis de robustez de CU-02 «Registrar cuenta»
-' Insumos: ECU-02, MD-01, DCU-01, DIS-00 (P-02; continuacion P-03), REQ-01, PRIV-01
+' DR-02 (v2.0, PDR-01 fase D.4) — Analisis de robustez de CU-02 «Registrar cuenta»
+' Insumos: ECU-02 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-02; continuacion P-03), REQ-01, PRIV-01
 left to right direction
 skinparam linetype ortho
 skinparam shadowing false
@@ -18,22 +18,25 @@ control "Confirmar el registro e invitar a iniciar sesion" as C_ConfirmarRegistr
 control "Indicar que el username ya esta en uso" as C_MsgUsernameEnUso #LightCoral
 control "Mostrar el error de validacion de los campos" as C_MsgEntradaInvalida #LightCoral
 
+entity "Visitante" as E_Visitante
+entity "TitularDeCuenta" as E_TitularDeCuenta
 entity "Usuario" as E_Usuario
 
 ACT_Visitante -- B_FormularioRegistro : 1 abre el formulario de registro
-B_FormularioRegistro -- C_MostrarFormularioRegistro : 1 mostrar los campos username, alias y contrasena
+B_FormularioRegistro -- C_MostrarFormularioRegistro : 1 pide unicamente username, alias y contrasena
+C_MostrarFormularioRegistro -- E_Visitante : 1 quien registra aun no tiene cuenta
 B_FormularioRegistro -- C_ValidarFormatoDeCampos : 2 envia username, alias y contrasena
 C_ValidarFormatoDeCampos -- C_VerificarUnicidadDeUsername : 2 formato valido
-C_VerificarUnicidadDeUsername -- E_Usuario : 2 consulta si el username ya existe
+C_VerificarUnicidadDeUsername -- E_TitularDeCuenta : 2 comprueba que ningun titular tenga tomado ese username
 C_VerificarUnicidadDeUsername -- C_CrearCuentaDeUsuario : 3 username disponible
 C_CrearCuentaDeUsuario -- E_Usuario : 3 crea la cuenta con contrasena hasheada y rol de usuario
 C_CrearCuentaDeUsuario -- C_ConfirmarRegistro : 3 cuenta creada
-C_ConfirmarRegistro -- B_FormularioRegistro : 3 confirma el registro
+C_ConfirmarRegistro -- B_FormularioRegistro : 3 confirma el alta sobre P-02; su estado de exito no esta declarado en DIS-00 (RA-01)
 C_ConfirmarRegistro -- B_PaginaInicioSesion : 3 invita a iniciar sesion, continua en CU-03
 C_VerificarUnicidadDeUsername -- C_MsgUsernameEnUso : FA-01 el username propuesto ya existe
 C_MsgUsernameEnUso -- B_FormularioRegistro : FA-01 solicita otro y retorna al paso 2
 C_ValidarFormatoDeCampos -- C_MsgEntradaInvalida : FE-01 campos incompletos o con formato incorrecto
-C_MsgEntradaInvalida -- B_FormularioRegistro : FE-01 muestra el error sin crear la cuenta
+C_MsgEntradaInvalida -- B_FormularioRegistro : FE-01 retorna al paso 2; explica el rechazo sin crear la cuenta
 
 legend right
   <b>Convencion de color</b>
@@ -41,7 +44,7 @@ legend right
 endlegend
 
 note as N_DR02
-  <b>CU-02 - Registrar cuenta</b> (ECU-02) - actor: Visitante (pasa a Usuario al crear la cuenta)
+  <b>CU-02 - Registrar cuenta</b> (ECU-02 v2.0) - actor: Visitante (pasa a TitularDeCuenta al crear la cuenta)
   PRE-01 el Visitante no tiene sesion activa. PRE-02 el username propuesto no esta en uso.
 
   <b>Flujo basico</b>
