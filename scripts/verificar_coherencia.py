@@ -6,7 +6,7 @@ Los cuatro validadores de las skills ICONIX cubren MD-01, DCU-01, las 14 ECU y
 los 14 DR. No cubren los cinco documentos mas densos del paquete —MV-01, REQ-01,
 PER-01, PRIV-01 y PLAN-01—, que se editan a mano. Este script cubre ese hueco.
 
-Tres comprobaciones:
+Cuatro comprobaciones:
 
   1. HECHOS CANONICOS  — que las cifras repetidas entre documentos coincidan, y
      que ningun valor obsoleto sobreviva como afirmacion viva.
@@ -14,6 +14,8 @@ Tres comprobaciones:
      aparezcan donde son cita historica.
   3. DISCIPLINA DE FICHA — que todo archivo tocado suba su version y anote su
      fila de historial.
+  4. VERSIONES DECLARADAS — que el inventario de INDICE_MAESTRO diga, de cada
+     artefacto, la version que ese artefacto dice tener en su propia ficha.
 
 La distincion que hace util a (1) y (2): un valor viejo dentro de un bloque de
 historial, changelog o registro de decisiones es CORRECTO —describe lo que se
@@ -171,6 +173,99 @@ def exceptuada(rel: str, linea: str) -> bool:
     return any(ruta in rel and texto in linea for ruta, texto, _ in EXCEPCIONES)
 
 
+# --------------------------------------------------------------------------
+# 4. VERSIONES DECLARADAS
+# --------------------------------------------------------------------------
+#
+# Por que existe este bloque. En SD-31 el INDICE_MAESTRO declaraba
+# «DS-00..14 v1.0» cuando DS-00 iba por v1.3, y una lectura a ojo no lo vio.
+# Al contrastarlo por script aparecieron ademas MD-01 citado en v1.4 (iba por
+# v1.6) y DCU-01 en v2.1 (iba por v2.2). Importa mas de lo que parece: el
+# indice es donde se mira para saber QUE VERSION CONSUMIR, asi que una version
+# mal ahi se propaga a quien lo lea.
+
+# «**Versión:** v1.6» en la ficha de cabecera
+VERSION_FICHA = re.compile(r"\*\*Versi[oó]n:\*\*\s*(v\d+\.\d+)")
+
+# ALCANCE: solo el INVENTARIO, y hay una razon para que sea tan estrecho.
+#
+# La primera version de este bloque miraba TODA mencion «ARTEFACTO vX.Y» del
+# corpus. Dio 202 hallazgos y practicamente ninguno era un defecto: la inmensa
+# mayoria son PROCEDENCIA —«`Visitante` | Clase de MD-01 v1.4», «Mapa a DCU-01
+# v2.1», las lineas de `**Insumos:**`—, que dicen contra que version se
+# construyo algo y son legitimamente historicas. Un bloque con esa relacion
+# senal/ruido no se lee: se ignora, y entonces no vigila nada.
+#
+# Lo que si es una afirmacion viva sobre el estado ACTUAL es el inventario de
+# `INDICE_MAESTRO`, cuyo proposito declarado es decir que es cada artefacto y
+# en que version esta. Ahi mentir se propaga a quien lo consulte, y ahi es
+# donde el error de SD-31 se colo de verdad.
+ARCHIVOS_INVENTARIO = {"INDICE_MAESTRO.md"}
+
+# «MD-01 v1.4» — el ID pegado a su version, sin otro ID de por medio, para que
+# «DS-00 v1.3 · DS-01…14 v1.0» no ate el v1.0 al DS-00.
+MENCION_VERSION = re.compile(
+    r"\b([A-Z]{2,4}-\d{2}(?:-\d{2})?)\b[^A-Z|\n]{0,14}?\b(v\d+\.\d+)\b")
+
+
+def version_de_ficha(archivo: Path) -> str | None:
+    """La version que el propio artefacto declara en sus primeras lineas."""
+    for linea in leer(archivo)[:8]:
+        m = VERSION_FICHA.search(linea)
+        if m:
+            return m.group(1)
+    return None
+
+
+def indice_de_fichas() -> dict[str, tuple[str, str]]:
+    """ID de artefacto -> (version declarada en su ficha, ruta).
+
+    El ID se toma del nombre del archivo: `MD-01_modelo_dominio.md` -> `MD-01`.
+    Si dos archivos reclaman el mismo ID, gana ninguno: se omite, porque no
+    hay una respuesta unica que exigir.
+    """
+    fichas: dict[str, tuple[str, str]] = {}
+    duplicados: set[str] = set()
+    for archivo in archivos_markdown():
+        m = re.match(r"([A-Z]{2,4}-\d{2}(?:-\d{2})?)_", archivo.name)
+        if not m:
+            continue
+        ident = m.group(1)
+        version = version_de_ficha(archivo)
+        if version is None:
+            continue
+        if ident in fichas:
+            duplicados.add(ident)
+        fichas[ident] = (version, archivo.relative_to(RAIZ).as_posix())
+    for d in duplicados:
+        fichas.pop(d, None)
+    return fichas
+
+
+def comprobar_versiones() -> list[str]:
+    """El inventario debe declarar la version que cada artefacto dice tener."""
+    errores: list[str] = []
+    fichas = indice_de_fichas()
+
+    for archivo in archivos_markdown():
+        if archivo.name not in ARCHIVOS_INVENTARIO:
+            continue
+        rel = archivo.relative_to(RAIZ).as_posix()
+        for n, linea in enumerate(leer(archivo), 1):
+            # Una cita de changelog o de ficha describe lo que fue: es correcta.
+            if es_historica(archivo, linea):
+                continue
+            for ident, citada in MENCION_VERSION.findall(linea):
+                if ident not in fichas:
+                    continue
+                real, origen = fichas[ident]
+                if citada != real:
+                    errores.append(
+                        f"[VERSION] {rel}:{n} — el inventario declara «{ident} "
+                        f"{citada}» pero su ficha dice {real} ({origen})")
+    return errores
+
+
 def comprobar_hechos() -> list[str]:
     errores: list[str] = []
 
@@ -292,9 +387,11 @@ def main() -> int:
     bloques = [
         ("1. HECHOS CANONICOS", comprobar_hechos()),
         ("2. RESIDUOS DE STACK", comprobar_residuos()),
+        ("4. VERSIONES DECLARADAS", comprobar_versiones()),
     ]
     if not args.sin_git:
-        bloques.append(("3. DISCIPLINA DE FICHA (solo cambios sin comitear)", comprobar_fichas()))
+        bloques.insert(2, ("3. DISCIPLINA DE FICHA (solo cambios sin comitear)",
+                           comprobar_fichas()))
 
     total = 0
     print("Verificacion de coherencia — «Alan & Aura Academico»")
