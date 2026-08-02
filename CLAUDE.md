@@ -15,6 +15,8 @@
 - Subproyecto académico hijo de Smart-AID (materia *Diseño y Construcción de Productos de Software*, UNAL Medellín, Grupo 5). Ideador y líder: **Jonatan Estiven Sánchez Vargas**. Equipo: **Santiago Bedoya García**, **Luis Fernando Montoya Rodríguez**, **Santiago Eusse Gil**.
 - Personaje masculino = **Alan** en todo artefacto nuevo (alias históricos del macro: Alanus ≡ Alanor ≡ Alan). Femenino = **Aura** (precursor conceptual: Pandora). Nunca "corregir" grafías de los originales; solo citar la grafía original al referir un archivo existente.
 
+- **Autoría de los commits — innegociable.** Los commits los firma **el equipo humano de §2 y nadie más**. **Nunca** se añade un trailer `Co-Authored-By` de una herramienta, un asistente ni un modelo, en ningún commit, por ninguna razón. La hace cumplir un *hook* versionado, `.githooks/commit-msg`, que retira esa línea **antes de que el commit exista** — actívalo en cada clon con `git config core.hooksPath .githooks`. Decisión `SD-32`.
+
 ## 3. Canon de dominio (mínimo al escribir cualquier artefacto)
 - No sobre-claim clínico (no diagnostica, no hace terapia, no maneja urgencias en autonomía).
 - Minimización (el LLM recibe la cápsula de perfil mínima, nunca historial bruto/ítems/diario/biomarcadores crudos); consentimiento granular revocable; uso no punitivo; divulgación mínima; **seguridad emocional > engagement**.

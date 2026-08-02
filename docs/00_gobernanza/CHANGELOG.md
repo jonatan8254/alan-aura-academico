@@ -3,6 +3,16 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-02 — v0.17.3 · Los commits los firma el equipo humano (SD-32)
+
+- **Regla nueva y explícita:** los commits de este repositorio los firma **el equipo humano y nadie más**. No se admite ningún trailer `Co-Authored-By` de herramientas, asistentes ni modelos. Queda escrita en `CLAUDE.md §2` y `AGENTS.md §3`.
+- **Historia limpiada.** Se retiraron los trailers de coautoría que existían, reescribiendo las cuatro ramas desde la última base limpia (`b8c551b`) con `git filter-branch --msg-filter`.
+- **Cero pérdida de información, verificada contra un respaldo en *bundle*.** Los **163** pares de commits comparados tienen el **SHA de árbol idéntico** —el hash del contenido: si coincide, no hay un byte distinto—, y el autor, el correo, el *committer* y **ambas fechas** quedan intactos. La única diferencia admitida en cada mensaje es la línea retirada. Los **19** commits anteriores a la base conservan su SHA original.
+- **Tres barridos de comprobación:** sobre los **5.413 objetos** de la base de datos, sobre los archivos de `.git/` fuera de `objects/` y sobre `git log --all`. Cero coincidencias en los tres. Se borró `refs/original`, se expiraron los reflogs y se purgó con `gc --prune=now`.
+- **Un límite que se declara en vez de disimularse.** Tras un `push --force`, los objetos siguen existiendo en el servidor de GitHub hasta que pase su recolector, que no se dispara desde fuera. El repositorio **no tiene *forks* ni *pull requests*** —las dos cosas que harían el rastro permanente—, así que quedan **inalcanzables desde cualquier referencia**. Borrar y recrear el repositorio sigue disponible en cualquier momento si se quiere certeza total.
+- **Añadido — `.githooks/commit-msg`.** Retira el trailer **antes de que el commit exista**, de cualquier herramienta. Conserva las líneas en blanco entre párrafos: una primera versión las colapsaba y destruía la estructura del mensaje. Se activa con `git config core.hooksPath .githooks`.
+- **Por qué tres capas y no solo el *hook*:** el *hook* lo impide, pero solo donde `core.hooksPath` esté puesto. El canon lo declara para quien clone. Y `SD-32` explica el motivo, para que nadie lo desmonte sin saber por qué estaba.
+
 ## 2026-08-02 — v0.17.2 · Canon y gobernanza al día tras el paquete de secuencia (SD-31)
 
 - **Corregido — `CLAUDE.md` y `AGENTS.md` daban una instrucción caducada.** Los dos decían, literalmente, *«Siguiente artefacto ICONIX: los diagramas de secuencia (`DS-01…DS-14`)»* — y están hechos, verificados y comiteados desde `SD-30`. Es el canon del proyecto mandando construir lo que ya existe: cualquier agente que lo leyera empezaría de cero. Ahora el siguiente es el **diagrama de clases de diseño**, con el **CDR** detrás y `ARQ-01` después de ese hito. `CLAUDE.md` obliga a mantener `AGENTS.md` como espejo *superset*, así que se tocaron los dos.

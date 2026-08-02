@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# commit-msg — los commits los firma el equipo humano, y nadie mas.
+#
+# Retira cualquier trailer de coautoria de herramienta, asistente o modelo
+# ANTES de que el commit exista. Actua aunque la linea se escriba en el mensaje:
+# es la unica capa que no depende de que alguien recuerde la regla ni lea el
+# canon.
+#
+# ALCANCE: cualquier herramienta, no una en concreto. El trabajo de este
+# subproyecto es del equipo humano que figura en CLAUDE.md §2.
+#
+# QUE NO TOCA: todo lo demas. Las lineas en blanco entre parrafos se conservan
+# —una primera version las colapsaba y destruia la estructura del mensaje—; solo
+# se retiran las que quedan huerfanas AL FINAL tras el borrado.
+#
+# ACTIVACION (una vez por clon):
+#     git config core.hooksPath .githooks
+#
+# Regla en CLAUDE.md §2 y AGENTS.md §3; decision registrada como SD-32. Si
+# alguien lo quita, que sea sabiendo por que estaba.
+
+MSG_FILE="$1"
+[ -f "$MSG_FILE" ] || exit 0
+
+PATRON='^[[:space:]]*co-authored-by:.*(claude|anthropic|copilot|cursor|codex|chatgpt|gpt-|gemini|noreply@anthropic\.com)'
+
+if ! grep -qiE "$PATRON" "$MSG_FILE"; then
+    exit 0
+fi
+
+TMP="$MSG_FILE.hooktmp"
+
+# 1. Fuera las lineas del trailer. `grep -v` conserva TODO lo demas, incluidas
+#    las lineas en blanco entre parrafos.
+grep -viE "$PATRON" "$MSG_FILE" > "$TMP"
+
+# 2. Fuera solo las lineas en blanco DEL FINAL, que es lo que deja el borrado.
+awk 'NF{ultima=NR} {linea[NR]=$0} END{for(i=1;i<=ultima;i++) print linea[i]}' "$TMP" > "$MSG_FILE"
+
+rm -f "$TMP"
+
+echo "commit-msg: se retiro un trailer de coautoria de herramienta." >&2
+echo "            Los commits de este repositorio los firma el equipo humano (SD-32)." >&2
+
+exit 0
