@@ -1,5 +1,5 @@
 # DR-00 — Índice y certificado del análisis de robustez
-**ID:** DR-00 · **Familia:** DR (robustez, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/robustez/` · **Fecha:** 2026-08-01 · **Versión:** v2.1 (SD-30: entra `EventoOperativo` en `DR-04` con su controlador, y `FE-02` de `DR-01` corregido a P-01; 261 → **263** elementos, 149 → **150** controladores) · **Estado:** Propuesto.
+**ID:** DR-00 · **Familia:** DR (robustez, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/robustez/` · **Fecha:** 2026-08-01 · **Versión:** v2.2 (SD-30: `DR-09` deja de contar desde `Conversacion`, que sale del diagrama por quedar huérfana — 262 elementos. Antes, v2.1: entra `EventoOperativo` en `DR-04` con su controlador, y `FE-02` de `DR-01` corregido a P-01; 261 → **263** elementos, 149 → **150** controladores) · **Estado:** Propuesto.
 **Propósito:** índice de los **14 diagramas de robustez** (`DR-01…DR-14`) derivados de `ECU-01…ECU-14`, con su certificado de auditoría, el delta de *object discovery* y la trazabilidad.
 **Insumos:** ECU-01…ECU-14 v2.0 (en 0 errores / 0 advertencias), MD-01 v1.4, DCU-01 v2.1, DIS-00, MV-01, SEG-01, PRIV-01, PER-01, contrato conversacional.
 **Generado con:** skill `uml-robustness-diagram` (contrato actualizado). **Validador:** `validate_robustness_puml.py --domain MD-01` → **0 errores en los 14**.
@@ -19,13 +19,13 @@
 | [DR-06](DR-06_robustez_conversar_con_el_acompanante.puml) | CU-06 Conversar con el acompañante | 40 | 2/4/25/9 | 2 | 9 |
 | [DR-07](DR-07_robustez_derivar_ante_peligro.puml) | CU-07 Derivar ante peligro | 20 | 1/2/12/5 | 3 | 3 |
 | [DR-08](DR-08_robustez_consultar_directorio.puml) | CU-08 Consultar directorio de usuarios | 12 | 1/1/8/2 | 2 | 2 |
-| [DR-09](DR-09_robustez_consultar_metricas.puml) | CU-09 Consultar métricas de uso | 14 | 1/1/8/4 | 2 | 2 |
+| [DR-09](DR-09_robustez_consultar_metricas.puml) | CU-09 Consultar métricas de uso | 13 | 1/1/8/3 | 2 | 2 |
 | [DR-10](DR-10_robustez_habilitar_deshabilitar_chatbot.puml) | CU-10 Habilitar o deshabilitar el chatbot | 19 | 1/3/11/4 | 3 | 3 |
 | [**DR-11**](DR-11_robustez_reiniciar_la_caracterizacion.puml) | CU-11 **Reiniciar la caracterización** | 18 | 1/3/11/3 | 3 | 4 |
 | [**DR-12**](DR-12_robustez_revocar_la_personalizacion.puml) | CU-12 **Revocar la personalización** | 16 | 1/2/9/4 | 3 | 3 |
 | [**DR-13**](DR-13_robustez_cambiar_de_acompanante.puml) | CU-13 **Cambiar de acompañante** | 15 | 1/2/6/6 | 1 | 2 |
 | [**DR-14**](DR-14_robustez_elegir_acompanante.puml) | CU-14 **Elegir acompañante (Alan o Aura)** | 13 | 1/2/6/4 | 1 | 1 |
-| | **Total** | **263** | **15/38/150/60** | | |
+| | **Total** | **262** | **15/38/150/59** | | |
 
 **Un diagrama por caso de uso, con su curso básico y *todos* sus cursos alternativos y de excepción en el mismo diagrama.** Los objetos que participan solo en un curso alternativo o de excepción van en `#LightCoral`; los compartidos con el básico, sin color.
 
@@ -37,7 +37,7 @@ Los genera [`scripts/generar_svg_robustez.py`](scripts/generar_svg_robustez.py) 
 python scripts/generar_svg_robustez.py
 ```
 
-El generador comprueba su propia correspondencia con los `.puml` y aborta el visto bueno si no cuadra: *«Correspondencia con los .puml: OK (263 elementos, 15/38/150/60)»*.
+El generador comprueba su propia correspondencia con los `.puml` y aborta el visto bueno si no cuadra: *«Correspondencia con los .puml: OK (262 elementos, 15/38/150/59)»*.
 
 ## 3. Qué cambió en v2.0
 

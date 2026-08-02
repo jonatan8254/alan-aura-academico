@@ -1,5 +1,5 @@
 # ECU-13 — Especificación de caso de uso: «Cambiar de acompañante» (CU-13)
-**ID documento:** DOC-CU-13 · **Caso de uso:** CU-13 · **Alias en DCU-01:** `CU_Cambiar` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-30 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-13 · **Caso de uso:** CU-13 · **Alias en DCU-01:** `CU_Cambiar` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-30 · **Versión:** v1.1 · **Estado:** Propuesto.
 **Forma:** **ágil** (núcleo de dos párrafos + campos mínimos, §23 de la plantilla de la skill `use-case-specifier`) — extensión simple, sin efectos sobre datos persistidos.
 **Insumos:** DCU-01 v2.1, MD-01 v1.4, MV-01 §Vista Conversación, REQ-01 (RF-12), plan §4.9. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 **Origen:** extraído del **flujo alternativo «Cambiar de personaje»** de ECU-06 v1.0 (PDR-01, fase D.3). Era una meta que el usuario pide deliberadamente, sepultada como flujo alternativo.
@@ -94,6 +94,12 @@ Ninguna existía: ECU-06 nunca cubrió este flujo en su sección de postcondicio
 | RN-01.6 | Lo persistido en `character` es la **última elección** del onboarding y actúa como predeterminado; la sesión puede usar otro `Personaje` sin reescribir la cápsula. | Restricción | §7 (invariante) | MV-01 §7.2 (SD-26) |
 | RN-02.7 | No se conversa si el chatbot está deshabilitado. | Restricción | PRE-04, FE-01 | MV-01 §7.3 |
 
+> **`RN-02.9` retirada de la trazabilidad (`H-5`, corregido).** §12 la citaba entre las reglas que
+> «gobiernan el flujo», pero esta sección nunca la definió: era una **referencia colgante**. Y no
+> podía definirse, porque `RN-02.9` es el **límite de tasa** (3/min, 30/día — `H-04`), que gobierna
+> el envío de mensajes en `CU-06`, no el cambio de acompañante. Cambiar de `Personaje` no consume
+> cuota: no hay llamada al proveedor. Se retira de §12 en vez de inventarle una definición aquí.
+
 ## 9. Requisitos especiales
 
 | ID | Categoría | Requisito | Criterio verificable |
@@ -130,7 +136,7 @@ Ninguno existía: los seis criterios de ECU-06 cubren el gate, el *payload*, el 
 | **Alias del diagrama ↔ ID** | `CU_Cambiar` (DCU-01 v2.1) ↔ **CU-13** | Correspondencia explícita. El número **no** viene del orden de declaración del `.puml`: los diez casos de uso de v1.0 conservan su numeración original y DCU-01 §2 numera los cuatro nuevos del 11 al 14 en el orden de su tabla. Esta nota existe porque, sin ella, el número parecería arbitrario |
 | Requisito funcional | RF-12 «Permitir cambiar de personaje durante o entre conversaciones» | Realizado por este CU en su mitad «**durante**», que es la que exige una `Conversacion` abierta (`PRE-05`). La mitad «**entre** conversaciones» se realiza en CU-14, que fija el `Personaje` predeterminado, y en el paso 1 de CU-06, que lo usa al abrir |
 | Objetivo de negocio | OBJ-2 | Conversación de acompañamiento |
-| Regla de negocio | RN-02.6, RN-02.4, RN-01.6, RN-02.7, RN-02.9 | Gobiernan el flujo |
+| Regla de negocio | RN-02.6, RN-02.4, RN-01.6, RN-02.7 | Gobiernan el flujo — **las cuatro definidas en §8** |
 | Modelo de dominio | `Personaje`, `Alan`, `Aura`, `Conversacion`, `CapsulaDePerfil`, `DisponibilidadDelChatbot` | Conceptos manipulados |
 | Diagrama de casos de uso | `CU_Cambiar ..> CU_Chat : <<extend>>` | Origen de la relación |
 | Caso de uso base | CU-06 «Conversar con el acompañante» | **Lo extiende**; el punto de extensión es cualquier turno de una conversación abierta |
@@ -152,6 +158,7 @@ Ninguno existía: los seis criterios de ECU-06 cubren el gate, el *payload*, el 
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| v1.1 | 2026-08-01 | **SD-30, hallazgo `H-5` de `DS-00`.** §12 citaba `RN-02.9` entre las reglas que gobiernan el flujo, pero §8 nunca la definió: **referencia colgante**. Y no podía definirse aquí — `RN-02.9` es el límite de tasa, que gobierna el envío de mensajes en `CU-06`; cambiar de acompañante no consume cuota porque no hay llamada al proveedor. Se retira de §12, con el motivo escrito en §8. |
 | v1.0 | 2026-07-30 | Creación (PDR-01, fase D.3, tanda 1). Extraído del primer flujo alternativo de ECU-06 v1.0, que queda retirado de allí y sustituido por la relación `<<extend>>`. Migran el flujo, las cinco precondiciones, `RN-02.6` y `RN-02.4`, y la pantalla P-10. **Se redactan por primera vez las postcondiciones y los cinco criterios de aceptación**, que el flujo de origen nunca tuvo. |
 
 **Fin de ECU-13.**

@@ -1,5 +1,5 @@
 # ECU-06 — Especificación de caso de uso: «Conversar con el acompañante» (CU-06)
-**ID documento:** DOC-CU-06 · **Caso de uso:** CU-06 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Alias en DCU-01:** `CU_Chat` · **Fecha:** 2026-07-30 · **Versión:** v2.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-06 · **Caso de uso:** CU-06 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Alias en DCU-01:** `CU_Chat` · **Fecha:** 2026-08-01 · **Versión:** v2.1 · **Estado:** Propuesto.
 **Forma:** **completa** (§1–§23) — caso de uso **central y canon-sensible** (conversación gobernada, minimización, no persistencia, gate de seguridad).
 **Insumos:** DCU-01 v2.1, MV-01 §Vista Conversación, MD-01 v1.4, REQ-01 (RF-07…RF-11, RF-13, RF-25, RF-26), contrato conversacional, SEG-01, PRIV-01, plan §3.4/§4.9/§4.10/§4.11/§4.13. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -11,16 +11,17 @@
 | Nombre del proyecto | Alan & Aura Académico |
 | Nombre del sistema | Aplicación de acompañamiento conversacional «Alan & Aura Académico» |
 | ID del documento | DOC-CU-06 |
-| Versión | v2.0 |
+| Versión | v2.1 |
 | Autor(es) | Jonatan Estiven Sánchez Vargas (redacción) · Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil |
 | Fecha de creación | 2026-07-16 |
-| Fecha de última actualización | 2026-07-30 |
+| Fecha de última actualización | 2026-08-01 |
 | Estado | Propuesto |
 
 **Historial de cambios**
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v2.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgos `H-1a` y `H-2` de `DS-00`.** El `EventoOperativo` pasa de crearse **al cerrar** (paso 8) a crearse **en cada turno** (paso 6), tras mostrar la respuesta: sus campos —latencia, resultado, modelo, versión— son valores **de una llamada**, y `MET-07` mide peticiones, no conversaciones. Afecta a §7, §11 (pasos 6 y 8), §14, §16 `RE-07` y §18. Se **unifica la nomenclatura de campos**, que este documento llevaba en dos listas incompatibles: manda el plan §4.15, que distingue «resultado técnico» de «código de estado» como campos distintos; el «estado» de §14/§16 era el **resultado**, y los tres campos restantes del plan son de persistencia (`PER-01 §3.6`). Y se hace explícito que el **paso 3 del plan §4.11** («verificar mayoría de edad») quedó **absorbido en `PRE-03`** — estaba cubierto, no dicho (`H-2`). |
 | v2.0 | 2026-07-30 | J. Sánchez | **PDR-01, fase D.3, tanda 1.** El flujo alternativo «Cambiar de personaje» sale a **CU-13** vía `<<extend>>`, y los dos restantes se renumeran. Se añade **FE-09** para la capa base del consentimiento retirada, que cierra el hallazgo D-01. El límite por mensaje pasa de 1.500 a **2.500 caracteres** y el criterio que lo verificaba se parte en dos, uno por disparador (D-08). Se declara `Consentimiento` como concepto del dominio de este CU, y se define localmente toda regla citada. |
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
 
@@ -86,7 +87,7 @@
 | DisponibilidadDelChatbot | Estado global habilitado/deshabilitado | Condiciona el inicio | estado | DisponibilidadDelChatbot–Conversacion (condiciona) |
 | `EventoDeSeguridad` | Ocurrencia de peligro explícito | Documenta lo detectado en un `Mensaje` | — | `Mensaje -- EventoDeSeguridad : se documenta con` |
 | `Consentimiento` | Aceptación granular por capas y revocable | **Se consulta**: la capa base condiciona el acceso; la de personalización, si los autorreportes orientan | capa ∈ {base, personalizacion}, estado | `Usuario -- Consentimiento : otorga` |
-| `EventoOperativo` | Telemetría de la conversación **sin contenido** | Se **crea** al cerrar (paso 8) | momento, resultado, latencia, modelo, versión | `Conversacion -- EventoOperativo : se documenta con` |
+| `EventoOperativo` | Telemetría **sin contenido** de **una llamada** al Proveedor LLM | Se **crea en cada turno** (paso 6), tras mostrar la respuesta | momento, resultado, latencia, modelo, versión | `Conversacion -- EventoOperativo : se documenta con` |
 
 **Control terminológico**
 
@@ -135,9 +136,19 @@
 | 3 | Sistema | Evalúa el **gate de seguridad determinista** sobre el `Mensaje` **antes** de responder | EventoDeSeguridad (posible) | Decide {no-peligro / peligro-explícito} | — |
 | 4 | Sistema | (no-peligro) Construye el **contexto mínimo** —`character` siempre, los **cuatro autorreportes** de la cápsula solo si la capa de personalización está otorgada, persona, hasta 4 intercambios de la sesión actual y el turno— y lo solicita al Proveedor LLM | `CapsulaDePerfil`, `Consentimiento` | Envía el contexto mínimo al Proveedor LLM | Frontera con el Proveedor LLM |
 | 5 | Proveedor LLM | Genera el texto de la respuesta | — | Devuelve el texto al sistema | Frontera con el Proveedor LLM |
-| 6 | Sistema | Aplica las **guardas de salida** (no riesgo, no claim clínico) y limita a 350 tokens | — | Muestra la respuesta del personaje | Interfaz de chat |
+| 6 | Sistema | Aplica las **guardas de salida** (no riesgo, no claim clínico), limita a 350 tokens y **registra el `EventoOperativo` de esa llamada** | `EventoOperativo` | Muestra la respuesta del personaje y deja el evento **sin contenido** (momento, resultado, latencia, modelo, versión) | Interfaz de chat |
 | 7 | Usuario | Intercambia turnos (repite 2–6), hasta 20 mensajes de usuario | Mensaje | Mantiene la conversación coherente de personaje | Interfaz de chat |
-| 8 | Usuario | Cierra la conversación | Conversacion | **Descarta** el contenido (no persistencia); registra solo evento operativo sin contenido | Interfaz de chat |
+| 8 | Usuario | Cierra la conversación | Conversacion | **Descarta** el contenido (no persistencia). **No registra nada aquí**: los `EventoOperativo` ya se escribieron turno a turno en el paso 6 | Interfaz de chat |
+
+> **Por qué el evento operativo es por turno y no por cierre.** Sus campos —latencia, resultado,
+> modelo, versión— son **valores de una llamada**. Al cerrar no existe una latencia única que
+> registrar, y `MET-07` (`RC-07`) mide «peticiones OK + *fallback* / totales»: su denominador son
+> **peticiones**, no conversaciones. Una conversación de veinte turnos con resultados distintos
+> entre sí no cabe en un solo registro escalar. Corregido en `v2.1` (hallazgo `H-1a` de `DS-00`),
+> que también hace explícito lo que ya estaba decidido: el **paso 3 del plan §4.11** («verificar
+> mayoría de edad») no es un paso de este caso de uso porque quedó **absorbido en `PRE-03`**, que
+> exige ser adulto **y** tener vigente la capa base. Está cubierto; lo que faltaba era decirlo
+> (`H-2`).
 
 ## 12. Flujos alternativos
 | ID | Nombre | Punto | Condición | Resultado | Retorno | Reglas |
@@ -169,7 +180,7 @@
 |---|---|---|
 | Éxito | El usuario recibió respuestas coherentes de personaje | Observación / rúbrica (RC-08) |
 | Fallo controlado | Ante error del LLM, la UI informa el estado y permite reintento; no se rompe | Prueba de fallos (RF-26) |
-| Datos creados | Ninguno de contenido; solo evento operativo sin contenido (latencia, modelo, versión, estado) | Inspección |
+| Datos creados | Ninguno de contenido; **un `EventoOperativo` por llamada al Proveedor LLM** (momento, resultado, latencia, modelo, versión), sin contenido | Inspección |
 | Datos consultados | `CapsulaDePerfil`: `character` **siempre**, los cuatro autorreportes solo con la capa de personalización otorgada; estado de las capas del `Consentimiento`; `DisponibilidadDelChatbot` | Inspección |
 | Datos eliminados | **El contenido de la conversación se descarta al cerrar** (no persistencia) | Inspección de BD/logs = sin contenido |
 | Cambios de estado | `Conversacion` → cerrada | Traza |
@@ -200,7 +211,16 @@
 | RE-04 | Rendimiento | Respuesta en tiempo aceptable pese al servicio externo. | p95 ≤ 5 s (RC-05) [dependiente del LLM] |
 | RE-05 | Fiabilidad | Degradación con gracia ante indisponibilidad/timeout/cuota. | ≥95 % de peticiones OK o *fallback* (RC-07) |
 | RE-06 | Seguridad | Rol en servidor; claves/tokens fuera del cliente y del repo (RNF-08/09). | Inspección |
-| RE-07 | Auditoría | El Sistema registra un `EventoOperativo` (latencia, modelo, versión, estado) **sin contenido**. | Inspección de eventos |
+| RE-07 | Auditoría | El Sistema registra **un `EventoOperativo` por cada llamada** al Proveedor LLM (momento, resultado, latencia, modelo, versión), **sin contenido**. | Inspección de eventos: su número coincide con el de llamadas del turno |
+
+> **Nomenclatura de los campos, unificada en `v2.1`.** Este documento usaba dos listas distintas
+> —§7/§18 decían *momento, resultado, latencia, modelo, versión*; §14/§16 decían *latencia, modelo,
+> versión, **estado***—. Manda el **plan §4.15**, que distingue «**resultado técnico**» de «**código
+> de estado**»: son campos **distintos**, no sinónimos. Lo que §14/§16 llamaban «estado» era el
+> **resultado técnico** ({ok, *fallback*, error}), y así queda en todo el documento. El **código de
+> estado** (HTTP), el ***request ID*** y el **entorno** completan los ocho campos del plan, pero son
+> de **persistencia**: viven en `PER-01 §3.6`, no aquí — la misma frontera que `MD-01 §6` traza para
+> los atributos de esta clase.
 
 ## 17. Prototipos, GUI o referencias de interfaz
 | Elemento | Nombre explícito | Propósito | Campos principales | Acciones | Pasos |
@@ -219,7 +239,7 @@
 | `Mensaje` | contenido del turno | Crear / Comprobar | Paso 2 | ≤2.500 caracteres; no persiste |
 | `CapsulaDePerfil` | `character` (siempre) + los 4 autorreportes (solo con la capa de personalización otorgada) + metadatos | Consultar | Paso 4 | Solo esos campos viajan al Proveedor LLM. **`character` no depende de la capa de personalización**: por `RN-01.6` es precondición funcional y lo cubre la capa base |
 | `Consentimiento` | capa, estado | Consultar | Paso 1, paso 4 | La capa base condiciona el acceso (`FE-09`); la de personalización, si los autorreportes orientan |
-| `EventoOperativo` | momento, resultado, latencia, modelo, versión | Crear | Paso 8 | **Sin contenido del diálogo** (`RE-07`, RNF-03) |
+| `EventoOperativo` | momento, resultado, latencia, modelo, versión | Crear (**uno por llamada**) | Paso 6, en cada turno | **Sin contenido del diálogo** (`RE-07`, RNF-03). Los otros tres campos del plan §4.15 —*request ID*, código de estado, entorno— son de persistencia (`PER-01 §3.6`) |
 | Contexto al LLM (`ContextoInicialConversacionalV1`) | cápsula (5 campos, incluye `character`) + system prompt de personalidad + ≤4 intercambios + turno | Construir / Enviar | Paso 4 | Sin datos identificatorios (PRIV-R9) |
 | EventoDeSeguridad | señal de peligro | Validar | Paso 3 | Determinista; deriva a CU-07 |
 

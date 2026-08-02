@@ -1,7 +1,7 @@
 # CP-00 — Índice de casos de prueba y matriz de cobertura
 
-**ID:** CP-00 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto.
-**Propósito:** índice de los **178 casos de prueba** derivados de los **150 Controladores** de `DR-01…DR-14`, con la matriz de cobertura por caso de uso y por operador de fragmento.
+**ID:** CP-00 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 · **Estado:** Propuesto.
+**Propósito:** índice de los **181 casos de prueba** derivados de los **150 Controladores** de `DR-01…DR-14`, con la matriz de cobertura por caso de uso y por operador de fragmento.
 **Insumos:** `DR-01…DR-14 v2.0`, `DS-01…DS-14 v1.0`, `ECU-01…ECU-14 v2.0` (sus criterios de aceptación), `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-sequence-diagram`. Borradores por subagentes, **auditados por el orquestador** contra los `.puml`.
 **Consumidores:** pruebas unitarias y de integración de la fase de construcción, `TRZ-DS-01`, el CDR.
@@ -27,7 +27,7 @@ básico y **cada** `FA`/`FE` deben quedar cubiertos, con las dos ramas de cada `
 | [CP-03](CP-03_pruebas_iniciar_y_cerrar_sesion.md) | CU-03 Iniciar y cerrar sesión | `CP-701…712` | 12 | 12/12 |
 | [CP-04](CP-04_pruebas_eliminar_cuenta.md) | CU-04 Eliminar cuenta | `CP-801…813` | 13 | 12/12 |
 | [CP-05](CP-05_pruebas_consentimiento_caracterizacion.md) | CU-05 Consentimiento y cápsula | `CP-201…218` | 18 | 16/16 |
-| [**CP-06**](CP-06_pruebas_conversar_con_el_acompanante.md) | CU-06 **Conversar con el acompañante** | `CP-001…031` | **31** | 25/25 |
+| [**CP-06**](CP-06_pruebas_conversar_con_el_acompanante.md) | CU-06 **Conversar con el acompañante** | `CP-001…034` | **34** | 25/25 |
 | [**CP-07**](CP-07_pruebas_derivar_ante_peligro.md) | CU-07 **Derivar ante peligro** | `CP-101…121` | 21 | 12/12 |
 | [CP-08](CP-08_pruebas_consultar_directorio.md) | CU-08 Consultar directorio | `CP-901…908` | 8 | 8/8 |
 | [CP-09](CP-09_pruebas_consultar_metricas.md) | CU-09 Consultar métricas | `CP-1001…1008` | 8 | 8/8 |
@@ -36,13 +36,13 @@ básico y **cada** `FA`/`FE` deben quedar cubiertos, con las dos ramas de cada `
 | [CP-12](CP-12_pruebas_revocar_la_personalizacion.md) | CU-12 Revocar la personalización | `CP-1301…1311` | 11 | 9/9 |
 | [CP-13](CP-13_pruebas_cambiar_de_acompanante.md) | CU-13 Cambiar de acompañante | `CP-301…308` | 8 | 6/6 |
 | [CP-14](CP-14_pruebas_elegir_acompanante.md) | CU-14 Elegir acompañante | `CP-401…407` | 7 | 6/6 |
-| | **Total** | | **178** | **150/150** |
+| | **Total** | | **181** | **150/150** |
 
 **Numeración global y correlativa**, no reiniciada por caso de uso: un identificador de prueba es
 único en todo el proyecto. Los rangos se asignaron en **orden de construcción**, no de numeración
 de caso de uso — por eso `CU-06` ocupa `CP-001…` (fue el piloto) y `CU-01` ocupa `CP-501…`.
 
-**178 casos para 150 controladores.** La cota inferior se respeta con holgura: los controladores que
+**181 casos para 150 controladores.** La cota inferior se respeta con holgura: los controladores que
 rinden más de uno son aquellos cuyos `opt` exigen probar la rama tomada **y** la no tomada.
 
 ## 3. Cobertura de caminos, desagregada por operador
@@ -109,3 +109,4 @@ casos.
 |---|---|---|---|
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. Índice de los 177 casos derivados de los 149 controladores, con la cobertura desagregada por operador y el inventario de los casos que prueban ausencias. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** entra `CP-813`; 178 casos y 150/150 controladores. `CA-11` deja de figurar como hueco. |
+| v1.2 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1a`.** `CU-06` pasa de 31 a **34** casos: la granularidad por turno obligó a fijar el volumen en la frontera (`CP-032`) y a decidir **qué llamadas cuentan** para `MET-07` — la fallida sí (`CP-033`), la cortada por límite de tasa no (`CP-034`). Total **181**; 150/150 controladores sin cambio. |

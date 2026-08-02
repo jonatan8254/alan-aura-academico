@@ -1,5 +1,5 @@
 # ECU-07 — Especificación de caso de uso: «Derivar ante peligro» (CU-07)
-**ID documento:** DOC-CU-07 · **Caso de uso:** CU-07 · **Alias en DCU-01:** `CU_Deriv` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-07 · **Caso de uso:** CU-07 · **Alias en DCU-01:** `CU_Deriv` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.1 · **Estado:** Propuesto.
 **Forma:** **completa** (§1–§23 de la plantilla de la skill `use-case-specifier`) — caso de uso **de seguridad (*safety*), criticidad máxima**. Es la ruta que el MVP debe garantizar al 100 %.
 **Insumos:** DCU-01 v2.1, MD-01 v1.4, MV-01 §Vista Seguridad, REQ-01 (RF-11), SEG-01 v1.1, PRIV-01, contrato conversacional (C-3, C-7, C-10), NORM-01 (§3.9), DIS-00 (P-12), `00_PLAN_CODEX_ORIGINAL.md` §3.8. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -12,7 +12,7 @@
 | Nombre del proyecto | Alan & Aura Académico |
 | Nombre del sistema | Aplicación de acompañamiento conversacional «Alan & Aura Académico» |
 | ID del documento | DOC-CU-07 |
-| Versión | v2.0 |
+| Versión | v2.1 |
 | Autor(es) | Jonatan Estiven Sánchez Vargas (redacción) · Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil |
 | Fecha de creación | 2026-07-16 |
 | Fecha de última actualización | 2026-07-31 |
@@ -22,6 +22,7 @@
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v2.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-3` de `DS-00`.** Se declara en §11 que `DS-07` **invierte el orden 7↔8 con razón**: el descarte del contenido resuelve el turno en curso, mientras que reabrir una conversación es un acto del Usuario «cuando lo decide». Un diagrama de secuencia ordena por tiempo real; esta tabla conserva su numeración narrativa. `DR-07` ya lo modelaba así. Sin cambios de flujo. |
 | v2.0 | 2026-07-31 | J. Sánchez | **PDR-01, fase D.3, tanda 3.** Cierra **D-09**: el flujo alternativo de recursos y el de excepción de configuración compartían disparador; ahora la falla de recursos es **un solo** flujo (`FA-01`) y la excepción queda reservada al **otro** elemento configurable, el texto de contención (`FE-02`). Cierra **D-10**: el recuento de pasos se comprueba contra sus fuentes reales y queda la correspondencia auditable en §11. Se declara el desenlace de los tres flujos de excepción, se reescriben los ocho pasos en voz activa con conceptos nombrados, y **todo flujo gana criterio de aceptación**. Se añaden `FA-02`, `FA-03` y `FE-03`, que cubren huecos reales. Se incorpora la **transparencia** de SEG-01 §5, ausente del flujo de v1.0. Se añade la correspondencia alias ↔ CU-NN en §19. |
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
 
@@ -164,6 +165,15 @@ Cuatro invariantes gobiernan cada flujo de esta especificación. Ningún flujo a
 | 6 | Sistema | Bloquea el chat ordinario de esa `Conversacion` | `Conversacion` | El Usuario no puede seguir conversando en esa sesión | Interfaz de chat |
 | 7 | Usuario | Abre más tarde una `Conversacion` nueva, cuando lo decide | `Conversacion` | El Sistema permite reabrir el acompañamiento en una sesión nueva | Interfaz de chat |
 | 8 | Sistema | Descarta el contenido del turno y **no** contabiliza ninguna clasificación de riesgo | `Mensaje`, `EventoDeSeguridad` | Sin persistencia del contenido y sin *scoring* (invariante I-3) | — |
+
+> **`DS-07` invierte el orden 7↔8, y tiene razón (`H-3`, declarado).** El diagrama de secuencia
+> ejecuta el **descarte del contenido** (paso 8) **antes** de la reapertura (paso 7). No es una
+> discrepancia a corregir: el descarte **resuelve el turno en curso** —es la última acción de la
+> ruta de seguridad— mientras que «abrir más tarde una `Conversacion` nueva» es un acto del Usuario
+> «cuando lo decide», que puede tardar días. Un diagrama de secuencia ordena por **tiempo real**, y
+> en tiempo real el descarte no puede esperar a una acción que quizá no ocurra nunca. `DR-07` ya lo
+> modelaba así. Esta tabla conserva su numeración porque es la **narrativa del caso de uso**, donde
+> el paso 7 cierra el arco del actor; la inversión queda declarada aquí en vez de silenciada.
 
 ### 11.1 Procedencia de la secuencia y recuento de pasos (cierra el hallazgo D-10)
 

@@ -1,5 +1,5 @@
 # ECU-05 — Especificación de caso de uso: «Otorgar consentimiento y crear la cápsula de perfil» (CU-05)
-**ID documento:** DOC-CU-05 · **Caso de uso:** CU-05 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Alias en DCU-01:** `CU_Onb` · **Fecha:** 2026-07-30 · **Versión:** v2.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-05 · **Caso de uso:** CU-05 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Alias en DCU-01:** `CU_Onb` · **Fecha:** 2026-07-30 · **Versión:** v2.1 · **Estado:** Propuesto.
 **Forma:** **completa** (24 secciones de la skill `use-case-specifier`, §1–§23) — caso de uso **canon-sensible** (consentimiento, minimización, solo adultos).
 **Insumos:** DCU-01 v2.1, MV-01 §Vista Onboarding, MD-01 v1.4, REQ-01 (RF-01…RF-05), PRIV-01, VIS-01, contrato, plan §3.1/§3.3/§3.4. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -11,7 +11,7 @@
 | Nombre del proyecto | Alan & Aura Académico |
 | Nombre del sistema | Aplicación de acompañamiento conversacional «Alan & Aura Académico» |
 | ID del documento | DOC-CU-05 |
-| Versión | v2.0 |
+| Versión | v2.1 |
 | Autor(es) | Jonatan Estiven Sánchez Vargas (redacción) · Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil |
 | Fecha de creación | 2026-07-16 |
 | Fecha de última actualización | 2026-07-30 |
@@ -21,6 +21,7 @@
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v2.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-4` de `DS-00`.** El armado de la `CapsulaDePerfil` estaba numerado en el **paso 8** por §11 y en el **7** por §15 (`CA-05`), §18 y `RN-01.3`. Manda **§11**, que es el flujo básico: el paso 7 otorga la capa de personalización, el 8 arma la cápsula. `DS-05` ya lo modelaba así. Corregidas las tres referencias y añadida la nota que distingue los dos pasos. |
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
 | v2.0 | 2026-07-30 | J. Sánchez | **PDR-01, fase D.3, tanda 1.** Renombrado a «crear la cápsula de perfil» («perfil» a secas es término prohibido por el control terminológico de §7). Los **pasos 8 y 9** salen a **CU-14** vía `<<include>>`. Se separa el `Consentimiento` en **capas base y personalización** (§4.1), lo que resuelve el hallazgo D-01. Se ancla el tercer flujo alternativo a un paso concreto (D-06), se declara quién cierra la sesión del menor (D-07), se añade `RN-01.6` y se define `RN-07` en §15 (D-14), y se unifica la versión (D-15). |
 | v1.1 | 2026-07-25 | J. Sánchez | **Resolución de PER-H1 (SD-26):** la `CapsulaDePerfil` **siempre existe** al terminar el onboarding, con `character` como contenido mínimo. Corrige FA-01 (decía «continúa sin cápsula»), §4, §14, §20 CA-05 y §23; precisa RN-01.4 y añade RN-01.6; nota sobre el personaje cambiable por sesión en §18. Sin cambios en el flujo básico ni en lo que recibe el LLM. |
@@ -141,6 +142,11 @@
 | 7 | Usuario | **Otorga la capa de personalización** | `Consentimiento` | Añade la capa de personalización al `Consentimiento`, en estado otorgado | Pantalla de caracterización |
 | 8 | Usuario | Responde u omite cada autorreporte | `CapsulaDePerfil` | **Arma** la `CapsulaDePerfil` con los autorreportes respondidos, sin *defaults* para los omitidos, e **invoca CU-14** (`<<include>>`) para completarla con `character` | Pantalla de caracterización |
 
+> **Dos pasos distintos, que este documento llegó a confundir (`H-4`, corregido).** El **paso 7**
+> es *otorgar la capa de personalización*; el **paso 8** es *armar la `CapsulaDePerfil`* con los
+> autorreportes respondidos. §15 (`CA-05`), §18 y `RN-01.3` decían «paso 7» para el armado.
+> **Manda §11**, que es el flujo básico y por tanto la autoridad; `DS-05` ya lo modelaba así.
+>
 > El flujo básico tiene **8 pasos** y termina invocando CU-14. El otorgamiento de la capa de personalización es el **paso 7**, con el Usuario como responsable: en la primera redacción de v2.0 iba escondido como condicional dentro de la respuesta del Sistema al paso 6, lo que ocultaba el acto que crea la capa.
 
 ## 12. Flujos alternativos
@@ -179,7 +185,7 @@
 | RN-10 | «Adulto» = declara edad ≥18 en el onboarding. | Término | Paso 3 | MV-01 §7.1 |
 | RN-01.1 | El *disclosure* precede a cualquier dato. | Restricción | Paso 1 | MV-01 §7.2 |
 | RN-01.2 | La edad se declara antes del consentimiento; <18 no continúa. | Restricción | Paso 3, FE-01 | MV-01 §7.2 |
-| RN-01.3 | La cápsula (`ContextoInicialConversacionalV1`) = 5 campos de contenido (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) + metadatos (`schema_version`, `consent_version`). | Restricción | Paso 7 | MV-01 §7.2, plan §3.4 |
+| RN-01.3 | La cápsula (`ContextoInicialConversacionalV1`) = 5 campos de contenido (`mood_self_report`, `energy_self_report`, `conversation_goal`, `response_style`, `character`) + metadatos (`schema_version`, `consent_version`). | Restricción | **Paso 8** | MV-01 §7.2, plan §3.4 |
 | RN-01.4 | Ningún **autorreporte** de la caracterización es obligatorio; el usuario puede omitir los 4. Obligatorios son solo edad, capa base del consentimiento y `character`. | Habilitador | FA-01, FA-02 | MV-01 §7.2 |
 | RN-01.5 | El consentimiento se puede revocar desde el onboarding **y después**. El «después» de la capa de personalización es CU-12. | Habilitador | FA-03, FA-04 | MV-01 §7.2 |
 | RN-07 | El consentimiento es revocable; al revocarlo cesa el uso de la cápsula. | Habilitador | FA-01, FA-03, FA-04 | MV-01 §7.1 |
@@ -208,7 +214,7 @@
 | Concepto de dominio | Datos usados | Operación | Flujo | Restricciones |
 |---|---|---|---|---|
 | `Consentimiento` | capa, estado, fecha, versión de *disclosure* | Crear / Confirmar | Pasos 5 y 6 | Revocable por capas (`RN-01.5`, `RN-07`) |
-| `CapsulaDePerfil` | mood_self_report, energy_self_report, conversation_goal, response_style (+ schema_version, consent_version) | Crear | Paso 7 | Solo campos de `RN-01.3`; los 4 autorreportes son opcionales. **`character` lo escribe CU-14** |
+| `CapsulaDePerfil` | mood_self_report, energy_self_report, conversation_goal, response_style (+ schema_version, consent_version) | Crear | **Paso 8** | Solo campos de `RN-01.3`; los 4 autorreportes son opcionales. **`character` lo escribe CU-14** |
 | `Usuario` | esAdulto, versionDisclosure | Actualizar | Paso 3 | Booleano, no fecha de nacimiento (`RN-04.2`) |
 
 > La fila de `Personaje` de v1.1 —con la nota sobre la última elección como predeterminado— **migró a CU-14**, junto con los pasos 8 y 9.
@@ -239,7 +245,7 @@
 | CA-02 | Dado un usuario que declara <18, cuando lo confirma, entonces el sistema no continúa ni registra perfil. | FE-01 | Prueba de caso <18 |
 | CA-03 | Dado un usuario, cuando otorga la **capa base**, entonces el registro queda creado y puede avanzar; sin ella, no avanza. | Flujo básico / FE-02 | Traza de consentimiento |
 | CA-04 | Dado un usuario que completa la caracterización, cuando el Sistema arma la cápsula, entonces contiene solo los 5 campos de contenido + metadatos (`RN-01.3`) y nada más. | Flujo básico | Inspección de la cápsula |
-| CA-05 | Dado un usuario que omite autorreportes, cuando finaliza el paso 7, entonces la cápsula se arma solo con lo respondido, **sin *defaults***. | FA-01, FA-02 | Inspección de la cápsula |
+| CA-05 | Dado un usuario que omite autorreportes, cuando finaliza el **paso 8**, entonces la cápsula se arma solo con lo respondido, **sin *defaults***. | FA-01, FA-02 | Inspección de la cápsula |
 | CA-06 | Dado un usuario que rechaza la caracterización, cuando termina el onboarding, entonces el `Consentimiento` conserva la capa base y **no** tiene capa de personalización. | FA-01 | Traza de consentimiento |
 | CA-07 | Dado un usuario que retira la capa base en el paso 5, cuando el onboarding termina, entonces el chat **no queda habilitado**. | FA-03 | Prueba de acceso al chat |
 | CA-08 | Dado un usuario que retira solo la capa de personalización, cuando termina el onboarding, entonces conserva la capa base, **puede conversar** y sus autorreportes no orientan la conversación. | FA-04 | Prueba de conversación e inspección de *payload* |

@@ -1,6 +1,6 @@
 # DOP-01 — Delta de operaciones
 
-**ID:** DOP-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.0 · **Estado:** Propuesto — cubre los **14** diagramas.
+**ID:** DOP-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto — cubre los **14** diagramas.
 **Propósito:** registrar, operación por operación, **qué clase la recibe y por qué**. Es la entrada del diagrama de clases de diseño y la única parte del paso 4 que queda auditable.
 **Insumos:** `DR-01…DR-14` v2.0 (los **150** controladores), `DS-01…DS-14` v1.0, `MD-01 v1.4`, `SEG-01 v1.2`, `PER-01 v1.2`, `MV-01 §7`.
 **Generado con:** skill `uml-sequence-diagram` (modo Generar). **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores** en los 14.
@@ -52,7 +52,7 @@ diseño detallado los dos espacios convergen.
 | `C_MostrarRespuesta` | `mostrarRespuestaDelPersonaje()` | `B_InterfazDeChat` | solución | Presentación pura |
 | `C_CerrarYDescartar` | `cerrar()` | `Conversacion` | problema | Cambio de estado propio |
 | ↳ | `descartarContenido()` | `Mensaje` | problema | **Realiza `RF-13`/`PRIV-R2`:** el mensaje sabe descartarse |
-| `C_RegistrarEventoOperativo` | `registrarSinContenido(latencia, modelo, version, estado)` | `EventoOperativo` | problema | Los cuatro campos son suyos (`PER-01`, plan §4.15) |
+| `C_RegistrarEventoOperativo` | `registrarSinContenido(momento, resultado, latencia, modelo, version)` | `EventoOperativo` | problema | Los cinco campos son suyos, y son **valores de una llamada**: por eso la operación se invoca **dentro del `loop`**, una vez por petición al proveedor, y no al cerrar (`v1.1`, hallazgo `H-1a`). Los otros tres del plan §4.15 —*request ID*, código de estado, entorno— son de persistencia y viven en `PER-01 §3.6`, la misma frontera que `MD-01 §6` traza |
 | `C_InformarLimiteDeSesion` | `alcanzoElLimiteDeSesion()` | `Conversacion` | problema | La conversación cuenta sus propios turnos (`H-02` = 20) |
 | ↳ | `informarLimiteDeSesionSinErrorCrudo()` | `B_InterfazDeChat` | solución | `FA-01` termina de forma controlada, no con error |
 | `C_SustituirSalidaInsegura` | `sustituirPorRespuestaSegura()` | `C_GateDeSeguridad` | solución | La sustitución es decisión de seguridad, no de presentación (`FA-02`, `CA-10`) |
@@ -169,4 +169,5 @@ el techo razonable para clases controladoras, y ninguna es un `XController` por 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v0.1 | 2026-08-01 | J. Sánchez | Creación con el piloto: 37 controladores de `DR-06`/`DR-07` repartidos en 50 operaciones sobre 13 clases del problema y 2 nuevas del espacio de la solución. |
+| v1.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1a`.** `registrarSinContenido()` cambia de firma —`(momento, resultado, latencia, modelo, version)`, unificada contra el plan §4.15— y de sitio: se invoca **dentro del `loop`**, una vez por llamada al proveedor, no al cerrar la conversación. Misma clase receptora, mismo espacio: **192 operaciones sin cambio**. |
 | v1.0 | 2026-08-01 | J. Sánchez | Cierre con los 14 diagramas: **150 controladores → 192 operaciones** sobre las **16 clases** de `MD-01` y **3** del espacio de la solución. Añadidas §6 (asignaciones que exigieron juicio), §7 (cobertura del dominio) y §8 (cifras). |

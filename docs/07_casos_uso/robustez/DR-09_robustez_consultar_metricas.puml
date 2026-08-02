@@ -1,5 +1,9 @@
 @startuml
 ' DR-09 — Analisis de robustez de CU-09 «Consultar metricas de uso»
+' v2.1 (SD-30): las "llamadas al chat de los ultimos 7 dias" pasan de contarse desde
+'      Conversacion a contarse desde EventoOperativo. Conversacion NO se persiste (RF-13),
+'      asi que a los 7 dias no habia nada que contar. Sale la entidad Conversacion, que
+'      quedaba huerfana con ese unico arco. Hallazgo H-1b de DS-00.
 ' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-09, MD-01 (MetricaDeUso = vista derivada, NO clase), DCU-01, DIS-00 (P-15),
 '          PRIV-01, PER-01 (OperationalEvent, fuente de MET-07)
@@ -21,7 +25,6 @@ control "Denegar el acceso por sesion ausente" as C_DenegarPorSesionAusente #Lig
 control "Denegar el acceso por rol insuficiente" as C_DenegarPorRol #LightCoral
 
 entity "Usuario" as E_Usuario
-entity "Conversacion" as E_Conversacion
 entity "EventoOperativo" as E_EventoOperativo
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot #LightCoral
 
@@ -30,7 +33,7 @@ ACT_Administrador -- B_MetricasDeUso : 2 revisa las cifras agregadas mostradas
 B_MetricasDeUso -- C_VerificarSesionYRol : 1 solicita los agregados
 C_VerificarSesionYRol -- C_CalcularAgregados : 1 sesion con rol de administrador validado en servidor
 C_CalcularAgregados -- E_Usuario : 1 cuenta el total de cuentas y los onboardings completados
-C_CalcularAgregados -- E_Conversacion : 1 cuenta las llamadas al chat de los ultimos 7 dias
+C_CalcularAgregados -- E_EventoOperativo : 1 cuenta las llamadas al chat de los ultimos 7 dias
 C_CalcularAgregados -- C_CalcularTasaTecnica : 1 calcula peticiones correctas mas fallback sobre el total
 C_CalcularTasaTecnica -- E_EventoOperativo : 1 lee los eventos operativos sin contenido
 C_CalcularAgregados -- C_RestringirACifrasAgregadas : 1 aplica la restriccion de agregados de RN-03.3
@@ -62,8 +65,13 @@ note as N_DR09
      momento de este flujo, datos ni conteos por usuario ni contenido de conversaciones.
 
   <b>Cursos alternativos</b>
-  No aplica: el MVP ofrece una unica vista de agregados (RN-03.3); no hay filtros, rangos ni
-  variantes de presentacion en esta fase.
+  FA-01 Ventana sin actividad: la ventana de siete dias no tuvo ningun EventoOperativo; el
+        sistema muestra ceros como cifra valida, no como error, y el flujo continua.
+  FA-02 Chatbot deshabilitado: el kill switch esta activo; el sistema presenta igualmente las
+        cuatro cifras y senala el estado junto a ellas; el flujo continua.
+  (Lo que no existe son filtros, rangos ni variantes de presentacion: RN-03.3 impone una
+  unica vista de agregados. La prosa de v2.0 decia "No aplica" mientras el diagrama ya
+  dibujaba estos dos FA — corregido en v2.1, mismo defecto que H-7 en DR-08.)
 
   <b>Cursos de excepcion</b>
   FE-01 Sesion ausente: 401; no muestra ninguna cifra; el caso de uso no se inicia.
@@ -80,14 +88,16 @@ note as N_DR09
     clase del dominio, y §3.3 insiste en que "ver metricas" no se dibuja como caja ni como
     linea. Se representa como el calculo (Controlador) sobre las entidades de las que se
     deriva.
-  - <b>EventoOperativo si se dibuja, en verde, y por que:</b> la tasa tecnica de MET-07 se
-    define sobre peticiones correctas mas fallback dividido por el total, y esa telemetria es
-    una entidad persistida en PER-01 §3 (`OperationalEvent`, 8 campos), creada en el paso 8 de
-    CU-06. Es un descubrimiento propuesto a MD-01, no una clase existente.
-    <b>Hallazgo reportado:</b> MV-01 §13.2 agrupa `MetricaDeUso` y `EventoOperativo` como
-    "vista derivada (no clase)", mientras PER-01 (posterior, SD-25) trata `OperationalEvent`
-    como entidad persistida. Las dos fuentes se contradicen; aqui se sigue PER-01 y la
-    contradiccion queda reportada. ECU-09 tampoco lo menciona.
+  - <b>EventoOperativo es la unica fuente de las dos cifras de ventana</b> (v2.1, hallazgo
+    H-1b de DS-00). Ya es clase de MD-01 v1.4 —no un descubrimiento propuesto— y no se dibuja
+    en verde. Se escribe uno por llamada al proveedor (PER-01 §3.6), asi que contar sus
+    registros de los ultimos 7 dias ES contar las llamadas al chat.
+    <b>Que se corrigio y por que era imposible:</b> hasta v2.0 ese conteo salia de
+    Conversacion. Pero la Conversacion NO se persiste (RF-13, PRIV-01 §2: "No (nunca)"): a
+    los siete dias no queda nada que contar. MD-01 §3 creo esta clase precisamente por eso
+    —"sin esta clase la tasa de 7 dias de ECU-09 seria incomputable"—, y el diagrama contaba
+    igualmente desde la clase efimera. Retirado el arco, Conversacion quedaba sin ninguno y
+    sale del diagrama: 60 -> 59 entidades, 263 -> 262 elementos del paquete.
   - <b>La prohibicion del paso 2 se dibuja en positivo</b>, igual que en DR-08: RN-03.3 esta
     formulada como "las metricas visualizadas son agregadas", de modo que restringir la vista
     es comportamiento real, no una no-accion.

@@ -1,5 +1,7 @@
 @startuml
 ' DR-08 — Analisis de robustez de CU-08 «Consultar directorio de usuarios»
+' v2.1 (SD-30): la nota decia "cero cursos alternativos" mientras el diagrama dibujaba FA-01
+'      y FA-02, que ECU-08 §6 define. Corregido — hallazgo H-7 de DS-00.
 ' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-08, MD-01, DCU-01, DIS-00 (P-14), PRIV-01, PER-01 (PER-H3 / SD-26)
 left to right direction
@@ -60,8 +62,12 @@ note as N_DR08
      elegido.
 
   <b>Cursos alternativos</b>
-  No aplica: vista unica en el MVP. El directorio no pagina ni filtra (una sola vista, sin
-  variantes). La especificacion declara cero cursos alternativos.
+  FA-01 Directorio vacio: ninguna cuenta registrada todavia; presenta el directorio vacio con
+        un aviso sobrio, sin error; el flujo FINALIZA con cero filas.
+  FA-02 Cuenta sin consentimiento vigente: deriva para esa fila el estado "sin consentimiento
+        vigente" y no ofrece accion alguna sobre ella; el flujo CONTINUA con el resto.
+  (Lo que no existe son paginacion, filtros ni variantes de presentacion: el MVP ofrece una
+  vista unica.)
 
   <b>Cursos de excepcion</b>
   FE-01 Sesion ausente: quien intenta abrir el directorio no esta autenticado; 401; no
@@ -83,7 +89,11 @@ note as N_DR08
     Son el mismo concepto. Discrepancia reportada para unificar en la ECU.
   - Las ramas FE-01/FE-02 retornan a P-14 porque DIS-00 §2 declara 401 y 403 entre los
     estados clave de esa pantalla: el Borde representa la pantalla, no el contenido servido.
-  - Sin cursos alternativos: la ausencia es fiel al texto, que la declara explicitamente.
+  - <b>La prosa de v2.0 se contradecia con sus propias flechas</b> (v2.1, hallazgo H-7 de
+    DS-00). Decia "No aplica... cero cursos alternativos" mientras el diagrama dibujaba
+    FA-01 y FA-02, que ECU-08 §6 define con nombre, condicion y desenlace. Lo que ECU-08 no
+    tiene son paginacion ni filtros — eso es lo que la nota queria decir y decia mal. Aqui
+    la ausencia NO era la afirmacion: era un error de redaccion.
 end note
 
 @enduml

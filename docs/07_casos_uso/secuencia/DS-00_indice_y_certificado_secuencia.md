@@ -1,8 +1,8 @@
 # DS-00 — Índice y certificado de los diagramas de secuencia
 
-**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 (SD-30: `H-8` y `H-9` aplicados; robustez a 263 elementos y 150 controladores) · **Estado:** Propuesto.
+**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-30 cerrado: los **siete** hallazgos pendientes aplicados; robustez queda en **262 elementos** y 150 controladores; **181** casos de prueba) · **Estado:** Propuesto.
 **Propósito:** índice de los **14 diagramas de secuencia** (`DS-01…DS-14`) derivados de `DR-01…DR-14`, con su certificado de auditoría, las capas declaradas, las excepciones y la trazabilidad hacia adelante.
-**Insumos:** `DR-01…DR-14 v2.0` (263 elementos, **150 controladores**), `ECU-01…ECU-14 v2.0`, `MD-01 v1.4`, `DCU-01 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `DIS-00`, `SEG-01 v1.2`, `PER-01 v1.2`, `PRIV-01`, `MV-01 §7`, `HECHOS_CANONICOS`.
+**Insumos:** `DR-01…DR-14 v2.1` (**262 elementos**, **150 controladores**), `ECU-01…ECU-14 v2.1`, `MD-01 v1.4`, `DCU-01 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `DIS-00`, `SEG-01 v1.2`, `PER-01 v1.2`, `PRIV-01`, `MV-01 §7`, `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-sequence-diagram`, modo **Generar**. **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores en los 14**.
 **Consumidores:** `uml-design-class-model` (diagrama de clases de diseño), el **CDR**, la fase de construcción.
 **Fundamentos:** Rosenberg & Stephens, *Use Case Driven Object Modeling with UML*, cap. 8; Fowler, *UML Distilled* 3ª ed., cap. 4; Rosenberg, Collins-Cope & Stephens, *Agile Development with ICONIX Process*; ISO/IEC 12207:2017 §6.4.5. Se **citan**, no se reproducen.
@@ -39,6 +39,10 @@ llegó a **anidamiento de nivel 7**. Ver §5.
 | [DS-13](puml/DS-13_secuencia_cambiar_de_acompanante.puml) | CU-13 Cambiar de acompañante | 9 | 16 | 6/6 | ✅ 0 · 1 |
 | [DS-14](puml/DS-14_secuencia_elegir_acompanante.puml) | CU-14 Elegir acompañante (Alan o Aura) | 7 | 13 | 6/6 | ✅ 0 · 1 |
 | | **Total** | | **282** | **150/150** | **0 errores · 6 advertencias** |
+
+> **Los conteos del paquete son ahora hechos canónicos:** `H-22` (282 mensajes), `H-23` (192
+> operaciones) y `H-24` (181 casos de prueba) viven en `HECHOS_CANONICOS`, no aquí. Si discrepan,
+> manda esa tabla.
 
 **Un diagrama por caso de uso, con el curso básico y *todos* los alternos en el mismo diagrama.**
 Flujos sin fragmento: **0** en los 14.
@@ -159,17 +163,19 @@ restantes se **proponen**, no se aplican.
 | **H-8** | **`FE-02` de `CU-01` tenía dos desenlaces incompatibles.** `ECU-01` lo decía **tres veces** —§6, la fila de `FE-02` y `CA-08`—: «**vuelve** a la Presentación / landing con el acceso de registro a la vista» (P-01). `DR-01:37` dirigía a `B_FormularioRegistro` (**P-02**) y decía «**termina**». | **Mandó `ECU-01`**: la especificación es la autoridad del comportamiento del caso de uso, y aquí lo dice en un criterio comprobable. Corregidos `DR-01` (→ **v2.1**), `DS-01` y `CP-507`. Al Visitante **se le ofrece** registrarse, no se le empuja a un formulario que no pidió |
 | **H-9** | **`CA-11` de `ECU-04` no tenía de dónde derivar prueba.** El criterio exige que «ningún `EventoOperativo` permita reconstruir que esa cuenta existió», y `EventoOperativo` **no aparecía en `DR-04`** — pese a que `ECU-04 §7` lo declara como concepto que **permanece** fuera de la cascada «y por eso debe ser irreidentificable» (`RE-06`) | **El defecto estaba en `DR-04`, no en el criterio.** `DR-04 v2.1` gana la entidad y el controlador `C_ConservarTelemetriaSinIdentidad`, cuya **no-acción sobre la cascada es la afirmación**; `DS-04` gana `conservarSinIdentidad()` y de ahí deriva **`CP-813`**. Ripple: 261 → **263** elementos, 149 → **150** controladores, propagado a `HECHOS_CANONICOS` (`H-20`, `H-21`), `DR-00`, el generador de SVG de robustez, `ESTADO_PIPELINE` e `INDICE_MAESTRO` |
 
-### Pendientes de tu confirmación
+### Los siete restantes, aplicados en la misma decisión
 
-| # | Hallazgo | Destino |
+Todos confirmados y ejecutados. La columna de la derecha dice **qué se hizo**, no a dónde iba.
+
+| # | Hallazgo | Resolución |
 |---|---|---|
-| H-1 | **Plan §4.11 paso 17 vs. `ECU-06` §18.** El plan sitúa el registro del evento operativo **por petición**; `ECU-06` y `DR-06` lo sitúan al **cerrar**. Al cerrar no hay una latencia única que registrar. `[I2]` | `/use-case-specifier` |
-| H-2 | **Plan §4.11 paso 3 («verificar mayoría de edad») no está modelado.** `ECU-06` `PRE-03` lo funde con la capa base. Queda absorbido, no perdido, pero conviene que la fusión sea explícita. `[E1]` | `/use-case-specifier` |
-| H-3 | **`DS-07` invierte el orden 7↔8 de `ECU-07`.** El descarte resuelve el turno en curso y no puede esperar a una acción que el Usuario emprende «cuando lo decide». `DR-07` ya lo modela así. `[I2]` | `/use-case-specifier` |
-| H-4 | **`ECU-05` numera el armado de la cápsula en el paso 8 (§11) y en el 7 (§15/§18).** `DS-05` sigue §11, que es el flujo básico y por tanto la autoridad. `[E1]` | `/use-case-specifier` |
-| H-5 | **`ECU-13` §12 cita `RN-02.9` como regla que gobierna el flujo, pero §8 no la define.** Referencia colgante. `[E1]` | `/use-case-specifier` |
-| H-6 | **`DR-06:194-196`** afirma que `ContadorDeUsoDiario` y `EventoOperativo` «NO son clases de MD-01» y las llama «entidades en verde». **Ambas cosas son falsas hoy** (`MD-01:48-49`; `DR-00 §6`). `[E1]` | `/uml-robustness-diagram` |
-| H-7 | **`DR-08:62-64,86`** — el diagrama **se contradice a sí mismo**: sus flechas implementan `FA-01` y `FA-02`, y su nota en prosa dice «cero cursos alternativos». `DR-00 §1`, `ECU-08` §6 y las flechas coinciden entre sí. `[E1]` | `/uml-robustness-diagram` |
+| **H-1** | **Resultó ser dos defectos con una raíz.** `H-1a`: `ECU-06` creaba el `EventoOperativo` **al cerrar** (paso 8), con campos —latencia, resultado, modelo, versión— que son valores **de una llamada**; al cerrar no hay una latencia única que registrar, y `MET-07` mide «peticiones OK + *fallback* / **totales**». `H-1b`: `DR-09`/`DS-09` contaban las «llamadas al chat de 7 días» desde **`Conversacion`**. | **La raíz común: `Conversacion` no se persiste** (`RF-13`, `PRIV-01 §2`: «No (nunca)»), y `MD-01 §3` creó `EventoOperativo` **precisamente por eso** — «sin esta clase la tasa de 7 días de `ECU-09` sería incomputable». El evento pasa a escribirse **por llamada** (`ECU-06` §7/§11/§14/§16/§18, `DR-06`, `DS-06` dentro del `loop`, `DOP-01`, `MD-01.md`); las dos cifras de ventana pasan a salir de él (`ECU-09`, `PER-01 §3.6`, `DR-09`, `DS-09`, `CP-09`). **Ripple:** `E_Conversacion` quedó huérfana en `DR-09` y sale → **263 → 262** elementos, 60 → **59** entidades; `H-21` sin cambio. **Decisión que el plan no previó:** se registra **una vez por llamada efectivamente hecha al proveedor** — `FE-06`/`FE-07` **sí**, o el denominador de `MET-07` solo tendría éxitos; `FE-04`/`FE-05` **no**, porque cortan antes de tocar al proveedor. De ahí `CP-032`/`CP-033`/`CP-034` y **178 → 181** casos |
+| **H-2** | El **paso 3 del plan §4.11** («verificar mayoría de edad») no aparecía modelado. | **Estaba cubierto, no dicho.** Quedó absorbido en `PRE-03` de `ECU-06` («El Usuario es adulto **y** tiene vigente la capa base»). Se hace explícita la absorción en la nota del paso 8 |
+| **H-3** | `DS-07` invierte el orden 7↔8 de `ECU-07`. | **Con razón, y así queda declarado en `ECU-07` §11.** El descarte resuelve el turno en curso; reabrir es un acto del Usuario «cuando lo decide», que puede tardar días. Un diagrama de secuencia ordena por **tiempo real**. `DR-07` ya lo modelaba así; la tabla conserva su numeración narrativa |
+| **H-4** | `ECU-05` numeraba el armado de la cápsula en el **paso 8** (§11) y en el **7** (§15, §18, `RN-01.3`). | **Manda §11**, el flujo básico: el paso 7 otorga la capa de personalización, el 8 arma la cápsula. Corregidas las tres referencias y añadida la nota que distingue los dos actos. `DS-05` ya lo modelaba así |
+| **H-5** | `ECU-13` §12 citaba `RN-02.9` como regla que gobierna el flujo; §8 no la definía. | **Referencia colgante, retirada.** No podía definirse allí: `RN-02.9` es el límite de tasa, que gobierna el envío de mensajes en `CU-06`. Cambiar de acompañante no consume cuota porque **no hay llamada al proveedor**. El motivo queda escrito en §8 |
+| **H-6** | `DR-06` afirmaba que `ContadorDeUsoDiario` y `EventoOperativo` «NO son clases de MD-01» y las llamaba «entidades en verde». | **Las dos cosas eran falsas.** Son clases desde `MD-01 v1.4` (líneas 48-49, `DR-00 §6`) y el `#PaleGreen` se había retirado ya en `CERT-D4-tanda1`. Nota reescrita |
+| **H-7** | `DR-08` **se contradecía con sus propias flechas**: dibujaba `FA-01` y `FA-02`, y su prosa decía «cero cursos alternativos». | **Error de redacción, no ausencia significativa.** `ECU-08` §6 define ambos con nombre, condición y desenlace. Lo que el MVP no tiene es paginación ni filtros — eso es lo que la nota quería decir. Reescrita, y la misma corrección se aplicó a `DR-09`, que arrastraba el defecto |
 | ~~H-8~~ | *(aplicado — ver arriba)* — **`FE-02` de `CU-01` tenía dos desenlaces incompatibles.** `ECU-01` lo dice **tres veces** —§6, la fila de `FE-02` y `CA-08`—: «**vuelve** a la **Presentación / landing** con el acceso de registro a la vista» (P-01). `DR-01:37` dibuja el arco hacia `B_FormularioRegistro` (**P-02**) y dice «**termina**». Difieren en el destino *y* en el desenlace. `DS-01` sigue a `DR-01`, que es su insumo inmediato; si la autoridad es `ECU-01`, hay que corregir `DR-01` **y** `DS-01`. `[E1]` | `/uml-robustness-diagram` |
 | ~~H-9~~ | *(aplicado — ver arriba)* — **`CA-11` de `ECU-04` no tenía controlador que la gobierne.** El criterio exige que «ningún `EventoOperativo` permita reconstruir que esa cuenta existió ni qué hizo» (`RE-06`), pero **`EventoOperativo` aparece cero veces en `DR-04`**: ni como entidad ni tocado por controlador alguno. Es **comportamiento declarado que el análisis de robustez nunca modeló**, así que no hay `CP` derivable sin inventar el controlador. No se fabricó uno. `[E1]` | `/uml-robustness-diagram` |
 
@@ -189,12 +195,40 @@ Lo que sigue es el **diagrama de clases de diseño** y después el **Critical De
 
 | Asunto | Estado |
 |---|---|
-| `CP-XX` de los 14 casos de uso | ✅ **177 casos**, `CP-00` como índice |
+| `CP-XX` de los 14 casos de uso | ✅ **181 casos** (`H-24`), `CP-00` como índice |
 | `COD-01` (insumos para código: clase · operación · firma · capa) | Pendiente |
 | `TRZ-DS-01` (matriz paso ↔ mensaje ↔ operación ↔ clase ↔ `CP`) y propagación a `TRZ-01` | Pendiente |
 | Propagación de gobernanza: `ESTADO_PIPELINE`, `CHANGELOG`, `REGISTRO_DECISIONES` (**SD-30**), `HECHOS_CANONICOS`, `README`, `INDICE_MAESTRO` | Pendiente |
-| Orientación para regenerar los `.svg` ya existentes (robustez, `MD-01`, `DCU-01`) con la retícula corregida | Pendiente |
-| Los **7** hallazgos pendientes de §8 (`H-1`…`H-7`) | **Pendientes de tu confirmación** — `H-8` y `H-9` ya aplicados en SD-30 |
+| Regenerar `MD-01.svg` y `DCU-01.svg` con la retícula corregida | Pendiente — **orientación entregada en §11**; los 14 de robustez ya se regeneran solos, porque su generador comparte el diagnóstico | Pendiente |
+| Los **9** hallazgos de §8 (`H-1`…`H-9`) | ✅ **Todos aplicados** en SD-30 |
+
+## 11. Orientación para regenerar los SVG antiguos (D-6, prometido)
+
+**No se ejecuta aquí**, se entrega diagnosticada. El defecto de legibilidad de los SVG antiguos
+—etiquetas encima de las líneas, trazos apelmazados— **no es de estilo, es aritmético**, y tiene
+dos causas independientes en `generar_svg_robustez.py`:
+
+1. **Canales de capacidad fija con aritmética modular.** Los arcos se reparten con `idx % N` sobre
+   un canal de anchura constante. `CANAL_CC` tiene **28 px y 4 posiciones** para los **23** arcos
+   control-control de `DR-06`: a partir del quinto **recicla una coordenada ya usada**, y dos
+   trazos distintos se dibujan encima. No hay aviso: el generador cree que ha colocado 23 arcos.
+2. **El anti-solape solo mira etiquetas.** `libre()` compara cada etiqueta contra **otras
+   etiquetas**, nunca contra las **líneas**. Por construcción no puede detectar el defecto que el
+   ojo ve primero.
+
+**La corrección ya está escrita y probada** en `generar_svg_secuencia.py`, que resuelve ambas:
+capacidad **derivada de la demanda real** en vez de constante, el trazo **10 px por debajo** del
+texto como garantía geométrica en vez de búsqueda de hueco, y un **pase de verificación
+post-layout que aborta** si detecta colisión — el generador prefiere no producir nada a producir
+algo ilegible.
+
+**Coste estimado:** portar las dos correcciones son unas 80 líneas; lo caro es **revalidar los 14
+SVG a ojo**, porque el pase geométrico garantiza que no hay colisiones pero no que el resultado
+sea *legible*. Quedan fuera `MD-01.svg` y `DCU-01.svg`, que usan otro generador.
+
+**Recomendación:** hacerlo **antes del CDR**, no ahora. El CDR revisa el diseño con estos
+diagramas delante, y llegar con SVG ilegibles convierte una revisión de fondo en una discusión de
+forma.
 
 ---
 
@@ -202,5 +236,6 @@ Lo que sigue es el **diagrama de clases de diseño** y después el **Critical De
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.2 | 2026-08-01 | J. Sánchez | **SD-30 cerrado.** Se aplican los **siete** hallazgos restantes (`H-1`…`H-7`); §8 deja de tener pendientes. El grande, `H-1`, resultó **dos defectos con una raíz**: el evento operativo se registraba al cerrar y las cifras de ventana se contaban desde `Conversacion` — ambas insostenibles porque **la `Conversacion` no se persiste**, que es la razón por la que `MD-01` creó `EventoOperativo`. Ripple: **263 → 262** elementos y **178 → 181** casos de prueba, estos últimos porque `H-1a` obligó a decidir **qué llamadas cuentan** para `MET-07`. Los conteos del paquete pasan a `HECHOS_CANONICOS` como `H-22`/`H-23`/`H-24`. Entra §11 con la orientación de D-6. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** se aplican `H-8` (`FE-02` de `CU-01` vuelve a P-01, no dirige a P-02) y `H-9` (`DR-04` incorpora `EventoOperativo` y su controlador). `DR-01` y `DR-04` pasan a v2.1; los conteos suben a 263 elementos y 150 controladores; entra `CP-813`. Quedan 7 hallazgos pendientes de confirmación. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. Los 14 diagramas de secuencia en **0 errores**, **149/149** controladores cubiertos, **191 operaciones** asignadas con justificación, **16/16** clases del dominio con comportamiento, 3 clases nuevas del espacio de la solución, generador SVG propio sin colisiones, y **9 hallazgos** enrutados a sus skills. |

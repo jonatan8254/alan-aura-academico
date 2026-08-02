@@ -44,19 +44,19 @@
 <polyline points="345,167 352,167 352,639 425,639"/>
 <polyline points="700,660 708,660 708,712 700,712"/>
 <polyline points="345,177 364,177 364,774 425,774"/>
-<polyline points="700,787 715,787 715,842 700,842"/>
-<polyline points="345,113 376,113 376,834 425,834"/>
+<polyline points="700,787 715,787 715,839 700,839"/>
+<polyline points="345,113 376,113 376,833 425,833"/>
+<polyline points="700,846 722,846 722,904 700,904"/>
+<polyline points="700,891 744,891 744,506 800,506"/>
 <polyline points="345,108 388,108 388,397 425,397"/>
-<polyline points="345,118 400,118 400,888 425,888"/>
-<polyline points="700,899 744,899 744,200 800,200"/>
-<polyline points="700,909 752,909 752,314 800,314"/>
-<polyline points="700,920 722,920 722,979 700,979"/>
-<polyline points="700,961 760,961 760,506 800,506"/>
-<polyline points="700,849 729,849 729,1049 700,1049"/>
+<polyline points="345,118 400,118 400,957 425,957"/>
+<polyline points="700,970 752,970 752,200 800,200"/>
+<polyline points="700,983 760,983 760,314 800,314"/>
+<polyline points="700,852 729,852 729,1049 700,1049"/>
 <polyline points="700,1036 768,1036 768,210 800,210"/>
 <polyline points="345,123 352,123 352,1023 425,1023"/>
 <polyline points="700,800 708,800 708,1093 700,1093"/>
-<polyline points="700,1111 715,1111 715,857 700,857"/>
+<polyline points="700,1111 715,1111 715,858 700,858"/>
 <polyline points="700,115 722,115 722,1159 700,1159"/>
 <polyline points="345,300 364,300 364,1177 425,1177" stroke="#993C1D" stroke-dasharray="5 3"/>
 <polyline points="700,123 729,123 729,1225 700,1225"/>
@@ -69,10 +69,11 @@
 <polyline points="345,330 352,330 352,1408 425,1408" stroke="#993C1D" stroke-dasharray="5 3"/>
 <polyline points="700,671 729,671 729,1483 700,1483"/>
 <polyline points="345,188 364,188 364,1470 425,1470"/>
-<polyline points="700,1496 708,1496 708,1562 700,1562" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,730 715,730 715,1549 700,1549"/>
-<polyline points="345,338 376,338 376,1536 425,1536" stroke="#993C1D" stroke-dasharray="5 3"/>
-<polyline points="700,555 722,555 722,1624 700,1624"/>
+<polyline points="700,1496 708,1496 708,1565 700,1565" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,730 715,730 715,1544 700,1544"/>
+<polyline points="345,338 376,338 376,1533 425,1533" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="700,1554 722,1554 722,917 700,917"/>
+<polyline points="700,555 729,555 729,1624 700,1624"/>
 <polyline points="345,127 388,127 388,1606 425,1606"/>
 </g>
 
@@ -187,13 +188,13 @@
 <rect x="425" y="878" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="904.0" r="5.5"/><polyline points="440.5,896.5 444.5,898.8 440.2,901.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="900">Cerrar la conversacion y descartar su</text>
+<text x="457" y="900">Registrar el evento operativo sin</text>
 <text x="457" y="915">contenido</text>
 </g>
 <rect x="425" y="944" width="275" height="52" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="442" cy="970.0" r="5.5"/><polyline points="440.5,962.5 444.5,964.8 440.2,967.2"/></g>
 <g font-size="11" fill="#04342C">
-<text x="457" y="966">Registrar el evento operativo sin</text>
+<text x="457" y="966">Cerrar la conversacion y descartar su</text>
 <text x="457" y="981">contenido</text>
 </g>
 <rect x="425" y="1010" width="275" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
@@ -334,13 +335,13 @@
 <rect x="351" y="185" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="195" fill="#5F5E5A">5</text>
 <rect x="706" y="780" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="790" fill="#5F5E5A">6</text>
 <rect x="351" y="211" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="221" fill="#5F5E5A">6</text>
+<rect x="706" y="838" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="848" fill="#5F5E5A">6</text>
+<rect x="706" y="884" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="894" fill="#5F5E5A">6</text>
 <rect x="351" y="266" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="276" fill="#5F5E5A">7</text>
 <rect x="351" y="141" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="359" y="151" fill="#5F5E5A">8</text>
-<rect x="706" y="892" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="902" fill="#5F5E5A">8</text>
-<rect x="706" y="917" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="927" fill="#5F5E5A">8</text>
-<rect x="706" y="943" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="953" fill="#5F5E5A">8</text>
-<rect x="706" y="969" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="979" fill="#5F5E5A">8</text>
-<rect x="706" y="842" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="852" fill="#5F5E5A">FA-01</text>
+<rect x="706" y="963" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="973" fill="#5F5E5A">8</text>
+<rect x="706" y="991" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="714" y="1001" fill="#5F5E5A">8</text>
+<rect x="706" y="860" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="870" fill="#5F5E5A">FA-01</text>
 <rect x="706" y="1029" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1039" fill="#5F5E5A">FA-01</text>
 <rect x="351" y="281" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="291" fill="#5F5E5A">FA-01</text>
 <rect x="706" y="808" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="818" fill="#5F5E5A">FA-02</text>
@@ -360,6 +361,7 @@
 <rect x="706" y="1489" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="1499" fill="#4A1B0C">FE-06</text>
 <rect x="706" y="723" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="733" fill="#5F5E5A">FE-07</text>
 <rect x="351" y="436" width="50" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="376" y="446" fill="#4A1B0C">FE-06/07</text>
+<rect x="706" y="1547" width="50" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="731" y="1557" fill="#5F5E5A">FE-06/07</text>
 <rect x="706" y="743" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="723" y="753" fill="#5F5E5A">FE-08</text>
 <rect x="351" y="450" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="368" y="460" fill="#5F5E5A">FE-08</text>
 </g>

@@ -1,5 +1,5 @@
 # Hechos canónicos del subproyecto «Alan & Aura Académico»
-**ID:** HC-01 · **Familia:** gobernanza · **Hogar:** `docs/00_gobernanza/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 (SD-30: H-20 261→263 y H-21 149→150, por la corrección de `DR-04`) · **Estado:** vigente.
+**ID:** HC-01 · **Familia:** gobernanza · **Hogar:** `docs/00_gobernanza/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-30: H-20 en **262** y H-21 en **150**; tres hechos nuevos del paquete de secuencia) · **Estado:** vigente.
 **Propósito:** ser la **fuente única** de las cifras y conteos que aparecen repetidos en varios artefactos. Cuando dos documentos discrepan, **manda esta tabla**.
 **Insumos:** `MD-01`, `DCU-01`, `REQ-01`, `PER-01`, `PRIV-01`, `DR-00` — contados directamente, no citados de segunda mano.
 **Consumidores:** `scripts/verificar_coherencia.py`, y cualquier pasada de edición que toque cifras.
@@ -14,7 +14,7 @@ Las mismas cifras viven repetidas en cinco o seis documentos sin nadie que las c
 
 Esta tabla convierte «revisar coherencia» en algo comprobable.
 
-**Qué comprueba automáticamente `scripts/verificar_coherencia.py`, y qué no.** Comprueba **ocho** de los veintiún hechos: H-01, H-04, H-05, H-10 (que ningún valor obsoleto sobreviva como afirmación viva) y H-11, H-12, H-13, H-14 (contando directamente sobre los `.puml`). Los demás —H-02, H-03, H-06 a H-09 y H-15 a H-21— **son responsabilidad del lector**: están aquí para que exista una fuente única, no porque una máquina los vigile. Además el script **solo recorre archivos `.md`**: quedan fuera los `.puml`, los `.html` de *mockups* y el `.docx` del informe. Decirlo importa porque un «verde» que se cree más amplio de lo que es resulta peor que no tener validador.
+**Qué comprueba automáticamente `scripts/verificar_coherencia.py`, y qué no.** Comprueba **ocho** de los veinticuatro hechos: H-01, H-04, H-05, H-10 (que ningún valor obsoleto sobreviva como afirmación viva) y H-11, H-12, H-13, H-14 (contando directamente sobre los `.puml`). Los demás —H-02, H-03, H-06 a H-09 y H-15 a H-24— **son responsabilidad del lector**: están aquí para que exista una fuente única, no porque una máquina los vigile. Además el script **solo recorre archivos `.md`**: quedan fuera los `.puml`, los `.html` de *mockups* y el `.docx` del informe. Decirlo importa porque un «verde» que se cree más amplio de lo que es resulta peor que no tener validador.
 
 **Alcance:** cifras y conteos verificables. **No** sustituye a los artefactos: `REQ-01` sigue siendo el dueño de los requisitos y `PER-01` del mapa de persistencia. Esta tabla solo garantiza que todos digan lo mismo.
 
@@ -43,8 +43,11 @@ Todos los valores fueron **verificados contra los artefactos** el 2026-08-01 (co
 | H-17 | Requisitos de calidad y sus métricas | **10 RC + 10 MET** | `REQ-01` §3 | `NORM-01`, `TRZ-01` |
 | H-18 | Reglas transversales de persistencia | **7** (PER-T1…PER-T7) | `PER-01` §5 | — |
 | H-19 | Requisitos de privacidad | **14 reglas** = 12 numeradas (PRIV-R1…R12) + 2 subreglas (R3.1, R3.2) | `PRIV-01` | `PER-01`, `ECU-05`/`ECU-12` |
-| H-20 | Elementos de los diagramas de robustez | **263** = 15 actores / 38 bordes / 150 controladores / 60 entidades | `DR-00` | `ESTADO_PIPELINE`, `RPD-01` |
+| H-20 | Elementos de los diagramas de robustez | **262** = 15 actores / 38 bordes / 150 controladores / 59 entidades | `DR-00` | `ESTADO_PIPELINE`, `RPD-01` |
 | H-21 | Controladores de robustez (cota inferior de casos de prueba) | **150** | `DR-00` | `ESTADO_PIPELINE` |
+| H-22 | Mensajes de los diagramas de secuencia | **282** | `DS-00` | `DOP-01`, `REGISTRO_DECISIONES` |
+| H-23 | Operaciones asignadas (delta de `DOP-01`) | **192** sobre 16 clases de `MD-01` + 3 del espacio de la solución | `DOP-01` | `DS-00`, el diagrama de clases |
+| H-24 | Casos de prueba derivados de los controladores | **181** | `CP-00` | `DS-00`, `TRZ-DS-01` |
 
 ## Valores obsoletos y dónde SÍ pueden aparecer
 
@@ -55,6 +58,8 @@ Esta sección es tan importante como la anterior: sin ella, un barrido automáti
 | 1.500 caracteres | **2.500** (H-01) | `CHANGELOG`, `REGISTRO_DECISIONES` (SD-17), `PDR-01`, bloques de «Cambio vX.Y» de `MV-01`, y las notas de `ECU-06` que documentan el cambio | Ninguna regla, requisito o criterio de aceptación vigente |
 | 12 clases · 12 relaciones | **16 · 17** (H-11, H-12) | `CHANGELOG`, `PDR-01`, `ESTADO_PIPELINE` §PDR-01 | `MD-01`, `TRZ-01` |
 | 10 casos de uso | **14** (H-13) | `CHANGELOG`, `PDR-01`, `REGISTRO_DECISIONES` (SD-28) | `DCU-01`, `ECU-00`, `TRZ-01` |
+| 263 elementos · 60 entidades | **262 · 59** (H-20) | `CHANGELOG`, `REGISTRO_DECISIONES` (SD-30), y el bloque `v1.1` de esta misma tabla | `DR-00`, `HECHOS_CANONICOS`, `ESTADO_PIPELINE`, `INDICE_MAESTRO`, el generador de SVG |
+| 177 · 178 casos de prueba | **181** (H-24) | `CHANGELOG`, changelogs de `CP-00`/`CP-06` | `CP-00`, `DS-00`, `TRZ-DS-01` |
 | 3 campos de cápsula | **5 + 2** (H-10) | `REGISTRO_DECISIONES` (SD-22), `ESTADO_PIPELINE` | `PRIV-01`, `PER-01`, `REQ-01` |
 | Django · SQLite · PythonAnywhere | React · DynamoDB · Vercel + AWS (`ADR-002`) | `00_PLAN_CODEX_ORIGINAL`, `00_AUDITORIA_PLAN_CODEX`, `ADR-001` (superada), `CHANGELOG`, `REGISTRO_DECISIONES`, `MANIFIESTO_FUENTES` | Cualquier afirmación vigente sobre qué se va a construir |
 
@@ -99,4 +104,5 @@ cat docs/07_casos_uso/robustez/DR-[0-9][0-9]_*.puml | grep -cE '^\s*control '   
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v1.0 | 2026-08-01 | J. Sánchez | Creación (SD-29). 21 hechos canónicos verificados contra los artefactos, tabla de valores obsoletos con su ámbito legítimo, y registro del pendiente D.5 sobre el límite de caracteres, que ya estaba resuelto en los documentos pero seguía declarado como abierto. |
+| v1.2 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1b` de `DS-00`.** `H-20` baja de **263** a **262** y las entidades de 60 a **59**: `DR-09` contaba las «llamadas al chat de los últimos 7 días» desde `Conversacion`, que **no se persiste**, y al reapuntar ese arco a `EventoOperativo` la entidad quedó sin ningún arco. `H-21` **no cambia** (150). Entran tres hechos nuevos del paquete de secuencia: **`H-22`** 282 mensajes, **`H-23`** 192 operaciones, **`H-24`** 181 casos de prueba —181 y no 178 porque `H-1a` obligó a tres casos nuevos: el volumen por turno y el par que fija qué llamadas cuentan para `MET-07`—. Propagado a `DR-00`, `generar_svg_robustez.py`, `ESTADO_PIPELINE`, `INDICE_MAESTRO`, `DS-00`, `DOP-01` y `CP-00`. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** `H-20` pasa de **261** a **263** elementos y `H-21` de **149** a **150** controladores, por la corrección de `DR-04` (entra `EventoOperativo` con su controlador `C_ConservarTelemetriaSinIdentidad`, hallazgo `H-9` de `DS-00`). Propagado a `DR-00`, `generar_svg_robustez.py` —cuyos conteos estaban grabados a fuego—, `ESTADO_PIPELINE`, `INDICE_MAESTRO` y al paquete de secuencia. **Cambiar un valor de esta tabla es una decisión, no una edición:** por eso queda registrada en `REGISTRO_DECISIONES` como SD-30. |

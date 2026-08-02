@@ -1,8 +1,8 @@
 # CP-06 — Casos de prueba de CU-06 «Conversar con el acompañante»
 
-**ID:** CP-06 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** CP-06 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto.
 **Propósito:** derivar los casos de prueba de `CU-06` **desde los Controladores** de `DR-06`, no desde el código ni desde el diagrama de secuencia. La unidad de derivación es el Controlador; la comprobación de cobertura son los caminos.
-**Insumos:** `DR-06 v2.0` (25 controladores), `DS-06 v1.0`, `ECU-06 v2.0` (§20, `CA-01…CA-11`), `HECHOS_CANONICOS` (`H-01…H-06`).
+**Insumos:** `DR-06 v2.1` (25 controladores), `DS-06 v1.1`, `ECU-06 v2.1` (§20, `CA-01…CA-11`), `HECHOS_CANONICOS` (`H-01…H-06`).
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador** contra los `.puml` (canon `CLAUDE.md` §1).
 **Consumidores:** `CP-00`, pruebas unitarias y de integración de la fase de construcción, `TRZ-DS-01`.
 
@@ -11,9 +11,9 @@
 ## 1. Numeración
 
 Los `CP` llevan numeración **global y correlativa** en todo el proyecto: no reinicia por caso de
-uso, para que un identificador de prueba sea único. `CU-06` ocupa **`CP-001`…`CP-031`**.
+uso, para que un identificador de prueba sea único. `CU-06` ocupa **`CP-001`…`CP-034`**.
 
-## 2. Los 31 casos
+## 2. Los 34 casos
 
 | CP | Controlador origen | Camino cubierto | Precondición | Estímulo | Resultado esperado | Trazabilidad |
 |---|---|---|---|---|---|---|
@@ -47,7 +47,10 @@ uso, para que un identificador de prueba sea único. `CU-06` ocupa **`CP-001`…
 | CP-028 | `C_InformarLimiteDeSesion` | Curso básico · **`FA-01` no tomado, frontera 19** | La sesión tiene 18 mensajes enviados y respondidos. | Envía el mensaje 19. | Muestra la respuesta 19 y permite seguir escribiendo; **no** aparece el aviso de límite. | … → CP-028 |
 | CP-029 | `C_InformarLimiteDeSesion` | FA-01 · **tomado, frontera `H-02` = 20** | La sesión tiene 19 mensajes enviados y respondidos. | Envía el mensaje **20**. | Tras la respuesta 20, P-10 informa el límite e invita a cerrar o iniciar otra sesión, **sin código de error crudo**; finaliza de forma controlada. | … → CP-029; CA-05 |
 | CP-030 | `C_CerrarYDescartar` | Curso básico | `Conversacion` abierta con varios turnos. | Cierra la conversación. | Una inspección de base de datos y registros **no encuentra ningún fragmento de texto** de la conversación; `Conversacion` queda cerrada. | … → CP-030; CA-04 |
-| CP-031 | `C_RegistrarEventoOperativo` | Curso básico | `Conversacion` recién cerrada. | El sistema registra el evento de cierre. | El `EventoOperativo` trae momento, resultado, latencia, modelo y versión; **el campo de contenido está ausente**. | … → CP-031 |
+| CP-031 | `C_RegistrarEventoOperativo` | Básico p.6 — **un turno** | Conversación abierta; el proveedor responde. | Se completa **un** turno (pasos 2-6). | Existe **exactamente un** `EventoOperativo` nuevo, con momento, resultado, latencia, modelo y versión; **el campo de contenido está ausente**. | … → CP-031 |
+| CP-032 | `C_RegistrarEventoOperativo` | Básico p.6 — **frontera de volumen** | Conversación abierta. | Se completan **20** turnos y se cierra. | Hay **20** `EventoOperativo`, uno por llamada — **no uno solo**; el cierre **no añade ninguno**. | `H-02` · `MET-07` |
+| CP-033 | `C_InformarFalloDelProveedor` | **FE-06 / FE-07 — la llamada fallida cuenta** | El proveedor no responde, o se agotan los 20 s. | Se agota el reintento único. | Se registra un `EventoOperativo` con **resultado de error**: la llamada entra en el **denominador** de `MET-07`, que si no mediría solo los éxitos. | `RC-07` · `MET-07` |
+| CP-034 | `C_InformarLimiteDeTasa` | **FE-05 — la que NO cuenta** | El Usuario supera 3/min o 30/día. | Intenta enviar el turno. | **No se registra ningún `EventoOperativo`**: el corte ocurre antes de tocar al proveedor, así que no hubo petición que medir. Contarla falsearía la tasa técnica a la baja. | `H-04` · `PER-T2` |
 
 *(La columna de trazabilidad se abrevia con «…» a partir de `CP-002`: en todas las filas es `CU-06 → DR-06 → DS-06 → CP-XXX`, más el `CA-XX` cuando se indica.)*
 
@@ -70,13 +73,13 @@ aceptada del borrador.
 | `C_VerificarLimitesDeTasa` | 012 | | `C_InformarIndisponibilidad` | 006 |
 | `C_EvaluarGate` | 014 | | `C_InformarLimiteDeTasa` | 013 |
 | `C_ConstruirContextoMinimo` | 016, 017, 018 | | `C_ReintentarUnaVez` | 021 |
-| `C_SolicitarGeneracion` | 019 | | `C_InformarFalloDelProveedor` | 022 |
+| `C_SolicitarGeneracion` | 019 | | `C_InformarFalloDelProveedor` | 022, **033** |
 | `C_ControlarTiempoDeEspera` | 020, 023 | | `C_DesviarADerivacion` | 015 |
 | `C_AplicarGuardas` | 024, 026 | | `C_DenegarPorCapaBaseRevocada` | 004 |
 | `C_MostrarRespuesta` | 027 | | `C_CerrarYDescartar` | 030 |
-| `C_RegistrarEventoOperativo` | 031 | | | |
+| `C_RegistrarEventoOperativo` | **031, 032** | | `C_InformarLimiteDeTasa` | 013, **034** |
 
-**25/25.** Cota inferior respetada: 31 ≥ 25.
+**25/25.** Cota inferior respetada: 34 ≥ 25.
 
 **Cobertura de caminos, desagregada por operador** (no basta «básico + cada FA/FE»):
 
@@ -92,6 +95,26 @@ aceptada del borrador.
 
 **11/11 flujos no básicos cubiertos.** Las dos fronteras del `loop` y las dos ramas de cada
 `opt` están explícitas.
+
+### Los tres casos que entran en `v1.1` — y por qué el par `033`/`034` es inseparable
+
+`H-1a` movió el `EventoOperativo` del cierre al turno, y eso abrió una pregunta que antes no
+existía: **cuántos eventos, y de qué llamadas**. `CP-032` fija el volumen en la frontera —veinte
+turnos deben dejar **veinte** registros, no uno—, que es exactamente lo que la granularidad
+anterior no podía dar.
+
+Los otros dos hay que leerlos juntos, porque solos no demuestran nada:
+
+- **`CP-033`** exige que una llamada **fallida** (`FE-06`/`FE-07`) **sí** se registre. Sin él, un
+  sistema que solo anotara los éxitos pasaría las pruebas y reportaría una tasa técnica del
+  100 % — `MET-07` se define como «peticiones OK + *fallback* / **totales**», y ese denominador
+  necesita los fallos.
+- **`CP-034`** exige que un corte por límite de tasa (`FE-05`) **no** se registre. Sin él, un
+  sistema que anotara todo inflaría el denominador con peticiones que **nunca se le hicieron al
+  proveedor**, hundiendo la tasa por un motivo ajeno a su salud.
+
+Uno pide registrar, el otro pide no registrar. La regla que satisface a ambos es la única
+correcta: **un evento por llamada efectivamente hecha al proveedor**.
 
 ## 4. Cifras usadas
 
@@ -112,4 +135,5 @@ devuelve verdadero». Es la regla que hace que estas pruebas sobrevivan a un cam
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1a`.** `CP-031` deja de probar «el evento de cierre» y pasa a probar **un turno**. Entran tres casos que la granularidad nueva hace necesarios: **`CP-032`** fija el volumen en la frontera (20 turnos → **20** eventos, no uno), y el par **`CP-033`/`CP-034`** fija qué llamadas cuentan — la fallida **sí** (o `MET-07` mediría solo éxitos), la cortada por límite de tasa **no** (nunca llegó al proveedor). De 31 a **34** casos; siguen 25/25 controladores. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. 31 casos derivados de los 25 controladores de `DR-06`, con cobertura de caminos desagregada por operador y las seis cifras canónicas verificadas. |

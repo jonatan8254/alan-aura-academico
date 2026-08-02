@@ -1,5 +1,9 @@
 @startuml
 ' DR-06 — Analisis de robustez de CU-06 «Conversar con el acompanante»
+' v2.1 (SD-30): el EventoOperativo pasa del paso 8 (cerrar) al paso 6 (cada turno) — hallazgo
+'      H-1a de DS-00; se anade el arco de FE-06/FE-07 para que las llamadas fallidas entren en
+'      el denominador de MET-07. Y se corrige la nota que decia que ContadorDeUsoDiario y
+'      EventoOperativo no eran clases de MD-01 y que iban en verde: ambas falsas (H-6).
 ' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-06, MD-01 (incl. §3.9: el LLM vive en robustez como objeto frontera),
 '          DCU-01, DIS-00 (P-10, P-11), SEG-01, PRIV-01, PER-01, contrato conversacional
@@ -83,12 +87,12 @@ C_SolicitarGeneracion -- C_ControlarTiempoDeEspera : 4 vigila el plazo de espera
 B_FronteraProveedorLLM -- C_AplicarGuardas : 5 devuelve el texto generado
 C_AplicarGuardas -- C_MostrarRespuesta : 6 salida sin riesgo ni claim clinico, hasta 350 tokens
 C_MostrarRespuesta -- B_InterfazDeChat : 6 muestra la respuesta del personaje
+C_MostrarRespuesta -- C_RegistrarEventoOperativo : 6 registra la llamada con su resultado tecnico ok o fallback
+C_RegistrarEventoOperativo -- E_EventoOperativo : 6 guarda momento, resultado, latencia, modelo y version
 B_InterfazDeChat -- C_ValidarTurno : 7 repite los pasos 2 a 6 hasta 20 mensajes de usuario
 B_InterfazDeChat -- C_CerrarYDescartar : 8 cierra la conversacion
 C_CerrarYDescartar -- E_Conversacion : 8 marca la conversacion como cerrada
 C_CerrarYDescartar -- E_Mensaje : 8 descarta el contenido sin persistirlo
-C_CerrarYDescartar -- C_RegistrarEventoOperativo : 8 registra solo el evento operativo
-C_RegistrarEventoOperativo -- E_EventoOperativo : 8 guarda latencia, modelo, version y estado
 C_MostrarRespuesta -- C_InformarLimiteDeSesion : FA-01 alcanza los 20 mensajes de la sesion
 C_InformarLimiteDeSesion -- E_Conversacion : FA-01 contrasta el limite de la sesion
 C_InformarLimiteDeSesion -- B_InterfazDeChat : FA-01 finaliza de forma controlada, sin error crudo
@@ -109,6 +113,7 @@ C_ReintentarUnaVez -- B_FronteraProveedorLLM : FE-06 reintenta una sola vez ante
 C_ReintentarUnaVez -- C_InformarFalloDelProveedor : FE-06 agotado el reintento unico
 C_ControlarTiempoDeEspera -- C_InformarFalloDelProveedor : FE-07 se agotan los 20 segundos de espera
 C_InformarFalloDelProveedor -- B_EstadosDeError : FE-06 FE-07 informa el estado y permite reintentar
+C_InformarFalloDelProveedor -- C_RegistrarEventoOperativo : FE-06 FE-07 registra la llamada con resultado error
 C_EvaluarGate -- C_DesviarADerivacion : FE-08 detecta peligro explicito
 C_DesviarADerivacion -- B_InterfazDeChat : FE-08 devuelve safety_fallback, CU-07 toma el turno y suspende el chat ordinario
 
@@ -191,9 +196,22 @@ note as N_DR06
     sus dos ramas. Pero la derivacion NO se reimplementa: "Desviar el turno al flujo de
     derivacion de CU-07" es un hand-off. Quien origina el EventoDeSeguridad, muestra la
     contencion y lee los RecursoDeAyuda es DR-07, no este diagrama.
-  - <b>Entidades en verde</b> (ContadorDeUsoDiario, EventoOperativo): tienen respaldo textual
-    (PRE-05/RN-02.9 y el paso 8) y en PER-01 (`DailyUsageCounter`, `OperationalEvent`), pero
-    NO son clases de MD-01. Descubrimientos propuestos al modelo de dominio.
+  - <b>ContadorDeUsoDiario y EventoOperativo SI son clases de MD-01</b> (v1.4, lineas 48-49),
+    y ya no se dibujan en verde: la marca #PaleGreen se retiro cuando entraron al dominio
+    (CERT-D4-tanda1). Esta nota afirmaba lo contrario en v2.0 —que no eran clases y que iban
+    en verde— y ambas cosas eran falsas. Corregido en v2.1, hallazgo H-6 de DS-00.
+  - <b>El evento operativo es por llamada, no por cierre</b> (v2.1, hallazgo H-1a de DS-00).
+    Sus campos —latencia, resultado, modelo, version— son valores de UNA peticion, y MET-07
+    (RC-07) mide "peticiones OK mas fallback sobre el total": el denominador son peticiones.
+    Al cerrar no hay una latencia unica que registrar.
+    <b>Que se registra y que no, decidido aqui:</b> se registra <b>una vez por llamada
+    efectivamente hecha al proveedor</b>. El arco desde C_MostrarRespuesta cubre el turno que
+    llega a mostrar respuesta —resultado ok, o fallback si FA-02 sustituyo la salida, porque
+    esa rama vuelve al paso 6—, y el arco desde C_InformarFalloDelProveedor cubre FE-06/FE-07,
+    llamadas hechas que no devolvieron nada. <b>FE-04</b> (kill switch) y <b>FE-05</b> (limite
+    de tasa) <b>NO registran evento</b>: cortan antes de tocar al proveedor, asi que no son
+    peticiones y no pueden entrar en el denominador de MET-07. Si se registraran, la tasa
+    tecnica mediria la salud del proveedor contando llamadas que nunca se le hicieron.
   - <b>Hallazgo de desambiguacion (PRE-03):</b> el consentimiento vigente se verifica aqui
     porque es precondicion declarada y CU-04 permite revocarlo, pero ECU-06 §13 NO define
     ningun curso de excepcion para "consentimiento revocado". La rama de fallo NO se inventa:

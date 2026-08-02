@@ -8,7 +8,7 @@ Este script produce la VISTA DERIVADA en SVG, con el mismo sistema visual que
 `<defs>` ni `<style>` ni `<marker>`, agrupacion por color en triadas
 (relleno pastel / borde saturado / texto oscuro) y leyenda de notacion.
 
-Por que un generador y no 14 SVG a mano: son 263 elementos y ~350 arcos en 14
+Por que un generador y no 14 SVG a mano: son 262 elementos y ~350 arcos en 14
 diagramas; un generador garantiza que los 10 comparten exactamente la misma
 retica y hace el resultado reproducible, igual que `grafo/scripts/`.
 
@@ -573,12 +573,12 @@ def main(argv: list[str]) -> int:
     total = sum(tot.values())
     print(f"\nTOTAL: {total} elementos "
           f"({tot['actor']}/{tot['boundary']}/{tot['control']}/{tot['entity']})")
-    esperado = (15, 38, 150, 60)
+    esperado = (15, 38, 150, 59)
     real = (tot["actor"], tot["boundary"], tot["control"], tot["entity"])
-    if real == esperado and total == 263:
-        print("Correspondencia con los .puml: OK (263 elementos, 15/38/150/60)")
+    if real == esperado and total == 262:
+        print("Correspondencia con los .puml: OK (262 elementos, 15/38/150/59)")
         return 0
-    print(f"AVISO: se esperaba 263 elementos {esperado} y se obtuvo {total} {real}")
+    print(f"AVISO: se esperaba 262 elementos {esperado} y se obtuvo {total} {real}")
     return 1
 
 

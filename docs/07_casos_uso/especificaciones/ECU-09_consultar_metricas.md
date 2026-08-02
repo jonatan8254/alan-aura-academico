@@ -1,5 +1,5 @@
 # ECU-09 — Especificación de caso de uso: «Consultar métricas de uso» (CU-09)
-**ID documento:** DOC-CU-09 · **Caso de uso:** CU-09 · **Alias en DCU-01:** `CU_Met` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-09 · **Caso de uso:** CU-09 · **Alias en DCU-01:** `CU_Met` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-08-01 · **Versión:** v2.1 · **Estado:** Propuesto.
 **Forma:** **ágil** (núcleo de dos párrafos + campos mínimos, §23 de la plantilla de la skill `use-case-specifier`) — consulta de solo lectura, sin efecto sobre ningún dato persistido.
 **Insumos:** DCU-01 v2.1 (alias `CU_Met`), MD-01 v1.4, MV-01 §7.4, REQ-01 (RF-16, RNF-08, RC-07/MET-07), PRIV-01 v1.4 (PRIV-R10), PER-01 v1.1 (§3.5, §3.6, PER-T2, PER-H4), VIS-01 (OBJ-6), DIS-00 (P-15). **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 **Origen:** reescritura de ECU-09 v1.0 (PDR-01, fase D.3, tanda 4). La v1.0 escondía las precondiciones en una celda de propósito, dejaba dos flujos de excepción sin desenlace, nombraba tecnología en su checklist y sostenía la agregación como afirmación suelta en vez de como requisito verificable.
@@ -26,7 +26,7 @@
 
 | Término oficial | Significado | Sinónimos o términos prohibidos | Observación |
 |---|---|---|---|
-| `MétricaDeUso` | **Vista derivada, no clase de dominio** (MD-01 §2; MV-01 §13.2) | prohibido: «reporte», «tablero», «estadística por usuario» | El Sistema la deriva de `Usuario`, `Conversacion` y `EventoOperativo`; no la persiste como clase propia ni la dibuja MD-01 |
+| `MétricaDeUso` | **Vista derivada, no clase de dominio** (MD-01 §2; MV-01 §13.2) | prohibido: «reporte», «tablero», «estadística por usuario» | El Sistema la deriva de **`Usuario` y `EventoOperativo`**; no la persiste como clase propia ni la dibuja MD-01. **`Conversacion` no es fuente** — ver la nota de §2 |
 | `EventoOperativo` | Clase de MD-01 v1.4: telemetría técnica **sin contenido** | prohibido: «log de conversación», «traza del chat» | Única fuente de las cifras que dependen de la ventana temporal (PER-01 §3.6). Retención declarada: 30 días |
 | `ContadorDeUsoDiario` | Clase de MD-01 v1.4: cuota diaria **por usuario** | prohibido: «métrica de uso» | **No alimenta esta vista.** Es un conteo por persona, y el Administrador tiene prohibido verlos (RN-03.5). Su composición interna sigue sin especificar: **PER-H4**, abierta (§13, `RA-01`) |
 | `Administrador` | Clase de MD-01 v1.4, `is-a` `TitularDeCuenta` | prohibido: «supervisor», «moderador», «auditor» | «Administrador de plataforma» es el nombre del mismo rol como actor en DCU-01 v2.1: forma extendida, no sinónimo nuevo |
@@ -34,7 +34,15 @@
 
 ## 2. Núcleo del caso de uso
 
-**Curso básico.** El Administrador de plataforma, ya autenticado por el acceso administrativo separado, abre la **Vista de métricas de uso** del panel administrativo. El Sistema deriva cuatro cifras de la plataforma completa —total de cuentas, onboardings completados, llamadas al chat en los últimos siete días y tasa técnica de éxito/error— a partir de `Usuario`, `Conversacion` y `EventoOperativo`, y las presenta como agregados de un **grupo único**, sin segmentación ni desglose. El Administrador de plataforma lee las cuatro cifras y el flujo **finaliza** sin que el Sistema haya expuesto un solo conteo por persona ni contenido de conversación alguno.
+**Curso básico.** El Administrador de plataforma, ya autenticado por el acceso administrativo separado, abre la **Vista de métricas de uso** del panel administrativo. El Sistema deriva cuatro cifras de la plataforma completa y las presenta como agregados de un **grupo único**, sin segmentación ni desglose. **Dos son cardinalidades de `Usuario`** —total de cuentas y onboardings completados— y **dos salen de `EventoOperativo`**, que es el único registro que sobrevive a la ventana temporal: llamadas al chat en los últimos siete días y tasa técnica de éxito/error. El Administrador de plataforma lee las cuatro cifras y el flujo **finaliza** sin que el Sistema haya expuesto un solo conteo por persona ni contenido de conversación alguno.
+
+> **Por qué `Conversacion` no es fuente, y por qué antes lo parecía.** Hasta `v2.0` este documento
+> agrupaba las tres clases sin repartir las cifras, y `DR-09`/`DS-09` —la única asignación
+> explícita que existía— contaban las «llamadas al chat» desde **`Conversacion`**. Es imposible:
+> la `Conversacion` **no se persiste** (`RF-13`, `PRIV-01 §2`: «No (nunca)»), así que a los siete
+> días no queda nada que contar. `MD-01 §3` creó `EventoOperativo` **precisamente por eso** —«sin
+> esta clase la tasa de 7 días de `ECU-09` sería incomputable»— y el reparto se corrige aquí a
+> favor de esa decisión. Hallazgo `H-1b` de `DS-00`, resuelto en `v2.1`.
 
 **Cursos alternativos y de excepción.** Si la ventana de siete días no tiene ningún `EventoOperativo`, el Sistema presenta en cero las cifras que dependen de esa ventana y declara la ausencia de actividad en lugar de dejar la tarjeta vacía; el flujo **continúa** hasta la lectura (`FA-01`). Si el *kill switch* está activo, el Sistema presenta las cuatro cifras igualmente —la indisponibilidad corta las conversaciones, no la administración— y el flujo **continúa** (`FA-02`). Si quien pide la vista no tiene sesión vigente, el Sistema responde `401`, no presenta ninguna cifra y el flujo **termina** (`FE-01`). Si la sesión es vigente pero el rol validado en servidor no es administrador, el Sistema responde `403`, no presenta ninguna cifra y el flujo **termina** (`FE-02`).
 
@@ -62,7 +70,7 @@ Las dos primeras son de autorización y corresponden al acceso administrativo se
 
 | Paso | Responsable | Acción | Concepto de dominio | Respuesta del sistema | Interfaz |
 |---|---|---|---|---|---|
-| 1 | Administrador de plataforma | Abre la **Vista de métricas de uso** del panel administrativo | `MétricaDeUso` | El Sistema deriva las cuatro cifras de `Usuario`, `Conversacion` y `EventoOperativo`, siempre sobre la plataforma completa | Vista de métricas de uso (P-15) |
+| 1 | Administrador de plataforma | Abre la **Vista de métricas de uso** del panel administrativo | `MétricaDeUso` | El Sistema deriva las cuatro cifras de **`Usuario`** (dos cardinalidades) y **`EventoOperativo`** (las dos dependientes de la ventana), siempre sobre la plataforma completa | Vista de métricas de uso (P-15) |
 | 2 | Sistema | Presenta los cuatro agregados vigentes: total de cuentas, onboardings completados, llamadas al chat en los últimos siete días y tasa técnica de éxito/error | `MétricaDeUso`, `EventoOperativo` | El Administrador de plataforma ve cuatro cifras de grupo único, sin control de segmentación, filtro ni rango | Vista de métricas de uso (P-15) |
 | 3 | Administrador de plataforma | Lee las cuatro cifras y cierra la consulta | `MétricaDeUso` | El Sistema no ha expuesto conteo por persona ni contenido de conversación; el flujo **finaliza** sin escritura alguna | Vista de métricas de uso (P-15) |
 
@@ -149,7 +157,7 @@ Las dos primeras son de autorización y corresponden al acceso administrativo se
 | Requisito de privacidad | PRIV-R10, PRIV-R6, PER-T2 | Anti-reidentificación y uso no punitivo |
 | Requisito de calidad | RC-07 (Reliability) con **MET-07** y umbral **≥ 95 %** (REQ-01 §3) | Ancla de calidad de la cuarta cifra |
 | Requisito no funcional | RNF-08 (rol validado en servidor) | Sostiene `PRE-02` y `FE-02` |
-| Modelo de dominio | `Administrador`, `Usuario`, `Conversacion`, `EventoOperativo` (clases de MD-01 v1.4) · `MétricaDeUso` (**vista derivada, no clase**) · `ContadorDeUsoDiario` (**excluido a propósito**) | Conceptos manipulados |
+| Modelo de dominio | `Administrador`, `Usuario`, `EventoOperativo` (clases de MD-01 v1.4) · `MétricaDeUso` (**vista derivada, no clase**) · `ContadorDeUsoDiario` y `Conversacion` (**ambas excluidas a propósito**: la primera por `RN-03.5`, la segunda porque no se persiste — `H-1b`) | Conceptos manipulados |
 | Mapa de persistencia | PER-01 §3.6 (`EventoOperativo`, única fuente y retención de 30 días), §3.5 (`ContadorDeUsoDiario`), PER-T2 | Origen y límites de las cifras |
 | Diagrama de casos de uso | `Admin -- CU_Met` (asociación directa, DCU-01 v2.1) | Origen de la asociación |
 | Caso de uso previo | CU-03 «Iniciar y cerrar sesión» | Provee la sesión administrativa (RF-14, RF-21) |
@@ -180,7 +188,7 @@ Las dos primeras son de autorización y corresponden al acceso administrativo se
 | 5 | Flujo básico = escenario de éxito completo | ✅ | Tres pasos, del disparador a la lectura |
 | 6 | Flujos alternativos suficientes | ✅ | `FA-01` (ventana vacía) y `FA-02` (*kill switch*). La v1.0 declaraba «no aplica»: era una omisión, no una decisión |
 | 7 | Flujos de excepción relevantes | ✅ | `FE-01` (`401`) y `FE-02` (`403`), ambos **con desenlace declarado** |
-| 8 | Términos del dominio (MD-01 v1.4) | ✅ | `Administrador`, `Usuario`, `Conversacion`, `EventoOperativo`; `MétricaDeUso` marcada como vista derivada |
+| 8 | Términos del dominio (MD-01 v1.4) | ✅ | `Administrador`, `Usuario`, `EventoOperativo`; `MétricaDeUso` marcada como vista derivada; `Conversacion` retirada como fuente (`H-1b`) |
 | 9 | Sin sinónimos ambiguos | ✅ | Control terminológico §1, con `ContadorDeUsoDiario` explícitamente excluido |
 | 10 | Interfaces nombradas | ✅ | Vista de métricas de uso (P-15) y *endpoint* visible §10 |
 | 11 | Reglas de negocio separadas por ID | ✅ | §8, cada una con fuente en MV-01 |
@@ -199,6 +207,7 @@ Las dos primeras son de autorización y corresponden al acceso administrativo se
 | Versión | Fecha | Cambio |
 |---|---|---|
 | v1.0 | 2026-07-16 | Creación (forma ágil). |
+| v2.1 | 2026-08-01 | **SD-30, hallazgo `H-1b` de `DS-00`.** Se reparten las cuatro cifras entre sus fuentes, que hasta ahora se citaban agrupadas: dos son **cardinalidades de `Usuario`**, dos salen de **`EventoOperativo`**. **`Conversacion` deja de ser fuente** — no se persiste (`RF-13`, `PRIV-01 §2`), así que a los siete días no queda nada que contar, y `MD-01 §3` creó `EventoOperativo` precisamente por eso. Afecta a §1 (control terminológico), §2 (núcleo + nota nueva), §5 paso 1, §12 y §14. `DR-09` y `DS-09` se alinean y pierden la entidad `Conversacion`. |
 | v2.0 | 2026-07-31 | Reescritura (PDR-01, fase D.3, tanda 4). **Precondiciones** extraídas a fila propia (`PRE-01`…`PRE-03`), donde antes vivían en una celda de propósito. **Desenlace declarado** en los dos flujos de excepción y **dos flujos alternativos nuevos** (`FA-01`, `FA-02`) donde la v1.0 escribía «no aplica». **Cobertura completa de flujos por criterios** (`CA-01`…`CA-05`). El umbral de agregación pasa de afirmación suelta a **requisito verificable** (`RE-01`…`RE-04`), con la ausencia de umbral numérico declarada en `RA-02`. **PER-H4 registrada como abierta** (`RA-01`) y `ContadorDeUsoDiario` excluido de las fuentes de manera explícita. Se retira la mención de tecnología del checklist. Se añade la correspondencia **alias `CU_Met` ↔ CU-09** a la trazabilidad y los insumos pasan a MD-01 v1.4, DCU-01 v2.1 y PER-01 v1.1. |
 
 **Fin de ECU-09.**

@@ -1,5 +1,8 @@
 @startuml
 ' DS-09 - Secuencia de CU-09 «Consultar metricas de uso»
+' v1.1 (SD-30): contarLlamadasAlChatDeLosUltimos7Dias() se reapunta de Conversacion a
+'      EventoOperativo, y Conversacion sale del diagrama. La Conversacion no se persiste,
+'      asi que a los 7 dias no habia nada que contar. Hallazgo H-1b de DS-00.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-09 v2.0 (8 controladores), ECU-09 v2.0, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-15), PRIV-01 (PRIV-R10), MV-01 RN-03.3/RN-03.5, REQ-01 (RC-07).
@@ -12,7 +15,6 @@ skinparam responseMessageBelowArrow true
 actor "Administrador de plataforma" as ACT_Administrador
 boundary "Metricas de uso (P-15)" as B_MetricasDeUso
 entity "Usuario" as E_Usuario
-entity "Conversacion" as E_Conversacion
 entity "EventoOperativo" as E_EventoOperativo
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
 
@@ -30,10 +32,16 @@ break FE-02 rol validado distinto de administrador
 end
 
 B_MetricasDeUso -> E_Usuario : contarTotalDeCuentasYOnboardingsCompletados()
-B_MetricasDeUso -> E_Conversacion : contarLlamadasAlChatDeLosUltimos7Dias()
+B_MetricasDeUso -> E_EventoOperativo : contarLlamadasAlChatDeLosUltimos7Dias()
 B_MetricasDeUso -> E_EventoOperativo : calcularTasaTecnicaDeExitoYError()
 
 note right of E_EventoOperativo
+  <b>Las DOS cifras de ventana salen de aqui</b> (v1.1, hallazgo H-1b de DS-00), porque
+  se escribe un EventoOperativo por llamada al proveedor: contar sus registros de los
+  ultimos 7 dias ES contar las llamadas al chat. Antes ese conteo salia de Conversacion,
+  que <b>no se persiste</b> (RF-13) — a los siete dias no quedaba nada que contar.
+  Las otras dos cifras son cardinalidades de Usuario, no salen de esta linea de vida.
+
   <b>La tasa tecnica se calcula sobre eventos SIN CONTENIDO</b> (PER-01, plan §4.15):
   peticiones correctas mas <i>fallback</i> sobre el total. Es salud del servicio, no
   medida de personas. Umbral `RC-07` (MET-07) >= 95 %.

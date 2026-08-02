@@ -1,7 +1,9 @@
 @startuml
 ' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
+' v1.1 (SD-30): registrarSinContenido() se mueve del cierre a DENTRO del loop — un evento por
+'      llamada al proveedor, no uno por conversacion. Hallazgo H-1a de DS-00.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
-' Insumos: DR-06 v2.0 (25 controladores), ECU-06 v2.0, MD-01 v1.4, DCU-01 v2.1,
+' Insumos: DR-06 v2.1 (25 controladores), ECU-06 v2.1, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-07, P-10, P-11), SEG-01 v1.2, PER-01 v1.2, PRIV-01, MV-01 §7,
 '          HECHOS_CANONICOS (H-01..H-06)
 ' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
@@ -116,6 +118,7 @@ loop 1..20 mensajes de usuario
   B_FronteraProveedorLLM -> B_FronteraProveedorLLM : limitarA350Tokens()
   B_FronteraProveedorLLM --> B_InterfazDeChat : respuesta del personaje
   B_InterfazDeChat -> B_InterfazDeChat : mostrarRespuestaDelPersonaje()
+  B_InterfazDeChat -> E_EventoOperativo : registrarSinContenido(momento, resultado, latencia, modelo, version)
 
   break FA-01 se alcanzan los 20 mensajes de la sesion
     B_InterfazDeChat -> E_Conversacion : alcanzoElLimiteDeSesion()
@@ -128,13 +131,17 @@ end
 ACT_Usuario -> B_InterfazDeChat : cerrar la conversacion
 B_InterfazDeChat -> E_Conversacion : cerrar()
 B_InterfazDeChat -> E_Mensaje : descartarContenido()
-B_InterfazDeChat -> E_EventoOperativo : registrarSinContenido(latencia, modelo, version, estado)
 
 note over E_Mensaje, E_EventoOperativo
   <b>No persistencia (RF-13, RNF-03, PRIV-R2).</b> El contenido se descarta al cerrar.
   Lo que NO existe en este diagrama es la afirmacion: ningun mensaje guarda el texto
   de la Conversacion ni de sus Mensaje, y no hay ninguna cache de pares
   mensaje-respuesta (no-objetivo declarado en ADR-002-D6).
+
+  <b>El cierre ya no registra nada</b> (v1.1, hallazgo H-1a de DS-00). El evento
+  operativo se escribe <b>dentro del loop</b>, un registro por llamada al proveedor,
+  porque latencia, resultado, modelo y version son valores de UNA peticion y MET-07
+  mide peticiones sobre el total. Al cerrar no hay una latencia unica que registrar.
 end note
 
 @enduml

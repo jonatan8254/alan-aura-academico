@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="697" viewBox="0 0 1000 697" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="713" viewBox="0 0 1000 713" role="img" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title>DR-08 — Analisis de robustez de CU-08 «Consultar directorio de usuarios»</title>
 <desc>Diagrama de robustez ICONIX de Analisis de robustez de CU-08 «Consultar directorio de usuarios». 1 actor(es), 1 objeto(s) tipo Borde, 8 Controlador(es) y 2 Entidad(es), en cuatro carriles verticales. Los objetos en terracota participan solo en cursos alternativos o de excepcion; la entidad con borde punteado es un descubrimiento de robustez ausente del modelo de dominio MD-01. Vista derivada: la fuente de verdad es el archivo .puml.</desc>
 
-<rect x="0" y="0" width="1000" height="697" fill="#FFFFFF"/>
+<rect x="0" y="0" width="1000" height="713" fill="#FFFFFF"/>
 
 <text x="24" y="26" font-size="14" font-weight="500" fill="#2C2C2A">DR-08 · Analisis de robustez de CU-08 «Consultar directorio de usuarios»</text>
 <g font-size="11" font-weight="500" fill="#5F5E5A" text-anchor="middle">
@@ -123,25 +123,27 @@
 <line x1="24" y1="575" x2="965" y2="575" stroke="#B4B2A9" stroke-width="1"/>
 <text x="24" y="591" font-size="11" font-weight="500" fill="#5F5E5A">Cursos alternativos y de excepcion</text>
 <g font-size="10">
-<rect x="24" y="603" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="612" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="74" y="612" fill="#5F5E5A">Sesion ausente</text>
-<rect x="504" y="603" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="612" text-anchor="middle" fill="#4A1B0C">FE-02</text><text x="554" y="612" fill="#5F5E5A">Rol insuficiente</text>
+<rect x="24" y="603" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="612" text-anchor="middle" fill="#4A1B0C">FA-01</text><text x="74" y="612" fill="#5F5E5A">Directorio vacio</text>
+<rect x="504" y="603" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="612" text-anchor="middle" fill="#4A1B0C">FA-02</text><text x="554" y="612" fill="#5F5E5A">Cuenta sin consentimiento vigente</text>
+<rect x="24" y="619" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="628" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="74" y="628" fill="#5F5E5A">Sesion ausente</text>
+<rect x="504" y="619" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="525" y="628" text-anchor="middle" fill="#4A1B0C">FE-02</text><text x="554" y="628" fill="#5F5E5A">Rol insuficiente</text>
 </g>
 
-<line x1="24" y1="629" x2="965" y2="629" stroke="#B4B2A9" stroke-width="1"/>
+<line x1="24" y1="645" x2="965" y2="645" stroke="#B4B2A9" stroke-width="1"/>
 <g font-size="11">
-<rect x="24" y="640" width="13" height="13" rx="2" fill="#E6F1FB" stroke="#185FA5"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="23.5" y1="640.5" x2="23.5" y2="652.5"/><line x1="23.5" y1="646.5" x2="27.5" y2="646.5"/><circle cx="32.5" cy="646.5" r="5"/></g>
-<text x="44" y="650" fill="#5F5E5A">Objeto tipo Borde</text>
-<rect x="155.4" y="640" width="13" height="13" rx="2" fill="#E1F5EE" stroke="#0F6E56"/>
-<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="161.9" cy="646.5" r="5.5"/><polyline points="160.4,639.0 164.4,641.3 160.1,643.7"/></g>
-<text x="175.4" y="650" fill="#5F5E5A">Controlador</text>
-<rect x="249.60000000000002" y="640" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="256.1" cy="645.0" r="5.5"/><line x1="249.60000000000002" y1="652.5" x2="262.6" y2="652.5"/></g>
-<text x="269.6" y="650" fill="#5F5E5A">Entidad</text>
+<rect x="24" y="656" width="13" height="13" rx="2" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="23.5" y1="656.5" x2="23.5" y2="668.5"/><line x1="23.5" y1="662.5" x2="27.5" y2="662.5"/><circle cx="32.5" cy="662.5" r="5"/></g>
+<text x="44" y="666" fill="#5F5E5A">Objeto tipo Borde</text>
+<rect x="155.4" y="656" width="13" height="13" rx="2" fill="#E1F5EE" stroke="#0F6E56"/>
+<g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="161.9" cy="662.5" r="5.5"/><polyline points="160.4,655.0 164.4,657.3 160.1,659.7"/></g>
+<text x="175.4" y="666" fill="#5F5E5A">Controlador</text>
+<rect x="249.60000000000002" y="656" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="256.1" cy="661.0" r="5.5"/><line x1="249.60000000000002" y1="668.5" x2="262.6" y2="668.5"/></g>
+<text x="269.6" y="666" fill="#5F5E5A">Entidad</text>
 </g>
 <g font-size="11">
-<rect x="24" y="662" width="13" height="13" rx="2" fill="#FAECE7" stroke="#993C1D"/><text x="44" y="672" fill="#5F5E5A">Participa solo en un curso alternativo o de excepcion</text>
-<rect x="384" y="662" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/><text x="404" y="672" fill="#5F5E5A">Entidad descubierta, ausente de MD-01</text>
-<line x1="694" y1="669" x2="724" y2="669" stroke="#8a8a8a" stroke-width="1"/><text x="732" y="672" fill="#5F5E5A">Asociacion de comunicacion (sin direccion)</text>
+<rect x="24" y="678" width="13" height="13" rx="2" fill="#FAECE7" stroke="#993C1D"/><text x="44" y="688" fill="#5F5E5A">Participa solo en un curso alternativo o de excepcion</text>
+<rect x="384" y="678" width="13" height="13" rx="2" fill="#EEEDFE" stroke="#534AB7" stroke-dasharray="4 3"/><text x="404" y="688" fill="#5F5E5A">Entidad descubierta, ausente de MD-01</text>
+<line x1="694" y1="685" x2="724" y2="685" stroke="#8a8a8a" stroke-width="1"/><text x="732" y="688" fill="#5F5E5A">Asociacion de comunicacion (sin direccion)</text>
 </g>
 </svg>
