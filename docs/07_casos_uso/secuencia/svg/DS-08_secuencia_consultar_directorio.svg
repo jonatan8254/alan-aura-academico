@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1342 1192" width="1342" height="1192" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title id="t">DS-08 - Secuencia de CU-08 «Consultar directorio de usuarios»</title>
+<desc id="d">Diagrama de secuencia UML. 4 participantes, 13 mensajes.</desc>
+<rect x="0" y="0" width="1342" height="1192" fill="#FFFFFF"/>
+<text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-08 - Secuencia de CU-08 «Consultar directorio de usuarios»</text>
+<line x1="83.4" y1="116.0" x2="83.4" y2="1164.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="515.0" y1="80.0" x2="515.0" y2="1164.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="879.0" y1="67.0" x2="879.0" y2="1164.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1264.7" y1="67.0" x2="1264.7" y2="1164.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="45.4" y="285.0" width="507.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="45.400000000000006,285 107.4,285 107.4,297 99.4,305 45.400000000000006,305" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="54.400000000000006" y="299" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="117.4" y="299" font-size="10" fill="#993C1D">[FE-01 sesion ausente]</text>
+<rect x="45.4" y="369.0" width="507.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="45.400000000000006,369 107.4,369 107.4,381 99.4,389 45.400000000000006,389" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="54.400000000000006" y="383" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="117.4" y="383" font-size="10" fill="#993C1D">[FE-02 autenticado pero sin rol de administrador]</text>
+<rect x="45.4" y="493.0" width="507.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="45.400000000000006,493 107.4,493 107.4,505 99.4,513 45.400000000000006,513" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="54.400000000000006" y="507" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="117.4" y="507" font-size="10" fill="#993C1D">[FA-01 no hay ninguna cuenta registrada]</text>
+<rect x="841.0" y="617.0" width="461.7" height="190.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="841.0,617 903.0,617 903.0,629 895.0,637 841.0,637" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="850.0" y="631" font-size="10" font-weight="600" fill="#993C1D">alt</text>
+<text x="913.0" y="631" font-size="10" fill="#993C1D">[FA-02 la cuenta no tiene consentimiento vigente]</text>
+<line x1="841.0" y1="751.0" x2="1302.7" y2="751.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="851.0" y="764.0" font-size="10" fill="#993C1D">[consentimiento vigente]</text>
+<line x1="63.4" y1="155.0" x2="1284.7" y2="155.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="584.4" y="144.0" width="179.3" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="674.0" y="159.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 1 - Directorio minimo</text>
+<line x1="63.4" y1="939.0" x2="1284.7" y2="939.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="575.3" y="928.0" width="197.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="674.0" y="943.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 2 - Revision de la lista</text>
+<line x1="83.4" y1="199.0" x2="515.0" y2="199.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="513.0,199 506.0,195.6 506.0,202.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="218.2" y="174.0" width="162.0" height="15.0" fill="#FFFFFF"/>
+<text x="222.2" y="186.0" font-size="10" fill="#2C2C2A">abrir la vista de directorio</text>
+<polyline points="515.0,239.0 557.0,239.0 557.0,265.0 524.0,265.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="517.0,265 524.0,261.6 524.0,268.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="563.0" y="214.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="567.0" y="226.0" font-size="10" fill="#2C2C2A">verificarSesionYRolDeAdministrador()</text>
+<line x1="515.0" y1="341.0" x2="83.4" y2="341.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="85.4,341 92.4,337.6 92.4,344.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="165.9" y="316.0" width="266.5" height="15.0" fill="#FFFFFF"/>
+<text x="169.9" y="328.0" font-size="10" fill="#2C2C2A">denegarPorSesionAusenteSinMostrarElDirectorio()</text>
+<line x1="515.0" y1="425.0" x2="83.4" y2="425.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="85.4,425 92.4,421.6 92.4,428.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="193.4" y="400.0" width="211.5" height="15.0" fill="#FFFFFF"/>
+<text x="197.4" y="412.0" font-size="10" fill="#2C2C2A">denegarPorRolSinMostrarElDirectorio()</text>
+<line x1="515.0" y1="473.0" x2="879.0" y2="473.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="877.0,473 870.0,469.6 870.0,476.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="585.8" y="448.0" width="222.5" height="15.0" fill="#FFFFFF"/>
+<text x="589.8" y="460.0" font-size="10" fill="#2C2C2A">reunirAliasIdTruncadoFechaYOnboarding()</text>
+<line x1="515.0" y1="549.0" x2="83.4" y2="549.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="85.4,549 92.4,545.6 92.4,552.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="204.4" y="524.0" width="189.5" height="15.0" fill="#FFFFFF"/>
+<text x="208.4" y="536.0" font-size="10" fill="#2C2C2A">informarDirectorioVacioSinError()</text>
+<line x1="879.0" y1="597.0" x2="1264.7" y2="597.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1262.6999999999998,597 1255.6999999999998,593.6 1255.6999999999998,600.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="963.3" y="572.0" width="217.0" height="15.0" fill="#FFFFFF"/>
+<text x="967.3" y="584.0" font-size="10" fill="#2C2C2A">derivarEstadoDeConsentimientoVigente()</text>
+<line x1="1264.7" y1="673.0" x2="879.0" y2="673.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="881.0,673 888.0,669.6 888.0,676.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="996.3" y="648.0" width="151.0" height="15.0" fill="#FFFFFF"/>
+<text x="1000.3" y="660.0" font-size="10" fill="#2C2C2A">sin consentimiento vigente</text>
+<polyline points="879.0,713.0 921.0,713.0 921.0,739.0 888.0,739.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="881.0,739 888.0,735.6 888.0,742.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="927.0" y="688.0" width="217.0" height="15.0" fill="#FFFFFF"/>
+<text x="931.0" y="700.0" font-size="10" fill="#2C2C2A">marcarLaFilaConEseEstadoSinExcluirla()</text>
+<line x1="1264.7" y1="797.0" x2="879.0" y2="797.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="881.0,797 888.0,793.6 888.0,800.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="1051.3" y="772.0" width="41.0" height="15.0" fill="#FFFFFF"/>
+<text x="1055.3" y="784.0" font-size="10" fill="#2C2C2A">activo</text>
+<line x1="879.0" y1="845.0" x2="515.0" y2="845.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="517.0,845 524.0,841.6 524.0,848.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="618.8" y="820.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="622.8" y="832.0" font-size="10" fill="#2C2C2A">filas del directorio minimo</text>
+<polyline points="515.0,885.0 557.0,885.0 557.0,911.0 524.0,911.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="517.0,911 524.0,907.6 524.0,914.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="563.0" y="860.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="567.0" y="872.0" font-size="10" fill="#2C2C2A">restringirAlConjuntoMinimoDeRN0302()</text>
+<line x1="83.4" y1="983.0" x2="515.0" y2="983.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="513.0,983 506.0,979.6 506.0,986.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="209.9" y="958.0" width="178.5" height="15.0" fill="#FFFFFF"/>
+<text x="213.9" y="970.0" font-size="10" fill="#2C2C2A">revisar la lista del directorio</text>
+<rect x="386.3" y="995.0" width="949.7" height="159.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="394.3" y="1013.0" font-size="9.5" fill="#2C2C2A">PER-T3 y RN-03.5 se realizan como una AUSENCIA, y esa es la afirmacion.</text>
+<text x="394.3" y="1026.0" font-size="9.5" fill="#2C2C2A">En todo el diagrama no existe ningun mensaje hacia `CapsulaDePerfil`,</text>
+<text x="394.3" y="1039.0" font-size="9.5" fill="#2C2C2A">`Mensaje` ni `Personaje`, y ninguno lee el username completo ni las respuestas de</text>
+<text x="394.3" y="1052.0" font-size="9.5" fill="#2C2C2A">encuesta. No hay «filtro que oculta»: sencillamente no hay camino que alcance esos</text>
+<text x="394.3" y="1065.0" font-size="9.5" fill="#2C2C2A">datos. Ninguna consulta administrativa puede llegar a ellos por construccion.</text>
+<text x="394.3" y="1078.0" font-size="9.5" fill="#2C2C2A">El `estado` es DERIVADO, no almacenado (PER-T4, SD-26): se calcula del</text>
+<text x="394.3" y="1091.0" font-size="9.5" fill="#2C2C2A">`Consentimiento` en cada consulta y su dominio es {activo, sin consentimiento</text>
+<text x="394.3" y="1104.0" font-size="9.5" fill="#2C2C2A">vigente}. No es suspension ni sancion.</text>
+<text x="394.3" y="1117.0" font-size="9.5" fill="#2C2C2A">FA-01 y FA-02 existen y `DR-08` los dibuja, pese a que la nota en prosa de ese</text>
+<text x="394.3" y="1130.0" font-size="9.5" fill="#2C2C2A">mismo archivo diga «no aplica». Contradiccion interna reportada a</text>
+<text x="394.3" y="1143.0" font-size="9.5" fill="#2C2C2A">`/uml-robustness-diagram`; aqui se sigue a las flechas y a `ECU-08` §6, que coinciden.</text>
+<g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="83.4" cy="46" r="9"/><line x1="83.4" y1="55" x2="83.4" y2="77"/><line x1="71.4" y1="64" x2="95.4" y2="64"/><line x1="83.4" y1="77" x2="73.4" y2="92"/><line x1="83.4" y1="77" x2="93.4" y2="92"/></g>
+<text x="83.4" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Administrador de</text>
+<text x="83.4" y="110.0" font-size="11" text-anchor="middle" fill="#2C2C2A">plataforma</text>
+<rect x="437.4" y="34.0" width="155.1" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="444.45" y1="51.0" x2="444.45" y2="63.0"/><line x1="444.45" y1="57.0" x2="448.45" y2="57.0"/><circle cx="453.45" cy="57.0" r="5"/></g>
+<text x="525.0" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Directorio de usuarios</text>
+<text x="525.0" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">(P-14)</text>
+<rect x="831.0" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="845.0" cy="49.0" r="5.5"/><line x1="838.5" y1="56.5" x2="851.5" y2="56.5"/></g>
+<text x="889.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Usuario</text>
+<rect x="1211.3" y="34.0" width="106.7" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1225.35" cy="49.0" r="5.5"/><line x1="1218.85" y1="56.5" x2="1231.85" y2="56.5"/></g>
+<text x="1274.7" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Consentimiento</text>
+</svg>

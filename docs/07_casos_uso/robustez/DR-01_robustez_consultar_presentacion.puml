@@ -1,5 +1,8 @@
 @startuml
 ' DR-01 — Analisis de robustez de CU-01 «Consultar presentacion del servicio»
+' v2.1 (SD-30): FE-02 corregido — vuelve a P-01, no dirige a P-02. ECU-01 lo declara tres
+'      veces (§6, la fila de FE-02 y CA-08) y la especificacion es la autoridad del
+'      comportamiento del caso de uso. Hallazgo H-8 de DS-00, resuelto a favor de ECU-01.
 ' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-01, MD-01, DCU-01, DIS-00 (P-01; continuacion P-02/P-03), MV-01, REQ-01
 left to right direction
@@ -34,7 +37,7 @@ C_MostrarPresentacion -- E_Visitante : 1 quien consulta no tiene cuenta ni sesio
 B_PaginaPresentacion -- C_SalirSinElegirAcceso : FA-03 el Visitante se va sin elegir ningun acceso
 C_SalirSinElegirAcceso -- E_Visitante : FA-03 finaliza sin crear sesion ni dejar rastro
 B_PaginaInicioSesion -- C_ExigirCuentaParaAcompanamiento : FE-02 intenta alcanzar el acompanamiento sin cuenta
-C_ExigirCuentaParaAcompanamiento -- B_FormularioRegistro : FE-02 termina; el acompanamiento exige cuenta, y dirige al registro
+C_ExigirCuentaParaAcompanamiento -- B_PaginaPresentacion : FE-02 vuelve al paso 1; el acompanamiento exige cuenta y mantiene visible el acceso al registro
 C_MostrarPresentacion -- C_MostrarIndisponibilidad : FE-01 el servicio esta caido o en mantenimiento
 C_MostrarIndisponibilidad -- B_PaginaPresentacion : FE-01 vuelve al paso 1; permite reintentar sin crear sesion
 
@@ -65,6 +68,9 @@ note as N_DR01
   FE-01 Pagina de presentacion no disponible: el servicio esta caido o en mantenimiento;
         el sistema muestra un estado de indisponibilidad y permite reintentar.
         Sin sesion creada; sin datos capturados.
+  FE-02 Intento de alcanzar el acompanamiento sin cuenta: el sistema no abre la Conversacion
+        ni concede acceso a dato alguno de cuenta, y VUELVE al paso 1 con el acceso de
+        registro a la vista. No dirige al formulario: ofrece, no empuja.
 
   <b>Postcondicion</b> El Visitante queda informado del alcance, los limites y los accesos;
   no se captura ningun dato; no se crea sesion.

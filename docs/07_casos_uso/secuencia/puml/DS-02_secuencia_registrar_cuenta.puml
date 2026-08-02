@@ -1,0 +1,69 @@
+@startuml
+' DS-02 - Secuencia de CU-02 «Registrar cuenta»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-02 v2.0 (7 controladores), ECU-02 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-02; continuacion P-03), PRIV-01, REQ-01.
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Visitante" as ACT_Visitante
+boundary "Registro (P-02)" as B_FormularioRegistro
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Visitante" as E_Visitante
+entity "TitularDeCuenta" as E_TitularDeCuenta
+entity "Usuario" as E_Usuario
+
+== Paso 1 - Formulario de registro ==
+
+ACT_Visitante -> B_FormularioRegistro : abrir el formulario de registro
+B_FormularioRegistro -> E_Visitante : identificarComoAunSinCuenta()
+B_FormularioRegistro -> B_FormularioRegistro : pedirUnicamenteUsernameAliasYContrasena()
+
+note right of B_FormularioRegistro
+  <b>RN-04.1 se realiza como una AUSENCIA.</b> No hay ningun mensaje que pida
+  nombre legal, documento, correo, telefono, direccion ni fecha de nacimiento.
+  Esos campos no existen en el diagrama, y esa es la afirmacion.
+  RN-04.6: tampoco hay recuperacion de contrasena por correo ni verificacion.
+end note
+
+== Paso 2 - Validacion y unicidad ==
+
+ACT_Visitante -> B_FormularioRegistro : enviar username, alias y contrasena
+B_FormularioRegistro -> B_FormularioRegistro : validarFormatoDeLosCampos()
+
+break FE-01 campos incompletos o con formato incorrecto
+  B_FormularioRegistro -> B_FormularioRegistro : mostrarErrorDeValidacionSinCrearLaCuenta()
+end
+
+B_FormularioRegistro -> E_TitularDeCuenta : estaTomadoElUsername()
+
+break FA-01 el username propuesto ya existe
+  E_TitularDeCuenta --> B_FormularioRegistro : tomado
+  B_FormularioRegistro -> B_FormularioRegistro : indicarQueEstaEnUsoYSolicitarOtro()
+end
+
+E_TitularDeCuenta --> B_FormularioRegistro : disponible
+
+== Paso 3 - Creacion de la cuenta ==
+
+B_FormularioRegistro -> E_Visitante : promoverATitularDeCuenta(username, alias, contrasena hasheada)
+E_Visitante -> E_TitularDeCuenta : reservarUsername()
+E_Visitante -> E_Usuario : crearCuenta(rol de usuario asignado en el servidor)
+E_Usuario --> B_FormularioRegistro : cuenta creada
+B_FormularioRegistro -> B_FormularioRegistro : confirmarElAlta()
+B_FormularioRegistro -> B_PaginaInicioSesion : invitarAIniciarSesion()
+
+note over E_Usuario, B_PaginaInicioSesion
+  <b>El hasheo y la asignacion de rol son restricciones de `crearCuenta`, no pasos
+  aparte</b> (PRIV-R12, RNF-08): sacarlos a mensajes propios habria metido mecanismo
+  en un diagrama de diseno que aun no decide infraestructura.
+  <b>Postcondicion:</b> existe un `Usuario` con rol de usuario asignado en el servidor,
+  <b>aun sin Consentimiento ni CapsulaDePerfil</b> — esos los crea CU-05.
+  <b>Hallazgo heredado de DR-02 (RA-01):</b> DIS-00 §2 no declara ningun estado de
+  exito para P-02, asi que `confirmarElAlta` no tiene pantalla real inventariada.
+end note
+
+@enduml

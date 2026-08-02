@@ -1,0 +1,87 @@
+@startuml
+' DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-11 v2.0 (11 controladores), ECU-11 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-13; destinos P-08, P-03), PER-01 v1.2 (PER-T7), RN-01.6.
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta
+boundary "Onboarding - caracterizacion (P-08)" as B_PantallaCaracterizacion
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Usuario" as E_Usuario
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "Consentimiento" as E_Consentimiento
+
+note over B_PaginaGestionCuenta, E_Consentimiento
+  <b>PER-T7 - reiniciar NO es revocar.</b> Reiniciar <b>borra</b> la CapsulaDePerfil
+  entera, incluido `character`, y por eso el Usuario <b>pierde el acceso al chat</b>
+  hasta rehacer CU-05. Revocar la personalizacion (CU-12, DS-12) solo hace que deje de
+  <b>alimentar</b> la conversacion y no es punitivo. Dos operaciones distintas sobre
+  estados distintos.
+end note
+
+== Pasos 1 y 2 - Advertencia y confirmacion explicita ==
+
+ACT_Usuario -> B_PaginaGestionCuenta : elegir reiniciar la caracterizacion
+
+break FE-01 la sesion expira
+  B_PaginaGestionCuenta -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+end
+
+break FE-02 el rol no esta autorizado
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : denegarPorPermisoSinBorrarNada()
+end
+
+B_PaginaGestionCuenta -> E_CapsulaDePerfil : enumerarQueElBorradoAlcanzaTambienCharacter()
+
+break FA-01 no existe capsula porque ya se reinicio antes
+  B_PaginaGestionCuenta --> ACT_Usuario : informarQueNoHayCaracterizacionQueReiniciar()
+end
+
+E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acceso al chat
+B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
+ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita
+
+break FA-03 el Usuario cancela la advertencia
+  B_PaginaGestionCuenta --> ACT_Usuario : cancelarDejandoLaCapsulaCompleta()
+end
+
+break FE-03 llega sin confirmacion explicita o mal formada
+  B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso1()
+end
+
+== Paso 3 - Borrado completo de la capsula ==
+
+opt FA-02 la capsula solo tiene character y sus metadatos
+  E_CapsulaDePerfil --> B_PaginaGestionCuenta : el borrado alcanza igualmente character y los metadatos
+end
+
+B_PaginaGestionCuenta -> E_CapsulaDePerfil : borrarCompleta()
+E_CapsulaDePerfil -> E_CapsulaDePerfil : dejarDeExistir()
+
+break FE-04 el sistema no logra completar el borrado
+  E_CapsulaDePerfil -> E_CapsulaDePerfil : deshacerElBorradoIncompleto()
+  E_CapsulaDePerfil --> B_PaginaGestionCuenta : queda como estaba, con character
+end
+
+== Pasos 4 y 5 - Alcance declarado y oferta de rehacer ==
+
+B_PaginaGestionCuenta -> E_Usuario : permanecerIntacta()
+B_PaginaGestionCuenta -> E_Consentimiento : permanecerConSusDosCapas()
+B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatQuedaInhabilitado()
+B_PaginaGestionCuenta -> B_PantallaCaracterizacion : ofrecerRehacerDesdeElPaso6DeCU05()
+
+note over E_CapsulaDePerfil, E_Consentimiento
+  <b>La consecuencia aceptada y documentada (SD-26):</b> como `character` vive en la
+  capsula y esta deja de existir, el Usuario queda <b>sin poder conversar</b> hasta
+  rehacer CU-05. No es un efecto colateral: es lo que el paso 4 declara por escrito.
+  <b>FE-04 sin estados intermedios (RE-04):</b> o la capsula desaparece entera o
+  queda como estaba, con `character`. Ninguna rama la deja a medias.
+end note
+
+@enduml

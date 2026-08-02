@@ -1,5 +1,5 @@
 # Índice maestro — Subproyecto «Alan & Aura Académico»
-**Propósito:** qué es cada artefacto, su ID, sus insumos y consumidores. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-07-31.
+**Propósito:** qué es cada artefacto, su ID, sus insumos y consumidores. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-01 (SD-30: diagramas de secuencia).
 **Convención de IDs:** `RF/RNF/RC/RN/CU/PR/MET` con **guion único** (`RF-01`). Documentos con prefijo semántico (`VIS`, `ADR`, `MV`, `REQ`, `PRIV`, `SEG`, `NORM`, `TRZ`, `PLAN`, `SD`).
 
 ---
@@ -43,6 +43,7 @@
 | **RET-01** | `00_gobernanza/RET-01_retroalimentacion_docente.md` | Retroalimentación del profesor sobre la fase 2 | Revisión docente, informe académico |
 | **PDR-01** | `00_gobernanza/PDR-01_primera_pasada_correcciones.md` | RET-01, DR-00 (15 hallazgos), skills actualizadas | Revisión docente, informe académico, fases posteriores |
 | **RPD-01** | `07_casos_uso/RPD-01_revision_preliminar_diseno.md` | MD-01, DCU-01, ECU-00…14, DR-00…14 (compuerta ICONIX, skill `iconix-pdr-review`) | Diagramas de secuencia (autoriza el paso a diseño detallado) |
+| **DS-00…DS-14** | `07_casos_uso/secuencia/` (`puml/`, `svg/`, `pruebas/`, `scripts/`) | DR-01…14, ECU-01…14, MD-01, DCU-01, RPD-01, DIS-00, SEG-01, PER-01 | Diagrama de clases de diseño, `COD-01`, el CDR |
 | **DR-00…DR-14** | `07_casos_uso/robustez/` (`.puml` + `.svg` + certificados `CERT-D4-tanda1/2/3.md`) | ECU-01…ECU-14, MD-01, DCU-01, DIS-00, SEG-01 | `RPD-01`, diagramas de secuencia, casos de prueba |
 | **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, `RPD-01`, clases (fase 2+) |
 | **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez, `RPD-01` |
@@ -63,6 +64,7 @@ Fase 2 ICONIX: `MV-01 → MD-01 (dominio) ✅ → DCU-01 (casos de uso) ✅ → 
 - **MD-01 v1.4:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); **16 clases, 17 relaciones** (4 generalizaciones + 1 composición + 12 asociaciones), sin atributos/multiplicidades; validador 0/0 y compuertas de la skill (*Final Quality Gates*) superadas.
 - **DCU-01 v2.1:** diagrama de casos de uso PlantUML (skill `uml-use-case-diagram`); **5 actores** (4 concretos + el rol general `Titular de cuenta`), **14 casos de uso**, 3 paquetes, **2 `<<extend>>` y 1 `<<include>>`**; validador 0 errores y compuertas de la skill superadas.
 - **ECU-00…14:** especificación textual (skill `use-case-specifier`); 7 completas + 7 ágiles; validador **0 errores y 0 advertencias** en las 14; **100 % de sus 76 flujos** con criterio de aceptación asociado.
-- **DR-00…14:** análisis de robustez (skill `uml-robustness-diagram`); **261 elementos** (15 actores / 38 borde / 149 control / 59 entidad); validador 0 errores con `--domain MD-01`; cobertura de flujos completa.
+- **DR-00…14 v2.1:** análisis de robustez (skill `uml-robustness-diagram`); **263 elementos** (15 actores / 38 borde / 150 control / 60 entidad); validador 0 errores con `--domain MD-01`; cobertura de flujos completa.
+- **DS-00…14 v1.0:** diagramas de secuencia (skill `uml-sequence-diagram`, modo *Generar*); **282 mensajes**, **150/150** controladores cubiertos, 0 flujos sin fragmento; validador **0 errores en los 14**. Capa de infraestructura **declarada no ejecutada** (`E-1` de `DS-00`). Delta en `DOP-01` (**192 operaciones**, 16/16 clases del dominio) y **178 casos de prueba** en `pruebas/CP-00…CP-14`.
 - **RPD-01:** compuerta ICONIX (skill `iconix-pdr-review`) entre análisis y diseño detallado; veredicto **Aceptado con verificación de retrabajo**.
 - **PER-01:** inventario consolidado de persistencia (7 entidades del plan §4.14 + telemetría §4.15); marcas [E1]/[I2], reglas transversales `PER-T1…T7`, hallazgos abiertos `PER-H2`/`PER-H4`/**`PER-H5`** (este último, de canon: el respaldo en S3 escapa al borrado en cascada — ver `ADR-002`). **No** es diseño de esquema: sin tipos, claves ni DDL.

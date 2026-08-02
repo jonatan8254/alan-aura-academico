@@ -1,5 +1,9 @@
 @startuml
 ' DR-04 — Analisis de robustez de CU-04 «Eliminar cuenta»
+' v2.1 (SD-30): entra EventoOperativo con su controlador «Conservar la telemetria sin
+'      identidad». ECU-04 §7 lo declaraba como concepto involucrado —«permanece: la cascada
+'      no lo alcanza, y por eso debe ser irreidentificable (RE-06)»— y este diagrama lo habia
+'      omitido, dejando CA-11 sin nada de donde derivar prueba. Hallazgo H-9 de DS-00.
 ' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-04 v2.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-13; destinos P-01, P-03), PRIV-01, PER-01
 ' v2.0: el caso de uso se estrecha a un solo objetivo. Reiniciar la caracterizacion salio a
@@ -25,6 +29,7 @@ control "Deshacer la cascada interrumpida" as C_DeshacerCascada #LightCoral
 control "Denegar por permiso insuficiente" as C_DenegarPorPermiso #LightCoral
 control "Informar la peticion invalida" as C_MsgPeticionInvalida #LightCoral
 control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
+control "Conservar la telemetria sin identidad" as C_ConservarTelemetriaSinIdentidad
 
 entity "Usuario" as E_Usuario
 entity "CapsulaDePerfil" as E_CapsulaDePerfil
@@ -32,6 +37,7 @@ entity "Consentimiento" as E_Consentimiento
 entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario
 entity "Conversacion" as E_Conversacion #LightCoral
 entity "Visitante" as E_Visitante
+entity "EventoOperativo" as E_EventoOperativo
 
 ACT_Usuario -- B_PaginaGestionCuenta : 1 solicita eliminar su cuenta
 B_PaginaGestionCuenta -- C_VerificarSesionYRol : 1 solicita la eliminacion
@@ -45,6 +51,8 @@ C_EliminarEnCascada -- E_Usuario : 3 suprime la cuenta; FA-01 si nunca hubo onbo
 C_EliminarEnCascada -- E_CapsulaDePerfil : 3 suprime la capsula
 C_EliminarEnCascada -- E_Consentimiento : 3 suprime el consentimiento con sus dos capas
 C_EliminarEnCascada -- E_ContadorDeUsoDiario : 3 suprime los contadores del usuario
+C_EliminarEnCascada -- C_ConservarTelemetriaSinIdentidad : 3 la cascada NO alcanza la telemetria
+C_ConservarTelemetriaSinIdentidad -- E_EventoOperativo : 3 permanece sin alias ni username; no permite reconstruir que la cuenta existio
 C_EliminarEnCascada -- C_CerrarSesionYConfirmar : 4 borrado en cascada completado
 C_CerrarSesionYConfirmar -- E_Visitante : 4 la persona queda en la condicion de Visitante
 C_CerrarSesionYConfirmar -- B_PaginaPresentacion : 4 cierra la sesion y confirma que no queda dato recuperable

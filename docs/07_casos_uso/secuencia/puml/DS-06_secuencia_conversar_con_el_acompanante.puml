@@ -1,0 +1,140 @@
+@startuml
+' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-06 v2.0 (25 controladores), ECU-06 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-07, P-10, P-11), SEG-01 v1.2, PER-01 v1.2, PRIV-01, MV-01 §7,
+'          HECHOS_CANONICOS (H-01..H-06)
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
+boundary "Chat - error y degradacion (P-11)" as B_EstadosDeError
+boundary "Onboarding - consentimiento capa base (P-07)" as B_OnboardingCapaBase
+control "Gate de seguridad" as C_GateDeSeguridad
+entity "Consentimiento" as E_Consentimiento
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
+entity "Conversacion" as E_Conversacion
+entity "Personaje" as E_Personaje
+entity "Mensaje" as E_Mensaje
+entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "EventoDeSeguridad" as E_EventoDeSeguridad
+entity "EventoOperativo" as E_EventoOperativo
+boundary "Frontera con el Proveedor LLM" as B_FronteraProveedorLLM
+actor "Proveedor LLM (Groq)" as ACT_ProveedorLLM
+
+== Paso 1 - Apertura de la conversacion ==
+
+ACT_Usuario -> B_InterfazDeChat : elegir acompanante e iniciar conversacion
+B_InterfazDeChat -> B_InterfazDeChat : verificarSesionYRol()
+
+break FE-02 rol no autorizado
+  B_InterfazDeChat -> B_EstadosDeError : denegarAcceso()
+end
+
+B_InterfazDeChat -> E_Consentimiento : estaVigenteLaCapaBase()
+
+break FE-09 la capa base del consentimiento esta revocada
+  B_InterfazDeChat -> B_OnboardingCapaBase : redirigirParaOtorgarCapaBase()
+end
+
+B_InterfazDeChat -> E_DisponibilidadDelChatbot : estaHabilitado()
+
+break FE-04 el kill switch esta activo
+  B_InterfazDeChat -> B_EstadosDeError : informarIndisponibilidadTemporal()
+end
+
+B_InterfazDeChat -> E_Conversacion : abrir()
+B_InterfazDeChat -> E_Personaje : obtenerPersona()
+E_Personaje --> B_InterfazDeChat : persona de Alan o Aura
+B_InterfazDeChat -> E_Conversacion : fijarPersonajeDeLaSesion()
+B_InterfazDeChat -> B_InterfazDeChat : abrirDialogoConElPersonaje()
+
+== Pasos 2 a 7 - Turno de conversacion ==
+
+loop 1..20 mensajes de usuario
+  ACT_Usuario -> B_InterfazDeChat : escribir y enviar mensaje
+  B_InterfazDeChat -> B_InterfazDeChat : verificarSesionYRol()
+
+  break FE-01 sesion ausente en el turno
+    B_InterfazDeChat -> B_EstadosDeError : solicitarReingresoPorCU03()
+  end
+
+  B_InterfazDeChat -> E_Mensaje : validarLongitudYEstructura(2.500 caracteres)
+
+  break FE-03 mensaje mal formado o excedido
+    B_InterfazDeChat -> B_EstadosDeError : informarEntradaInvalida()
+  end
+
+  B_InterfazDeChat -> E_ContadorDeUsoDiario : dentroDeLimites(3/min, 30/dia)
+
+  break FE-05 supera el limite de tasa
+    B_InterfazDeChat -> B_EstadosDeError : informarLimiteYTiempoDeEspera()
+  end
+
+  B_InterfazDeChat -> E_ContadorDeUsoDiario : registrarSolicitud()
+  B_InterfazDeChat -> C_GateDeSeguridad : evaluarPeligroExplicito(mensaje)
+  C_GateDeSeguridad -> E_Mensaje : obtenerTextoDelTurno()
+
+  break FE-08 el gate decide peligro explicito
+    C_GateDeSeguridad -> E_EventoDeSeguridad : documentarSinContenidoIndividual()
+    C_GateDeSeguridad -> B_InterfazDeChat : desviarADerivacionDeCU07()
+  end
+
+  B_InterfazDeChat -> E_CapsulaDePerfil : materializarContextoV1()
+  E_CapsulaDePerfil -> E_Consentimiento : estaOtorgadaLaPersonalizacion()
+  E_CapsulaDePerfil -> E_Personaje : obtenerPersona()
+  E_CapsulaDePerfil -> E_Mensaje : ultimosIntercambiosDeLaSesion(4)
+  E_CapsulaDePerfil --> B_InterfazDeChat : ContextoInicialConversacionalV1
+
+  B_InterfazDeChat -> B_FronteraProveedorLLM : generar(contexto minimo)
+  B_FronteraProveedorLLM -> B_FronteraProveedorLLM : vigilarPlazoDeEspera(20 s)
+  B_FronteraProveedorLLM -> ACT_ProveedorLLM : solicitar la generacion del texto
+
+  break FE-06 el proveedor no responde
+    B_FronteraProveedorLLM -> B_FronteraProveedorLLM : reintentarUnaVez()
+    B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
+  end
+
+  break FE-07 se agotan los 20 segundos de espera
+    B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
+  end
+
+  ACT_ProveedorLLM -> B_FronteraProveedorLLM : texto generado
+  B_FronteraProveedorLLM -> B_FronteraProveedorLLM : extraerSoloContenidoFinal()
+  B_FronteraProveedorLLM -> C_GateDeSeguridad : aplicarGuardasDeSalida(texto)
+
+  opt FA-02 la postvalidacion detecta riesgo o claim clinico
+    C_GateDeSeguridad -> C_GateDeSeguridad : sustituirPorRespuestaSegura()
+  end
+
+  C_GateDeSeguridad --> B_FronteraProveedorLLM : salida admisible
+  B_FronteraProveedorLLM -> B_FronteraProveedorLLM : limitarA350Tokens()
+  B_FronteraProveedorLLM --> B_InterfazDeChat : respuesta del personaje
+  B_InterfazDeChat -> B_InterfazDeChat : mostrarRespuestaDelPersonaje()
+
+  break FA-01 se alcanzan los 20 mensajes de la sesion
+    B_InterfazDeChat -> E_Conversacion : alcanzoElLimiteDeSesion()
+    B_InterfazDeChat -> B_InterfazDeChat : informarLimiteDeSesionSinErrorCrudo()
+  end
+end
+
+== Paso 8 - Cierre y no persistencia ==
+
+ACT_Usuario -> B_InterfazDeChat : cerrar la conversacion
+B_InterfazDeChat -> E_Conversacion : cerrar()
+B_InterfazDeChat -> E_Mensaje : descartarContenido()
+B_InterfazDeChat -> E_EventoOperativo : registrarSinContenido(latencia, modelo, version, estado)
+
+note over E_Mensaje, E_EventoOperativo
+  <b>No persistencia (RF-13, RNF-03, PRIV-R2).</b> El contenido se descarta al cerrar.
+  Lo que NO existe en este diagrama es la afirmacion: ningun mensaje guarda el texto
+  de la Conversacion ni de sus Mensaje, y no hay ninguna cache de pares
+  mensaje-respuesta (no-objetivo declarado en ADR-002-D6).
+end note
+
+@enduml

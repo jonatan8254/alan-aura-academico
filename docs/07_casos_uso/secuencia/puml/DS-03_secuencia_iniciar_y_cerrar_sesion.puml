@@ -1,0 +1,92 @@
+@startuml
+' DS-03 - Secuencia de CU-03 «Iniciar y cerrar sesion»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-03 v2.0 (12 controladores), ECU-03 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-03, P-04; destinos P-05, P-10, P-14), REQ-01 (RNF-08).
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Titular de cuenta" as ACT_Titular
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+boundary "Inicio de sesion de administracion (P-04)" as B_PaginaInicioSesionAdmin
+boundary "Onboarding - disclosure de IA (P-05)" as B_PantallaDisclosure
+boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
+boundary "Directorio de usuarios (P-14)" as B_DirectorioDeUsuarios
+entity "TitularDeCuenta" as E_TitularDeCuenta
+entity "Usuario" as E_Usuario
+entity "Administrador" as E_Administrador
+entity "Consentimiento" as E_Consentimiento
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+
+== Pasos 1 y 2 - Credenciales ==
+
+ACT_Titular -> B_PaginaInicioSesion : abrir el inicio de sesion
+
+opt FA-02 entra por el acceso separado de administracion
+  ACT_Titular -> B_PaginaInicioSesionAdmin : enviar credenciales por la ruta administrativa
+end
+
+B_PaginaInicioSesion -> E_TitularDeCuenta : solicitarUsernameYContrasena()
+ACT_Titular -> B_PaginaInicioSesion : escribir sus credenciales y enviarlas
+B_PaginaInicioSesion -> E_TitularDeCuenta : contrastarConLaCuentaRegistrada()
+
+note right of E_TitularDeCuenta
+  <b>El formulario no ofrece seleccion de rol, y esa ausencia es la afirmacion</b>
+  (RNF-08): ningun mensaje transporta un rol propuesto por el cliente.
+end note
+
+break FE-01 las credenciales no coinciden
+  B_PaginaInicioSesion -> B_PaginaInicioSesion : mostrarMensajeGenericoSinRevelarQueCampoFallo()
+end
+
+== Pasos 3 y 4 - Rol, sesion y encaminamiento ==
+
+E_TitularDeCuenta -> E_Usuario : determinarRolEnElServidor()
+
+opt FA-02 el servidor confirma el rol de administrador
+  E_TitularDeCuenta -> E_Administrador : determinarRolEnElServidor()
+end
+
+break FE-02 rol de usuario pidiendo una ruta administrativa
+  B_PaginaInicioSesion -> B_PaginaInicioSesion : denegarAccesoAdministrativoSinConcederPrivilegios()
+end
+
+E_TitularDeCuenta -> E_TitularDeCuenta : establecerSesionConElRolDeterminado()
+E_TitularDeCuenta --> B_PaginaInicioSesion : sesion activa
+
+alt FA-02 rol de administrador
+  B_PaginaInicioSesion -> B_DirectorioDeUsuarios : dirigirAlPanelAdministrativoSinPasarPorOnboarding()
+else rol de usuario
+  B_PaginaInicioSesion -> E_Consentimiento : existeLaCapaBaseOtorgada()
+  B_PaginaInicioSesion -> E_CapsulaDePerfil : existeConCharacter()
+
+  alt FA-01 falta la capa base o la capsula con character
+    B_PaginaInicioSesion -> B_PantallaDisclosure : dirigirAlOnboardingPendiente()
+  else onboarding completo
+    B_PaginaInicioSesion -> B_InterfazDeChat : dirigirALaConversacion()
+  end
+end
+
+== Paso 5 - Cierre de sesion ==
+
+ACT_Titular -> B_InterfazDeChat : elegir cerrar la sesion
+
+break FE-03 opera una funcion protegida sin sesion activa
+  B_InterfazDeChat -> B_PaginaInicioSesion : solicitarAutenticacionSinCerrarNada()
+end
+
+B_InterfazDeChat -> E_TitularDeCuenta : invalidarSesionEnElServidor()
+E_TitularDeCuenta -> E_TitularDeCuenta : dejarDeReconocerAlTitular()
+E_TitularDeCuenta --> B_PaginaInicioSesion : sesion invalidada
+
+note over B_DirectorioDeUsuarios, E_Administrador
+  <b>El cierre del paso 5 aplica igual al Administrador</b> (FA-02): entra por P-04 y
+  cierra desde P-14, pero la operacion que invalida la sesion es la misma. Por eso
+  `invalidarSesionEnElServidor` vive en `TitularDeCuenta`, el supertipo, y no
+  duplicada en cada rol.
+end note
+
+@enduml

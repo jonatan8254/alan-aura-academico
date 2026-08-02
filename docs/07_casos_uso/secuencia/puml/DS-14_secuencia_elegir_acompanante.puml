@@ -1,0 +1,66 @@
+@startuml
+' DS-14 - Secuencia de CU-14 «Elegir acompanante (Alan o Aura)»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' <<include>> de CU-05: lo invoca el onboarding al final de su paso 8.
+' Insumos: DR-14 v2.0 (6 controladores), ECU-14 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-09, P-03).
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Onboarding - elegir Alan o Aura (P-09)" as B_PantallaEleccionPersonaje
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Alan" as E_Alan
+entity "Aura" as E_Aura
+entity "Personaje" as E_Personaje
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+
+== Paso 1 - Presentacion de los dos acompanantes ==
+
+B_PantallaEleccionPersonaje -> E_Alan : describirRolYEstilo()
+E_Alan --> B_PantallaEleccionPersonaje : activacion
+B_PantallaEleccionPersonaje -> E_Aura : describirRolYEstilo()
+E_Aura --> B_PantallaEleccionPersonaje : calma
+B_PantallaEleccionPersonaje -> B_PantallaEleccionPersonaje : presentarEleccionDeInterlocutor()
+
+note right of B_PantallaEleccionPersonaje
+  <b>El actor entra en el paso 2, no en el 1.</b> El paso 1 lo ejecuta el sistema:
+  es CU-05 quien dispara este caso de uso por <<include>>, no el Usuario. Por eso
+  CU-14 no cuelga de ningun actor en DCU-01 v2.1.
+  <b>Alan y Aura como entidades distintas:</b> este es el unico punto del sistema
+  donde se distinguen como objetos. Cada uno describe su propio rol y estilo.
+end note
+
+break FE-01 la sesion expira durante la presentacion
+  B_PantallaEleccionPersonaje -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+end
+
+== Pasos 2 y 3 - Eleccion y escritura de character ==
+
+ACT_Usuario -> B_PantallaEleccionPersonaje : confirmar con quien desea conversar
+
+opt FA-01 selecciona el otro personaje antes de confirmar
+  B_PantallaEleccionPersonaje -> B_PantallaEleccionPersonaje : sustituirSeleccionSinEscribirNada()
+end
+
+B_PantallaEleccionPersonaje -> E_Personaje : identificarInterlocutorElegido()
+E_Personaje -> E_CapsulaDePerfil : escribirCharacter()
+E_CapsulaDePerfil --> E_Personaje : capsula existente con su contenido minimo
+E_Personaje --> B_PantallaEleccionPersonaje : eleccion fijada
+B_PantallaEleccionPersonaje -> B_PantallaEleccionPersonaje : devolverControlACU05()
+
+note over E_Personaje, E_CapsulaDePerfil
+  <b>El paso 2 usa el supertipo Personaje</b>, no Alan ni Aura: lo que se fija en la
+  capsula es el interlocutor, no la subclase concreta.
+  <b>Invariante de RN-01.6, y se cumple aqui, no en DS-05:</b> al terminar, la
+  CapsulaDePerfil <b>existe y tiene character</b> como contenido minimo. En la ruta
+  FA-01 de CU-05 no se pasa por «armar la capsula» y aun asi este caso de uso la
+  escribe. Lo persistido es la ultima eleccion y actua como predeterminado: usar el
+  otro Personaje en sesion es CU-13, y no reescribe la capsula.
+  <b>FA-01 no deja rastro:</b> no hay ningun mensaje de escritura antes de la
+  confirmacion, asi que lo descartado no existe en ninguna parte.
+end note
+
+@enduml

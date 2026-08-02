@@ -1,0 +1,68 @@
+@startuml
+' DS-13 - Secuencia de CU-13 «Cambiar de acompanante»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' <<extend>> de CU-06: el Usuario lo pide en cualquier turno de la conversacion.
+' Insumos: DR-13 v2.0 (6 controladores), ECU-13 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-10, P-03).
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Interfaz de chat (P-10)" as B_InterfazChat
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Alan" as E_Alan
+entity "Aura" as E_Aura
+entity "Personaje" as E_Personaje
+entity "Conversacion" as E_Conversacion
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
+
+== Paso 1 - Selector de personaje ==
+
+ACT_Usuario -> B_InterfazChat : solicitar cambiar de acompanante
+
+break FE-02 la sesion expira
+  B_InterfazChat -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+end
+
+B_InterfazChat -> E_Alan : ofrecerseComoActivacion()
+B_InterfazChat -> E_Aura : ofrecerseComoCalma()
+B_InterfazChat -> B_InterfazChat : mostrarSelectorDePersonaje()
+
+== Pasos 2 y 3 - Sustitucion y confirmacion ==
+
+ACT_Usuario -> B_InterfazChat : confirmar el otro personaje
+
+opt FA-01 confirma el personaje que ya conduce la sesion
+  B_InterfazChat -> B_InterfazChat : continuarSinCambioObservable()
+end
+
+B_InterfazChat -> E_DisponibilidadDelChatbot : estaHabilitado()
+
+break FE-01 el kill switch se activa durante el cambio
+  B_InterfazChat -> B_InterfazChat : informarIndisponibilidadTemporal()
+  B_InterfazChat -> E_Conversacion : cerrar()
+end
+
+B_InterfazChat -> E_Conversacion : cambiarPersonajeSinCerrarse()
+E_Conversacion -> E_Personaje : sustituirInterlocutorDeLaSesion()
+E_Conversacion -> E_CapsulaDePerfil : consultarCharacterSinReescribirlo()
+E_CapsulaDePerfil --> E_Conversacion : character persistido, intacto
+E_Conversacion --> B_InterfazChat : sigue abierta, ahora con el otro personaje
+B_InterfazChat -> B_InterfazChat : confirmarCambioSinCerrarLaConversacion()
+
+note over E_Personaje, E_DisponibilidadDelChatbot
+  <b>La capsula se consulta y no se escribe, y ese es el invariante.</b>
+  `CapsulaDePerfil.character` <b>no cambia</b>: la sesion usa otro Personaje sin
+  reescribir la capsula (RN-01.6). En todo el caso de uso <b>no existe ninguna
+  escritura persistida</b> — la ausencia de todo mensaje de escritura es la afirmacion.
+
+  <b>El gate de seguridad no aparece aqui, y tampoco es un olvido.</b> Cambiar de
+  Personaje modula el tono, <b>no las reglas de seguridad</b> (RN-02.4): el gate y las
+  guardas de salida pertenecen a CU-06 y se dibujan en DS-06. Que este diagrama no
+  tenga ninguna frontera con el Proveedor LLM lo hace verificable de un vistazo.
+end note
+
+@enduml

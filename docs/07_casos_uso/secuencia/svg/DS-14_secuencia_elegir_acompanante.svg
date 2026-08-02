@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1969 1142" width="1969" height="1142" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title id="t">DS-14 - Secuencia de CU-14 «Elegir acompanante (Alan o Aura)»</title>
+<desc id="d">Diagrama de secuencia UML. 7 participantes, 13 mensajes.</desc>
+<rect x="0" y="0" width="1969" height="1142" fill="#FFFFFF"/>
+<text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-14 - Secuencia de CU-14 «Elegir acompanante (Alan o Aura)»</text>
+<line x1="77.3" y1="103.0" x2="77.3" y2="1114.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="455.1" y1="80.0" x2="455.1" y2="1114.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="854.5" y1="80.0" x2="854.5" y2="1114.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1080.5" y1="67.0" x2="1080.5" y2="1114.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1306.5" y1="67.0" x2="1306.5" y2="1114.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1532.5" y1="67.0" x2="1532.5" y2="1114.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1888.8" y1="67.0" x2="1888.8" y2="1114.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="417.1" y="487.0" width="475.5" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="417.05000000000007,487 479.05000000000007,487 479.05000000000007,499 471.05000000000007,507 417.05000000000007,507" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="426.05000000000007" y="501" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="489.05000000000007" y="501" font-size="10" fill="#993C1D">[FE-01 la sesion expira durante la presentacion]</text>
+<rect x="417.1" y="643.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="417.05000000000007,643 479.05000000000007,643 479.05000000000007,655 471.05000000000007,663 417.05000000000007,663" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="426.05000000000007" y="657" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="489.05000000000007" y="657" font-size="10" fill="#993C1D">[FA-01]</text>
+<line x1="57.3" y1="142.0" x2="1908.8" y2="142.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="835.9" y="131.0" width="294.2" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="983.0" y="146.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 1 - Presentacion de los dos acompanantes</text>
+<line x1="57.3" y1="579.0" x2="1908.8" y2="579.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="829.9" y="568.0" width="306.4" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="983.0" y="583.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 2 y 3 - Eleccion y escritura de character</text>
+<line x1="455.1" y1="186.0" x2="1080.5" y2="186.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1078.5,186 1071.5,182.6 1071.5,189.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="706.0" y="161.0" width="123.5" height="15.0" fill="#FFFFFF"/>
+<text x="710.0" y="173.0" font-size="10" fill="#2C2C2A">describirRolYEstilo()</text>
+<line x1="1080.5" y1="226.0" x2="455.1" y2="226.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="457.05000000000007,226 464.05000000000007,222.6 464.05000000000007,229.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="736.3" y="201.0" width="63.0" height="15.0" fill="#FFFFFF"/>
+<text x="740.3" y="213.0" font-size="10" fill="#2C2C2A">activacion</text>
+<line x1="455.1" y1="266.0" x2="1306.5" y2="266.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1304.5,266 1297.5,262.6 1297.5,269.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="819.0" y="241.0" width="123.5" height="15.0" fill="#FFFFFF"/>
+<text x="823.0" y="253.0" font-size="10" fill="#2C2C2A">describirRolYEstilo()</text>
+<line x1="1306.5" y1="306.0" x2="455.1" y2="306.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="457.05000000000007,306 464.05000000000007,302.6 464.05000000000007,309.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="863.0" y="281.0" width="35.5" height="15.0" fill="#FFFFFF"/>
+<text x="867.0" y="293.0" font-size="10" fill="#2C2C2A">calma</text>
+<polyline points="455.1,346.0 497.1,346.0 497.1,372.0 464.1,372.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="457.05000000000007,372 464.05000000000007,368.6 464.05000000000007,375.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="503.1" y="321.0" width="189.5" height="15.0" fill="#FFFFFF"/>
+<text x="507.1" y="333.0" font-size="10" fill="#2C2C2A">presentarEleccionDeInterlocutor()</text>
+<line x1="455.1" y1="543.0" x2="854.5" y2="543.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="852.5000000000001,543 845.5000000000001,539.6 845.5000000000001,546.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="576.5" y="518.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="580.5" y="530.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
+<line x1="77.3" y1="623.0" x2="455.1" y2="623.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="453.05000000000007,623 446.05000000000007,619.6 446.05000000000007,626.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="166.0" y="598.0" width="200.5" height="15.0" fill="#FFFFFF"/>
+<text x="170.0" y="610.0" font-size="10" fill="#2C2C2A">confirmar con quien desea conversar</text>
+<polyline points="455.1,699.0 497.1,699.0 497.1,725.0 464.1,725.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="457.05000000000007,725 464.05000000000007,721.6 464.05000000000007,728.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="503.1" y="674.0" width="200.5" height="15.0" fill="#FFFFFF"/>
+<text x="507.1" y="686.0" font-size="10" fill="#2C2C2A">sustituirSeleccionSinEscribirNada()</text>
+<line x1="455.1" y1="773.0" x2="1532.5" y2="773.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1530.5,773 1523.5,769.6 1523.5,776.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="901.8" y="748.0" width="184.0" height="15.0" fill="#FFFFFF"/>
+<text x="905.8" y="760.0" font-size="10" fill="#2C2C2A">identificarInterlocutorElegido()</text>
+<line x1="1532.5" y1="813.0" x2="1888.8" y2="813.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1886.75,813 1879.75,809.6 1879.75,816.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1654.4" y="788.0" width="112.5" height="15.0" fill="#FFFFFF"/>
+<text x="1658.4" y="800.0" font-size="10" fill="#2C2C2A">escribirCharacter()</text>
+<line x1="1888.8" y1="853.0" x2="1532.5" y2="853.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="1534.5,853 1541.5,849.6 1541.5,856.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="1593.9" y="828.0" width="233.5" height="15.0" fill="#FFFFFF"/>
+<text x="1597.9" y="840.0" font-size="10" fill="#2C2C2A">capsula existente con su contenido minimo</text>
+<line x1="1532.5" y1="893.0" x2="455.1" y2="893.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="457.05000000000007,893 464.05000000000007,889.6 464.05000000000007,896.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="948.5" y="868.0" width="90.5" height="15.0" fill="#FFFFFF"/>
+<text x="952.5" y="880.0" font-size="10" fill="#2C2C2A">eleccion fijada</text>
+<polyline points="455.1,933.0 497.1,933.0 497.1,959.0 464.1,959.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="457.05000000000007,959 464.05000000000007,955.6 464.05000000000007,962.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="503.1" y="908.0" width="129.0" height="15.0" fill="#FFFFFF"/>
+<text x="507.1" y="920.0" font-size="10" fill="#2C2C2A">devolverControlACU05()</text>
+<rect x="481.1" y="384.0" width="460.0" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="489.1" y="402.0" font-size="9.5" fill="#2C2C2A">El actor entra en el paso 2, no en el 1. El paso 1 lo ejecuta el sistema:</text>
+<text x="489.1" y="415.0" font-size="9.5" fill="#2C2C2A">es CU-05 quien dispara este caso de uso por &lt;&lt;include&gt;&gt;, no el Usuario. Por eso</text>
+<text x="489.1" y="428.0" font-size="9.5" fill="#2C2C2A">CU-14 no cuelga de ningun actor en DCU-01 v2.1.</text>
+<text x="489.1" y="441.0" font-size="9.5" fill="#2C2C2A">Alan y Aura como entidades distintas: este es el unico punto del sistema</text>
+<text x="489.1" y="454.0" font-size="9.5" fill="#2C2C2A">donde se distinguen como objetos. Cada uno describe su propio rol y estilo.</text>
+<rect x="1406.9" y="971.0" width="556.2" height="133.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="1414.9" y="989.0" font-size="9.5" fill="#2C2C2A">El paso 2 usa el supertipo Personaje, no Alan ni Aura: lo que se fija en la</text>
+<text x="1414.9" y="1002.0" font-size="9.5" fill="#2C2C2A">capsula es el interlocutor, no la subclase concreta.</text>
+<text x="1414.9" y="1015.0" font-size="9.5" fill="#2C2C2A">Invariante de RN-01.6, y se cumple aqui, no en DS-05: al terminar, la</text>
+<text x="1414.9" y="1028.0" font-size="9.5" fill="#2C2C2A">CapsulaDePerfil existe y tiene character como contenido minimo. En la ruta</text>
+<text x="1414.9" y="1041.0" font-size="9.5" fill="#2C2C2A">FA-01 de CU-05 no se pasa por «armar la capsula» y aun asi este caso de uso la</text>
+<text x="1414.9" y="1054.0" font-size="9.5" fill="#2C2C2A">escribe. Lo persistido es la ultima eleccion y actua como predeterminado: usar el</text>
+<text x="1414.9" y="1067.0" font-size="9.5" fill="#2C2C2A">otro Personaje en sesion es CU-13, y no reescribe la capsula.</text>
+<text x="1414.9" y="1080.0" font-size="9.5" fill="#2C2C2A">FA-01 no deja rastro: no hay ningun mensaje de escritura antes de la</text>
+<text x="1414.9" y="1093.0" font-size="9.5" fill="#2C2C2A">confirmacion, asi que lo descartado no existe en ninguna parte.</text>
+<g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
+<text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
+<rect x="371.5" y="34.0" width="167.2" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="378.45000000000005" y1="51.0" x2="378.45000000000005" y2="63.0"/><line x1="378.45000000000005" y1="57.0" x2="382.45000000000005" y2="57.0"/><circle cx="387.45000000000005" cy="57.0" r="5"/></g>
+<text x="465.1" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Onboarding - elegir Alan</text>
+<text x="465.1" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">o Aura (P-09)</text>
+<rect x="786.0" y="34.0" width="136.9" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="793.0250000000001" y1="51.0" x2="793.0250000000001" y2="63.0"/><line x1="793.0250000000001" y1="57.0" x2="797.0250000000001" y2="57.0"/><circle cx="802.0250000000001" cy="57.0" r="5"/></g>
+<text x="864.5" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>
+<text x="864.5" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">usuario (P-03)</text>
+<rect x="1032.5" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1046.5" cy="49.0" r="5.5"/><line x1="1040.0" y1="56.5" x2="1053.0" y2="56.5"/></g>
+<text x="1090.5" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Alan</text>
+<rect x="1258.5" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1272.5" cy="49.0" r="5.5"/><line x1="1266.0" y1="56.5" x2="1279.0" y2="56.5"/></g>
+<text x="1316.5" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Aura</text>
+<rect x="1484.5" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1498.5" cy="49.0" r="5.5"/><line x1="1492.0" y1="56.5" x2="1505.0" y2="56.5"/></g>
+<text x="1542.5" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Personaje</text>
+<rect x="1832.4" y="34.0" width="112.8" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1846.375" cy="49.0" r="5.5"/><line x1="1839.875" y1="56.5" x2="1852.875" y2="56.5"/></g>
+<text x="1898.8" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">CapsulaDePerfil</text>
+</svg>

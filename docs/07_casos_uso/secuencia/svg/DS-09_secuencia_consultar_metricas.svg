@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1752 1230" width="1752" height="1230" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title id="t">DS-09 - Secuencia de CU-09 «Consultar metricas de uso»</title>
+<desc id="d">Diagrama de secuencia UML. 6 participantes, 13 mensajes.</desc>
+<rect x="0" y="0" width="1752" height="1230" fill="#FFFFFF"/>
+<text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-09 - Secuencia de CU-09 «Consultar metricas de uso»</text>
+<line x1="83.4" y1="116.0" x2="83.4" y2="1202.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="482.0" y1="67.0" x2="482.0" y2="1202.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="878.0" y1="67.0" x2="878.0" y2="1202.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1104.0" y1="67.0" x2="1104.0" y2="1202.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1346.8" y1="67.0" x2="1346.8" y2="1202.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1643.9" y1="67.0" x2="1643.9" y2="1202.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="45.4" y="285.0" width="474.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="45.400000000000006,285 107.4,285 107.4,297 99.4,305 45.400000000000006,305" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="54.400000000000006" y="299" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="117.4" y="299" font-size="10" fill="#993C1D">[FE-01 sesion ausente]</text>
+<rect x="45.4" y="369.0" width="474.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="45.400000000000006,369 107.4,369 107.4,381 99.4,389 45.400000000000006,389" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="54.400000000000006" y="383" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="117.4" y="383" font-size="10" fill="#993C1D">[FE-02 rol validado distinto de administrador]</text>
+<rect x="444.0" y="668.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="444.00000000000006,668 506.00000000000006,668 506.00000000000006,680 498.00000000000006,688 444.00000000000006,688" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="453.00000000000006" y="682" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="516.0" y="682" font-size="10" fill="#993C1D">[FA-01 la]</text>
+<rect x="444.0" y="844.0" width="1237.9" height="172.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="444.00000000000006,844 506.00000000000006,844 506.00000000000006,856 498.00000000000006,864 444.00000000000006,864" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="453.00000000000006" y="858" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="516.0" y="858" font-size="10" fill="#993C1D">[FA-02 el chatbot esta deshabilitado]</text>
+<line x1="63.4" y1="155.0" x2="1663.9" y2="155.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="771.0" y="144.0" width="185.4" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="863.7" y="159.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 1 - Agregados vigentes</text>
+<line x1="63.4" y1="1042.0" x2="1663.9" y2="1042.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="758.9" y="1031.0" width="209.6" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="863.7" y="1046.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 2 - Revision de las cifras</text>
+<line x1="83.4" y1="199.0" x2="482.0" y2="199.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="480.00000000000006,199 473.00000000000006,195.6 473.00000000000006,202.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="188.0" y="174.0" width="189.5" height="15.0" fill="#FFFFFF"/>
+<text x="192.0" y="186.0" font-size="10" fill="#2C2C2A">abrir la vista de metricas de uso</text>
+<polyline points="482.0,239.0 524.0,239.0 524.0,265.0 491.0,265.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="484.00000000000006,265 491.00000000000006,261.6 491.00000000000006,268.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="530.0" y="214.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="534.0" y="226.0" font-size="10" fill="#2C2C2A">verificarSesionYRolDeAdministrador()</text>
+<line x1="482.0" y1="341.0" x2="83.4" y2="341.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="85.4,341 92.4,337.6 92.4,344.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="166.0" y="316.0" width="233.5" height="15.0" fill="#FFFFFF"/>
+<text x="170.0" y="328.0" font-size="10" fill="#2C2C2A">denegarPorSesionAusenteSinMostrarCifras()</text>
+<line x1="482.0" y1="425.0" x2="83.4" y2="425.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="85.4,425 92.4,421.6 92.4,428.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="193.5" y="400.0" width="178.5" height="15.0" fill="#FFFFFF"/>
+<text x="197.5" y="412.0" font-size="10" fill="#2C2C2A">denegarPorRolSinMostrarCifras()</text>
+<line x1="482.0" y1="473.0" x2="878.0" y2="473.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="876.0,473 869.0,469.6 869.0,476.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="552.2" y="448.0" width="255.5" height="15.0" fill="#FFFFFF"/>
+<text x="556.2" y="460.0" font-size="10" fill="#2C2C2A">contarTotalDeCuentasYOnboardingsCompletados()</text>
+<line x1="482.0" y1="513.0" x2="1104.0" y2="513.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1102.0,513 1095.0,509.6 1095.0,516.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="681.8" y="488.0" width="222.5" height="15.0" fill="#FFFFFF"/>
+<text x="685.8" y="500.0" font-size="10" fill="#2C2C2A">contarLlamadasAlChatDeLosUltimos7Dias()</text>
+<line x1="482.0" y1="553.0" x2="1346.8" y2="553.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1344.75,553 1337.75,549.6 1337.75,556.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="816.9" y="528.0" width="195.0" height="15.0" fill="#FFFFFF"/>
+<text x="820.9" y="540.0" font-size="10" fill="#2C2C2A">calcularTasaTecnicaDeExitoYError()</text>
+<polyline points="482.0,724.0 524.0,724.0 524.0,750.0 491.0,750.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="484.00000000000006,750 491.00000000000006,746.6 491.00000000000006,753.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="530.0" y="699.0" width="239.0" height="15.0" fill="#FFFFFF"/>
+<text x="534.0" y="711.0" font-size="10" fill="#2C2C2A">mostrarLosAgregadosEnCeroComoCifraValida()</text>
+<polyline points="482.0,798.0 524.0,798.0 524.0,824.0 491.0,824.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="484.00000000000006,824 491.00000000000006,820.6 491.00000000000006,827.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="530.0" y="773.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="534.0" y="785.0" font-size="10" fill="#2C2C2A">restringirACifrasAgregadasDeRN0303()</text>
+<line x1="482.0" y1="900.0" x2="1643.9" y2="900.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1641.9499999999998,900 1634.9499999999998,896.6 1634.9499999999998,903.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="995.7" y="875.0" width="134.5" height="15.0" fill="#FFFFFF"/>
+<text x="999.7" y="887.0" font-size="10" fill="#2C2C2A">consultarEstadoGlobal()</text>
+<line x1="1643.9" y1="940.0" x2="482.0" y2="940.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="484.00000000000006,940 491.00000000000006,936.6 491.00000000000006,943.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="1023.2" y="915.0" width="79.5" height="15.0" fill="#FFFFFF"/>
+<text x="1027.2" y="927.0" font-size="10" fill="#2C2C2A">deshabilitado</text>
+<polyline points="482.0,980.0 524.0,980.0 524.0,1006.0 491.0,1006.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="484.00000000000006,1006 491.00000000000006,1002.6 491.00000000000006,1009.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="530.0" y="955.0" width="200.5" height="15.0" fill="#FFFFFF"/>
+<text x="534.0" y="967.0" font-size="10" fill="#2C2C2A">senalarElEstadoJuntoALosAgregados()</text>
+<line x1="83.4" y1="1086.0" x2="482.0" y2="1086.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="480.00000000000006,1086 473.00000000000006,1082.6 473.00000000000006,1089.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="174.2" y="1061.0" width="217.0" height="15.0" fill="#FFFFFF"/>
+<text x="178.2" y="1073.0" font-size="10" fill="#2C2C2A">revisar las cifras agregadas mostradas</text>
+<rect x="1364.8" y="565.0" width="380.8" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="1372.8" y="583.0" font-size="9.5" fill="#2C2C2A">La tasa tecnica se calcula sobre eventos SIN CONTENIDO (PER-01, plan</text>
+<text x="1372.8" y="596.0" font-size="9.5" fill="#2C2C2A">§4.15):</text>
+<text x="1372.8" y="609.0" font-size="9.5" fill="#2C2C2A">peticiones correctas mas fallback sobre el total. Es salud del</text>
+<text x="1372.8" y="622.0" font-size="9.5" fill="#2C2C2A">servicio, no</text>
+<text x="1372.8" y="635.0" font-size="9.5" fill="#2C2C2A">medida de personas. Umbral `RC-07` (MET-07) &gt;= 95 %.</text>
+<rect x="383.6" y="1098.0" width="1361.9" height="94.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="391.6" y="1116.0" font-size="9.5" fill="#2C2C2A">RN-03.3 y PRIV-R10 se realizan como una AUSENCIA. En todo el diagrama no hay</text>
+<text x="391.6" y="1129.0" font-size="9.5" fill="#2C2C2A">ningun mensaje que pida un conteo por usuario ni contenido de conversacion:</text>
+<text x="391.6" y="1142.0" font-size="9.5" fill="#2C2C2A">las cuatro lecturas son agregados sobre el conjunto. El Administrador no puede</text>
+<text x="391.6" y="1155.0" font-size="9.5" fill="#2C2C2A">descender al individuo porque no existe camino que lo permita.</text>
+<text x="391.6" y="1168.0" font-size="9.5" fill="#2C2C2A">Los ceros de FA-01 son una cifra valida, no un error: una ventana sin actividad</text>
+<text x="391.6" y="1181.0" font-size="9.5" fill="#2C2C2A">se muestra, no se oculta ni se sustituye por un aviso de fallo.</text>
+<g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="83.4" cy="46" r="9"/><line x1="83.4" y1="55" x2="83.4" y2="77"/><line x1="71.4" y1="64" x2="95.4" y2="64"/><line x1="83.4" y1="77" x2="73.4" y2="92"/><line x1="83.4" y1="77" x2="93.4" y2="92"/></g>
+<text x="83.4" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Administrador de</text>
+<text x="83.4" y="110.0" font-size="11" text-anchor="middle" fill="#2C2C2A">plataforma</text>
+<rect x="404.5" y="34.0" width="155.1" height="33.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="411.45000000000005" y1="44.5" x2="411.45000000000005" y2="56.5"/><line x1="411.45000000000005" y1="50.5" x2="415.45000000000005" y2="50.5"/><circle cx="420.45000000000005" cy="50.5" r="5"/></g>
+<text x="492.0" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Metricas de uso (P-15)</text>
+<rect x="830.0" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="844.0" cy="49.0" r="5.5"/><line x1="837.5" y1="56.5" x2="850.5" y2="56.5"/></g>
+<text x="888.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Usuario</text>
+<rect x="1056.0" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1070.0" cy="49.0" r="5.5"/><line x1="1063.5" y1="56.5" x2="1076.5" y2="56.5"/></g>
+<text x="1114.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Conversacion</text>
+<rect x="1290.4" y="34.0" width="112.8" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1304.375" cy="49.0" r="5.5"/><line x1="1297.875" y1="56.5" x2="1310.875" y2="56.5"/></g>
+<text x="1356.8" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">EventoOperativo</text>
+<rect x="1560.3" y="34.0" width="167.2" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1574.35" cy="49.0" r="5.5"/><line x1="1567.85" y1="56.5" x2="1580.85" y2="56.5"/></g>
+<text x="1653.9" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">DisponibilidadDelChatbot</text>
+</svg>

@@ -1,0 +1,68 @@
+@startuml
+' DS-09 - Secuencia de CU-09 «Consultar metricas de uso»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-09 v2.0 (8 controladores), ECU-09 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-15), PRIV-01 (PRIV-R10), MV-01 RN-03.3/RN-03.5, REQ-01 (RC-07).
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Administrador de plataforma" as ACT_Administrador
+boundary "Metricas de uso (P-15)" as B_MetricasDeUso
+entity "Usuario" as E_Usuario
+entity "Conversacion" as E_Conversacion
+entity "EventoOperativo" as E_EventoOperativo
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
+
+== Paso 1 - Agregados vigentes ==
+
+ACT_Administrador -> B_MetricasDeUso : abrir la vista de metricas de uso
+B_MetricasDeUso -> B_MetricasDeUso : verificarSesionYRolDeAdministrador()
+
+break FE-01 sesion ausente
+  B_MetricasDeUso --> ACT_Administrador : denegarPorSesionAusenteSinMostrarCifras()
+end
+
+break FE-02 rol validado distinto de administrador
+  B_MetricasDeUso --> ACT_Administrador : denegarPorRolSinMostrarCifras()
+end
+
+B_MetricasDeUso -> E_Usuario : contarTotalDeCuentasYOnboardingsCompletados()
+B_MetricasDeUso -> E_Conversacion : contarLlamadasAlChatDeLosUltimos7Dias()
+B_MetricasDeUso -> E_EventoOperativo : calcularTasaTecnicaDeExitoYError()
+
+note right of E_EventoOperativo
+  <b>La tasa tecnica se calcula sobre eventos SIN CONTENIDO</b> (PER-01, plan §4.15):
+  peticiones correctas mas <i>fallback</i> sobre el total. Es salud del servicio, no
+  medida de personas. Umbral `RC-07` (MET-07) >= 95 %.
+end note
+
+opt FA-01 la ventana de siete dias no tuvo actividad
+  B_MetricasDeUso -> B_MetricasDeUso : mostrarLosAgregadosEnCeroComoCifraValida()
+end
+
+B_MetricasDeUso -> B_MetricasDeUso : restringirACifrasAgregadasDeRN0303()
+
+opt FA-02 el chatbot esta deshabilitado
+  B_MetricasDeUso -> E_DisponibilidadDelChatbot : consultarEstadoGlobal()
+  E_DisponibilidadDelChatbot --> B_MetricasDeUso : deshabilitado
+  B_MetricasDeUso -> B_MetricasDeUso : senalarElEstadoJuntoALosAgregados()
+end
+
+== Paso 2 - Revision de las cifras ==
+
+ACT_Administrador -> B_MetricasDeUso : revisar las cifras agregadas mostradas
+
+note over B_MetricasDeUso, E_DisponibilidadDelChatbot
+  <b>RN-03.3 y PRIV-R10 se realizan como una AUSENCIA.</b> En todo el diagrama no hay
+  ningun mensaje que pida un conteo <b>por usuario</b> ni contenido de conversacion:
+  las cuatro lecturas son agregados sobre el conjunto. El Administrador no puede
+  descender al individuo porque no existe camino que lo permita.
+
+  <b>Los ceros de FA-01 son una cifra valida, no un error</b>: una ventana sin actividad
+  se muestra, no se oculta ni se sustituye por un aviso de fallo.
+end note
+
+@enduml

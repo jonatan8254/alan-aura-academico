@@ -1,0 +1,126 @@
+@startuml
+' DS-05 - Secuencia de CU-05 «Otorgar consentimiento y crear la capsula de perfil»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-05 v2.0 (16 controladores), ECU-05 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-05..P-08; destino P-03), PRIV-01, MV-01 §7.
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Onboarding - disclosure de IA (P-05)" as B_PantallaDisclosure
+boundary "Onboarding - declaracion de edad (P-06)" as B_PantallaEdad
+boundary "Onboarding - consentimiento capa base (P-07)" as B_PantallaConsentimiento
+boundary "Onboarding - caracterizacion y capa de personalizacion (P-08)" as B_PantallaCaracterizacion
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Usuario" as E_Usuario
+entity "Consentimiento" as E_Consentimiento
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+
+note over B_PantallaDisclosure, B_PantallaCaracterizacion
+  <b>Las dos capas del Consentimiento</b> (definicion canonica en ECU-12 §4.1).
+  <b>Capa base:</b> autoriza procesar lo minimo para conversar (edad, character, el turno).
+  Sin ella no hay conversacion. Se otorga en el paso 5.
+  <b>Capa de personalizacion:</b> autoriza que los CUATRO AUTORREPORTES orienten la
+  conversacion. Sin ella se conversa igual. Se otorga en el paso 7.
+  <b>character pertenece a la capa BASE</b>, no a la de personalizacion (RN-01.6).
+end note
+
+== Pasos 1 a 3 - Disclosure y declaracion de edad ==
+
+ACT_Usuario -> B_PantallaDisclosure : iniciar el onboarding
+B_PantallaDisclosure -> B_PantallaDisclosure : mostrarQueSeConversaConUnaIA()
+
+note right of B_PantallaDisclosure
+  RN-01.1: el disclosure se muestra <b>antes de pedir cualquier dato</b>.
+  Su posicion en el diagrama es la afirmacion: ningun mensaje de captura
+  lo precede.
+end note
+
+ACT_Usuario -> B_PantallaDisclosure : leer el disclosure y continuar
+B_PantallaDisclosure -> B_PantallaEdad : solicitarDeclaracionDeMayoriaDeEdad()
+ACT_Usuario -> B_PantallaEdad : declarar ser mayor de 18 anos
+
+break FE-01 declara ser menor de 18
+  B_PantallaEdad -> B_PantallaEdad : cerrarSesionPorMinoriaDeEdad()
+end
+
+B_PantallaEdad -> E_Usuario : registrarDeclaracionDeEdad(booleana, version del disclosure)
+
+note right of E_Usuario
+  RN-04.2: se guarda una <b>declaracion booleana mas la version del disclosure</b>,
+  nunca una fecha de nacimiento. Menores fuera de alcance (FE-01): no se crea
+  Consentimiento ni CapsulaDePerfil.
+end note
+
+== Pasos 4 y 5 - Capa base del consentimiento ==
+
+B_PantallaEdad -> B_PantallaConsentimiento : mostrarAlcanceDeLaCapaBase()
+ACT_Usuario -> B_PantallaConsentimiento : otorgar la capa base
+
+break FE-02 no otorga la capa base
+  B_PantallaConsentimiento -> B_PantallaConsentimiento : impedirAvanceYVolverAlPaso4()
+end
+
+break FE-04 la sesion expira en cualquier paso
+  B_PantallaConsentimiento -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+end
+
+B_PantallaConsentimiento -> E_Consentimiento : crearConCapaBaseOtorgada()
+
+break FA-03 retira la capa base que acababa de otorgar
+  B_PantallaConsentimiento -> E_Consentimiento : revocarCapaBase()
+  B_PantallaConsentimiento -> B_PantallaConsentimiento : finalizarSinConversacionNiCapsula()
+end
+
+== Pasos 6 y 7 - Capa de personalizacion ==
+
+B_PantallaConsentimiento -> B_PantallaCaracterizacion : ofrecerPersonalizacionYLosCuatroAutorreportes()
+
+alt FA-01 no otorga la personalizacion y rechaza la caracterizacion
+  B_PantallaCaracterizacion -> E_Consentimiento : conservarSoloLaCapaBase()
+else otorga la capa de personalizacion
+  ACT_Usuario -> B_PantallaCaracterizacion : otorgar la capa de personalizacion
+  B_PantallaCaracterizacion -> E_Consentimiento : anadirCapaDePersonalizacion()
+end
+
+opt FA-04 retira solo la personalizacion en el onboarding
+  B_PantallaCaracterizacion -> E_Consentimiento : revocarCapaDePersonalizacion()
+end
+
+== Paso 8 - Capsula de perfil e invocacion de CU-14 ==
+
+ACT_Usuario -> B_PantallaCaracterizacion : responder u omitir cada autorreporte
+
+break FE-03 autorreportes mal formados
+  B_PantallaCaracterizacion -> B_PantallaCaracterizacion : mostrarRevisaTusRespuestas()
+end
+
+B_PantallaCaracterizacion -> E_CapsulaDePerfil : armarConLoRespondido(schema_version, consent_version)
+
+opt FA-02 el Usuario respondio solo algunos de los cuatro autorreportes
+  E_CapsulaDePerfil -> E_CapsulaDePerfil : dejarSinDefaultsLosOmitidos()
+end
+
+note right of E_CapsulaDePerfil
+  <b>FA-02 - respuestas parciales.</b> La capsula se arma <b>solo con lo respondido</b>.
+  La operacion `dejarSinDefaultsLosOmitidos` existe para que la prohibicion sea
+  <b>visible y verificable</b>, no tacita: ningun mensaje de este diagrama rellena
+  un hueco con un valor inventado.
+  RN-01.4: ningun autorreporte es obligatorio; el Usuario puede omitirlos todos.
+end note
+
+B_PantallaCaracterizacion -> B_PantallaCaracterizacion : invocarEleccionDeAcompanante()
+
+note over B_PantallaCaracterizacion, E_CapsulaDePerfil
+  <b><<include>> de CU-14.</b> El control pasa a DS-14, que escribe `character` y
+  devuelve. <b>Aqui no se reimplementa</b>: Alan, Aura y Personaje no son
+  participantes de este diagrama, y por eso no aparecen.
+  <b>Postcondicion:</b> existe un Consentimiento con su capa base otorgada y
+  <b>siempre</b> una CapsulaDePerfil — cuatro autorreportes opcionales, `character`
+  obligatorio escrito por CU-14, mas los dos metadatos. El Usuario puede iniciar CU-06.
+end note
+
+@enduml

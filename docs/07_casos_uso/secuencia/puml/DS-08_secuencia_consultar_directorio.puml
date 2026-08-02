@@ -1,0 +1,68 @@
+@startuml
+' DS-08 - Secuencia de CU-08 «Consultar directorio de usuarios»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-08 v2.0 (8 controladores), ECU-08 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-14), PRIV-01 (PRIV-R10), PER-01 v1.2 (PER-T3, PER-T4), MV-01 RN-03.2/RN-03.5.
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Administrador de plataforma" as ACT_Administrador
+boundary "Directorio de usuarios (P-14)" as B_DirectorioDeUsuarios
+entity "Usuario" as E_Usuario
+entity "Consentimiento" as E_Consentimiento
+
+== Paso 1 - Directorio minimo ==
+
+ACT_Administrador -> B_DirectorioDeUsuarios : abrir la vista de directorio
+B_DirectorioDeUsuarios -> B_DirectorioDeUsuarios : verificarSesionYRolDeAdministrador()
+
+break FE-01 sesion ausente
+  B_DirectorioDeUsuarios -> ACT_Administrador : denegarPorSesionAusenteSinMostrarElDirectorio()
+end
+
+break FE-02 autenticado pero sin rol de administrador
+  B_DirectorioDeUsuarios -> ACT_Administrador : denegarPorRolSinMostrarElDirectorio()
+end
+
+B_DirectorioDeUsuarios -> E_Usuario : reunirAliasIdTruncadoFechaYOnboarding()
+
+break FA-01 no hay ninguna cuenta registrada
+  B_DirectorioDeUsuarios -> ACT_Administrador : informarDirectorioVacioSinError()
+end
+
+E_Usuario -> E_Consentimiento : derivarEstadoDeConsentimientoVigente()
+
+alt FA-02 la cuenta no tiene consentimiento vigente
+  E_Consentimiento --> E_Usuario : sin consentimiento vigente
+  E_Usuario -> E_Usuario : marcarLaFilaConEseEstadoSinExcluirla()
+else consentimiento vigente
+  E_Consentimiento --> E_Usuario : activo
+end
+
+E_Usuario --> B_DirectorioDeUsuarios : filas del directorio minimo
+B_DirectorioDeUsuarios -> B_DirectorioDeUsuarios : restringirAlConjuntoMinimoDeRN0302()
+
+== Paso 2 - Revision de la lista ==
+
+ACT_Administrador -> B_DirectorioDeUsuarios : revisar la lista del directorio
+
+note over B_DirectorioDeUsuarios, E_Consentimiento
+  <b>PER-T3 y RN-03.5 se realizan como una AUSENCIA, y esa es la afirmacion.</b>
+  En todo el diagrama <b>no existe ningun mensaje</b> hacia `CapsulaDePerfil`,
+  `Mensaje` ni `Personaje`, y ninguno lee el username completo ni las respuestas de
+  encuesta. No hay «filtro que oculta»: sencillamente no hay camino que alcance esos
+  datos. Ninguna consulta administrativa puede llegar a ellos por construccion.
+
+  <b>El `estado` es DERIVADO, no almacenado</b> (PER-T4, SD-26): se calcula del
+  `Consentimiento` en cada consulta y su dominio es {activo, sin consentimiento
+  vigente}. No es suspension ni sancion.
+
+  <b>FA-01 y FA-02 existen y `DR-08` los dibuja</b>, pese a que la nota en prosa de ese
+  mismo archivo diga «no aplica». Contradiccion interna reportada a
+  `/uml-robustness-diagram`; aqui se sigue a las flechas y a `ECU-08` §6, que coinciden.
+end note
+
+@enduml

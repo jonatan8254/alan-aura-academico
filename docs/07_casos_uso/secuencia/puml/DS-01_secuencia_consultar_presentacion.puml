@@ -1,0 +1,63 @@
+@startuml
+' DS-01 - Secuencia de CU-01 «Consultar presentacion del servicio»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-01 v2.0 (7 controladores), ECU-01, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-01; destino P-02/P-03).
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Visitante" as ACT_Visitante
+boundary "Presentacion / landing (P-01)" as B_PaginaPresentacion
+boundary "Registro (P-02)" as B_FormularioRegistro
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Visitante" as E_Visitante
+
+== Pasos 1 y 2 - Presentacion publica ==
+
+ACT_Visitante -> B_PaginaPresentacion : solicitar la pagina de presentacion
+
+break FE-01 el servicio esta caido o en mantenimiento
+  B_PaginaPresentacion -> B_PaginaPresentacion : mostrarEstadoDeIndisponibilidad()
+end
+
+B_PaginaPresentacion -> E_Visitante : identificarComoSinCuentaNiSesion()
+B_PaginaPresentacion -> B_PaginaPresentacion : mostrarPropositoNoClinicoLimitesYAccesos()
+ACT_Visitante -> B_PaginaPresentacion : leer el alcance y los limites
+B_PaginaPresentacion -> B_PaginaPresentacion : mantenerVisiblesLosAccesos()
+
+note right of B_PaginaPresentacion
+  <b>Sin objetos tipo Entidad persistentes.</b> `Visitante` es clase de dominio
+  (MD-01 v1.4) pero aqui solo se identifica: no se captura ningun dato y no se
+  crea sesion. La ausencia de todo mensaje de escritura es la postcondicion.
+end note
+
+== Paso 3 - Eleccion de acceso ==
+
+alt FA-01 elige registrarse
+  ACT_Visitante -> B_PaginaPresentacion : elegir registrarse
+  B_PaginaPresentacion -> B_FormularioRegistro : dirigirAlAccesoDeRegistro()
+else FA-02 elige iniciar sesion
+  ACT_Visitante -> B_PaginaPresentacion : elegir iniciar sesion
+  B_PaginaPresentacion -> B_PaginaInicioSesion : dirigirAlAccesoDeInicioDeSesion()
+else FA-03 se va sin elegir ningun acceso
+  B_PaginaPresentacion -> E_Visitante : dejarLaPresentacionSinCrearSesionNiRastro()
+end
+
+opt FE-02 intenta alcanzar el acompanamiento sin cuenta
+  B_PaginaInicioSesion -> B_PaginaPresentacion : exigirCuentaYMantenerVisibleElAccesoAlRegistro()
+end
+
+note over B_FormularioRegistro, B_PaginaInicioSesion
+  <b>FA-01 continua en CU-02 y FA-02 en CU-03.</b> Ambos son destinos de
+  continuacion, no comportamiento de este caso de uso: aqui solo se dirige.
+  <b>FE-02 vuelve al paso 1, no empuja al formulario</b> (SD-30, hallazgo H-8
+  resuelto a favor de ECU-01): al Visitante se le ensena donde esta y se le
+  ofrece registrarse, en vez de llevarlo a un formulario que no pidio. Lo dice
+  ECU-01 en su §6, en la fila de FE-02 y en CA-08.
+  <b>Traza:</b> RF-19 -> OBJ-7. <b>Reglas:</b> RN-04.5 (el Visitante solo consulta
+  la presentacion) y RN-09 (el disclosure precede a la primera conversacion).
+end note
+
+@enduml

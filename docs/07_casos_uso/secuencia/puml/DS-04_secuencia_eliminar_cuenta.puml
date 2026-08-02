@@ -1,0 +1,104 @@
+@startuml
+' DS-04 - Secuencia de CU-04 «Eliminar cuenta»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-04 v2.0 (11 controladores), ECU-04 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-13; destinos P-01, P-03), PER-01 v1.2 (PER-T1), PRIV-01.
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta
+boundary "Presentacion / landing (P-01)" as B_PaginaPresentacion
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Usuario" as E_Usuario
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "Consentimiento" as E_Consentimiento
+entity "ContadorDeUsoDiario" as E_ContadorDeUsoDiario
+entity "Conversacion" as E_Conversacion
+entity "Visitante" as E_Visitante
+entity "EventoOperativo" as E_EventoOperativo
+
+== Pasos 1 y 2 - Alcance, advertencia y confirmacion ==
+
+ACT_Usuario -> B_PaginaGestionCuenta : solicitar eliminar su cuenta
+B_PaginaGestionCuenta -> B_PaginaGestionCuenta : verificarSesionYRol()
+
+break FE-01 la sesion expira
+  B_PaginaGestionCuenta -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+end
+
+B_PaginaGestionCuenta -> E_Usuario : enumerarRegistrosQueDesapareceran()
+E_Usuario --> B_PaginaGestionCuenta : alcance de la supresion
+B_PaginaGestionCuenta -> B_PaginaGestionCuenta : advertirQueLaAccionEsIrreversible()
+ACT_Usuario -> B_PaginaGestionCuenta : confirmar explicitamente la eliminacion
+
+break FA-03 el Usuario no confirma y cancela
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarDejandoLaCuentaIntacta()
+end
+
+B_PaginaGestionCuenta -> E_Usuario : comprobarTitularidadEnServidor()
+
+break FE-02 rol no autorizado o cuenta ajena
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : denegarPorPermisoSinSuprimirNada()
+end
+
+break FE-03 solicitud mal formada o sin confirmacion explicita
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarPeticionInvalidaYVolverAlPaso1()
+end
+
+== Paso 3 - Borrado en cascada ==
+
+opt FA-02 hay una conversacion en curso al confirmar
+  B_PaginaGestionCuenta -> E_Conversacion : cerrarYDescartarSuContenido()
+end
+
+B_PaginaGestionCuenta -> E_Usuario : suprimirEnCascada()
+
+alt FA-01 la cuenta nunca completo el onboarding
+  E_Usuario -> E_Usuario : noHayDependientesQueSuprimir()
+else existen capsula, consentimiento y contadores
+  E_Usuario -> E_CapsulaDePerfil : suprimir()
+  E_Usuario -> E_Consentimiento : suprimirConSusDosCapas()
+  E_Usuario -> E_ContadorDeUsoDiario : suprimirLosContadoresDelUsuario()
+end
+
+E_Usuario -> E_EventoOperativo : conservarSinIdentidad()
+
+note right of E_Usuario
+  <b>La cascada la ejecuta el `Usuario`, no la pantalla</b> (PER-T1): quien conoce sus
+  dependientes es el titular del dato. Repartirla desde el borde habria acoplado la
+  interfaz al esquema.
+  <b>FA-01</b> no es un caso degenerado sino una rama real: sin onboarding no existen
+  los tres dependientes, y el diagrama lo dice en vez de darlo por supuesto.
+
+  <b>`conservarSinIdentidad` afirma que la cascada NO alcanza la telemetria</b>
+  (SD-30, hallazgo H-9). `ECU-04 §7` declara que el `EventoOperativo` <b>permanece</b>
+  —la cascada no lo alcanza— <b>y por eso debe ser irreidentificable</b> (`RE-06`,
+  `PER-T2`): sin alias ni username, sin permitir reconstruir que la cuenta existio.
+  La operacion existe para que esa propiedad sea <b>verificable</b> (`CA-11`), no tacita.
+end note
+
+break FE-04 el almacenamiento falla a mitad de la cascada
+  E_Usuario -> E_Usuario : deshacerLoSuprimido()
+  E_Usuario --> B_PaginaGestionCuenta : la cuenta queda como estaba
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueLaAccionNoSeCompleto()
+end
+
+== Paso 4 - Cierre de sesion y condicion de Visitante ==
+
+E_Usuario -> E_Visitante : quedarEnLaCondicionDeVisitante()
+B_PaginaGestionCuenta -> B_PaginaPresentacion : cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()
+
+note over E_ContadorDeUsoDiario, E_Visitante
+  <b>PER-H5, hallazgo de canon abierto y declarado.</b> `ADR-002-D6` puso los respaldos
+  de la base de datos en S3, y ese respaldo <b>escapa a esta cascada</b>: ninguna regla
+  vigente lo alcanza. Por tanto `RF-24` («no queda dato asociado recuperable»)
+  <b>no se cumple de extremo a extremo</b> hasta cerrarlo.
+  No se dibuja aqui porque el respaldo es diseno fisico y su sitio es `ARQ-01`, tras el
+  CDR. Se declara para que el hueco sea visible, no para taparlo.
+end note
+
+@enduml

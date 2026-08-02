@@ -1,0 +1,82 @@
+@startuml
+' DS-12 - Secuencia de CU-12 «Revocar la personalizacion»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-12 v2.0 (9 controladores), ECU-12 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-13; destino P-03), PRIV-01 (PRIV-R3), PER-01 v1.2 (PER-T7).
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Gestion de cuenta (P-13)" as B_GestionCuenta
+boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
+entity "Usuario" as E_Usuario
+entity "Consentimiento" as E_Consentimiento
+entity "CapsulaDePerfil" as E_CapsulaDePerfil
+entity "Conversacion" as E_Conversacion
+
+note over B_GestionCuenta, E_Conversacion
+  <b>Invariante, y es lo esencial de este caso de uso: el Usuario SIGUE PUDIENDO
+  CONVERSAR.</b> Revocar la personalizacion <b>no es punitivo</b> (RN-08). La capa base
+  permanece otorgada; lo unico que cesa es que los cuatro autorreportes orienten la
+  conversacion. `character` permanece, porque pertenece a la capa BASE (RN-01.6).
+  Contraste con CU-11 (DS-11), que <b>borra</b> la capsula entera: PER-T7.
+end note
+
+== Pasos 1 y 2 - Alcance y confirmacion ==
+
+ACT_Usuario -> B_GestionCuenta : elegir revocar la personalizacion
+
+break FE-01 la sesion expira
+  B_GestionCuenta -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+end
+
+break FE-02 el rol no esta autorizado
+  B_GestionCuenta -> B_GestionCuenta : denegarPorPermisoSinCambios()
+end
+
+B_GestionCuenta -> E_CapsulaDePerfil : dejaraDeOrientarLaConversacion()
+
+break FA-01 la capa ya estaba revocada
+  B_GestionCuenta -> B_GestionCuenta : informarQueYaEstabaRevocadaSinRepetirElCambio()
+end
+
+B_GestionCuenta -> B_GestionCuenta : declararQueElChatSeguiraDisponible()
+ACT_Usuario -> B_GestionCuenta : confirmar la revocacion
+
+break FA-03 cancela en la confirmacion
+  B_GestionCuenta -> B_GestionCuenta : cancelarSinModificarElConsentimiento()
+end
+
+break FE-03 peticion mal formada
+  B_GestionCuenta -> B_GestionCuenta : mostrarPeticionMalFormadaYPermitirReintentar()
+end
+
+== Paso 3 - Revocacion y descarte de los autorreportes ==
+
+B_GestionCuenta -> E_Usuario : identificarTitularDelConsentimiento()
+E_Usuario -> E_Consentimiento : revocarCapaDePersonalizacion(fecha)
+E_Consentimiento -> E_Consentimiento : conservarLaCapaBaseOtorgada()
+E_Consentimiento -> E_CapsulaDePerfil : marcarLosCuatroAutorreportesParaDescarte()
+E_CapsulaDePerfil -> E_CapsulaDePerfil : conservarCharacter()
+
+opt FA-02 la capsula solo tiene character
+  E_CapsulaDePerfil --> B_GestionCuenta : efecto observable nulo, no habia nada que dejara de usarse
+end
+
+== Paso 4 - Confirmacion de que el chat sigue disponible ==
+
+B_GestionCuenta -> E_Conversacion : desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor()
+B_GestionCuenta -> B_GestionCuenta : confirmarQuePuedeSeguirConversando()
+
+note over E_Consentimiento, E_CapsulaDePerfil
+  <b>PRIV-R3:</b> los autorreportes quedan <b>marcados para descarte</b>, no borrados en
+  el acto. El diagrama lo dice con ese verbo y no con «suprimir», porque el momento del
+  descarte fisico es diseno de retencion y su sitio es `ARQ-01`.
+  <b>Lo que NO existe aqui es la afirmacion:</b> ningun mensaje toca la capa base, y
+  ninguno borra `character`. Por eso el chat sigue disponible.
+end note
+
+@enduml

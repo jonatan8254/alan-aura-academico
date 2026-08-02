@@ -1,5 +1,5 @@
 # Hechos canónicos del subproyecto «Alan & Aura Académico»
-**ID:** HC-01 · **Familia:** gobernanza · **Hogar:** `docs/00_gobernanza/` · **Fecha:** 2026-08-01 · **Versión:** v1.0 · **Estado:** vigente.
+**ID:** HC-01 · **Familia:** gobernanza · **Hogar:** `docs/00_gobernanza/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 (SD-30: H-20 261→263 y H-21 149→150, por la corrección de `DR-04`) · **Estado:** vigente.
 **Propósito:** ser la **fuente única** de las cifras y conteos que aparecen repetidos en varios artefactos. Cuando dos documentos discrepan, **manda esta tabla**.
 **Insumos:** `MD-01`, `DCU-01`, `REQ-01`, `PER-01`, `PRIV-01`, `DR-00` — contados directamente, no citados de segunda mano.
 **Consumidores:** `scripts/verificar_coherencia.py`, y cualquier pasada de edición que toque cifras.
@@ -43,8 +43,8 @@ Todos los valores fueron **verificados contra los artefactos** el 2026-08-01 (co
 | H-17 | Requisitos de calidad y sus métricas | **10 RC + 10 MET** | `REQ-01` §3 | `NORM-01`, `TRZ-01` |
 | H-18 | Reglas transversales de persistencia | **7** (PER-T1…PER-T7) | `PER-01` §5 | — |
 | H-19 | Requisitos de privacidad | **14 reglas** = 12 numeradas (PRIV-R1…R12) + 2 subreglas (R3.1, R3.2) | `PRIV-01` | `PER-01`, `ECU-05`/`ECU-12` |
-| H-20 | Elementos de los diagramas de robustez | **261** = 15 actores / 38 bordes / 149 controladores / 59 entidades | `DR-00` | `ESTADO_PIPELINE`, `RPD-01` |
-| H-21 | Controladores de robustez (cota inferior de casos de prueba) | **149** | `DR-00` | `ESTADO_PIPELINE` |
+| H-20 | Elementos de los diagramas de robustez | **263** = 15 actores / 38 bordes / 150 controladores / 60 entidades | `DR-00` | `ESTADO_PIPELINE`, `RPD-01` |
+| H-21 | Controladores de robustez (cota inferior de casos de prueba) | **150** | `DR-00` | `ESTADO_PIPELINE` |
 
 ## Valores obsoletos y dónde SÍ pueden aparecer
 
@@ -83,7 +83,7 @@ Los valores estructurales se obtuvieron contando directamente sobre los artefact
 ```bash
 grep -cE '^\s*class ' docs/06_dominio/MD-01_modelo_dominio.puml                     # H-11 → 16
 grep -cE '^\s*usecase ' docs/07_casos_uso/DCU-01_casos_uso.puml                     # H-13 → 14
-cat docs/07_casos_uso/robustez/DR-[0-9][0-9]_*.puml | grep -cE '^\s*control '       # H-21 → 149
+cat docs/07_casos_uso/robustez/DR-[0-9][0-9]_*.puml | grep -cE '^\s*control '       # H-21 → 150
 ```
 
 ## Mantenimiento
@@ -99,3 +99,4 @@ cat docs/07_casos_uso/robustez/DR-[0-9][0-9]_*.puml | grep -cE '^\s*control '   
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v1.0 | 2026-08-01 | J. Sánchez | Creación (SD-29). 21 hechos canónicos verificados contra los artefactos, tabla de valores obsoletos con su ámbito legítimo, y registro del pendiente D.5 sobre el límite de caracteres, que ya estaba resuelto en los documentos pero seguía declarado como abierto. |
+| v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** `H-20` pasa de **261** a **263** elementos y `H-21` de **149** a **150** controladores, por la corrección de `DR-04` (entra `EventoOperativo` con su controlador `C_ConservarTelemetriaSinIdentidad`, hallazgo `H-9` de `DS-00`). Propagado a `DR-00`, `generar_svg_robustez.py` —cuyos conteos estaban grabados a fuego—, `ESTADO_PIPELINE`, `INDICE_MAESTRO` y al paquete de secuencia. **Cambiar un valor de esta tabla es una decisión, no una edición:** por eso queda registrada en `REGISTRO_DECISIONES` como SD-30. |

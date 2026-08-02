@@ -1,0 +1,117 @@
+@startuml
+' DS-07 - Secuencia de CU-07 «Derivar ante peligro»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' <<extend>> de CU-06: arranca DESPUES de que el gate decidio (ECU-07 §6).
+' Insumos: DR-07 v2.0 (12 controladores), ECU-07 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-10, P-12), SEG-01 v1.2, PRIV-01, MV-01 §7.
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Usuario adulto" as ACT_Usuario
+boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
+boundary "Contencion y derivacion (P-12)" as B_PantallaContencion
+control "Fallback de seguridad" as C_FallbackDeSeguridad
+entity "Mensaje" as E_Mensaje
+entity "EventoDeSeguridad" as E_EventoDeSeguridad
+entity "RecursoDeAyuda" as E_RecursoDeAyuda
+entity "Conversacion" as E_Conversacion
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
+
+note over C_FallbackDeSeguridad
+  <b>I-1 se realiza como una AUSENCIA, y es deliberado.</b> En todo este diagrama
+  <b>no existe ninguna frontera con el Proveedor LLM</b>: ningun mensaje sale hacia el.
+  Por eso el turno marcado como peligro explicito nunca le llega. Un atajo hacia el
+  proveedor contradiria C-3 en el caso de uso mas critico.
+  <b>SEG-01 v1.2:</b> la configuracion se carga al inicializar y se retiene en memoria.
+  Esta ruta <b>nunca hace una lectura remota</b>: resolver el texto de contencion y los
+  RecursoDeAyuda es local al propio despliegue (ECU-07 §6, «limite del sistema»).
+end note
+
+== Pasos 1 y 2 - Entrada en modo seguro ==
+
+ACT_Usuario -> B_InterfazDeChat : PRE-02 envio un mensaje que el gate evaluo
+B_InterfazDeChat -> C_FallbackDeSeguridad : activar(veredicto de peligro explicito)
+C_FallbackDeSeguridad -> E_Mensaje : suspenderRespuestaOrdinariaDelTurno()
+C_FallbackDeSeguridad -> E_EventoDeSeguridad : documentarSinConservarElTexto()
+C_FallbackDeSeguridad -> C_FallbackDeSeguridad : mantenerModoSeguro()
+
+opt FE-01 el Proveedor LLM o la red hacia el estan caidos
+  C_FallbackDeSeguridad -> C_FallbackDeSeguridad : continuarSinDegradacion()
+end
+
+note right of C_FallbackDeSeguridad
+  Paso 2 es una abstencion doble y observable: ni interpretacion clinica ni
+  preguntas exploratorias (ECU-07 §11.1). No se parte en dos mensajes.
+  I-4: la personalidad ordinaria queda suspendida (C-10).
+  <b>FE-01 no degrada nada</b> porque ningun paso de esta cadena consulta al
+  proveedor: RC-01 = 100 % se sostiene por construccion, no por un manejo de error.
+end note
+
+== Pasos 3 y 4 - Contencion y derivacion ==
+
+C_FallbackDeSeguridad -> B_PantallaContencion : presentarContencionYDerivacion()
+B_PantallaContencion -> B_PantallaContencion : resolverTextoFijoDeContencion()
+
+alt FE-02 el entorno no resuelve el texto de contencion
+  B_PantallaContencion -> B_PantallaContencion : presentarOrientacionMinimaInvariable()
+else el texto de contencion resuelve
+  B_PantallaContencion -> B_PantallaContencion : mostrarContencionQueDeclaraSerUnaIA()
+end
+
+B_PantallaContencion -> E_RecursoDeAyuda : obtenerAprovisionadosPorEntorno()
+
+alt FA-01 el entorno no entrega ningun recurso presentable
+  B_PantallaContencion -> B_PantallaContencion : orientarAEmergenciasSinNumerosEmbebidos()
+else hay recursos presentables
+  E_RecursoDeAyuda --> B_PantallaContencion : referencias de derivacion
+  B_PantallaContencion -> B_PantallaContencion : mostrarRecursosDeDerivacion()
+end
+
+== Pasos 5 y 6 - Marca del turno y suspension del chat ==
+
+C_FallbackDeSeguridad -> E_EventoDeSeguridad : marcarTurnoComoSafetyFallback()
+
+opt FE-03 el Administrador deshabilita el chatbot durante la derivacion
+  C_FallbackDeSeguridad -> E_DisponibilidadDelChatbot : consultarEstadoGlobalSinObedecerlo()
+end
+
+C_FallbackDeSeguridad -> E_Conversacion : suspenderChatOrdinario()
+E_Conversacion -> B_InterfazDeChat : impedirSeguirConversandoEnLaSesion()
+
+opt FA-02 el Usuario envia otro mensaje en la misma conversacion suspendida
+  ACT_Usuario -> B_InterfazDeChat : escribir otro mensaje
+  B_InterfazDeChat -> B_PantallaContencion : mantenerContencionYDerivacionVisibles()
+end
+
+== Paso 8 y luego paso 7 - Descarte del turno y sesion nueva ==
+
+note over C_FallbackDeSeguridad
+  <b>El orden invierte la numeracion de ECU-07, y es deliberado.</b> El texto numera
+  «7 el Usuario abre mas tarde una Conversacion nueva» y «8 el Sistema descarta el
+  contenido», pero el descarte resuelve el turno en curso y no puede esperar a una
+  accion que el Usuario emprende «cuando lo decide». DR-07 ya lo modela asi:
+  el paso 8 cuelga del bloqueo (paso 6) y el paso 7 es una rama que inicia el Usuario.
+end note
+
+C_FallbackDeSeguridad -> E_Mensaje : descartarContenidoDelTurno()
+C_FallbackDeSeguridad -> E_EventoDeSeguridad : noContabilizarClasificacionDeRiesgo()
+
+ACT_Usuario -> B_PantallaContencion : abrir una conversacion nueva
+B_PantallaContencion -> E_Conversacion : abrirNuevaSesionDeAcompanamiento()
+E_Conversacion -> B_InterfazDeChat : reabrirElAcompanamiento()
+
+opt FA-03 en la conversacion nueva el gate vuelve a decidir peligro
+  B_InterfazDeChat -> C_FallbackDeSeguridad : activar(veredicto de peligro explicito)
+end
+
+note over E_Mensaje, E_EventoDeSeguridad
+  <b>I-3 - lo que NO existe es la afirmacion.</b> En todo el diagrama no hay ningun
+  mensaje que persista el contenido del turno, que puntue severidad, que acumule
+  estado entre sesiones (FA-03 vuelve al mismo punto de entrada, sin endurecer)
+  ni que exponga un registro individual al Administrador (PRIV-R7).
+end note
+
+@enduml

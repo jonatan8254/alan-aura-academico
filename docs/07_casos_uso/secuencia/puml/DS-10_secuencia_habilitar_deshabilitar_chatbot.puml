@@ -1,0 +1,89 @@
+@startuml
+' DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»
+' v1.0 (fase de diseno detallado, ICONIX paso 6)
+' Insumos: DR-10 v2.0 (11 controladores), ECU-10 v2.0, MD-01 v1.4, DCU-01 v2.1,
+'          DIS-00 (P-16; destino P-04), MV-01 RN-03.4/RN-03.7, PER-01 v1.2.
+' Capa de infraestructura: NO EJECUTADA por decision declarada (E-1 de DS-00).
+
+skinparam style strictuml
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Administrador de plataforma" as ACT_Administrador
+boundary "Kill switch - control de disponibilidad (P-16)" as B_ControlDisponibilidad
+boundary "Dialogo de confirmacion del cambio" as B_DialogoConfirmacion
+boundary "Inicio de sesion de administracion (P-04)" as B_LoginAdmin
+entity "Administrador" as E_Administrador
+entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
+entity "Conversacion" as E_Conversacion
+participant "AccionAdministrativa" as INF_AccionAdministrativa
+
+note over INF_AccionAdministrativa
+  <b>No se declara `entity`, y es deliberado.</b> `AccionAdministrativa` esta
+  <b>fuera de MD-01 por decision declarada</b> (`DR-00 §6`, reafirmada en `RPD-01` H-02):
+  es auditoria de operacion, no concepto del problema. Declararla como entidad del
+  dominio produciria un falso hallazgo de trazabilidad. Va al delta como clase del
+  <b>espacio de la solucion</b>, que es lo que el metodo espera en diseno detallado.
+end note
+
+== Paso 1 - Estado actual ==
+
+ACT_Administrador -> B_ControlDisponibilidad : abrir el control de disponibilidad
+B_ControlDisponibilidad -> B_ControlDisponibilidad : verificarSesionYRolDeAdministrador()
+
+break FE-01 sesion ausente
+  B_ControlDisponibilidad -> B_LoginAdmin : solicitarReingresoPorCU03()
+end
+
+break FE-02 rol no administrador aunque manipule el cliente
+  B_ControlDisponibilidad -> B_LoginAdmin : denegarPorRolConRedireccionSegura()
+end
+
+B_ControlDisponibilidad -> E_DisponibilidadDelChatbot : leerEstadoGlobal()
+E_DisponibilidadDelChatbot --> B_ControlDisponibilidad : habilitado o deshabilitado
+B_ControlDisponibilidad -> B_ControlDisponibilidad : mostrarEstadoActual()
+
+== Paso 2 - Eleccion y confirmacion ==
+
+alt FA-01 elige habilitar el chatbot
+  ACT_Administrador -> B_ControlDisponibilidad : elegir habilitar
+else elige deshabilitar el chatbot
+  ACT_Administrador -> B_ControlDisponibilidad : elegir deshabilitar
+end
+
+break FA-03 el estado elegido ya es el vigente
+  B_ControlDisponibilidad -> E_DisponibilidadDelChatbot : contrastarConElEstadoGlobal()
+  B_ControlDisponibilidad --> ACT_Administrador : informarEstadoYaVigenteSinRegistrarAccion()
+end
+
+B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
+ACT_Administrador -> B_DialogoConfirmacion : confirmar o no confirmar el cambio
+
+break FA-02 el Administrador no confirma
+  B_DialogoConfirmacion -> B_ControlDisponibilidad : cancelarSinCambiarElEstado()
+end
+
+break FE-03 la confirmacion llega mal formada
+  B_DialogoConfirmacion -> B_ControlDisponibilidad : rechazarConfirmacionInvalidaYVolverAlPaso1()
+end
+
+== Pasos 3 y 4 - Cambio, registro y aplicacion ==
+
+B_DialogoConfirmacion -> E_DisponibilidadDelChatbot : cambiarEstadoGlobal()
+E_DisponibilidadDelChatbot -> E_Administrador : identificarAlAutorDelCambio()
+E_Administrador -> INF_AccionAdministrativa : registrarAccion(autor, fecha)
+E_DisponibilidadDelChatbot -> E_Conversacion : aplicarNuevoEstadoDeInmediato()
+E_DisponibilidadDelChatbot --> B_ControlDisponibilidad : estado vigente reflejado en el panel
+
+note over INF_AccionAdministrativa, E_Conversacion
+  <b>RN-03.4:</b> el cambio exige confirmacion <b>y</b> queda registrado. Las dos cosas,
+  no una: por eso hay un dialogo propio y un registro propio.
+  <b>PER-T2 se realiza como una ausencia:</b> `registrarAccion` recibe <b>autor y fecha</b>
+  y nada mas. Ningun mensaje le pasa alias, username ni dato de usuario alguno, asi que la
+  telemetria no permite reconstruir que hizo una persona concreta.
+  <b>Efecto en CU-06:</b> deshabilitado, ningun usuario inicia conversacion (409);
+  habilitado, CU-06 vuelve a estar disponible. Una derivacion de seguridad ya en curso
+  <b>no se interrumpe</b> — eso lo decide CU-07 (`FE-03` de `DS-07`), no este caso de uso.
+end note
+
+@enduml
