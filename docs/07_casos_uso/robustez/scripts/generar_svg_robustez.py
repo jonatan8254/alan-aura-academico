@@ -8,16 +8,47 @@ Este script produce la VISTA DERIVADA en SVG, con el mismo sistema visual que
 `<defs>` ni `<style>` ni `<marker>`, agrupacion por color en triadas
 (relleno pastel / borde saturado / texto oscuro) y leyenda de notacion.
 
-Por que un generador y no 14 SVG a mano: son 262 elementos y ~350 arcos en 14
-diagramas; un generador garantiza que los 10 comparten exactamente la misma
-retica y hace el resultado reproducible, igual que `grafo/scripts/`.
+Por que un generador y no 14 SVG a mano: son 262 elementos y ~370 arcos en 14
+diagramas; un generador garantiza que los 14 comparten exactamente la misma
+reticula y hace el resultado reproducible, igual que `grafo/scripts/`.
 
 Layout: cuatro carriles verticales (Actor - Borde - Controlador - Entidad), que
 es la disposicion natural de BCE, con los pasos fluyendo hacia abajo y los arcos
 ruteados ortogonalmente por los canales entre carriles.
 
+v2.0 - LEGIBILIDAD. La v1 producia diagramas con etiquetas encima de las lineas
+y trazos superpuestos. No era cuestion de estilo: eran tres defectos concretos,
+y los tres estan corregidos aqui.
+
+  1. CAPACIDAD FIJA. Los arcos se repartian con `idx % N` sobre bandas
+     constantes. `CANAL_CC` daba 4 posiciones y DR-06 pide 24 arcos: del quinto
+     en adelante reciclaba una coordenada. No era exclusivo de DR-06 — medidos
+     los 14, TODOS desbordaban algun canal. Ahora `asignar_pistas` hace
+     coloreado de intervalos: dos arcos comparten x si no se solapan en y, con
+     lo que la demanda de DR-06 baja de 24 a 12 pistas, y las bandas estan
+     dimensionadas contra ese peor caso MEDIDO.
+
+  2. ANTI-SOLAPE CIEGO. `libre()` comparaba cada etiqueta solo contra otras
+     etiquetas, nunca contra las lineas: por construccion no podia ver el
+     defecto que el ojo ve primero. Y si no hallaba hueco, colocaba igual sin
+     avisar. Ahora comprueba tambien los arcos —excluyendo el propio, sobre el
+     que el chip se apoya a proposito— y el hueco existe de verdad, porque cada
+     par de carriles tiene DOS bandas: una de etiquetas, sin una sola pista, y
+     otra de pistas. Un chip ya no puede taparle la linea a nadie.
+
+  3. SIN VERIFICACION. Nada comprobaba el resultado. Ahora `verificar_geometria`
+     contrasta todas las cajas de texto contra todas las cajas y todos los
+     segmentos, y el lote ABORTA sin escribir nada si algo colisiona: mejor no
+     producir nada que producir algo ilegible, que es como se colaron los SVG
+     de la v1.
+
+Y la altura de una caja ya no la fija solo su texto, sino tambien cuantos arcos
+salen de ella (`PASO_ANCLAJE`): con catorce arcos en una caja de 37px los anclajes
+salian a 2,5px y catorce etiquetas de 14px no podian no solaparse. Ninguna heuristica
+de colocacion arregla despues un espacio que no existe.
+
 Uso:
-    python generar_svg_robustez.py              # regenera los 10 .svg
+    python generar_svg_robustez.py              # regenera los 14 .svg
     python generar_svg_robustez.py --verificar  # solo comprueba, no escribe
 """
 
@@ -52,27 +83,50 @@ TRIADA = {
 # Geometria
 # --------------------------------------------------------------------------
 
-W = 1000
+W = 1340
 MARGEN_SUP = 34
 ALTO_CABECERA = 46      # titulo + cabeceras de carril
 GAP_FILA = 14
+PASO_ANCLAJE = 17       # px minimos entre dos anclajes de la misma caja.
+                        # Un chip mide 14 px de alto: por debajo de esto, dos
+                        # etiquetas del mismo objeto no pueden no solaparse.
 RADIO = 4
 
 CARRIL = {
-    "actor":    {"x": 24,  "w": 96,  "titulo": "Actor"},
-    "boundary": {"x": 150, "w": 195, "titulo": "Objeto tipo Borde"},
-    "control":  {"x": 425, "w": 275, "titulo": "Controlador"},
-    "entity":   {"x": 800, "w": 165, "titulo": "Entidad"},
+    "actor":    {"x": 24,   "w": 96,  "titulo": "Actor"},
+    "boundary": {"x": 225,  "w": 195, "titulo": "Objeto tipo Borde"},
+    "control":  {"x": 615,  "w": 275, "titulo": "Controlador"},
+    "entity":   {"x": 1140, "w": 165, "titulo": "Entidad"},
 }
 ORDEN_CARRIL = ["actor", "boundary", "control", "entity"]
 
-# Canales de ruteo (bandas verticales libres entre carriles).
-# C<->C va por la DERECHA del carril de controladores: si compartiera banda con
-# B<->C, el borde izquierdo del carril se congestiona y los chips se pisan.
-CANAL_AB = (124, 146)     # actor  <-> borde
-CANAL_BC = (352, 412)     # borde  <-> controlador (izquierda del carril)
-CANAL_CC = (708, 736)     # controlador <-> controlador (derecha del carril)
-CANAL_CE = (744, 792)     # controlador <-> entidad
+# El hueco entre dos carriles se reparte en DOS BANDAS, y esa separacion es la
+# clave del rediseño (v2.0). Antes habia una sola: las etiquetas se apoyaban en
+# su tramo horizontal justo donde pasaban todas las pistas verticales, asi que
+# cada chip tapaba los arcos de los demas. Ahora:
+#
+#   [ caja ][ ZONA DE ETIQUETAS — sin una sola pista ][ PISTAS ][ caja ]
+#
+# Los chips viven en la primera y los tramos verticales en la segunda, de modo
+# que un chip no puede taparle la linea a nadie: no hay ninguna donde el esta.
+#
+# Ancho de cada banda DERIVADO DE LA DEMANDA MEDIDA, no elegido a ojo. Las
+# pistas, del peor caso de los 14 diagramas con `asignar_pistas` (AB=2, BC=15,
+# CC=12, CE=10) a SEPARACION_MIN px. Las zonas de etiqueta, del chip mas ancho
+# que produce el corpus: 50 px, con holgura.
+ZONA_AB = (124, 186)      # 62px de etiquetas
+CANAL_AB = (190, 212)     #  2 pistas en 22px
+ZONA_BC = (424, 492)      # 68px de etiquetas
+CANAL_BC = (496, 601)     # 15 pistas en 105px
+ZONA_CX = (894, 962)      # 68px, compartida por los chips de C<->C y C<->E
+CANAL_CC = (966, 1050)    # 12 pistas en 84px
+CANAL_CE = (1058, 1128)   # 10 pistas en 70px
+
+# Zona de etiquetas que corresponde a cada canal
+ZONA_DE_CANAL = {CANAL_AB: ZONA_AB, CANAL_BC: ZONA_BC,
+                 CANAL_CC: ZONA_CX, CANAL_CE: ZONA_CX}
+
+SEPARACION_MIN = 7        # px entre arcos paralelos; por debajo dejan de leerse
 
 PX_POR_CHAR = 0.55        # ancho medio de caracter relativo al font-size
 
@@ -266,8 +320,25 @@ def monigote(cx: float, cy: float) -> str:
             f'</g>')
 
 
-def disponer(elems: dict[str, Elem]) -> int:
-    """Asigna x/y/w/h a cada elemento. Devuelve el alto del area de diagrama."""
+def disponer(elems: dict[str, Elem], rels=()) -> int:
+    """Asigna x/y/w/h a cada elemento. Devuelve el alto del area de diagrama.
+
+    La altura de una caja no la fija solo su texto: la fija **tambien el numero
+    de arcos que salen de ella**. `calcular_anclajes` reparte los k anclajes a
+    lo largo del borde, con paso `h/(k+1)`; si la caja mide lo que mide su
+    texto, catorce arcos salen a dos pixeles y medio unos de otros, y sus catorce
+    etiquetas —de catorce pixeles de alto— no pueden no solaparse. Ninguna heuristica de
+    colocacion arregla eso despues: el espacio sencillamente no existe.
+
+    Asi que la caja crece hasta `PASO_ANCLAJE * (k+1)`. Es el mismo principio
+    que rige los canales: **capacidad derivada de la demanda real**, aplicado
+    aqui al eje vertical.
+    """
+    incid: dict[str, int] = {a: 0 for a in elems}
+    for l, r, _ in rels:
+        incid[l] = incid.get(l, 0) + 1
+        incid[r] = incid.get(r, 0) + 1
+
     y_base = MARGEN_SUP + ALTO_CABECERA
     alto_max = y_base
 
@@ -278,13 +349,16 @@ def disponer(elems: dict[str, Elem]) -> int:
         y = y_base
         for e in grupo:
             e.x, e.w = carril["x"], carril["w"]
+            k = incid.get(e.alias, 0)
             if tipo == "actor":
                 e.lineas = envolver(e.label, e.w, 11)
-                e.h = 55 + 6 + 13 * len(e.lineas)
+                # tambien el actor crece con sus arcos: con k=4 el abanico se
+                # salia por encima del monigote y una linea nacia del vacio
+                e.h = max(55 + 6 + 13 * len(e.lineas), 16 + (k - 1) * PASO_ANCLAJE)
             else:
                 # deja hueco al icono a la izquierda del texto
                 e.lineas = envolver(e.label, e.w - 34, 11)
-                e.h = 22 + 15 * len(e.lineas)
+                e.h = max(22 + 15 * len(e.lineas), PASO_ANCLAJE * (k + 1))
             e.y = y
             y += e.h + GAP_FILA
         alto_max = max(alto_max, y)
@@ -316,45 +390,149 @@ def calcular_anclajes(elems: dict[str, Elem], rels) -> dict[tuple[str, int], flo
         k = len(orden)
         for j, i in enumerate(orden):
             if e.tipo == "actor":
-                anc[(alias, i)] = e.y + 18 + (j - (k - 1) / 2) * 6
+                # el centro baja lo justo para que el anclaje mas alto nunca
+                # quede por encima del monigote (con k>=4 lo hacia)
+                centro = e.y + max(18, 8 + (k - 1) * PASO_ANCLAJE / 2)
+                anc[(alias, i)] = centro + (j - (k - 1) / 2) * PASO_ANCLAJE
             else:
                 anc[(alias, i)] = e.y + e.h * (j + 1) / (k + 1)
     return anc
 
 
-def puntos_arco(a: Elem, b: Elem, idx: int, ya: float, yb: float):
-    """Ruteo ortogonal por el canal que corresponde al par de carriles."""
+def canal_de(ta: str, tb: str):
+    """Banda vertical por la que se rutea un arco entre dos carriles."""
+    tipos = {ta, tb}
+    if tipos == {"actor", "boundary"}:
+        return CANAL_AB
+    if tipos == {"boundary", "control"}:
+        return CANAL_BC
+    if tipos == {"control"}:
+        return CANAL_CC
+    if tipos == {"control", "entity"}:
+        return CANAL_CE
+    return None                               # el validador prohibe el resto
+
+
+def asignar_pistas(elems, rels, anclajes) -> dict[int, float]:
+    """Decide la coordenada x del tramo vertical de CADA arco.
+
+    Sustituye al reparto por `idx % N` sobre bandas de capacidad fija, que era
+    el defecto de fondo de la v1: `CANAL_CC` daba **4** posiciones y `DR-06`
+    pide **24** arcos, asi que del quinto en adelante se reciclaba una
+    coordenada ya usada y dos trazos se dibujaban uno encima del otro. No era
+    exclusivo de DR-06: los catorce diagramas desbordaban algun canal.
+
+    Aqui la observacion que lo resuelve: **dos arcos pueden compartir x si sus
+    tramos verticales no se solapan en y**. Es coloreado voraz de intervalos —
+    se ordenan por y_min y cada uno toma la primera pista cuyo ultimo y_max
+    quede por encima con holgura—. El numero de pistas pasa a ser la
+    PROFUNDIDAD MAXIMA DE SOLAPAMIENTO, no el total de arcos: en `DR-06` baja
+    de 24 a 12. Los canales de arriba estan dimensionados contra ese peor caso
+    medido, no contra una estimacion.
+    """
+    porcanal: dict[tuple, list[tuple[float, float, int]]] = {}
+    for i, (l, r, _) in enumerate(rels):
+        canal = canal_de(elems[l].tipo, elems[r].tipo)
+        if canal is None:
+            continue
+        ya, yb = anclajes[(l, i)], anclajes[(r, i)]
+        porcanal.setdefault(canal, []).append((min(ya, yb), max(ya, yb), i))
+
+    cx_de: dict[int, float] = {}
+    for (c0, c1), arcos in porcanal.items():
+        pistas: list[float] = []              # ultimo y_max ocupado de cada pista
+        de_arco: dict[int, int] = {}
+        for y0, y1, i in sorted(arcos):
+            for k, ymax in enumerate(pistas):
+                if y0 >= ymax + SEPARACION_MIN:
+                    pistas[k] = y1
+                    de_arco[i] = k
+                    break
+            else:
+                pistas.append(y1)
+                de_arco[i] = len(pistas) - 1
+        n = max(1, len(pistas))
+        # Se reparten sobre TODA la banda: un diagrama que solo necesita dos
+        # pistas las separa al maximo, en vez de apretarlas contra el borde.
+        paso = (c1 - c0) / n if n > 1 else 0
+        for i, k in de_arco.items():
+            cx_de[i] = c0 + k * paso if n > 1 else (c0 + c1) / 2
+    return cx_de
+
+
+def puntos_arco(a: Elem, b: Elem, cx: float, ya: float, yb: float):
+    """Ruteo ortogonal por la pista `cx` que le asigno `asignar_pistas`."""
     tipos = {a.tipo, b.tipo}
     izq, der = (a, b) if ORDEN_CARRIL.index(a.tipo) <= ORDEN_CARRIL.index(b.tipo) else (b, a)
     y_izq, y_der = (ya, yb) if izq is a else (yb, ya)
 
     if tipos == {"actor", "boundary"}:
-        c0, c1 = CANAL_AB
-        cx = c0 + (idx % 3) * ((c1 - c0) / 3)
         return [(izq.x + izq.w / 2 + 12, y_izq), (cx, y_izq), (cx, y_der), (der.x, y_der)]
 
-    if tipos == {"boundary", "control"}:
-        c0, c1 = CANAL_BC
-        cx = c0 + (idx % 5) * ((c1 - c0) / 5)
-        return [(izq.x + izq.w, y_izq), (cx, y_izq), (cx, y_der), (der.x, y_der)]
-
-    if tipos == {"control"}:                  # controlador <-> controlador
-        c0, c1 = CANAL_CC
-        cx = c0 + (idx % 4) * ((c1 - c0) / 4)
-        xr = a.x + a.w                        # salen y entran por la derecha
+    if tipos == {"control"}:                  # salen y entran por la derecha
+        xr = a.x + a.w
         return [(xr, ya), (cx, ya), (cx, yb), (xr, yb)]
 
-    if tipos == {"control", "entity"}:
-        c0, c1 = CANAL_CE
-        cx = c0 + (idx % 6) * ((c1 - c0) / 6)
+    if tipos in ({"boundary", "control"}, {"control", "entity"}):
         return [(izq.x + izq.w, y_izq), (cx, y_izq), (cx, y_der), (der.x, y_der)]
 
     # cualquier otro par (no deberia existir: el validador lo prohibe)
     return [(izq.x + izq.w, y_izq), (der.x, y_der)]
 
 
-def construir_svg(dr: str, subtitulo: str, elems, rels, cursos) -> str:
-    alto_diagrama = disponer(elems)
+# --------------------------------------------------------------------------
+# Verificacion geometrica post-layout (portada de generar_svg_secuencia.py)
+# --------------------------------------------------------------------------
+
+def solapan(c1, c2) -> bool:
+    """Interseccion de dos rectangulos. Se ignora todo campo mas alla del 4.o."""
+    return not (c1[2] <= c2[0] or c2[2] <= c1[0] or c1[3] <= c2[1] or c2[3] <= c1[1])
+
+
+def caja_cruza_segmento(c, seg) -> bool:
+    """Un segmento ortogonal atraviesa el rectangulo c.
+
+    Ambos llevan un campo extra con el indice del arco al que pertenecen; aqui
+    se descarta, porque la decision de que hacer con el la toma quien llama.
+    """
+    x1, y1, x2, y2 = seg[:4]
+    if x1 == x2:                              # tramo vertical
+        return c[0] <= x1 <= c[2] and not (max(y1, y2) < c[1] or min(y1, y2) > c[3])
+    if y1 == y2:                              # tramo horizontal
+        return c[1] <= y1 <= c[3] and not (max(x1, x2) < c[0] or min(x1, x2) > c[2])
+    return False
+
+
+def verificar_geometria(cajas, segmentos) -> list[str]:
+    """Ninguna etiqueta puede solaparse con otra ni ser cruzada por un arco AJENO.
+
+    Es la comprobacion que la v1 no podia hacer: su `libre()` comparaba cada
+    etiqueta candidata **solo contra otras etiquetas**, nunca contra las lineas,
+    asi que por construccion era incapaz de detectar el defecto que el ojo ve
+    primero. Y si tras 40 intentos no hallaba hueco, colocaba igual sin avisar.
+
+    «Ajeno» no es un matiz menor. Un chip se apoya **sobre su propio arco** a
+    proposito —es lo que hace inequivoca la pertenencia— y su fondo opaco tapa
+    ese tramo, que es el idioma normal de una etiqueta sobre linea. Lo que no
+    puede es tapar el arco **de otro**: ahi si se pierde informacion.
+
+    `cajas` son `(x0, y0, x1, y1, i_rel)`; `segmentos`, `(x1, y1, x2, y2, i_rel)`.
+    """
+    errores: list[str] = []
+    for i in range(len(cajas)):
+        for j in range(i + 1, len(cajas)):
+            if solapan(cajas[i], cajas[j]):
+                errores.append(f"L-1: dos etiquetas se superponen en y={cajas[i][1]:.0f}")
+    for c in cajas:
+        for s in segmentos:
+            if s[4] != c[4] and caja_cruza_segmento(c, s):
+                errores.append(f"L-2: un arco ajeno cruza la etiqueta de y={c[1]:.0f}")
+                break
+    return errores
+
+
+def construir_svg(dr: str, subtitulo: str, elems, rels, cursos):
+    alto_diagrama = disponer(elems, rels)
 
     # --- tira de cursos alternativos -------------------------------------
     y_cursos = alto_diagrama + 18
@@ -402,15 +580,15 @@ def construir_svg(dr: str, subtitulo: str, elems, rels, cursos) -> str:
     # --- arcos (primero: van por debajo de las cajas, z-order de DCU-01) --
     o.append(f'<g fill="none" stroke="{LINEA_TENUE}" stroke-width="1">')
     etiquetas = []
-    contador: dict[frozenset, int] = {}
+    segmentos: list[tuple[float, float, float, float]] = []
     anclajes = calcular_anclajes(elems, rels)
+    cx_de = asignar_pistas(elems, rels, anclajes)
     for i_rel, (l, r, label) in enumerate(rels):
         a, b = elems[l], elems[r]
-        k = frozenset({a.tipo, b.tipo})
-        idx = contador.get(k, 0)
-        contador[k] = idx + 1
-        pts = puntos_arco(a, b, idx,
+        pts = puntos_arco(a, b, cx_de.get(i_rel, (a.x + b.x) / 2),
                           anclajes[(l, i_rel)], anclajes[(r, i_rel)])
+        for p, q in zip(pts, pts[1:]):        # para el pase de verificacion
+            segmentos.append((p[0], p[1], q[0], q[1], i_rel))
         cadena = " ".join(f"{x:.0f},{y:.0f}" for x, y in pts)
         alt = a.alterno and b.alterno
         stroke = f' stroke="{TRIADA["alterno"][1]}"' if alt else ""
@@ -422,10 +600,26 @@ def construir_svg(dr: str, subtitulo: str, elems, rels, cursos) -> str:
             # de la caja de origen: ahi hay sitio en el canal y la pertenencia al
             # arco es inequivoca. Ponerlo sobre el tramo vertical lo metia debajo
             # de la caja vecina.
+            #
+            # El chip se desliza a lo largo de su propia linea —es su grado de
+            # libertad natural: conserva a que arco pertenece, cosa que moverlo
+            # en vertical destruye— pero SOLO dentro de la zona de etiquetas,
+            # nunca sobre las pistas. Se guardan los dos tramos horizontales
+            # acotados a esa zona.
             ancho = max(16, len(c) * 5.2 + 8)
-            signo = 1 if pts[1][0] >= pts[0][0] else -1
-            mx = pts[0][0] + signo * (ancho / 2 + 6)
-            etiquetas.append((mx, pts[0][1], ancho, c, alt))
+            canal = canal_de(a.tipo, b.tipo)
+            z0, z1 = ZONA_DE_CANAL.get(canal, (pts[0][0], pts[1][0]))
+            tramos = []
+            for (xa, ya_), (xb, _) in ((pts[0], pts[1]), (pts[3], pts[2])) if len(pts) >= 4 \
+                    else ((pts[0], pts[1]),):
+                lo, hi = min(xa, xb), max(xa, xb)
+                ini, fin = max(lo, z0), min(hi, z1)
+                if fin - ini >= 16:
+                    # se recorre desde el extremo mas cercano a la caja
+                    tramos.append((ini, fin, ya_) if xa <= xb else (fin, ini, ya_))
+            if not tramos:                      # arco tan corto que no cruza la zona
+                tramos = [(pts[0][0], pts[1][0], pts[0][1])]
+            etiquetas.append((tramos, ancho, c, alt, i_rel))
     o.append("</g>")
     o.append("")
 
@@ -457,30 +651,65 @@ def construir_svg(dr: str, subtitulo: str, elems, rels, cursos) -> str:
     o.append("")
 
     # --- chips (los ultimos: nada debe taparlos) --------------------------
+    cajas_txt: list[tuple[float, float, float, float, int]] = []
     if etiquetas:
         o.append('<g font-size="9" text-anchor="middle">')
-        puestos: list[tuple[float, float, float, float]] = []
 
-        def libre(bx, by, bw, bh):
-            return all(bx + bw <= px or px + pw <= bx or by + bh <= py or py + ph <= by
-                       for px, py, pw, ph in puestos)
+        def libre(caja) -> bool:
+            """Libre de OTRAS ETIQUETAS y de LOS ARCOS AJENOS.
+
+            La segunda mitad es la que faltaba en la v1: sin ella el buscador
+            de hueco no podia ver el defecto que iba a producir. El arco propio
+            se excluye a proposito — el chip se apoya en el.
+            """
+            if any(solapan(caja, c) for c in cajas_txt):
+                return False
+            return not any(s[4] != caja[4] and caja_cruza_segmento(caja, s)
+                           for s in segmentos)
 
         y_min = MARGEN_SUP + ALTO_CABECERA + 4
         y_max = alto_diagrama - 4
-        for mx, my0, ancho, c, alt in etiquetas:
-            my = min(max(my0, y_min), y_max)
-            for paso in range(0, 40):           # baja/sube en saltos hasta hallar hueco
-                for signo in (1, -1):
-                    cand = my0 + signo * paso * 15
-                    if not (y_min <= cand <= y_max):   # nunca fuera del diagrama
-                        continue
-                    if libre(mx - ancho / 2, cand - 7, ancho, 14):
-                        my = cand
+        for tramos, ancho, c, alt, i_rel in etiquetas:
+            caja = respaldo = None
+
+            # 1) deslizar por sus PROPIAS lineas: conserva la pertenencia al arco
+            for x_ini, x_fin, y_lin in tramos:
+                signo = 1 if x_fin >= x_ini else -1
+                recorrido = abs(x_fin - x_ini) - ancho - 8
+                mx0 = x_ini + signo * (ancho / 2 + 5)
+                if respaldo is None:
+                    respaldo = (mx0 - ancho / 2, y_lin - 7, mx0 + ancho / 2, y_lin + 7, i_rel)
+                for d in range(0, max(1, int(recorrido)), 3):
+                    mx = mx0 + signo * d
+                    prueba = (mx - ancho / 2, y_lin - 7, mx + ancho / 2, y_lin + 7, i_rel)
+                    if libre(prueba):
+                        caja = prueba
                         break
-                else:
-                    continue
-                break
-            puestos.append((mx - ancho / 2, my - 7, ancho, 14))
+                if caja is not None:
+                    break
+
+            # 2) si ningun tramo da de si, apartarse en vertical como ultimo recurso
+            if caja is None:
+                x_ini, x_fin, y_lin = tramos[0]
+                signo = 1 if x_fin >= x_ini else -1
+                mx0 = x_ini + signo * (ancho / 2 + 5)
+                for paso in range(1, 40):
+                    for s in (-1, 1):
+                        cand = y_lin + s * paso * 8
+                        if not (y_min <= cand <= y_max):
+                            continue
+                        prueba = (mx0 - ancho / 2, cand - 7, mx0 + ancho / 2, cand + 7, i_rel)
+                        if libre(prueba):
+                            caja = prueba
+                            break
+                    if caja is not None:
+                        break
+
+            if caja is None:                    # lo declara el pase, no lo esconde
+                caja = respaldo
+            mx = (caja[0] + caja[2]) / 2
+            my = (caja[1] + caja[3]) / 2
+            cajas_txt.append(caja)
             col = TRIADA["alterno"][2] if alt else LINEA
             o.append(f'<rect x="{mx - ancho/2:.0f}" y="{my - 7:.0f}" width="{ancho:.0f}" '
                      f'height="13" rx="3" fill="{FONDO}" stroke="{BORDE_TENUE}"/>'
@@ -497,7 +726,7 @@ def construir_svg(dr: str, subtitulo: str, elems, rels, cursos) -> str:
         o.append('<g font-size="10">')
         for i, (cid, nombre) in enumerate(cursos):
             col, fila = i % 2, i // 2
-            cx0 = 24 + col * 480
+            cx0 = 24 + col * ((W - 60) // 2)
             cy0 = y_cursos + 30 + fila * 16
             o.append(f'<rect x="{cx0}" y="{cy0 - 8}" width="42" height="12" rx="3" '
                      f'fill="{TRIADA["alterno"][0]}" stroke="{TRIADA["alterno"][1]}"/>'
@@ -533,13 +762,14 @@ def construir_svg(dr: str, subtitulo: str, elems, rels, cursos) -> str:
     o.append(f'<rect x="384" y="{yl2 - 9}" width="13" height="13" rx="2" fill="{f_e}" '
              f'stroke="{s_e}" stroke-dasharray="4 3"/>'
              f'<text x="404" y="{yl2 + 1}" fill="{LINEA}">Entidad descubierta, ausente de MD-01</text>')
-    o.append(f'<line x1="694" y1="{yl2 - 2}" x2="{724}" y2="{yl2 - 2}" '
+    x_arco = (W - 60) // 2 + 190
+    o.append(f'<line x1="{x_arco}" y1="{yl2 - 2}" x2="{x_arco + 30}" y2="{yl2 - 2}" '
              f'stroke="{LINEA_TENUE}" stroke-width="1"/>'
-             f'<text x="732" y="{yl2 + 1}" fill="{LINEA}">Asociacion de comunicacion (sin direccion)</text>')
+             f'<text x="{x_arco + 38}" y="{yl2 + 1}" fill="{LINEA}">Asociacion de comunicacion (sin direccion)</text>')
     o.append("</g>")
 
     o.append("</svg>")
-    return "\n".join(o) + "\n"
+    return "\n".join(o) + "\n", verificar_geometria(cajas_txt, segmentos)
 
 
 # --------------------------------------------------------------------------
@@ -557,22 +787,46 @@ def main(argv: list[str]) -> int:
         return 2
 
     tot = {"actor": 0, "boundary": 0, "control": 0, "entity": 0}
-    print(f"{'DR':7}{'act':>4}{'bor':>4}{'ctl':>4}{'ent':>4}{'arcos':>7}{'lienzo':>12}")
+    generados: list[tuple[Path, str]] = []
+    con_colisiones: list[tuple[str, list[str]]] = []
+    print(f"{'DR':7}{'act':>4}{'bor':>4}{'ctl':>4}{'ent':>4}{'arcos':>7}{'lienzo':>12}{'geom':>8}")
     for f in fuentes:
         elems, rels, cursos, dr, sub = parsear(f.read_text(encoding="utf-8"))
-        svg = construir_svg(dr or f.name[:5], sub, elems, rels, cursos)
+        nombre = dr or f.name[:5]
+        svg, errores = construir_svg(nombre, sub, elems, rels, cursos)
         alto = re.search(r'height="(\d+)"', svg).group(1)
         c = {t: sum(1 for e in elems.values() if e.tipo == t) for t in tot}
         for t in tot:
             tot[t] += c[t]
-        if not args.verificar:
-            f.with_suffix(".svg").write_text(svg, encoding="utf-8")
-        print(f"{(dr or f.name[:5]):7}{c['actor']:>4}{c['boundary']:>4}{c['control']:>4}"
-              f"{c['entity']:>4}{len(rels):>7}{f'{W}x{alto}':>12}")
+        if errores:
+            con_colisiones.append((nombre, errores))
+        else:
+            generados.append((f.with_suffix(".svg"), svg))
+        print(f"{nombre:7}{c['actor']:>4}{c['boundary']:>4}{c['control']:>4}"
+              f"{c['entity']:>4}{len(rels):>7}{f'{W}x{alto}':>12}"
+              f"{('OK' if not errores else f'{len(errores)} col.'):>8}")
+
+    # --- el pase geometrico ABORTA: mejor no producir nada que producir algo
+    #     ilegible, que es como se colaron los SVG de la v1 -------------------
+    if con_colisiones:
+        print(f"\nABORTADO: {len(con_colisiones)} diagrama(s) con colisiones geometricas.")
+        print("No se ha escrito NINGUN .svg — el lote se escribe entero o no se escribe.")
+        for nombre, errs in con_colisiones:
+            print(f"\n  {nombre}: {len(errs)} colision(es)")
+            for e in errs[:6]:
+                print(f"    - {e}")
+            if len(errs) > 6:
+                print(f"    ... y {len(errs) - 6} mas")
+        return 1
+
+    if not args.verificar:
+        for ruta, svg in generados:
+            ruta.write_text(svg, encoding="utf-8")
 
     total = sum(tot.values())
     print(f"\nTOTAL: {total} elementos "
           f"({tot['actor']}/{tot['boundary']}/{tot['control']}/{tot['entity']})")
+    print(f"Verificacion geometrica: {len(generados)} diagrama(s) sin colisiones.")
     esperado = (15, 38, 150, 59)
     real = (tot["actor"], tot["boundary"], tot["control"], tot["entity"])
     if real == esperado and total == 262:

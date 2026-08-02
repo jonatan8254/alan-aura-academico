@@ -1,6 +1,6 @@
 # DS-00 — Índice y certificado de los diagramas de secuencia
 
-**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-30 cerrado: los **siete** hallazgos pendientes aplicados; robustez queda en **262 elementos** y 150 controladores; **181** casos de prueba) · **Estado:** Propuesto.
+**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (SD-31: §11 pasa de orientación a hecho — los 14 SVG de robustez regenerados en cero colisiones — y §10 corrige el alcance que declaraba al revés). v1.2: SD-30 cerrado, los **siete** hallazgos aplicados; robustez en **262 elementos** y 150 controladores; **181** casos de prueba · **Estado:** Propuesto.
 **Propósito:** índice de los **14 diagramas de secuencia** (`DS-01…DS-14`) derivados de `DR-01…DR-14`, con su certificado de auditoría, las capas declaradas, las excepciones y la trazabilidad hacia adelante.
 **Insumos:** `DR-01…DR-14 v2.1` (**262 elementos**, **150 controladores**), `ECU-01…ECU-14 v2.1`, `MD-01 v1.4`, `DCU-01 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `DIS-00`, `SEG-01 v1.2`, `PER-01 v1.2`, `PRIV-01`, `MV-01 §7`, `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-sequence-diagram`, modo **Generar**. **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores en los 14**.
@@ -199,36 +199,51 @@ Lo que sigue es el **diagrama de clases de diseño** y después el **Critical De
 | `COD-01` (insumos para código: clase · operación · firma · capa) | Pendiente |
 | `TRZ-DS-01` (matriz paso ↔ mensaje ↔ operación ↔ clase ↔ `CP`) y propagación a `TRZ-01` | Pendiente |
 | Propagación de gobernanza: `ESTADO_PIPELINE`, `CHANGELOG`, `REGISTRO_DECISIONES` (**SD-30**), `HECHOS_CANONICOS`, `README`, `INDICE_MAESTRO` | Pendiente |
-| Regenerar `MD-01.svg` y `DCU-01.svg` con la retícula corregida | Pendiente — **orientación entregada en §11**; los 14 de robustez ya se regeneran solos, porque su generador comparte el diagnóstico | Pendiente |
+| Regenerar los SVG con la retícula corregida | ✅ **Hecho (SD-31):** los **14 de robustez**, que eran los afectados —no `MD-01.svg` ni `DCU-01.svg`, que los produce **PlantUML** y no este generador—. Los catorce pasan el pase geométrico en **cero colisiones**. Ver §11 | Hecho |
 | Los **9** hallazgos de §8 (`H-1`…`H-9`) | ✅ **Todos aplicados** en SD-30 |
 
-## 11. Orientación para regenerar los SVG antiguos (D-6, prometido)
+## 11. Los SVG de robustez, regenerados (`SD-31`)
 
-**No se ejecuta aquí**, se entrega diagnosticada. El defecto de legibilidad de los SVG antiguos
-—etiquetas encima de las líneas, trazos apelmazados— **no es de estilo, es aritmético**, y tiene
-dos causas independientes en `generar_svg_robustez.py`:
+Lo que en `v1.2` era una orientación pendiente **está ejecutado**, y al medirlo resultó ser peor de
+lo que esta sección declaraba.
 
-1. **Canales de capacidad fija con aritmética modular.** Los arcos se reparten con `idx % N` sobre
-   un canal de anchura constante. `CANAL_CC` tiene **28 px y 4 posiciones** para los **23** arcos
-   control-control de `DR-06`: a partir del quinto **recicla una coordenada ya usada**, y dos
-   trazos distintos se dibujan encima. No hay aviso: el generador cree que ha colocado 23 arcos.
-2. **El anti-solape solo mira etiquetas.** `libre()` compara cada etiqueta contra **otras
-   etiquetas**, nunca contra las **líneas**. Por construcción no puede detectar el defecto que el
-   ojo ve primero.
+**Alcance real, corregido.** Esta sección citaba `DR-06` como ejemplo. Medida la demanda de los
+catorce contra la capacidad de cada canal, **los catorce la desbordaban**: `CANAL_CC` daba **4**
+posiciones y `DR-06` pedía **24**; `CANAL_BC` daba 5 para 19; hasta `DR-01`, el más pequeño, pedía
+10 donde cabían 5. Y quedan fuera `MD-01.svg` y `DCU-01.svg`, que **los produce PlantUML** —no este
+generador— y cuyos `.puml` no cambian: no había nada que regenerar en ellos. Una nota de `§10`
+decía lo contrario; era un error.
 
-**La corrección ya está escrita y probada** en `generar_svg_secuencia.py`, que resuelve ambas:
-capacidad **derivada de la demanda real** en vez de constante, el trazo **10 px por debajo** del
-texto como garantía geométrica en vez de búsqueda de hueco, y un **pase de verificación
-post-layout que aborta** si detecta colisión — el generador prefiere no producir nada a producir
-algo ilegible.
+**Los tres defectos, y por qué el tercero era el que los dejaba pasar:**
 
-**Coste estimado:** portar las dos correcciones son unas 80 líneas; lo caro es **revalidar los 14
-SVG a ojo**, porque el pase geométrico garantiza que no hay colisiones pero no que el resultado
-sea *legible*. Quedan fuera `MD-01.svg` y `DCU-01.svg`, que usan otro generador.
+1. **Capacidad fija con aritmética modular.** `idx % N` sobre bandas constantes: al dar la vuelta,
+   dos arcos compartían coordenada y se dibujaban uno encima del otro.
+2. **Anti-solape ciego.** `libre()` comparaba cada etiqueta **solo contra otras etiquetas, nunca
+   contra las líneas**. Por construcción no podía ver el defecto que el ojo ve primero. Y si tras
+   40 intentos no hallaba hueco, **colocaba igual sin avisar**.
+3. **Ninguna verificación.** Nada comprobaba el resultado, así que los dos anteriores llegaron a
+   comitearse.
 
-**Recomendación:** hacerlo **antes del CDR**, no ahora. El CDR revisa el diseño con estos
-diagramas delante, y llegar con SVG ilegibles convierte una revisión de fondo en una discusión de
-forma.
+**Cómo se corrigieron.** El ruteo pasa a **coloreado de intervalos** —dos arcos comparten
+coordenada si sus tramos verticales no se solapan—, con lo que `DR-06` baja de 24 arcos a **12
+pistas**. Pero eso solo no bastaba: 12 pistas en 28 px son 2,3 px de separación. La pieza que
+faltaba fue **partir cada hueco entre carriles en dos bandas**, una de etiquetas sin una sola pista
+y otra de pistas, de modo que un chip **no puede taparle la línea a nadie: no hay ninguna donde él
+está**. Y la altura de cada caja pasó a depender también de **cuántos arcos salen de ella**: con
+catorce arcos en una caja de 37 px los anclajes salían a **2,5 px**, y catorce etiquetas de 14 px no podían no
+solaparse — ninguna heurística de colocación arregla después un espacio que no existe.
+
+Por último, `verificar_geometria` contrasta todas las cajas de texto contra todas las cajas y todos
+los segmentos, y **el lote aborta sin escribir nada** si algo colisiona: se escribe entero o no se
+escribe.
+
+**Resultado: los 14 en cero colisiones**, con los `.puml` intactos y los conteos sin moverse
+(*262 elementos, 15/38/150/59*). El lienzo pasa de 1.000 a **1.340 px** de ancho y los diagramas
+crecen en alto —`DR-06` llega a 2.488 px—, que es el precio de que quepan sin pisarse.
+
+> **Lo que el pase garantiza y lo que no.** Garantiza que **no hay colisiones**. No garantiza que
+> el diagrama se **lea bien**: eso se comprobó a ojo sobre `DR-06` y `DR-14`, el más denso y el más
+> simple.
 
 ---
 
@@ -236,6 +251,7 @@ forma.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.3 | 2026-08-02 | J. Sánchez | **SD-31.** §11 deja de ser una orientación pendiente: **los 14 SVG de robustez están regenerados en cero colisiones**. Al medir la demanda real apareció que el alcance declarado era doblemente erróneo: no era `DR-06` —**los catorce** desbordaban algún canal— y `MD-01.svg`/`DCU-01.svg` **no entraban**, porque los produce PlantUML y no el generador propio. La fila de §10 decía justo lo contrario y queda corregida. |
 | v1.2 | 2026-08-01 | J. Sánchez | **SD-30 cerrado.** Se aplican los **siete** hallazgos restantes (`H-1`…`H-7`); §8 deja de tener pendientes. El grande, `H-1`, resultó **dos defectos con una raíz**: el evento operativo se registraba al cerrar y las cifras de ventana se contaban desde `Conversacion` — ambas insostenibles porque **la `Conversacion` no se persiste**, que es la razón por la que `MD-01` creó `EventoOperativo`. Ripple: **263 → 262** elementos y **178 → 181** casos de prueba, estos últimos porque `H-1a` obligó a decidir **qué llamadas cuentan** para `MET-07`. Los conteos del paquete pasan a `HECHOS_CANONICOS` como `H-22`/`H-23`/`H-24`. Entra §11 con la orientación de D-6. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** se aplican `H-8` (`FE-02` de `CU-01` vuelve a P-01, no dirige a P-02) y `H-9` (`DR-04` incorpora `EventoOperativo` y su controlador). `DR-01` y `DR-04` pasan a v2.1; los conteos suben a 263 elementos y 150 controladores; entra `CP-813`. Quedan 7 hallazgos pendientes de confirmación. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. Los 14 diagramas de secuencia en **0 errores**, **149/149** controladores cubiertos, **191 operaciones** asignadas con justificación, **16/16** clases del dominio con comportamiento, 3 clases nuevas del espacio de la solución, generador SVG propio sin colisiones, y **9 hallazgos** enrutados a sus skills. |

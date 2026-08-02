@@ -34,6 +34,17 @@ No sobre-claim clínico · minimización (cápsula, no historial) · consentimie
 ## Dónde estamos (detalle en `ESTADO_PIPELINE.md`)
 Fase 2 ICONIX **avanzada**: producidos el modelo de dominio (`MD-01 v1.4`, 16 clases), el diagrama de casos de uso (`DCU-01 v2.1`, 14 casos de uso), las 14 especificaciones textuales (`ECU-00…14`) y los 14 diagramas de robustez (`DR-00…14`). El conjunto pasó una **primera pasada de correcciones** (`PDR-01`, motivada por retroalimentación docente) y la **compuerta ICONIX** entre análisis y diseño detallado (`RPD-01`, veredicto: *Aceptado con verificación de retrabajo*). Los cuatro validadores del pipeline están en 0 errores. Siguiente artefacto: **diagramas de secuencia** (`DS-XX`).
 
+## Qué queda abierto
+
+**Once pendientes, todos declarados, en `ESTADO_PIPELINE.md §Pendientes declarados`** — la tabla
+dice quién cierra cada uno y qué bloquea. Dos merecen saberse de memoria:
+
+- **`PER-H5`** es el único que **rompe un requisito vigente**: el respaldo en S3 escapa al borrado
+  en cascada, así que **`RF-24` no se cumple de extremo a extremo**. Se cierra en `ARQ-01`, y su
+  plazo no es de calendario sino material: **antes de que haya personas reales**.
+- **`COD-01`** no rompe nada. Es una espera con motivo: su columna de firma exige tipos, y los tipos
+  los fija el diagrama de clases.
+
 ## De dónde salió el alcance
 De un **plan generado con Codex** (auditado en `../../00_AUDITORIA_PLAN_CODEX.md`) y, **como cita histórica de procedencia** de la fase documental previa a la extracción (SD-18), del corpus del macroproyecto Smart-AID (Release 0.1/0.2, doc 8 plan metodológico, arquitectura LLM D22, personajes/onboarding). Esos artefactos **no están en este repositorio** y no se consultan de forma viva: el subproyecto ya es autosuficiente.
 
