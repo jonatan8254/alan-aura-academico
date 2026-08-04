@@ -1,5 +1,5 @@
 # Estado del subproyecto — «Alan & Aura Académico»
-**Propósito:** decir en qué fase está el subproyecto y qué sigue. Es el primer archivo a leer al rehidratar contexto. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-04 · **Versión:** v2.1 (SD-35: `PER-H2` cerrado por `ADR-004` — **`RF-24` pasa a cumplirse**). v2.0 (SD-33: `PER-H5` **cerrado** por `ADR-003` — el MVP no respalda el almacén de datos personales; `RF-24` pasa de dos excepciones abiertas a una). v1.9 (SD-32: el diagrama de clases de diseño está hecho; el siguiente hito es el **CDR**; `COD-01` cerrado y entra un pendiente nuevo, el render del `.svg` de `MC-01`). v1.8 (SD-31, segunda pasada: canon y punteros al día — el «siguiente artefacto» deja de ser la secuencia, los validadores pasan a cinco y las versiones citadas se alinean con sus fichas). v1.7: nueva sección **«Pendientes declarados»**, que reúne los once que estaban dispersos —`PER-H5` y `COD-01` entre ellos—; y los 14 SVG de robustez regenerados sin colisiones). v1.6: SD-30 completo, con los 14 diagramas de secuencia, sus 181 casos de prueba y los 7 hallazgos aplicados; robustez en **262 elementos**. v1.4 corrigió el conteo de `.puml` de la Fase 2: son **16**, no 17.
+**Propósito:** decir en qué fase está el subproyecto y qué sigue. Es el primer archivo a leer al rehidratar contexto. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-04 · **Versión:** v2.2 (SD-36: propagación que `SD-35` dejó a medias — el canon y tres artefactos seguían declarando `PER-H2` abierto y `RF-24` incumplido). v2.1 (SD-35: `PER-H2` cerrado por `ADR-004` — **`RF-24` pasa a cumplirse**). v2.0 (SD-33: `PER-H5` **cerrado** por `ADR-003` — el MVP no respalda el almacén de datos personales; `RF-24` pasa de dos excepciones abiertas a una). v1.9 (SD-32: el diagrama de clases de diseño está hecho; el siguiente hito es el **CDR**; `COD-01` cerrado y entra un pendiente nuevo, el render del `.svg` de `MC-01`). v1.8 (SD-31, segunda pasada: canon y punteros al día — el «siguiente artefacto» deja de ser la secuencia, los validadores pasan a cinco y las versiones citadas se alinean con sus fichas). v1.7: nueva sección **«Pendientes declarados»**, que reúne los once que estaban dispersos —`PER-H5` y `COD-01` entre ellos—; y los 14 SVG de robustez regenerados sin colisiones). v1.6: SD-30 completo, con los 14 diagramas de secuencia, sus 181 casos de prueba y los 7 hallazgos aplicados; robustez en **262 elementos**. v1.4 corrigió el conteo de `.puml` de la Fase 2: son **16**, no 17.
 
 ---
 
@@ -147,10 +147,14 @@ que ahora se leen de una vez.
 | 12 | **`.svg` de `MC-01`** | El render **no se generó ni se miró**: no hay PlantUML en el entorno de `SD-32` (sin binario, sin `jar` en las extensiones de VS Code, sin módulo de Python). La comprobación **estructural** del `.puml` sí pasó, pero eso no es un render | Quien tenga PlantUML: `java -jar plantuml.jar -tsvg`, o la extensión de VS Code — **y mirarlo** | La revisión visual del CDR | `MC-00 §4.2` |
 | 11 | Revisión de nivel 6 | Validación del usuario sobre `VIS-01`/`ADR-001`/`REQ-01`: servicios externos y frontera legal | El usuario | — | Abierta desde la Fase 1 |
 
-> **Actualizado en SD-33.** `PER-H5` era el único pendiente que **rompía un requisito vigente**, y por eso llevaba
-> fecha límite material —antes de que hubiera personas reales— en vez de de calendario. **Está cerrado.** Quien
-> hereda esa marca es **`PER-H2`** (fila 3): la ventana de «+30 días» es ahora lo único que impide cumplir `RF-24`
-> de forma inmediata, y se cierra junto con `V6-b`. `COD-01`, el otro que llevaba marca, se cerró en SD-32.
+> **Actualizado en SD-35. Ningún pendiente abierto rompe ya un requisito vigente.** Los tres que llevaban marca
+> están cerrados: **`PER-H5`** (fila 1, `ADR-003` en SD-33 — el almacén operativo no se respalda), **`PER-H2`**
+> (fila 3, `ADR-004-D1` en SD-35 — la supresión es física e inmediata) y **`COD-01`** (fila 2, SD-32). Con los
+> dos primeros, **`RF-24` pasa a cumplirse** — con la precisión que `TRZ-01 §2` no deja perder: **según el
+> diseño**, porque la inmediatez solo se puede verificar contra una implementación, y eso es fase 4.
+>
+> Los **nueve** que quedan son de diseño físico (`ARQ-01`), de construcción, de propagación documental o de
+> validación del usuario. Ninguno tiene plazo material.
 
 ## Invariantes que no se relajan
 - **Independencia** (SD-18): el subproyecto no depende del macroproyecto; toda mención a él es cita de procedencia histórica, nunca una referencia funcional viva.
