@@ -1,6 +1,6 @@
 # CP-04 — Casos de prueba de CU-04 «Eliminar cuenta»
 
-**ID:** CP-04 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto.
+**ID:** CP-04 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (SD-35: las dos excepciones de `RF-24` cerradas). v1.2 (SD-34: `PER-H5` cerrado; la cascada que estos casos prueban es toda la que existe). v1.1 · **Estado:** Propuesto.
 **Insumos:** `DR-04 v2.1` (12 controladores), `DS-04 v1.0`, `ECU-04 v2.1` (`CA-01…CA-11`), `PER-01 v1.2` (`PER-T1`), `PRIV-01`.
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador**.
 
@@ -47,9 +47,12 @@ cuenta desapareció cuando sigue ahí; uno que confirmara sin deshacer dejaría 
 controlador `C_ConservarTelemetriaSinIdentidad`, `DS-04` gana el mensaje `conservarSinIdentidad()`
 y de ahí deriva **`CP-813`**.
 
-**`PER-H5` sigue abierto:** los respaldos en S3 escapan al borrado en cascada, así que `RF-24`
-tampoco se cumple de extremo a extremo por esa vía. Se cierra en `ARQ-01`, antes de cualquier uso
-con personas reales. Ninguno de estos trece casos lo cubre porque el respaldo es diseño físico.
+**Las dos excepciones de `RF-24` están cerradas.** `PER-H5` en `ADR-003` (SD-33): el almacén
+operativo **no se respalda**, así que la cascada que estos trece casos prueban es **toda la que
+existe**. `PER-H2` en `ADR-004-D1` (SD-35): la supresión es **física e inmediata**, sin ventana de
+gracia. **`RF-24` pasa a cumplirse** según el diseño.
+**La inmediatez, sin embargo, no la prueba ninguno de estos casos**, y no por un hueco: exige una
+implementación contra la que medir. Es fase 4.
 
 ---
 
@@ -58,4 +61,5 @@ con personas reales. Ninguno de estos trece casos lo cubre porque el respaldo es
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. 12 casos desde los 11 controladores de `DR-04`, con `FE-04` verificando deshacer **y** no confirmar. |
+| v1.2 | 2026-08-04 | J. Sánchez | **SD-34.** El bloque decía «`PER-H5` sigue abierto: los respaldos en S3 escapan al borrado en cascada». `ADR-003` lo cerró quitando el respaldo del almacén operativo, así que **la cascada que estos trece casos prueban es toda la que existe**. Lo que sigue abierto es `PER-H2`, y por eso `RF-24` no se cumple de forma **inmediata**. **Ningún caso de prueba cambia.** |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** entra `CP-813` desde el controlador nuevo `C_ConservarTelemetriaSinIdentidad` de `DR-04 v2.1`. `CA-11` deja de estar sin prueba; el hallazgo `H-9` queda cerrado. Quedan 13 casos y 12/12 controladores. |

@@ -26,7 +26,7 @@ Este es un **repositorio independiente**, extraído el 2026-07-12 del macroproye
 
 Detalle, alternativas y condiciones de reversa en **`ADR-002`**, que supera a `ADR-001-D1/D2/D5` (Django · SQLite · PythonAnywhere). Ninguna condición de reversa declarada disparó el cambio: fue decisión del equipo (SD-29). El **diseño físico** —claves de DynamoDB, tabla de *endpoints*, inventario de S3— sigue diferido a `ARQ-01`, **posterior al diagrama de clases y su CDR**.
 
-**Hallazgo abierto que este cambio introdujo (`PER-H5`, canon):** el respaldo de la base de datos vive en S3 y **escapa al borrado en cascada** — hasta que se cierre en `ARQ-01`, «eliminar la cuenta» no borra el respaldo. Detalle en `PER-01` §8.
+~~**Hallazgo abierto que este cambio introdujo (`PER-H5`, canon):**~~ ✅ **CERRADO en `ADR-003`** (SD-33): el MVP **no respalda** el almacén de datos personales, así que el segundo lugar donde vivía el dato deja de existir y la cascada de `PER-T1` vuelve a ser completa. Precio declarado: perder ese almacén es irrecuperable. **Texto original del hallazgo:** el respaldo de la base de datos vive en S3 y **escapa al borrado en cascada** — hasta que se cierre en `ARQ-01`, «eliminar la cuenta» no borra el respaldo. Detalle en `PER-01` §8.
 
 ## Canon heredado (innegociable)
 No sobre-claim clínico · minimización (cápsula, no historial) · consentimiento granular y revocable (dos capas) · uso no punitivo · divulgación mínima · seguridad emocional > engagement · no persistencia del chat · solo adultos con *disclosure*.
@@ -39,9 +39,11 @@ Fase 2 ICONIX **completa salvo la compuerta**: producidos el modelo de dominio (
 **Once pendientes, todos declarados, en `ESTADO_PIPELINE.md §Pendientes declarados`** — la tabla
 dice quién cierra cada uno y qué bloquea. Dos merecen saberse de memoria:
 
-- **`PER-H5`** es el único que **rompe un requisito vigente**: el respaldo en S3 escapa al borrado
-  en cascada, así que **`RF-24` no se cumple de extremo a extremo**. Se cierra en `ARQ-01`, y su
-  plazo no es de calendario sino material: **antes de que haya personas reales**.
+- ~~**`PER-H2`**~~ ✅ **cerrado en SD-35** (`ADR-004`): la supresión es física e inmediata. **Ya ningún pendiente roza un requisito vigente: `RF-24` se cumple.** Texto original: la ventana de «+30 días» del plan
+  §4.14 impide que **`RF-24` se cumpla de forma inmediata**. Se cierra junto con `V6-b`, la frontera
+  legal, que es quien decide si esa ventana es siquiera admisible.
+  *(Hasta SD-33 este puesto lo ocupaba `PER-H5` —el respaldo escapaba al borrado en cascada—, y era
+  peor: rompía el requisito de extremo a extremo. `ADR-003` lo cerró quitando el respaldo.)*
 - **`COD-01`** no rompe nada. Es una espera con motivo: su columna de firma exige tipos, y los tipos
   los fija el diagrama de clases.
 

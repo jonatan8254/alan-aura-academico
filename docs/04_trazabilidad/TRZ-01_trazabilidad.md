@@ -1,5 +1,5 @@
 # TRZ-01 — Matriz de trazabilidad del MVP
-**ID:** TRZ-01 · **Hogar:** `docs/04_trazabilidad/` · **Fecha:** 2026-07-25 · **Versión:** v1.7 (SD-30: §5.1 gana la columna **Secuencia** con los `DS-XX` —16/16 clases—, §2 gana la columna de **casos de prueba** —26/26 RF—, la fila de `EventoOperativo` recupera `CU-04`/`DR-04` que `SD-30` le había añadido, y `RF-24` queda marcado como no cumplido de extremo a extremo por `PER-H5`. Antes, v1.6 (SD-29: `RNF-02` y `RC-09` reapuntados a `ADR-002`; **la estructura de la trazabilidad no cambia** —el cambio de stack no crea ni destruye requisitos, y los conteos de §5 siguen siendo 26 RF y 16 clases—. SD-26: **RN-01.6** trazada desde RF-04/RF-05 — la cápsula siempre existe con `character` como mínimo; cero reglas huérfanas · SD-22:  RF-04/05 coherentes con la cápsula de 5 campos = `ContextoInicialConversacionalV1` · SD-21: **columna CU poblada** — cada RF trazado a su especificación `ECU-0X`; dimensión CU cerrada · SD-15: +RF-19…26 cuenta/acceso y sesión; admin realineado; MD-01 disponible · SD-17: RF-25/26 con límites de tasa exactos y RN-02.9).
+**ID:** TRZ-01 · **Hogar:** `docs/04_trazabilidad/` · **Fecha:** 2026-07-25 · **Versión:** v1.9 (SD-35: `RF-24` deja de ser el único RF incumplido). v1.8 (SD-34: el recuadro de `RF-24` deja de citar `PER-H5` —cerrado— y pasa a `PER-H2`). v1.7 (SD-30: §5.1 gana la columna **Secuencia** con los `DS-XX` —16/16 clases—, §2 gana la columna de **casos de prueba** —26/26 RF—, la fila de `EventoOperativo` recupera `CU-04`/`DR-04` que `SD-30` le había añadido, y `RF-24` queda marcado como no cumplido de extremo a extremo por `PER-H5`. Antes, v1.6 (SD-29: `RNF-02` y `RC-09` reapuntados a `ADR-002`; **la estructura de la trazabilidad no cambia** —el cambio de stack no crea ni destruye requisitos, y los conteos de §5 siguen siendo 26 RF y 16 clases—. SD-26: **RN-01.6** trazada desde RF-04/RF-05 — la cápsula siempre existe con `character` como mínimo; cero reglas huérfanas · SD-22:  RF-04/05 coherentes con la cápsula de 5 campos = `ContextoInicialConversacionalV1` · SD-21: **columna CU poblada** — cada RF trazado a su especificación `ECU-0X`; dimensión CU cerrada · SD-15: +RF-19…26 cuenta/acceso y sesión; admin realineado; MD-01 disponible · SD-17: RF-25/26 con límites de tasa exactos y RN-02.9).
 **Insumos:** VIS-01 (OBJ-1…OBJ-7), MV-01 (vistas), contrato, REQ-01 (RF-01…26/RNF/RC/RN), PRIV-01, SEG-01, NORM-01, MD-01 (dominio).
 **Consumidores:** verificación de cobertura; fase 2 (CU/dominio) y fase 4 (pruebas).
 **Criterio de cierre:** **cero requisitos huérfanos** — todo RF traza a ≥1 objetivo, ≥1 regla y ≥1 prueba planificada; todo objetivo tiene ≥1 RF; todo RC tiene ≥1 RF **o RNF**.
@@ -43,14 +43,16 @@
 
 > **Columna CU poblada (SD-21; actualizada en el PDR-01):** cada RF traza a su especificación `ECU-NN`. Los **26 RF** quedan cubiertos por los **14** casos de uso, **cero huérfanos** y **ningún RF realizado por dos casos de uso**. Cuatro cambiaron de dueño al desglosarse el diagrama: RF-06 → CU-14, RF-12 → CU-13, RF-22 → CU-11, RF-23 → CU-12. (Detalle inverso RF→CU en `../07_casos_uso/especificaciones/ECU-00_indice_especificaciones.md` §5.)
 
-> ⚠️ **`RF-24` es el único RF que NO se cumple de extremo a extremo, y conviene decirlo aquí.**
+> ✅ **`RF-24` pasa a cumplirse en SD-35, y deja de ser el único RF declarado como incumplido.**
 > `CP-801…813` cubren la cascada sobre las cuatro entidades del titular, y `CP-813` verifica que la
-> telemetría sobrevive sin identidad. Lo que **ningún caso cubre** es el **respaldo en S3**, que
-> escapa al borrado: `PER-T1` y `PRIV-R11` enumeran la cascada sin mencionarlo, porque se
-> escribieron cuando no había respaldos, y el versionado agrava el punto — borrar un objeto no lo
-> borra, sobreviven sus versiones. Es **`PER-H5`**, abierto, y no se cubre con una prueba porque el
-> respaldo es **diseño físico**: se cierra en `ARQ-01`, «antes de cualquier uso con personas
-> reales» (`ADR-002-D6`). Declarado, no silenciado.
+> telemetría sobrevive sin identidad. Sus **dos excepciones están cerradas**: `PER-H5` en `ADR-003`
+> —el almacén operativo **no se respalda**, así que no hay copia que escape al borrado— y `PER-H2` en
+> `ADR-004-D1` — la supresión es **física e inmediata**, sin ventana de gracia ni marca de baja.
+> **Con una precisión que conviene no perder:** se cumple **según el diseño**. La inmediatez solo se
+> puede verificar contra una implementación, y eso es fase 4. Un artefacto de diseño no puede
+> sostener más que eso, y decir lo contrario sería el sobre-claim que este proyecto evita.
+> **Sigue abierta `V6-b`**, la validación legal, que es de nivel 6 y no la cierra un análisis
+> documental.
 
 ## 3. Cobertura de requisitos de calidad (RC → RF)
 | RC | Cubierto por | ¿≥1 RF? |

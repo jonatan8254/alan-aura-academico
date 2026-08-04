@@ -93,12 +93,14 @@ E_Usuario -> E_Visitante : quedarEnLaCondicionDeVisitante()
 B_PaginaGestionCuenta -> B_PaginaPresentacion : cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()
 
 note over E_ContadorDeUsoDiario, E_Visitante
-  <b>PER-H5, hallazgo de canon abierto y declarado.</b> `ADR-002-D6` puso los respaldos
-  de la base de datos en S3, y ese respaldo <b>escapa a esta cascada</b>: ninguna regla
-  vigente lo alcanza. Por tanto `RF-24` («no queda dato asociado recuperable»)
-  <b>no se cumple de extremo a extremo</b> hasta cerrarlo.
-  No se dibuja aqui porque el respaldo es diseno fisico y su sitio es `ARQ-01`, tras el
-  CDR. Se declara para que el hueco sea visible, no para taparlo.
+  <b>Esta cascada es TODA la que existe — PER-H5 cerrado en ADR-003 (SD-33).</b>
+  El almacen operativo <b>no se respalda</b>: sin exportaciones ni recuperacion a un punto
+  en el tiempo, no hay copia que escape a lo que estos mensajes suprimen. El hueco que
+  `ADR-002-D6` habia abierto se cerro <b>quitando el segundo almacen</b>, no acotandolo.
+  <b>Y desde SD-35 esta supresion es ademas INMEDIATA</b> (`ADR-004-D1`): fisica, sin
+  ventana de gracia y sin marca de baja — `PER-H2` cerrado. Resulto ser una ambiguedad
+  sintactica del plan §4.14, no un hueco de diseno: el MVP no tiene «cierre de cuenta».
+  Con sus dos excepciones cerradas, <b>`RF-24` pasa a cumplirse</b> segun el diseno.
 end note
 
 @enduml

@@ -633,12 +633,16 @@ note as N_Infraestructura
 end note
 
 note as N_PER_H5
-  <b>PER-H5 — hallazgo de canon abierto, declarado en el modelo y no tapado.</b>
+  <b>El borrado en cascada es COMPLETO — PER-H5 cerrado en ADR-003 (SD-33).</b>
   <code>Usuario.suprimirEnCascada()</code> alcanza CapsulaDePerfil, Consentimiento y
-  ContadorDeUsoDiario (PER-T1). <b>No alcanza el respaldo en S3</b> que ADR-002-D6
-  introdujo, y el versionado agrava el punto: borrar un objeto no lo borra.
-  Por tanto <b>RF-24 no se cumple de extremo a extremo</b>. Se cierra en ARQ-01,
-  y su plazo no es de calendario sino material: <b>antes de que haya personas reales</b>.
+  ContadorDeUsoDiario (PER-T1), y desde ADR-003 <b>eso es todo lo que hay</b>: el
+  almacen operativo <b>no se respalda</b>, asi que no existe copia que escape a la
+  cascada. Se cerro <b>quitando el segundo almacen</b>, no acotandolo.
+  <b>Y desde SD-35 la supresion es ademas INMEDIATA</b> (ADR-004-D1): fisica, sin ventana
+  de gracia y sin marca de baja — PER-H2 cerrado. Con sus dos excepciones cerradas,
+  <b>RF-24 pasa a cumplirse</b> segun el diseno; la inmediatez se verifica en fase 4,
+  contra una implementacion.
+  <b>Precio declarado:</b> perder este almacen es irrecuperable (riesgo R-11).
 end note
 
 note as N_Ausencias

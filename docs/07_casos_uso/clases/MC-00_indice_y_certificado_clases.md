@@ -1,6 +1,6 @@
 # MC-00 — Índice y certificado del modelo de clases de diseño
 
-**ID:** MC-00 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** MC-00 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.2 (SD-35: `PER-H2` cerrado tras emitir el modelo). v1.1 (SD-33: `PER-H5` cerrado por `ADR-003` tras emitir este modelo). v1.0 · **Estado:** Propuesto.
 **Propósito:** índice del paquete `MC`, certificado de auditoría con las capas ejecutadas **y las no ejecutadas**, hallazgos sobre los artefactos de entrada, delta al modelo de dominio y paquete para el CDR.
 **Insumos:** `DS-01…DS-14 v1.1` (282 mensajes), `DOP-01 v1.1` (192 operaciones), `MD-01 v1.4/v1.6` (16 clases, 17 relaciones), `ECU-01…ECU-14 v2.1`, `DR-01…DR-14 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `PER-01 v1.3`, `MV-01 §13`, `ECU-12 §4.1`, `DIS-00`, `SEG-01 v1.2`, `PRIV-01 v1.5`, `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-design-class-model`, modo **Ensamblar**.
@@ -238,7 +238,8 @@ Lo que `iconix-cdr-review` necesita, y contra qué guía suya responde cada piez
 
 1. **La capa de infraestructura no se ejecutó** (§4.1). Revisar decisiones de persistencia aquí sería revisar lo que aún no se ha decidido.
 2. **El `.svg` no está generado ni mirado** (§4.2).
-3. **`PER-H5` sigue abierto y rompe `RF-24` de extremo a extremo.** `Usuario.suprimirEnCascada()` no alcanza el respaldo en S3. Está declarado dentro del propio `.puml`, no escondido aquí.
+3. **Las dos excepciones de `RF-24` se cerraron después de emitir este modelo** — `PER-H5` en `ADR-003` (SD-33) y `PER-H2` en `ADR-004` (SD-35), así que **el requisito pasa a cumplirse** según el diseño.
+ `Usuario.suprimirEnCascada()` alcanza ahora **todo lo que existe y lo hace de inmediato**: el almacén operativo no se respalda (`ADR-003`) y la supresión es física, sin ventana de gracia ni marca de baja (`ADR-004-D1`). **Con la precisión que el CDR debe conservar:** se cumple **según el diseño**; la inmediatez solo se verifica contra una implementación, y eso es fase 4. El `.puml` lo lleva escrito dentro.
 
 ## 11. Ciclo de auditoría interna — resultado
 
@@ -266,7 +267,8 @@ Lo que `iconix-cdr-review` necesita, y contra qué guía suya responde cada piez
 |---|---|
 | Render del `.svg` y su revisión visual | ⛔ **No ejecutado** — falta PlantUML en el entorno (§4.2) |
 | Los 14 hallazgos de §6 | Reportados, **ninguno aplicado**. Pendientes de confirmación |
-| `PER-H5` | Abierto. Rompe `RF-24` de extremo a extremo. Se cierra en `ARQ-01`, **antes de que haya personas reales** |
+| ~~`PER-H5`~~ | ✅ **Cerrado en `ADR-003`** (SD-33), y **antes de `ARQ-01`**: resultó ser un no-objetivo declarado, no diseño físico. Se cerró **quitando** el respaldo del almacén operativo, no acotándolo |
+| ~~`PER-H2`~~ | ✅ **Cerrado en `ADR-004-D1`** (SD-35): la supresión es física e inmediata. Con sus dos excepciones cerradas, **`RF-24` pasa a cumplirse** según el diseño |
 | `PER-H4` | Abierto. Deja `ContadorDeUsoDiario` sin atributos |
 | Propagación de gobernanza | Pendiente: `INDICE_MAESTRO`, `ESTADO_PIPELINE`, `CHANGELOG`, `REGISTRO_DECISIONES` (`SD-32`), `HECHOS_CANONICOS` |
 
@@ -276,4 +278,5 @@ Lo que `iconix-cdr-review` necesita, y contra qué guía suya responde cada piez
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-04 | J. Sánchez | **SD-33.** `ADR-003` cierra `PER-H5` **después** de emitirse este modelo. §10 y §12 se actualizan: lo que el CDR debe saber ya no es «`PER-H5` rompe `RF-24` de extremo a extremo» sino que **`PER-H2`** lo impide de forma *inmediata*. La nota del `.puml` se reescribe en el mismo sentido. **Ninguna cifra del modelo cambia**: 37 clases, 200 operaciones, 35 atributos, 73 relaciones. |
 | v1.0 | 2026-08-04 | J. Sánchez | Creación. 37 clases (16 del problema + 21 de solución), 200 operaciones, 69 atributos, 11 enumerados; los dos validadores en 0 errores y 0 discrepancias. Dos capas declaradas **no ejecutadas**: infraestructura (por decisión) y render del SVG (por falta de herramienta). 14 hallazgos sobre los insumos, enrutados y no aplicados. |

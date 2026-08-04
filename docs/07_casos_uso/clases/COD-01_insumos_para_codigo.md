@@ -1,6 +1,6 @@
 # COD-01 — Insumos estructurados para código
 
-**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.2 (SD-35: borrado físico sin marca de baja). v1.1 (SD-33: `PER-H5` cerrado — la cascada de `suprimirEnCascada()` es completa; queda `PER-H2`). v1.0 · **Estado:** Propuesto.
 **Propósito:** clase · atributos · operaciones con firma · capa, en forma tabular, para que la fase de construcción y el CDR trabajen sobre una lista y no sobre un diagrama.
 **Insumos:** **`MC-01_modelo_clases_diseno.puml` y nada más.**
 **Consumidores:** el **CDR** (guía #2, *«generate the code headers for your classes»*), la fase de construcción, `ARQ-01`.
@@ -79,7 +79,7 @@ La palabra «capa» aquí significa **capa de diseño**, no capa física: el dis
 -marcarLaFilaConEseEstadoSinExcluirla(estado : EstadoDirectorio) : void
 ```
 > `estado` es **derivado**, no almacenado (`PER-T4`, `SD-26`). Al generar la cabecera debe salir como propiedad calculada, no como campo.
-> `suprimirEnCascada()` **no alcanza el respaldo en S3** (`PER-H5`): `RF-24` no se cumple de extremo a extremo.
+> `suprimirEnCascada()` **alcanza todo lo que existe y lo hace de inmediato**: `ADR-003` quitó el respaldo (`PER-H5`) y `ADR-004-D1` fijó la supresión como **física e inmediata**, sin marca de baja (`PER-H2`). **`RF-24` cumplido** según el diseño. Al generar la cabecera: **borrado físico, sin bandera de baja lógica**.
 
 ### `Administrador` — especializa `TitularDeCuenta`, sin atributos propios
 ```
@@ -305,7 +305,8 @@ Honestidad antes que completitud: esto **no** está listo para escribir código 
 | **Formato de `username`/`alias`/`contrasena`** (`RA-02` de `ECU-02`) | `validarFormatoDeLosCampos()` | Construcción |
 | **`Sesion` sin mecanismo** | Todo lo de autenticación | `ARQ-01` |
 | **CSRF sin construir** | Toda petición con efecto | `ARQ-01` |
-| **`PER-H5`** | **`RF-24` no se cumple de extremo a extremo** | `ARQ-01`, **antes de que haya personas reales** |
+| ~~`PER-H5`~~ | ✅ **Cerrado** en `ADR-003` (SD-33): sin respaldo del almacén operativo no hay copia que escape a la cascada | — |
+| ~~`PER-H2`~~ | ✅ **Cerrado** en `ADR-004-D1` (SD-35): la supresión es **física e inmediata**, sin marca de baja. `ARQ-01` hereda la restricción, no la pregunta: **nada de `deletedAt` ni borrado lógico** en el esquema | — |
 
 ---
 
@@ -313,4 +314,5 @@ Honestidad antes que completitud: esto **no** está listo para escribir código 
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-04 | J. Sánchez | **SD-33.** `ADR-003` cierra `PER-H5`: la nota de `suprimirEnCascada()` deja de decir «no alcanza el respaldo en S3» y pasa a decir que **alcanza todo lo que existe**. §8 sustituye la fila de `PER-H5` por la de `PER-H2`, que es la que ahora impide cumplir `RF-24` de forma inmediata. **Ninguna clase, atributo, operación ni firma cambia.** |
 | v1.0 | 2026-08-04 | J. Sánchez | Creación. Cierra el pendiente #2 de `ESTADO_PIPELINE`. 37 clases en 5 capas de diseño, 35 atributos y 200 operaciones con firma completa, proyectados de `MC-01` como fuente única. Ocho huecos declarados que impiden implementar de extremo a extremo. |

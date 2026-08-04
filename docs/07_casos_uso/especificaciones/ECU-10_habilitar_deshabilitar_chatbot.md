@@ -1,5 +1,5 @@
 # ECU-10 — Especificación de caso de uso: «Habilitar o deshabilitar el chatbot» (CU-10)
-**ID documento:** DOC-CU-10 · **Caso de uso:** CU-10 · **Alias en DCU-01:** `CU_Kill` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.0 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-10 · **Caso de uso:** CU-10 · **Alias en DCU-01:** `CU_Kill` · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.1 (SD-35: `PRE-03` cerrada — el kill switch arranca habilitado). v2.0 · **Estado:** Propuesto.
 **Forma:** **completa** (§1–§23 de la plantilla de la skill `use-case-specifier`) — caso de uso **de control global (*kill switch*) con auditoría**, y **canon-sensible por elevación**: condiciona a CU-06, así que un defecto aquí se paga en la conversación.
 **Insumos:** DCU-01 v2.1, MD-01 v1.4, MV-01 §Vista Administración, REQ-01 (RF-17, RF-18), PRIV-01, PER-01, DIS-00 (P-16), plan §3.2/§3.7/§4.14. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -22,6 +22,7 @@
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v2.1 | 2026-08-04 | J. Sánchez | **SD-35: `PRE-03` cerrada.** Declaraba que «ningún artefacto declara todavía cuál es el valor inicial de un entorno recién aprovisionado». `ADR-004-D2` lo fija: **`habilitado`**. **No es *fail-closed*, y se declara** — el motivo es la conveniencia de la demostración académica, y la condición de reversa es material: en cuanto haya personas reales, pasa a `deshabilitado`. El *gate* y el *fallback* no dependen de este estado. **Ningún flujo ni criterio cambia.** |
 | v2.0 | 2026-07-31 | J. Sánchez | **PDR-01, fase D.3, tanda 4.** Se declara en §4.1 **qué alcanza el *kill switch* y qué no**, con el efecto sobre las conversaciones ya abiertas separado del efecto sobre las nuevas. Toda regla citada queda **definida en §15** (v1.0 invocaba la familia de administración con notación de familia, que no resolvía). Los flujos de excepción ganan **desenlace explícito** y aparecen `FA-03` (estado ya vigente) y `FE-03` (confirmación mal formada). Los criterios de aceptación pasan de 3 a **9**, uno por flujo. El registro de auditoría se nombra `AccionAdministrativa`, como en MD-01 §2, y su nombre de persistencia queda acotado a PER-01. Se añade la correspondencia alias ↔ `CU-NN` en §19. |
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
 
@@ -132,7 +133,7 @@ La v1.0 decía «con el chatbot deshabilitado, ningún usuario puede iniciar con
 |---|---|---|---|
 | PRE-01 | El Administrador tiene sesión activa, abierta por el login separado del panel de administración. | Autorización | Sí (si no → `FE-01`) |
 | PRE-02 | El Sistema confirma en el servidor que la sesión tiene rol de administrador. | Autorización | Sí (si no → `FE-02`) |
-| PRE-03 | Existe un estado global de `DisponibilidadDelChatbot` con valor conocido. | Datos | Sí (el paso 1 lo presenta; ningún artefacto declara todavía cuál es el valor inicial de un entorno recién aprovisionado) |
+| PRE-03 | Existe un estado global de `DisponibilidadDelChatbot` con valor conocido. | Datos | Sí. **Valor inicial fijado en SD-35 (`ADR-004-D2`): `habilitado`** — un entorno recién aprovisionado arranca con el chatbot activo. **No es *fail-closed***, y el motivo está declarado: conveniencia de la demostración académica. **Condición de reversa material:** en cuanto haya personas reales, pasa a `deshabilitado` |
 
 ## 10. Disparador
 

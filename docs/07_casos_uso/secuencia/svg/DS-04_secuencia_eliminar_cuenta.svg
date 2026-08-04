@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3042 1968" width="3042" height="1968" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3042 1994" width="3042" height="1994" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-04 - Secuencia de CU-04 «Eliminar cuenta»</title>
 <desc id="d">Diagrama de secuencia UML. 11 participantes, 23 mensajes.</desc>
-<rect x="0" y="0" width="3042" height="1968" fill="#FFFFFF"/>
+<rect x="0" y="0" width="3042" height="1994" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-04 - Secuencia de CU-04 «Eliminar cuenta»</text>
-<line x1="77.3" y1="103.0" x2="77.3" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="477.1" y1="67.0" x2="477.1" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="922.2" y1="80.0" x2="922.2" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1189.1" y1="80.0" x2="1189.1" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1415.1" y1="67.0" x2="1415.1" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1762.8" y1="67.0" x2="1762.8" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1999.5" y1="67.0" x2="1999.5" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2266.5" y1="67.0" x2="2266.5" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2492.5" y1="67.0" x2="2492.5" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2718.5" y1="67.0" x2="2718.5" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2961.2" y1="67.0" x2="2961.2" y2="1940.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="77.3" y1="103.0" x2="77.3" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="477.1" y1="67.0" x2="477.1" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="922.2" y1="80.0" x2="922.2" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1189.1" y1="80.0" x2="1189.1" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1415.1" y1="67.0" x2="1415.1" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1762.8" y1="67.0" x2="1762.8" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1999.5" y1="67.0" x2="1999.5" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2266.5" y1="67.0" x2="2266.5" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2492.5" y1="67.0" x2="2492.5" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2718.5" y1="67.0" x2="2718.5" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2961.2" y1="67.0" x2="2961.2" y2="1966.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <rect x="439.1" y="272.0" width="788.0" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,272 501.05000000000007,272 501.05000000000007,284 493.05000000000007,292 439.05000000000007,292" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="448.05000000000007" y="286" font-size="10" font-weight="600" fill="#993C1D">break</text>
@@ -156,13 +156,15 @@
 <text x="1449.1" y="1457.0" font-size="9.5" fill="#2C2C2A">—la cascada no lo alcanza— y por eso debe ser irreidentificable (`RE-06`,</text>
 <text x="1449.1" y="1470.0" font-size="9.5" fill="#2C2C2A">`PER-T2`): sin alias ni username, sin permitir reconstruir que la cuenta existio.</text>
 <text x="1449.1" y="1483.0" font-size="9.5" fill="#2C2C2A">La operacion existe para que esa propiedad sea verificable (`CA-11`), no tacita.</text>
-<rect x="2176.5" y="1836.0" width="652.0" height="94.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="2184.5" y="1854.0" font-size="9.5" fill="#2C2C2A">PER-H5, hallazgo de canon abierto y declarado. `ADR-002-D6` puso los respaldos</text>
-<text x="2184.5" y="1867.0" font-size="9.5" fill="#2C2C2A">de la base de datos en S3, y ese respaldo escapa a esta cascada: ninguna regla</text>
-<text x="2184.5" y="1880.0" font-size="9.5" fill="#2C2C2A">vigente lo alcanza. Por tanto `RF-24` («no queda dato asociado recuperable»)</text>
-<text x="2184.5" y="1893.0" font-size="9.5" fill="#2C2C2A">no se cumple de extremo a extremo hasta cerrarlo.</text>
-<text x="2184.5" y="1906.0" font-size="9.5" fill="#2C2C2A">No se dibuja aqui porque el respaldo es diseno fisico y su sitio es `ARQ-01`, tras el</text>
-<text x="2184.5" y="1919.0" font-size="9.5" fill="#2C2C2A">CDR. Se declara para que el hueco sea visible, no para taparlo.</text>
+<rect x="2176.5" y="1836.0" width="652.0" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2184.5" y="1854.0" font-size="9.5" fill="#2C2C2A">Esta cascada es TODA la que existe — PER-H5 cerrado en ADR-003 (SD-33).</text>
+<text x="2184.5" y="1867.0" font-size="9.5" fill="#2C2C2A">El almacen operativo no se respalda: sin exportaciones ni recuperacion a un punto</text>
+<text x="2184.5" y="1880.0" font-size="9.5" fill="#2C2C2A">en el tiempo, no hay copia que escape a lo que estos mensajes suprimen. El hueco que</text>
+<text x="2184.5" y="1893.0" font-size="9.5" fill="#2C2C2A">`ADR-002-D6` habia abierto se cerro quitando el segundo almacen, no acotandolo.</text>
+<text x="2184.5" y="1906.0" font-size="9.5" fill="#2C2C2A">Y desde SD-35 esta supresion es ademas INMEDIATA (`ADR-004-D1`): fisica, sin</text>
+<text x="2184.5" y="1919.0" font-size="9.5" fill="#2C2C2A">ventana de gracia y sin marca de baja — `PER-H2` cerrado. Resulto ser una ambiguedad</text>
+<text x="2184.5" y="1932.0" font-size="9.5" fill="#2C2C2A">sintactica del plan §4.14, no un hueco de diseno: el MVP no tiene «cierre de cuenta».</text>
+<text x="2184.5" y="1945.0" font-size="9.5" fill="#2C2C2A">Con sus dos excepciones cerradas, `RF-24` pasa a cumplirse segun el diseno.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
 <rect x="393.5" y="34.0" width="167.2" height="33.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
