@@ -10,7 +10,7 @@ skinparam shadowing false
 skinparam responseMessageBelowArrow true
 
 actor "Usuario adulto" as ACT_Usuario
-boundary "Interfaz de chat (P-10)" as B_InterfazChat
+boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
 boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
 entity "Alan" as E_Alan
 entity "Aura" as E_Aura
@@ -21,37 +21,37 @@ entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
 
 == Paso 1 - Selector de personaje ==
 
-ACT_Usuario -> B_InterfazChat : solicitar cambiar de acompanante
+ACT_Usuario -> B_InterfazDeChat : solicitar cambiar de acompanante
 
 break FE-02 la sesion expira
-  B_InterfazChat -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+  B_InterfazDeChat -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
 end
 
-B_InterfazChat -> E_Alan : ofrecerseComoActivacion()
-B_InterfazChat -> E_Aura : ofrecerseComoCalma()
-B_InterfazChat -> B_InterfazChat : mostrarSelectorDePersonaje()
+B_InterfazDeChat -> E_Alan : ofrecerseComoActivacion()
+B_InterfazDeChat -> E_Aura : ofrecerseComoCalma()
+B_InterfazDeChat -> B_InterfazDeChat : mostrarSelectorDePersonaje()
 
 == Pasos 2 y 3 - Sustitucion y confirmacion ==
 
-ACT_Usuario -> B_InterfazChat : confirmar el otro personaje
+ACT_Usuario -> B_InterfazDeChat : confirmar el otro personaje
 
 opt FA-01 confirma el personaje que ya conduce la sesion
-  B_InterfazChat -> B_InterfazChat : continuarSinCambioObservable()
+  B_InterfazDeChat -> B_InterfazDeChat : continuarSinCambioObservable()
 end
 
-B_InterfazChat -> E_DisponibilidadDelChatbot : estaHabilitado()
+B_InterfazDeChat -> E_DisponibilidadDelChatbot : estaHabilitado()
 
 break FE-01 el kill switch se activa durante el cambio
-  B_InterfazChat -> B_InterfazChat : informarIndisponibilidadTemporal()
-  B_InterfazChat -> E_Conversacion : cerrar()
+  B_InterfazDeChat -> B_InterfazDeChat : informarIndisponibilidadTemporal()
+  B_InterfazDeChat -> E_Conversacion : cerrar()
 end
 
-B_InterfazChat -> E_Conversacion : cambiarPersonajeSinCerrarse()
+B_InterfazDeChat -> E_Conversacion : cambiarPersonajeSinCerrarse()
 E_Conversacion -> E_Personaje : sustituirInterlocutorDeLaSesion()
 E_Conversacion -> E_CapsulaDePerfil : consultarCharacterSinReescribirlo()
 E_CapsulaDePerfil --> E_Conversacion : character persistido, intacto
-E_Conversacion --> B_InterfazChat : sigue abierta, ahora con el otro personaje
-B_InterfazChat -> B_InterfazChat : confirmarCambioSinCerrarLaConversacion()
+E_Conversacion --> B_InterfazDeChat : sigue abierta, ahora con el otro personaje
+B_InterfazDeChat -> B_InterfazDeChat : confirmarCambioSinCerrarLaConversacion()
 
 note over E_Personaje, E_DisponibilidadDelChatbot
   <b>La capsula se consulta y no se escribe, y ese es el invariante.</b>

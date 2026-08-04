@@ -1,5 +1,5 @@
 # Índice maestro — Subproyecto «Alan & Aura Académico»
-**Propósito:** qué es cada artefacto, su ID, sus insumos y consumidores. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-02 (SD-31: versiones del paquete de secuencia al día, generadores de SVG inventariados; antes SD-30: diagramas de secuencia).
+**Propósito:** qué es cada artefacto, su ID, sus insumos y consumidores. **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-04 (SD-32: entra el **modelo de clases de diseño** `MC-00`/`MC-01` y `COD-01`; el siguiente hito es el CDR).
 **Convención de IDs:** `RF/RNF/RC/RN/CU/PR/MET` con **guion único** (`RF-01`). Documentos con prefijo semántico (`VIS`, `ADR`, `MV`, `REQ`, `PRIV`, `SEG`, `NORM`, `TRZ`, `PLAN`, `SD`).
 
 ---
@@ -10,8 +10,8 @@
 | `ESTADO_PIPELINE.md` | Fase actual y qué sigue. **Leer primero.** |
 | `CAPSULA_CONTEXTO.md` | El subproyecto en 5 minutos. |
 | `INDICE_MAESTRO.md` | Este índice. |
-| `REGISTRO_DECISIONES.md` | Decisiones SD-01…SD-29 con justificación. |
-| `HECHOS_CANONICOS.md` | **Fuente única de las cifras repetidas entre artefactos** (21 hechos) y de los valores obsoletos con su ámbito legítimo. Cuando dos documentos discrepan, manda esta tabla. La verifica `scripts/verificar_coherencia.py`. |
+| `REGISTRO_DECISIONES.md` | Decisiones SD-01…SD-32 con justificación. |
+| `HECHOS_CANONICOS.md` | **Fuente única de las cifras repetidas entre artefactos** (28 hechos) y de los valores obsoletos con su ámbito legítimo. Cuando dos documentos discrepan, manda esta tabla. La verifica `scripts/verificar_coherencia.py`. |
 | `CHANGELOG.md` | Hitos del paquete documental. |
 | `MANIFIESTO_FUENTES.md` | Procedencia: qué del macro se consultó (solo lectura). |
 
@@ -49,12 +49,14 @@
 | **MD-01** | `06_dominio/MD-01_modelo_dominio.puml` (+ `.md`) | MV-01, VIS-01, REQ-01, SEG-01, PRIV-01, contrato | DCU-01, robustez, `RPD-01`, clases (fase 2+) |
 | **DCU-01** | `07_casos_uso/DCU-01_casos_uso.puml` (+ `.md`, `.svg`) | MV-01, MD-01, VIS-01, REQ-01, plan §5.3 | Especificación textual de CU, robustez, `RPD-01` |
 | **ECU-00…14** | `07_casos_uso/especificaciones/ECU-00_indice…ECU-14_*.md` | DCU-01, MV-01, MD-01, REQ-01, PRIV-01, SEG-01, contrato, plan | Robustez (DR), `RPD-01`, secuencia (DS), pruebas (CP) |
+| **MC-00 / MC-01** | `07_casos_uso/clases/MC-00_indice_y_certificado_clases.md`, `MC-01_modelo_clases_diseno.puml` (+ matriz de procedencia) | `DS-01…14`, `DOP-01`, `MD-01`, `ECU-01…14`, `PER-01`, `MV-01 §13`, `DIS-00` (skill `uml-design-class-model`) | **CDR** (hito 3), `COD-01`, `ARQ-01`, construcción |
+| **COD-01** | `07_casos_uso/clases/COD-01_insumos_para_codigo.md` — clase · atributo · operación · firma · capa | `MC-01` **y nada más** (proyección, no segunda fuente) | CDR (guía #2), construcción |
 | **DIS-00 / DIS-01** | `08_diseno/DIS-00_inventario_y_plan.md`, `08_diseno/DIS-01_sistema_diseno.md` | DCU-01, ECU-00…14, VIS-01, MV-01, REQ-01, PRIV-01, SEG-01, **ADR-002-D1/D2** (supera a ADR-001); evidencia (Fase 1) | Mockups, §17 de las ECU, fase de construcción |
 | **Informe académico** | `09_informe/Informe_Academico_Alan_Aura.docx` | Todos los artefactos del proyecto | Entrega académica del curso (revisión del profesor). **Pendiente:** aún refleja el estado anterior a `PDR-01`/`RPD-01` |
 
 ## Cadena de dependencia (resumen)
 `VIS-01 → ADR-001 → ADR-002 (stack vigente) → MV-01 (vistas: Onboarding · Conversación (+contrato) · Seguridad · Administración) → REQ-01 → {PRIV-01, SEG-01, PER-01} → NORM-01 → TRZ-01 → PLAN-01`
-Fase 2 ICONIX: `MV-01 → MD-01 (dominio) ✅ → DCU-01 (casos de uso) ✅ → especificación textual ✅ → robustez ✅ → RPD-01 (compuerta) ✅ → secuencia ✅ → **clases de diseño (siguiente)** → CDR → `ARQ-01``
+Fase 2 ICONIX: `MV-01 → MD-01 (dominio) ✅ → DCU-01 (casos de uso) ✅ → especificación textual ✅ → robustez ✅ → RPD-01 (compuerta) ✅ → secuencia ✅ → clases de diseño (MC-01) ✅ → **CDR (siguiente)** → ARQ-01`
 
 ## Estándares por artefacto
 - **MV-01 (consolidado):** E8, 11 rasgos {1,2,3,6,7,12,13,14,15,16,17} + checklist único; apto para extracción de dominio (§14 Handoff, modo *academic strict*).
@@ -62,11 +64,12 @@ Fase 2 ICONIX: `MV-01 → MD-01 (dominio) ✅ → DCU-01 (casos de uso) ✅ → 
 - **SEG-01:** gate binario + fallback determinista; mapeo de procedencia a S0-S5 (E3).
 - **NORM-01:** filas [V-cláusula] reusadas de D6-bis; 3 niveles de verificación.
 - **TRZ-01:** objetivo → actor → RF/RN → calidad → norma → prueba-planeada; cero huérfanos.
-- **MD-01 v1.6** (el `.puml` intacto desde v1.4; v1.5 y v1.6 son **solo anexo**)**:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); **16 clases, 17 relaciones** (4 generalizaciones + 1 composición + 12 asociaciones), sin atributos/multiplicidades; validador 0/0 y compuertas de la skill (*Final Quality Gates*) superadas.
+- **MD-01 v1.7** (el `.puml` intacto desde v1.4; v1.5, v1.6 y v1.7 son **solo anexo**)**:** modelo de dominio PlantUML (skill `uml-domain-modeler`, modo *academic strict*); **16 clases, 17 relaciones** (4 generalizaciones + 1 composición + 12 asociaciones), sin atributos/multiplicidades; validador 0/0 y compuertas de la skill (*Final Quality Gates*) superadas.
 - **DCU-01 v2.2** (el `.puml` intacto desde v2.1; v2.2 es **solo anexo**)**:** diagrama de casos de uso PlantUML (skill `uml-use-case-diagram`); **5 actores** (4 concretos + el rol general `Titular de cuenta`), **14 casos de uso**, 3 paquetes, **2 `<<extend>>` y 1 `<<include>>`**; validador 0 errores y compuertas de la skill superadas.
 - **ECU-00…14:** especificación textual (skill `use-case-specifier`); 7 completas + 7 ágiles; validador **0 errores y 0 advertencias** en las 14; **100 % de sus 76 flujos** con criterio de aceptación asociado.
 - **DR-00…14 v2.2:** análisis de robustez (skill `uml-robustness-diagram`); **262 elementos** (15 actores / 38 borde / 150 control / 59 entidad); validador 0 errores con `--domain MD-01`; cobertura de flujos completa.
-- **DS-00 v1.3 · DS-01…14 v1.0** (`DS-06` y `DS-09` a **v1.1** por `H-1`)**:** diagramas de secuencia (skill `uml-sequence-diagram`, modo *Generar*); **282 mensajes** (`H-22`), **150/150** controladores cubiertos, 0 flujos sin fragmento; validador **0 errores en los 14** (6 advertencias, la excepción declarada `E-2`). Capa de infraestructura **declarada no ejecutada** (`E-1` de `DS-00`). Acompañan **`DOP-01 v1.1`** (delta de **192 operaciones**, `H-23`), **`CP-00 v1.2`** (índice; los 14 archivos de casos van por v1.0, salvo `CP-01`, `CP-04`, `CP-06` y `CP-09` en **v1.1**) con **181 casos de prueba** (`H-24`) derivados de los Controladores y **`TRZ-DS-01 v1.0`** (matriz paso ↔ mensaje ↔ operación ↔ clase ↔ `CP`). SVG por generador propio, **0 colisiones**.
+- **DS-00 v1.4 · DOP-01 v1.2 · TRZ-DS-01 v1.1 · DS-01…14 v1.0** (`DS-06` y `DS-09` a **v1.1** por `H-1`)**:** diagramas de secuencia (skill `uml-sequence-diagram`, modo *Generar*); **282 mensajes** (`H-22`), **150/150** controladores cubiertos, 0 flujos sin fragmento; validador **0 errores en los 14** (6 advertencias, la excepción declarada `E-2`). Capa de infraestructura **declarada no ejecutada** (`E-1` de `DS-00`). Acompañan **`DOP-01 v1.2`** (delta de **192 operaciones**, `H-23`), **`CP-00 v1.2`** (índice; los 14 archivos de casos van por v1.0, salvo `CP-01`, `CP-04`, `CP-06` y `CP-09` en **v1.1**) con **181 casos de prueba** (`H-24`) derivados de los Controladores y **`TRZ-DS-01 v1.0`** (matriz paso ↔ mensaje ↔ operación ↔ clase ↔ `CP`). SVG por generador propio, **0 colisiones**.
 - **Generadores de SVG (vistas derivadas, no entregables):** `docs/07_casos_uso/robustez/scripts/generar_svg_robustez.py` **v2.0** (SD-31: ruteo por coloreado de intervalos, banda de etiquetas separada de las pistas y pase geométrico que **aborta**) y `docs/07_casos_uso/secuencia/scripts/generar_svg_secuencia.py`. Los **28 SVG** pasan en **cero colisiones**; la fuente de verdad son siempre los `.puml`.
+- **MC-01:** modelo de clases de diseño (skill `uml-design-class-model`); **37 clases** (16 del problema con nombre idéntico a `MD-01` + **21 del espacio de la solución**, todas `<<solucion>>`), **200 operaciones**, 35 atributos, 11 enumerados y 73 relaciones; validador de la skill **0 errores** y verificación exacta de procedencia **sin discrepancias**. Dos capas declaradas **no ejecutadas**: infraestructura (`ARQ-01`) y render del `.svg` (falta PlantUML).
 - **RPD-01:** compuerta ICONIX (skill `iconix-pdr-review`) entre análisis y diseño detallado; veredicto **Aceptado con verificación de retrabajo**.
 - **PER-01:** inventario consolidado de persistencia (7 entidades del plan §4.14 + telemetría §4.15); marcas [E1]/[I2], reglas transversales `PER-T1…T7`, hallazgos abiertos `PER-H2`/`PER-H4`/**`PER-H5`** (este último, de canon: el respaldo en S3 escapa al borrado en cascada — ver `ADR-002`). **No** es diseño de esquema: sin tipos, claves ni DDL.

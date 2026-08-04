@@ -26,14 +26,14 @@
 <polyline points="890,428 1110,428 1110,232 1140,232"/>
 <polyline points="420,165 506,165 506,411 615,411"/>
 <polyline points="890,462 966,462 966,528 890,528"/>
-<polyline points="420,375 591,375 591,510 615,510"/>
+<polyline points="420,382 591,382 591,510 615,510"/>
 <polyline points="420,182 515,182 515,576 615,576"/>
 <polyline points="420,199 525,199 525,594 615,594"/>
 <polyline points="890,148 966,148 966,295 890,295"/>
 <polyline points="420,216 496,216 496,642 615,642"/>
 <polyline points="420,233 534,233 534,659 615,659"/>
 <polyline points="420,250 544,250 544,707 615,707"/>
-<polyline points="420,441 506,441 506,725 615,725" stroke="#993C1D" stroke-dasharray="5 3"/>
+<polyline points="420,456 506,456 506,725 615,725" stroke="#993C1D" stroke-dasharray="5 3"/>
 <polyline points="420,267 553,267 553,773 615,773"/>
 <polyline points="420,284 563,284 563,790 615,790"/>
 <polyline points="890,230 1022,230 1022,856 890,856"/>
@@ -52,17 +52,18 @@
 <g font-size="11" fill="#0C447C">
 <text x="257" y="211">Gestion de cuenta (P-13)</text>
 </g>
-<rect x="225" y="349" width="195" height="52" rx="4" fill="#E6F1FB" stroke="#185FA5"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="235" y1="369.0" x2="235" y2="381.0"/><line x1="235" y1="375.0" x2="239" y2="375.0"/><circle cx="244" cy="375.0" r="5"/></g>
+<rect x="225" y="349" width="195" height="67" rx="4" fill="#E6F1FB" stroke="#185FA5"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="235" y1="376.5" x2="235" y2="388.5"/><line x1="235" y1="382.5" x2="239" y2="382.5"/><circle cx="244" cy="382.5" r="5"/></g>
 <g font-size="11" fill="#0C447C">
 <text x="257" y="371">Onboarding -</text>
-<text x="257" y="386">caracterizacion (P-08)</text>
+<text x="257" y="386">caracterizacion y capa de</text>
+<text x="257" y="401">personalizacion (P-08)</text>
 </g>
-<rect x="225" y="415" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
-<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="235" y1="435.0" x2="235" y2="447.0"/><line x1="235" y1="441.0" x2="239" y2="441.0"/><circle cx="244" cy="441.0" r="5"/></g>
+<rect x="225" y="430" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
+<g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="235" y1="450.0" x2="235" y2="462.0"/><line x1="235" y1="456.0" x2="239" y2="456.0"/><circle cx="244" cy="456.0" r="5"/></g>
 <g font-size="11" fill="#4A1B0C">
-<text x="257" y="437">Inicio de sesion de</text>
-<text x="257" y="452">usuario (P-03)</text>
+<text x="257" y="452">Inicio de sesion de</text>
+<text x="257" y="467">usuario (P-03)</text>
 </g>
 <rect x="615" y="80" width="275" height="85" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
 <g fill="none" stroke="#0F6E56" stroke-width="1.3"><circle cx="632" cy="122.5" r="5.5"/><polyline points="630.5,115.0 634.5,117.3 630.2,119.7"/></g>
@@ -156,14 +157,14 @@
 <rect x="899" y="421" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="907" y="431" fill="#5F5E5A">4</text>
 <rect x="429" y="158" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="437" y="168" fill="#5F5E5A">4</text>
 <rect x="899" y="455" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="907" y="465" fill="#5F5E5A">5</text>
-<rect x="429" y="368" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="437" y="378" fill="#5F5E5A">5</text>
+<rect x="429" y="376" width="16" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="437" y="386" fill="#5F5E5A">5</text>
 <rect x="429" y="175" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="185" fill="#5F5E5A">FA-01</text>
 <rect x="429" y="192" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="202" fill="#5F5E5A">FA-01</text>
 <rect x="899" y="141" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="916" y="151" fill="#5F5E5A">FA-02</text>
 <rect x="429" y="209" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="219" fill="#5F5E5A">FA-03</text>
 <rect x="429" y="226" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="236" fill="#5F5E5A">FA-03</text>
 <rect x="429" y="243" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="253" fill="#5F5E5A">FE-01</text>
-<rect x="429" y="434" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="444" fill="#4A1B0C">FE-01</text>
+<rect x="429" y="449" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="459" fill="#4A1B0C">FE-01</text>
 <rect x="429" y="260" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="270" fill="#5F5E5A">FE-02</text>
 <rect x="429" y="277" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="446" y="287" fill="#5F5E5A">FE-02</text>
 <rect x="899" y="223" width="34" height="13" rx="3" fill="#FFFFFF" stroke="#B4B2A9"/><text x="916" y="233" fill="#5F5E5A">FE-03</text>

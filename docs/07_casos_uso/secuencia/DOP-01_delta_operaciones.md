@@ -1,6 +1,6 @@
 # DOP-01 — Delta de operaciones
 
-**ID:** DOP-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto — cubre los **14** diagramas.
+**ID:** DOP-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-32: desviarADerivacionDeCU07 cambia de receptora y §8 corrige el recuento del espacio de la solución a 21). v1.1 · **Estado:** Propuesto — cubre los **14** diagramas.
 **Propósito:** registrar, operación por operación, **qué clase la recibe y por qué**. Es la entrada del diagrama de clases de diseño y la única parte del paso 4 que queda auditable.
 **Insumos:** `DR-01…DR-14` v2.0 (los **150** controladores), `DS-01…DS-14` v1.0, `MD-01 v1.4`, `SEG-01 v1.2`, `PER-01 v1.2`, `MV-01 §7`.
 **Generado con:** skill `uml-sequence-diagram` (modo Generar). **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores** en los 14.
@@ -63,7 +63,7 @@ diseño detallado los dos espacios convergen.
 | `C_InformarLimiteDeTasa` | `informarLimiteYTiempoDeEspera()` | `B_EstadosDeError` | solución | `FE-05`, 429, respeta `Retry-After` |
 | `C_ReintentarUnaVez` | `reintentarUnaVez()` | `B_FronteraProveedorLLM` | solución | `FE-06`: el reintento vive donde vive la llamada |
 | `C_InformarFalloDelProveedor` | `informarFalloDelProveedor()` | `B_EstadosDeError` | solución | `FE-06`/`FE-07`, 502/504 |
-| `C_DesviarADerivacion` | `desviarADerivacionDeCU07()` | `C_GateDeSeguridad` | solución | `FE-08`: **hand-off, no reimplementación.** Quien materializa la contención es `DS-07` |
+| `C_DesviarADerivacion` | `desviarADerivacionDeCU07()` | `B_InterfazDeChat` | solución | `FE-08`: **hand-off, no reimplementación.** Quien materializa la contención es `DS-07`. **v1.2, hallazgo `H-A` de `MC-00`:** la receptora era `C_GateDeSeguridad` en v1.1, pero `DS-06:87` dibuja `C_GateDeSeguridad -> B_InterfazDeChat`, así que la operación aterriza en el borde. Manda la flecha, que es la fuente de verdad (`DS-00 §3`) |
 | `C_DenegarPorCapaBaseRevocada` | `redirigirParaOtorgarCapaBase()` | `B_OnboardingCapaBase` | solución | `FE-09`, 403 y vuelta a CU-05 |
 
 ## 3. `DS-07` — Derivar ante peligro (12 controladores → 18 operaciones)
@@ -95,12 +95,20 @@ diseño detallado los dos espacios convergen.
 
 | Clase | Estereotipo | Por qué es legítima | Riesgo vigilado |
 |---|---|---|---|
-| `C_GateDeSeguridad` | control | `SEG-R1…R6` la definen como componente propio: binaria, determinista, configurable, evaluada en **cada** mensaje antes de responder | Que absorba comportamiento ajeno. Hoy recibe 4 operaciones, todas de política de seguridad (entrada y salida). Ninguna de dominio |
+| `C_GateDeSeguridad` | control | `SEG-R1…R6` la definen como componente propio: binaria, determinista, configurable, evaluada en **cada** mensaje antes de responder | Que absorba comportamiento ajeno. Hoy recibe **3** operaciones, todas de política de seguridad (entrada y salida). Ninguna de dominio. *(v1.2: eran 4; `desviarADerivacionDeCU07()` sale por `H-A`)* |
 | `C_FallbackDeSeguridad` | control | `SEG-R2`, `SEG-R3`, `SEG-R5`: ruta determinista y local que debe operar con el proveedor y la red caídos | El control centralizado. Se midió: pasó del 69 % al rango admisible tras mover la presentación a `B_PantallaContencion` |
 
 **Dos clases controladoras sobre 37 controladores = 5 %.** Muy por debajo del 20 % que la fuente
 considera el techo razonable, y ninguna es un `XController` por entidad — el anti-patrón que la
 propia fuente advierte que los *frameworks* inducen.
+
+> **Aviso de alcance de esta sección (v1.2, hallazgo `H-B` de `MC-00`).** Esta tabla cuenta **clases
+> controladoras**, que es la métrica del 20 % de la fuente. **No** es el inventario del espacio de la
+> solución. Las clases de **frontera** —las 16 pantallas de `DIS-00`, el diálogo de confirmación y la
+> frontera con el proveedor— también son espacio de la solución: son pantallas y adaptadores, no
+> conceptos del problema, y ninguna está en `MD-01`. El inventario completo, **21 clases**, vive en
+> `MC-01_matriz_procedencia.md §4`. Leer esta tabla como «solo hay 3 clases nuevas» fue el error que
+> `MC-00 §6` reporta.
 
 ## 5. Comprobación de modelo anémico
 
@@ -157,10 +165,19 @@ sistema donde los personajes se distinguen como objetos. En el resto gobierna el
 | Controladores cubiertos | **150 / 150** |
 | Operaciones distintas | **192** |
 | Clases del problema con operaciones | **16 / 16** |
-| Clases nuevas del espacio de la solución | **3** — `C_GateDeSeguridad`, `C_FallbackDeSeguridad`, `AccionAdministrativa` |
+| Clases nuevas del espacio de la solución | **21** — 2 de control, 1 de auditoría y 18 de frontera *(v1.2, `H-B`)* |
+| — de ellas, **clases controladoras** | **2** — `C_GateDeSeguridad`, `C_FallbackDeSeguridad` |
+| — de ellas, auditoría de operación | **1** — `AccionAdministrativa` |
+| — de ellas, **fronteras** | **18** — 16 pantallas de `DIS-00` + el diálogo de confirmación de P-16 + la frontera con el proveedor |
 
-**3 clases nuevas sobre 150 controladores = 2 %.** Muy por debajo del 20 % que la fuente considera
-el techo razonable para clases controladoras, y ninguna es un `XController` por entidad.
+**Dos clases controladoras sobre 150 controladores = 1,3 %.** Muy por debajo del 20 % que la fuente
+considera el techo razonable para clases controladoras, y ninguna es un `XController` por entidad.
+
+> **Corregido en v1.2 (`H-B` de `MC-00`).** Hasta v1.1 esta fila decía «**3** clases nuevas» y
+> nombraba las dos de control más la de auditoría. Era un recuento de **clases controladoras**
+> presentado como recuento del espacio de la solución. Las 18 fronteras que los catorce `.puml`
+> declaran reciben **88 de las 192 operaciones** y ninguna está en `MD-01`: son espacio de la
+> solución con todas las letras. `TRZ-DS-01 §3` arrastraba el mismo error, con una lista distinta.
 
 ---
 
@@ -169,5 +186,6 @@ el techo razonable para clases controladoras, y ninguna es un `XController` por 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
 | v0.1 | 2026-08-01 | J. Sánchez | Creación con el piloto: 37 controladores de `DR-06`/`DR-07` repartidos en 50 operaciones sobre 13 clases del problema y 2 nuevas del espacio de la solución. |
+| v1.2 | 2026-08-04 | J. Sánchez | **SD-32, hallazgos `H-A` y `H-B` de `MC-00`.** `desviarADerivacionDeCU07()` cambia de clase receptora —de `C_GateDeSeguridad` a `B_InterfazDeChat`— porque `DS-06:87` dibuja la flecha hacia el borde y **manda la flecha**; `C_GateDeSeguridad` pasa de 4 a **3** operaciones. Y §8 deja de contar «3 clases nuevas del espacio de la solución»: eran las **controladoras**, no el espacio entero. El inventario real es **21** (2 de control + 1 de auditoría + 18 de frontera). **Las 192 operaciones no cambian**: ninguna se añade ni se quita, una cambia de dueño. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1a`.** `registrarSinContenido()` cambia de firma —`(momento, resultado, latencia, modelo, version)`, unificada contra el plan §4.15— y de sitio: se invoca **dentro del `loop`**, una vez por llamada al proveedor, no al cerrar la conversación. Misma clase receptora, mismo espacio: **192 operaciones sin cambio**. |
 | v1.0 | 2026-08-01 | J. Sánchez | Cierre con los 14 diagramas: **150 controladores → 192 operaciones** sobre las **16 clases** de `MD-01` y **3** del espacio de la solución. Añadidas §6 (asignaciones que exigieron juicio), §7 (cobertura del dominio) y §8 (cifras). |

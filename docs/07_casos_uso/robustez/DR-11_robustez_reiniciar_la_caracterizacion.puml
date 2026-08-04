@@ -10,7 +10,7 @@ skinparam shadowing false
 actor "Usuario adulto" as ACT_Usuario
 
 boundary "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta
-boundary "Onboarding - caracterizacion (P-08)" as B_PantallaCaracterizacion
+boundary "Onboarding - caracterizacion y capa de personalizacion (P-08)" as B_PantallaCaracterizacion
 boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
 
 control "Presentar la advertencia de borrado irreversible" as C_PresentarAdvertencia

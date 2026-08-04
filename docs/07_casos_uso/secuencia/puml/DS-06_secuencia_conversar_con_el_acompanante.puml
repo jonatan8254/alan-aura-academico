@@ -15,7 +15,7 @@ skinparam responseMessageBelowArrow true
 actor "Usuario adulto" as ACT_Usuario
 boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
 boundary "Chat - error y degradacion (P-11)" as B_EstadosDeError
-boundary "Onboarding - consentimiento capa base (P-07)" as B_OnboardingCapaBase
+boundary "Onboarding - consentimiento capa base (P-07)" as B_PantallaConsentimiento
 control "Gate de seguridad" as C_GateDeSeguridad
 entity "Consentimiento" as E_Consentimiento
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
@@ -41,7 +41,7 @@ end
 B_InterfazDeChat -> E_Consentimiento : estaVigenteLaCapaBase()
 
 break FE-09 la capa base del consentimiento esta revocada
-  B_InterfazDeChat -> B_OnboardingCapaBase : redirigirParaOtorgarCapaBase()
+  B_InterfazDeChat -> B_PantallaConsentimiento : redirigirParaOtorgarCapaBase()
 end
 
 B_InterfazDeChat -> E_DisponibilidadDelChatbot : estaHabilitado()

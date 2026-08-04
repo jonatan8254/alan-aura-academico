@@ -9,7 +9,7 @@ skinparam shadowing false
 
 actor "Usuario adulto" as ACT_Usuario
 
-boundary "Interfaz de chat (P-10)" as B_InterfazChat
+boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
 boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
 
 control "Mostrar el selector de personaje" as C_MostrarSelectorPersonaje
@@ -26,25 +26,25 @@ entity "Conversacion" as E_Conversacion
 entity "CapsulaDePerfil" as E_CapsulaDePerfil
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot #LightCoral
 
-ACT_Usuario -- B_InterfazChat : 1 solicita cambiar de acompanante
-B_InterfazChat -- C_MostrarSelectorPersonaje : 1 muestra el selector de personaje
+ACT_Usuario -- B_InterfazDeChat : 1 solicita cambiar de acompanante
+B_InterfazDeChat -- C_MostrarSelectorPersonaje : 1 muestra el selector de personaje
 C_MostrarSelectorPersonaje -- E_Alan : 1 ofrece el personaje de activacion
 C_MostrarSelectorPersonaje -- E_Aura : 1 ofrece el personaje de calma
-B_InterfazChat -- C_SustituirPersonaje : 2 confirma el otro personaje
+B_InterfazDeChat -- C_SustituirPersonaje : 2 confirma el otro personaje
 C_SustituirPersonaje -- E_Personaje : 2 sustituye el interlocutor de la sesion
 C_SustituirPersonaje -- E_Conversacion : 2 la conversacion sigue abierta
 C_SustituirPersonaje -- E_CapsulaDePerfil : 2 consulta character sin reescribirlo
 C_SustituirPersonaje -- C_ConfirmarCambio : 3 cambio aplicado
-C_ConfirmarCambio -- B_InterfazChat : 3 confirma el cambio; continua en el paso 2 de CU-06
+C_ConfirmarCambio -- B_InterfazDeChat : 3 confirma el cambio; continua en el paso 2 de CU-06
 
-B_InterfazChat -- C_MantenerPersonajeEnCurso : FA-01 elige el personaje que ya conduce la sesion
-C_MantenerPersonajeEnCurso -- B_InterfazChat : FA-01 continua en el paso 2 de CU-06 sin cambio observable
+B_InterfazDeChat -- C_MantenerPersonajeEnCurso : FA-01 elige el personaje que ya conduce la sesion
+C_MantenerPersonajeEnCurso -- B_InterfazDeChat : FA-01 continua en el paso 2 de CU-06 sin cambio observable
 
 C_SustituirPersonaje -- C_InformarIndisponibilidad : FE-01 el kill switch se activa durante el cambio
 C_InformarIndisponibilidad -- E_DisponibilidadDelChatbot : FE-01 consulta el estado global
-C_InformarIndisponibilidad -- B_InterfazChat : FE-01 termina; 409 y la conversacion se cierra
+C_InformarIndisponibilidad -- B_InterfazDeChat : FE-01 termina; 409 y la conversacion se cierra
 
-B_InterfazChat -- C_SolicitarReingreso : FE-02 la sesion expira
+B_InterfazDeChat -- C_SolicitarReingreso : FE-02 la sesion expira
 C_SolicitarReingreso -- B_PaginaInicioSesion : FE-02 termina; 401 sin sustituir el personaje
 
 legend right

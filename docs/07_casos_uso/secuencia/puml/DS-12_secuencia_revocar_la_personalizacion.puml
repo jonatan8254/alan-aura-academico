@@ -10,14 +10,14 @@ skinparam shadowing false
 skinparam responseMessageBelowArrow true
 
 actor "Usuario adulto" as ACT_Usuario
-boundary "Gestion de cuenta (P-13)" as B_GestionCuenta
+boundary "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta
 boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion
 entity "Usuario" as E_Usuario
 entity "Consentimiento" as E_Consentimiento
 entity "CapsulaDePerfil" as E_CapsulaDePerfil
 entity "Conversacion" as E_Conversacion
 
-note over B_GestionCuenta, E_Conversacion
+note over B_PaginaGestionCuenta, E_Conversacion
   <b>Invariante, y es lo esencial de este caso de uso: el Usuario SIGUE PUDIENDO
   CONVERSAR.</b> Revocar la personalizacion <b>no es punitivo</b> (RN-08). La capa base
   permanece otorgada; lo unico que cesa es que los cuatro autorreportes orienten la
@@ -27,49 +27,49 @@ end note
 
 == Pasos 1 y 2 - Alcance y confirmacion ==
 
-ACT_Usuario -> B_GestionCuenta : elegir revocar la personalizacion
+ACT_Usuario -> B_PaginaGestionCuenta : elegir revocar la personalizacion
 
 break FE-01 la sesion expira
-  B_GestionCuenta -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
+  B_PaginaGestionCuenta -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
 end
 
 break FE-02 el rol no esta autorizado
-  B_GestionCuenta -> B_GestionCuenta : denegarPorPermisoSinCambios()
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : denegarPorPermisoSinCambios()
 end
 
-B_GestionCuenta -> E_CapsulaDePerfil : dejaraDeOrientarLaConversacion()
+B_PaginaGestionCuenta -> E_CapsulaDePerfil : dejaraDeOrientarLaConversacion()
 
 break FA-01 la capa ya estaba revocada
-  B_GestionCuenta -> B_GestionCuenta : informarQueYaEstabaRevocadaSinRepetirElCambio()
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueYaEstabaRevocadaSinRepetirElCambio()
 end
 
-B_GestionCuenta -> B_GestionCuenta : declararQueElChatSeguiraDisponible()
-ACT_Usuario -> B_GestionCuenta : confirmar la revocacion
+B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatSeguiraDisponible()
+ACT_Usuario -> B_PaginaGestionCuenta : confirmar la revocacion
 
 break FA-03 cancela en la confirmacion
-  B_GestionCuenta -> B_GestionCuenta : cancelarSinModificarElConsentimiento()
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarSinModificarElConsentimiento()
 end
 
 break FE-03 peticion mal formada
-  B_GestionCuenta -> B_GestionCuenta : mostrarPeticionMalFormadaYPermitirReintentar()
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : mostrarPeticionMalFormadaYPermitirReintentar()
 end
 
 == Paso 3 - Revocacion y descarte de los autorreportes ==
 
-B_GestionCuenta -> E_Usuario : identificarTitularDelConsentimiento()
+B_PaginaGestionCuenta -> E_Usuario : identificarTitularDelConsentimiento()
 E_Usuario -> E_Consentimiento : revocarCapaDePersonalizacion(fecha)
 E_Consentimiento -> E_Consentimiento : conservarLaCapaBaseOtorgada()
 E_Consentimiento -> E_CapsulaDePerfil : marcarLosCuatroAutorreportesParaDescarte()
 E_CapsulaDePerfil -> E_CapsulaDePerfil : conservarCharacter()
 
 opt FA-02 la capsula solo tiene character
-  E_CapsulaDePerfil --> B_GestionCuenta : efecto observable nulo, no habia nada que dejara de usarse
+  E_CapsulaDePerfil --> B_PaginaGestionCuenta : efecto observable nulo, no habia nada que dejara de usarse
 end
 
 == Paso 4 - Confirmacion de que el chat sigue disponible ==
 
-B_GestionCuenta -> E_Conversacion : desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor()
-B_GestionCuenta -> B_GestionCuenta : confirmarQuePuedeSeguirConversando()
+B_PaginaGestionCuenta -> E_Conversacion : desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor()
+B_PaginaGestionCuenta -> B_PaginaGestionCuenta : confirmarQuePuedeSeguirConversando()
 
 note over E_Consentimiento, E_CapsulaDePerfil
   <b>PRIV-R3:</b> los autorreportes quedan <b>marcados para descarte</b>, no borrados en

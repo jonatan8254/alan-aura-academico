@@ -1,5 +1,5 @@
 # Hechos canónicos del subproyecto «Alan & Aura Académico»
-**ID:** HC-01 · **Familia:** gobernanza · **Hogar:** `docs/00_gobernanza/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (SD-31: se documenta el **cuarto bloque** del validador —`VERSIONES DECLARADAS`— y por qué su alcance es deliberadamente estrecho). v1.2: H-20 en **262**, H-21 en **150** y tres hechos nuevos del paquete de secuencia · **Estado:** vigente.
+**ID:** HC-01 · **Familia:** gobernanza · **Hogar:** `docs/00_gobernanza/` · **Fecha:** 2026-08-04 · **Versión:** v1.4 (SD-32: entran `H-25`…`H-28`, los conteos del modelo de clases de diseño, y dos filas nuevas de valor obsoleto). v1.3 (SD-31: se documenta el **cuarto bloque** del validador —`VERSIONES DECLARADAS`— y por qué su alcance es deliberadamente estrecho). v1.2: H-20 en **262**, H-21 en **150** y tres hechos nuevos del paquete de secuencia · **Estado:** vigente.
 **Propósito:** ser la **fuente única** de las cifras y conteos que aparecen repetidos en varios artefactos. Cuando dos documentos discrepan, **manda esta tabla**.
 **Insumos:** `MD-01`, `DCU-01`, `REQ-01`, `PER-01`, `PRIV-01`, `DR-00` — contados directamente, no citados de segunda mano.
 **Consumidores:** `scripts/verificar_coherencia.py`, y cualquier pasada de edición que toque cifras.
@@ -50,6 +50,10 @@ Todos los valores fueron **verificados contra los artefactos** el 2026-08-01 (co
 | H-22 | Mensajes de los diagramas de secuencia | **282** | `DS-00` | `DOP-01`, `REGISTRO_DECISIONES` |
 | H-23 | Operaciones asignadas (delta de `DOP-01`) | **192** sobre 16 clases de `MD-01` + 3 del espacio de la solución | `DOP-01` | `DS-00`, el diagrama de clases |
 | H-24 | Casos de prueba derivados de los controladores | **181** | `CP-00` | `DS-00`, `TRZ-DS-01` |
+| H-25 | Clases del modelo de clases de diseño | **37** = 16 del problema + 21 de solución | `MC-01` | `MC-00`, `COD-01`, `ESTADO_PIPELINE` |
+| H-26 | Operaciones del modelo de clases | **200** pares (clase, operación) = **192 nombres distintos** + 8 repeticiones | `MC-01` | `MC-00`, `COD-01`, `DOP-01` |
+| H-27 | Atributos del modelo de clases | **35** propios de clase (+ 34 literales de enumerado) | `MC-01` | `MC-00`, `COD-01` |
+| H-28 | Clases del espacio de la solución | **21** = 2 de control + 1 de auditoría + 18 de frontera | `MC-01_matriz_procedencia.md §4` | `DOP-01 §8`, `TRZ-DS-01 §3`, `DS-00 §7` |
 
 ## Valores obsoletos y dónde SÍ pueden aparecer
 
@@ -64,6 +68,9 @@ Esta sección es tan importante como la anterior: sin ella, un barrido automáti
 | 177 · 178 casos de prueba | **181** (H-24) | `CHANGELOG`, changelogs de `CP-00`/`CP-06` | `CP-00`, `DS-00`, `TRZ-DS-01` |
 | 3 campos de cápsula | **5 + 2** (H-10) | `REGISTRO_DECISIONES` (SD-22), `ESTADO_PIPELINE` | `PRIV-01`, `PER-01`, `REQ-01` |
 | Django · SQLite · PythonAnywhere | React · DynamoDB · Vercel + AWS (`ADR-002`) | `00_PLAN_CODEX_ORIGINAL`, `00_AUDITORIA_PLAN_CODEX`, `ADR-001` (superada), `CHANGELOG`, `REGISTRO_DECISIONES`, `MANIFIESTO_FUENTES` | Cualquier afirmación vigente sobre qué se va a construir |
+
+| 3 clases del espacio de la solución | **21** (H-28) | `CHANGELOG`, `REGISTRO_DECISIONES` (SD-30), y los bloques de corrección de `DOP-01 v1.2`, `TRZ-DS-01 v1.1` y `DS-00 v1.4` que documentan el cambio | `DOP-01 §8`, `TRZ-DS-01 §3`, `DS-00 §7` como afirmación vigente |
+| 1.500 caracteres en la **Parte A** de `MV-01` | **2.500** (H-01) | Solo `MV-01:66`, que es un bloque de cambio | La descripción del sistema de la Parte A — corregido en SD-32 |
 
 **Regla de lectura:** un valor obsoleto en un *bloque de historial, changelog o registro de decisiones* es **correcto** — describe lo que se decidió entonces. El mismo valor en una *regla, requisito, criterio de aceptación o descripción del sistema* es un **defecto**.
 
@@ -105,6 +112,7 @@ cat docs/07_casos_uso/robustez/DR-[0-9][0-9]_*.puml | grep -cE '^\s*control '   
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.4 | 2026-08-04 | J. Sánchez | **SD-32.** Entran cuatro hechos del modelo de clases de diseño: `H-25` (37 clases), `H-26` (200 operaciones = 192 nombres distintos + 8 repeticiones), `H-27` (35 atributos) y `H-28` (**21 clases del espacio de la solución**). Y dos filas de valor obsoleto: «3 clases del espacio de la solución», que `DOP-01 §8` y `TRZ-DS-01 §3` afirmaban con **listas distintas entre sí**; y el «1.500 caracteres» de la **Parte A de `MV-01`**, que sobrevivió a dos pasadas porque estaba escrito **en letras** y este validador busca cifras. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación (SD-29). 21 hechos canónicos verificados contra los artefactos, tabla de valores obsoletos con su ámbito legítimo, y registro del pendiente D.5 sobre el límite de caracteres, que ya estaba resuelto en los documentos pero seguía declarado como abierto. |
 | v1.3 | 2026-08-02 | J. Sánchez | **SD-31.** Se documenta el **cuarto bloque** de `verificar_coherencia.py`, `VERSIONES DECLARADAS`, y —más importante— **por qué su alcance es estrecho**: la primera versión miraba toda mención `ARTEFACTO vX.Y` del corpus y dio **202 hallazgos con casi ningún defecto**, porque la mayoría son procedencia legítima. Un bloque con esa señal/ruido se ignora, y entonces no vigila nada. Acotado al inventario de `INDICE_MAESTRO`, que sí afirma el estado actual, encontró **un error real** en su primera ejecución. **Ninguna cifra de la tabla se mueve.** |
 | v1.2 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1b` de `DS-00`.** `H-20` baja de **263** a **262** y las entidades de 60 a **59**: `DR-09` contaba las «llamadas al chat de los últimos 7 días» desde `Conversacion`, que **no se persiste**, y al reapuntar ese arco a `EventoOperativo` la entidad quedó sin ningún arco. `H-21` **no cambia** (150). Entran tres hechos nuevos del paquete de secuencia: **`H-22`** 282 mensajes, **`H-23`** 192 operaciones, **`H-24`** 181 casos de prueba —181 y no 178 porque `H-1a` obligó a tres casos nuevos: el volumen por turno y el par que fija qué llamadas cuentan para `MET-07`—. Propagado a `DR-00`, `generar_svg_robustez.py`, `ESTADO_PIPELINE`, `INDICE_MAESTRO`, `DS-00`, `DOP-01` y `CP-00`. |

@@ -1,5 +1,5 @@
 # Cápsula de contexto — Subproyecto «Alan & Aura Académico»
-**Objetivo:** entender el subproyecto en 5 minutos. **Naturaleza:** síntesis operativa (no normativa). **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-01 (`ADR-002`: reversión del stack a React + Vercel + AWS serverless, SD-29).
+**Objetivo:** entender el subproyecto en 5 minutos. **Naturaleza:** síntesis operativa (no normativa). **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-04 (`SD-32`: modelo de clases de diseño `MC-01`; el siguiente hito es el CDR).
 
 ---
 
@@ -32,7 +32,7 @@ Detalle, alternativas y condiciones de reversa en **`ADR-002`**, que supera a `A
 No sobre-claim clínico · minimización (cápsula, no historial) · consentimiento granular y revocable (dos capas) · uso no punitivo · divulgación mínima · seguridad emocional > engagement · no persistencia del chat · solo adultos con *disclosure*.
 
 ## Dónde estamos (detalle en `ESTADO_PIPELINE.md`)
-Fase 2 ICONIX **avanzada**: producidos el modelo de dominio (`MD-01 v1.6`, 16 clases), el diagrama de casos de uso (`DCU-01 v2.2`, 14 casos de uso), las 14 especificaciones textuales (`ECU-00…14`), los 14 diagramas de robustez (`DR-00…14`, 262 elementos) y los **14 diagramas de secuencia** (`DS-00…14`, SD-30): **282 mensajes** en 0 errores, el delta de **192 operaciones** (`DOP-01`), **181 casos de prueba** derivados de los 150 controladores (`CP-00…14`) y la matriz `TRZ-DS-01`. El conjunto pasó una **primera pasada de correcciones** (`PDR-01`, motivada por retroalimentación docente) y la **compuerta ICONIX** entre análisis y diseño detallado (`RPD-01`, veredicto: *Aceptado con verificación de retrabajo*). Los **cinco** validadores del pipeline están en 0 errores. Siguiente artefacto: **el diagrama de clases de diseño**, y tras él el **CDR**.
+Fase 2 ICONIX **completa salvo la compuerta**: producidos el modelo de dominio (`MD-01`, 16 clases), el diagrama de casos de uso (`DCU-01`, 14 casos de uso), las 14 especificaciones (`ECU-00…14`), los 14 diagramas de robustez (`DR-00…14`), la compuerta `RPD-01`, los 14 **diagramas de secuencia** (`DS-00…14`, 282 mensajes, 192 operaciones, 181 casos de prueba) y el **modelo de clases de diseño** (`MC-00`/`MC-01`/`COD-01`, SD-32): **37 clases** —16 del problema y **21 del espacio de la solución**—, **200 operaciones**, 35 atributos y 11 enumerados, con los seis validadores del pipeline en 0 errores. **Siguiente hito: el CDR** (hito 3). Dos capas declaradas **no ejecutadas** en `MC-01`: la de infraestructura (es `ARQ-01`, tras el CDR) y el render del `.svg`, que no se pudo generar por no haber PlantUML en el entorno — declarado, no dado por hecho.
 
 ## Qué queda abierto
 

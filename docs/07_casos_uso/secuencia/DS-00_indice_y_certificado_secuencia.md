@@ -1,6 +1,6 @@
 # DS-00 — Índice y certificado de los diagramas de secuencia
 
-**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (SD-31: §11 pasa de orientación a hecho — los 14 SVG de robustez regenerados en cero colisiones — y §10 corrige el alcance que declaraba al revés). v1.2: SD-30 cerrado, los **siete** hallazgos aplicados; robustez en **262 elementos** y 150 controladores; **181** casos de prueba · **Estado:** Propuesto.
+**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.4 (SD-32: etiquetas de P-08/P-10 corregidas en su raíz de robustez, participantes de DS-09, y E-3/E-4 declaradas). v1.3 (SD-31: §11 pasa de orientación a hecho — los 14 SVG de robustez regenerados en cero colisiones — y §10 corrige el alcance que declaraba al revés). v1.2: SD-30 cerrado, los **siete** hallazgos aplicados; robustez en **262 elementos** y 150 controladores; **181** casos de prueba · **Estado:** Propuesto.
 **Propósito:** índice de los **14 diagramas de secuencia** (`DS-01…DS-14`) derivados de `DR-01…DR-14`, con su certificado de auditoría, las capas declaradas, las excepciones y la trazabilidad hacia adelante.
 **Insumos:** `DR-01…DR-14 v2.1` (**262 elementos**, **150 controladores**), `ECU-01…ECU-14 v2.1`, `MD-01 v1.4`, `DCU-01 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `DIS-00`, `SEG-01 v1.2`, `PER-01 v1.2`, `PRIV-01`, `MV-01 §7`, `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-sequence-diagram`, modo **Generar**. **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores en los 14**.
@@ -32,7 +32,7 @@ llegó a **anidamiento de nivel 7**. Ver §5.
 | [**DS-06**](puml/DS-06_secuencia_conversar_con_el_acompanante.puml) | CU-06 **Conversar con el acompañante** | 16 | 49 | **25/25** | ✅ 0 · 0 |
 | [**DS-07**](puml/DS-07_secuencia_derivar_ante_peligro.puml) | CU-07 **Derivar ante peligro** | 9 | 26 | 12/12 | ✅ 0 · 0 |
 | [DS-08](puml/DS-08_secuencia_consultar_directorio.puml) | CU-08 Consultar directorio de usuarios | 4 | 13 | 8/8 | ✅ 0 · 0 |
-| [DS-09](puml/DS-09_secuencia_consultar_metricas.puml) | CU-09 Consultar métricas de uso | 6 | 13 | 8/8 | ✅ 0 · 1 |
+| [DS-09](puml/DS-09_secuencia_consultar_metricas.puml) | CU-09 Consultar métricas de uso | 5 | 13 | 8/8 | ✅ 0 · 1 |
 | [DS-10](puml/DS-10_secuencia_habilitar_deshabilitar_chatbot.puml) | CU-10 Habilitar o deshabilitar el chatbot | 8 | 20 | 11/11 | ✅ 0 · 0 |
 | [DS-11](puml/DS-11_secuencia_reiniciar_la_caracterizacion.puml) | CU-11 Reiniciar la caracterización | 7 | 19 | 11/11 | ✅ 0 · 1 |
 | [DS-12](puml/DS-12_secuencia_revocar_la_personalizacion.puml) | CU-12 Revocar la personalización | 7 | 17 | 9/9 | ✅ 0 · 1 |
@@ -75,7 +75,7 @@ Ninguna capa queda en silencio. Esa es la exigencia del método y el motivo de e
 |---|---|---|
 | 1 | Notación y estructura | ✅ Las tres directivas obligatorias; alias con prefijo; sin `activate`/`deactivate`; fragmentos etiquetados con su `FA`/`FE`; **anidamiento ≤ 2** en los 14 |
 | 2 | Cierre de participantes contra `DR-XX` | ✅ Todo participante viene del diagrama de robustez. **Ningún renombrado silencioso** |
-| 3 | Cierre de entidades contra el dominio | ✅ Las **16 clases** de `MD-01 v1.4` reciben operaciones; ninguna huérfana. **3 clases nuevas**, todas del espacio de la solución y declaradas en `DOP-01` |
+| 3 | Cierre de entidades contra el dominio | ✅ Las **16 clases** de `MD-01 v1.4` reciben operaciones; ninguna huérfana. **21 clases nuevas** del espacio de la solución — 2 de control, 1 de auditoría y 18 de frontera —, inventariadas en `MC-01_matriz_procedencia.md §4`. *(v1.4, `H-B`: hasta v1.3 esta celda decía «3», que era el recuento de clases **controladoras** presentado como el del espacio entero.)* |
 | 4 | Cobertura de controladores (guía #7) | ✅ **150/150** |
 | 5 | Cobertura de flujos alternativos | ✅ **0 flujos sin fragmento** en los 14 |
 | 6 | Barrido texto ↔ mensajes (guía #6) | ✅ Ejecutado **a mano**, línea a línea, contra las 14 `ECU` y contra los **18 pasos del plan §4.11** que `ECU-06` delega expresamente a `DS-06` |
@@ -135,6 +135,28 @@ más inventaría estructura que el texto no tiene — el mismo razonamiento que 
 a las cadenas de `DR-07`. El validador lo marca como **advertencia y no como error** precisamente
 porque pide criterio, no obediencia.
 
+**`E-3` de `DS-00` · Diez mensajes van dirigidos a un actor, y así se quedan.**
+`DS-08`, `DS-09`, `DS-10` y `DS-11` dibujan diez operaciones como mensaje de la frontera **hacia el
+actor** —`B_MetricasDeUso --> ACT_Administrador : denegarPorRolSinMostrarCifras()`— mientras `DS-04`
+dibuja conducta equivalente como **auto-llamada** (`advertirQueLaAccionEsIrreversible()`). La
+inconsistencia de estilo es real y la reportó `MC-00 §6` como `H-C`.
+
+**Se probó a unificarlo y se midió el resultado: empeoraba.** Convertir los diez en auto-llamadas
+subió el validador de **6 a 10 advertencias**, sacó a `DS-09` de la banda que `E-2` declara
+(62-78 % → **83 %** de control centralizado, porque una auto-llamada cuenta como mensaje emitido) y
+creó dos avisos de **auto-llamadas consecutivas** en `DS-08` y `DS-09`. **Revertido con evidencia,
+no por opinión.** Un mensaje de frontera a actor es UML legítimo —es la salida del sistema llegando
+a quien la pide— y el modelo de clases resuelve el punto igual de bien asignando la operación a la
+frontera **emisora**, que es lo que `MC-01` hace y declara.
+
+**`E-4` de `DS-00` · `actor "Visitante"` y `entity "Visitante"` comparten etiqueta, y no tiene arreglo limpio.**
+En `DS-01` y `DS-02` conviven las dos declaraciones con el mismo texto. El actor se llama así porque
+`DCU-01` lo llama así; la entidad, porque `MD-01 v1.4` la llama así — y esa clase existe justamente
+porque la retroalimentación docente pidió que el actor tuviera objeto de dominio (`RET-01 §3`).
+Renombrar cualquiera de las dos rompe una traza. **Consecuencia práctica, declarada:** toda
+herramienta que empareje participantes **por etiqueta** —incluido el validador del modelo de
+clases— confunde las dos. La desambiguación se hace por el prefijo del alias (`ACT_` frente a `E_`).
+
 **Excepción heredada de `DR-00 §5 E-2`, re-declarada sin reabrirse:** `CU-06` **no se parte** pese
 a que `DS-06` es el mayor del paquete (16 participantes, 49 mensajes). Sus once flujos no básicos
 son de un solo nivel; el tamaño viene de la tabla de códigos HTTP (`RF-26`), no de complejidad
@@ -148,8 +170,16 @@ oculta.
 | `C_FallbackDeSeguridad` | control | `SEG-R2`, `SEG-R3`, `SEG-R5`: ruta determinista y local que debe operar con el proveedor y la red caídos |
 | `AccionAdministrativa` | **`participant`, no `entity`** | **Fuera de `MD-01` por decisión declarada** (`DR-00 §6`, `RPD-01` H-02): auditoría de operación, no concepto del problema. Declararla `entity` habría producido un falso hallazgo de trazabilidad |
 
-**3 clases nuevas sobre 150 controladores = 2 %**, muy por debajo del 20 % que la fuente considera
-el techo. Ninguna es un `XController` por entidad — el anti-patrón que los *frameworks* inducen.
+**Dos clases controladoras sobre 150 controladores = 1,3 %**, muy por debajo del 20 % que la fuente
+considera el techo. Ninguna es un `XController` por entidad — el anti-patrón que los *frameworks*
+inducen.
+
+> **El espacio de la solución es mayor que esta tabla, y v1.3 lo decía mal** (`H-B` de `MC-00`).
+> Esta sección lista el *object discovery* **de clases con nombre propio**. Pero las **18 fronteras**
+> —las 16 pantallas de `DIS-00`, el diálogo de confirmación de P-16 y la frontera con el proveedor—
+> también son espacio de la solución: son pantallas y adaptadores, ninguna está en `MD-01`, y entre
+> las tres de arriba y ellas reciben las 192 operaciones. **El total es 21**, y el inventario con su
+> justificación vive en `MC-01_matriz_procedencia.md §4`.
 
 ## 8. Hallazgos sobre los artefactos de entrada
 
@@ -251,6 +281,7 @@ crecen en alto —`DR-06` llega a 2.488 px—, que es el precio de que quepan si
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.4 | 2026-08-04 | J. Sánchez | **SD-32, hallazgos del modelo de clases (`MC-00 §6`).** (a) **`H-D`, corregido en su raíz:** las etiquetas divergentes de P-08 y P-10 nacían en **`DR-11` y `DR-13`**, no aquí — `DS-11` y `DS-13` copiaban fielmente su robustez, que es lo que la capa 2 exige. Corregidas las dos en robustez y alineados `DS-06`, `DS-11`, `DS-12` y `DS-13`; SVG de ambas familias regenerados sin colisiones. (b) **`H-P`:** la tabla de §2 declaraba **6** participantes para `DS-09` y son **5** — residuo de `SD-30`, cuando `H-1b` sacó `E_Conversacion` del diagrama y nadie bajó el conteo. (c) **`H-C` evaluado y NO aplicado:** se propuso convertir en auto-llamadas los 10 mensajes dirigidos a un actor; al medirlo, el validador subió de 6 a 10 advertencias, sacó a `DS-09` de la banda declarada en `E-2` (62-78 % → 83 %) y creó dos avisos de auto-llamadas consecutivas. **Revertido:** un mensaje frontera→actor es UML legítimo. Queda como `E-3`. (d) **`H-N` declarado, no corregible:** `actor "Visitante"` y `entity "Visitante"` comparten etiqueta porque una viene de `DCU-01` y la otra de `MD-01`; renombrar cualquiera rompe una traza. **Verificación: los 14 en 0 errores y 6 advertencias, idéntico a la línea base tomada antes de empezar.** |
 | v1.3 | 2026-08-02 | J. Sánchez | **SD-31.** §11 deja de ser una orientación pendiente: **los 14 SVG de robustez están regenerados en cero colisiones**. Al medir la demanda real apareció que el alcance declarado era doblemente erróneo: no era `DR-06` —**los catorce** desbordaban algún canal— y `MD-01.svg`/`DCU-01.svg` **no entraban**, porque los produce PlantUML y no el generador propio. La fila de §10 decía justo lo contrario y queda corregida. |
 | v1.2 | 2026-08-01 | J. Sánchez | **SD-30 cerrado.** Se aplican los **siete** hallazgos restantes (`H-1`…`H-7`); §8 deja de tener pendientes. El grande, `H-1`, resultó **dos defectos con una raíz**: el evento operativo se registraba al cerrar y las cifras de ventana se contaban desde `Conversacion` — ambas insostenibles porque **la `Conversacion` no se persiste**, que es la razón por la que `MD-01` creó `EventoOperativo`. Ripple: **263 → 262** elementos y **178 → 181** casos de prueba, estos últimos porque `H-1a` obligó a decidir **qué llamadas cuentan** para `MET-07`. Los conteos del paquete pasan a `HECHOS_CANONICOS` como `H-22`/`H-23`/`H-24`. Entra §11 con la orientación de D-6. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** se aplican `H-8` (`FE-02` de `CU-01` vuelve a P-01, no dirige a P-02) y `H-9` (`DR-04` incorpora `EventoOperativo` y su controlador). `DR-01` y `DR-04` pasan a v2.1; los conteos suben a 263 elementos y 150 controladores; entra `CP-813`. Quedan 7 hallazgos pendientes de confirmación. |

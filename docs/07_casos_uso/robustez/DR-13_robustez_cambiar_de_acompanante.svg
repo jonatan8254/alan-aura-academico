@@ -40,7 +40,8 @@
 <rect x="225" y="80" width="195" height="153" rx="4" fill="#E6F1FB" stroke="#185FA5"/>
 <g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="235" y1="150.5" x2="235" y2="162.5"/><line x1="235" y1="156.5" x2="239" y2="156.5"/><circle cx="244" cy="156.5" r="5"/></g>
 <g font-size="11" fill="#0C447C">
-<text x="257" y="160">Interfaz de chat (P-10)</text>
+<text x="257" y="152">Chat con el acompanante</text>
+<text x="257" y="168">(P-10)</text>
 </g>
 <rect x="225" y="247" width="195" height="52" rx="4" fill="#FAECE7" stroke="#993C1D"/>
 <g fill="none" stroke="#993C1D" stroke-width="1.3"><line x1="235" y1="267.0" x2="235" y2="279.0"/><line x1="235" y1="273.0" x2="239" y2="273.0"/><circle cx="244" cy="273.0" r="5"/></g>

@@ -4,7 +4,7 @@
 <rect x="0" y="0" width="2561" height="1224" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-13 - Secuencia de CU-13 «Cambiar de acompanante»</text>
 <line x1="77.3" y1="103.0" x2="77.3" y2="1196.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="432.5" y1="67.0" x2="432.5" y2="1196.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="432.5" y1="80.0" x2="432.5" y2="1196.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <line x1="859.4" y1="80.0" x2="859.4" y2="1196.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <line x1="1085.4" y1="67.0" x2="1085.4" y2="1196.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <line x1="1311.4" y1="67.0" x2="1311.4" y2="1196.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
@@ -105,9 +105,10 @@
 <text x="1447.0" y="1175.0" font-size="9.5" fill="#2C2C2A">tenga ninguna frontera con el Proveedor LLM lo hace verificable de un vistazo.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
-<rect x="351.9" y="34.0" width="161.2" height="33.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="358.925" y1="44.5" x2="358.925" y2="56.5"/><line x1="358.925" y1="50.5" x2="362.925" y2="50.5"/><circle cx="367.925" cy="50.5" r="5"/></g>
-<text x="442.5" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Interfaz de chat (P-10)</text>
+<rect x="351.9" y="34.0" width="161.2" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="358.925" y1="51.0" x2="358.925" y2="63.0"/><line x1="358.925" y1="57.0" x2="362.925" y2="57.0"/><circle cx="367.925" cy="57.0" r="5"/></g>
+<text x="442.5" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Chat con el acompanante</text>
+<text x="442.5" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">(P-10)</text>
 <rect x="791.0" y="34.0" width="136.9" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
 <g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="797.9749999999999" y1="51.0" x2="797.9749999999999" y2="63.0"/><line x1="797.9749999999999" y1="57.0" x2="801.9749999999999" y2="57.0"/><circle cx="806.9749999999999" cy="57.0" r="5"/></g>
 <text x="869.4" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>

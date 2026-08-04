@@ -1,6 +1,6 @@
 # TRZ-DS-01 — Matriz de trazabilidad del paquete de secuencia
 
-**ID:** TRZ-DS-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** TRZ-DS-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 (SD-32: §3 corrige «tres clases del espacio de la solución» a 21). v1.0 · **Estado:** Propuesto.
 **Propósito:** cerrar la cadena **paso del texto → mensaje → operación → clase receptora → caso de prueba**, para los 14 casos de uso. Es el quinto entregable de la skill `uml-sequence-diagram` y la evidencia de que **ningún requisito quedó huérfano** al pasar de análisis a diseño detallado.
 **Insumos:** `ECU-01…ECU-14 v2.1`, `DR-01…DR-14 v2.1` (**262 elementos**, 150 controladores), `DS-01…DS-14 v1.1` (**282 mensajes**), `DOP-01 v1.1` (**192 operaciones**), `CP-00…CP-14 v1.2` (**181 casos**), `MD-01 v1.6`, `HECHOS_CANONICOS` (`H-20`…`H-24`).
 **Consumidores:** `TRZ-01` (matriz maestra), `uml-design-class-model`, el CDR.
@@ -76,10 +76,19 @@ recibir nada**: las 58 apariciones de entidad en los 14 diagramas son todas dest
 mensaje. Comprobado sobre los `.puml`, no supuesto. Una entidad dibujada que nadie invoca sería el
 síntoma clásico del modelo anémico.
 
-Tres clases del **espacio de la solución** reciben operaciones sin estar en `MD-01`:
-`C_GateDeSeguridad`, `B_FronteraProveedorLLM` y `B_InterfazDeChat`. **No es un defecto de
-trazabilidad**: es lo que se espera del diseño detallado, donde los dos espacios convergen. Cada
-una está justificada por nombre en `DOP-01`; la primera, además, contra `SEG-01 §R1-R6`.
+**Veintiuna** clases del **espacio de la solución** reciben operaciones sin estar en `MD-01`: dos de
+**control** (`C_GateDeSeguridad`, `C_FallbackDeSeguridad`), una de **auditoría de operación**
+(`AccionAdministrativa`) y **dieciocho de frontera** — las 16 pantallas de `DIS-00`, el diálogo de
+confirmación de P-16 y la frontera con el proveedor. Entre las tres primeras reúnen 7 operaciones y
+las fronteras 88. **No es un defecto de trazabilidad**: es lo que se espera del diseño detallado,
+donde los dos espacios convergen. El inventario con su justificación vive en
+`MC-01_matriz_procedencia.md §4`; las de control, además, contra `SEG-01 §R1-R6`.
+
+> **Corregido en v1.1 (`H-B` de `MC-00`, SD-32).** Hasta v1.0 este párrafo decía «**tres** clases» y
+> nombraba `C_GateDeSeguridad`, `B_FronteraProveedorLLM` y `B_InterfazDeChat`. Eran tres ejemplos
+> presentados como el total, y además una lista **distinta** de la que daba `DOP-01 §8` —que también
+> decía tres y nombraba otras—. Dos artefactos del mismo paquete daban dos respuestas incompatibles a
+> la misma pregunta, y ninguna era el número real.
 
 ## 4. Lo que esta matriz deja declarado y no resuelve
 
@@ -95,4 +104,5 @@ una está justificada por nombre en `DOP-01`; la primera, además, contra `SEG-0
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-04 | J. Sánchez | **SD-32, hallazgo `H-B` de `MC-00`.** §3 decía «tres clases del espacio de la solución» y nombraba tres ejemplos, con una lista además **distinta** de la de `DOP-01 §8`. Las reales son **21**. Ningún conteo de la matriz por caso de uso cambia: los 150 controladores, los 282 mensajes, las 192 operaciones y los 181 casos de prueba se mantienen. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación (SD-30). Cierra la cadena paso → mensaje → operación → clase → `CP` para los 14 casos de uso, con los cinco totales reproducidos contra los artefactos y la verificación de que las **16 clases** de `MD-01` reciben comportamiento. |

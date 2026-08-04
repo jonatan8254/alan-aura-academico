@@ -1,0 +1,662 @@
+@startuml
+' =====================================================================
+' MC-01 - Modelo de clases de diseno (ICONIX paso 7, modelo estatico)
+' v1.0 - fase de diseno detallado
+'
+' Insumos: DS-01..DS-14 v1.1 (282 mensajes), DOP-01 v1.1 (delta de operaciones),
+'          MD-01 v1.4/v1.6 (16 clases, 17 relaciones), ECU-01..ECU-14 v2.1,
+'          DR-01..DR-14 v2.1, RPD-01 (Aceptado con verificacion de retrabajo),
+'          PER-01 v1.3 (atributos), MV-01 §13.1 (dominios de valor) y §13.3
+'          (cardinalidades), DIS-00 (P-01..P-16), SEG-01 v1.2, PRIV-01 v1.5.
+'
+' REGLA QUE GOBIERNA ESTE ARCHIVO: cada elemento traza a un artefacto de origen.
+'   - operaciones -> mensajes de DS-XX      - relaciones -> MD-01 + operaciones
+'   - atributos   -> PER-01 / MV-01 / ECU   - clases de solucion -> declaradas
+' Lo que no traza esta en MC-00 §Hallazgos, NO relleno a ojo.
+'
+' CAPA DE INFRAESTRUCTURA: **NO EJECUTADA** por decision declarada, heredando
+'   E-1 de DS-00. El diseno fisico (claves de DynamoDB, endpoints, S3, IAM) es
+'   ARQ-01, posterior al CDR (ADR-002 §1). No hay clases INF_, ni repositorios,
+'   ni DAO, ni factorias de sesion en este modelo.
+'
+' NOMBRE DE CLASE: las clases de frontera llevan como nombre la ETIQUETA con que
+'   el diagrama de secuencia declara su participante, y el identificador como
+'   alias. No es cosmetica: es lo que mantiene el nombre del modelo estatico
+'   identico al de la secuencia, que es donde nacio la operacion.
+'
+' VISIBILIDAD: `+` a las operaciones recibidas desde otra linea de vida; `-` a
+'   las auto-llamadas. Las auto-llamadas se dibujan pese a la regla de «metodos
+'   privados de bajo nivel fuera» porque el criterio de entrada del CDR exige
+'   reflejar TODA operacion asignada en la secuencia; omitirlas lo incumpliria.
+'
+' TIPOS: ningun artefacto del proyecto declara tipos primitivos - PER-01 §1.1 los
+'   excluye de su alcance expresamente. Los tipos de este archivo son aporte del
+'   diseno, marcados como tales en MC-01_matriz_procedencia.md §5. No se copian
+'   de ninguna fuente porque no existe ninguna de la que copiarlos.
+' =====================================================================
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam defaultFontName Segoe UI, Helvetica, Arial, sans-serif
+skinparam defaultFontSize 12
+skinparam ArrowColor #5F5E5A
+skinparam ArrowThickness 1.1
+skinparam PackageBackgroundColor transparent
+skinparam PackageBorderColor #B4B2A9
+skinparam PackageFontColor #5F5E5A
+skinparam PackageFontSize 12
+skinparam ClassBorderThickness 1
+hide empty members
+top to bottom direction
+
+' El color va por ESTEREOTIPO, no en linea tras el nombre de clase.
+' Motivo verificado, no estetico: la forma `class X #color {` deja el `{` separado
+' del nombre y el parseador del validador de la skill aborta el cuerpo entero — con
+' ella el modelo validaba «0 operaciones» y aun asi imprimia LISTO PARA EL CDR.
+' Reportado como H-M en MC-00 §Hallazgos.
+skinparam class {
+  BackgroundColor #FDFDFC
+  BorderColor #5F5E5A
+  BackgroundColor<<solucion>> #EDF3F8
+  BorderColor<<solucion>> #39668C
+}
+
+' =====================================================================
+' ESPACIO DEL PROBLEMA - las 16 clases de MD-01 v1.4, con los 5 paquetes
+' y las 17 relaciones del modelo de dominio intactas.
+' Sin estereotipo, porque el espacio del problema es el caso por defecto.
+' =====================================================================
+
+package "Acceso y cuenta" {
+
+  class Visitante {
+    .. sin atributos: RN-04.5 - solo consulta la presentacion, no se captura ningun dato ..
+    +identificarComoSinCuentaNiSesion() : void
+    +identificarComoAunSinCuenta() : void
+    +promoverATitularDeCuenta(username : String, alias : String, contrasenaHash : String) : TitularDeCuenta
+    +quedarEnLaCondicionDeVisitante() : void
+    +dejarLaPresentacionSinCrearSesionNiRastro() : void
+  }
+
+  abstract class TitularDeCuenta {
+    -username : String {readOnly}
+    -alias : String
+    -contrasenaHash : String
+    -rol : Rol
+    +solicitarUsernameYContrasena() : void
+    +estaTomadoElUsername(username : String) : Boolean
+    +reservarUsername(username : String) : void
+    +contrastarConLaCuentaRegistrada(username : String, contrasena : String) : Boolean
+    +establecerSesionConElRolDeterminado(rol : Rol) : Sesion
+    +invalidarSesionEnElServidor() : void
+    -dejarDeReconocerAlTitular() : void
+  }
+
+  class Usuario {
+    -esAdulto : Boolean {readOnly}
+    -versionDisclosure : String {readOnly}
+    -fechaDeRegistro : Date {readOnly}
+    -estado : EstadoDirectorio {derived}
+    +crearCuenta(rol : Rol) : Usuario
+    +determinarRolEnElServidor() : Rol
+    +registrarDeclaracionDeEdad(esAdulto : Boolean, versionDisclosure : String) : void
+    +comprobarTitularidadEnServidor() : Boolean
+    +enumerarRegistrosQueDesapareceran() : List<String>
+    +suprimirEnCascada() : void
+    -noHayDependientesQueSuprimir() : Boolean
+    -deshacerLoSuprimido() : void
+    +reunirAliasIdTruncadoFechaYOnboarding() : List<FilaDeDirectorio>
+    -marcarLaFilaConEseEstadoSinExcluirla(estado : EstadoDirectorio) : void
+    +contarTotalDeCuentasYOnboardingsCompletados() : AgregadoDeCuentas
+    +identificarTitularDelConsentimiento() : Usuario
+    +permanecerIntacta() : void
+  }
+
+  class Administrador {
+    .. sin atributos propios: identidad y acceso los hereda de TitularDeCuenta (RET-01 §2) ..
+    +determinarRolEnElServidor() : Rol
+    +identificarAlAutorDelCambio() : Administrador
+  }
+}
+
+package "Consentimiento y perfil" {
+
+  class Consentimiento {
+    -capa : CapaConsentimiento
+    -estado : EstadoConsentimiento
+    -fecha : DateTime
+    -version : String
+    +crearConCapaBaseOtorgada() : Consentimiento
+    +anadirCapaDePersonalizacion() : void
+    +conservarSoloLaCapaBase() : void
+    +conservarLaCapaBaseOtorgada() : void
+    +revocarCapaBase() : void
+    +revocarCapaDePersonalizacion(fecha : DateTime) : void
+    +existeLaCapaBaseOtorgada() : Boolean
+    +estaVigenteLaCapaBase() : Boolean
+    +estaOtorgadaLaPersonalizacion() : Boolean
+    +derivarEstadoDeConsentimientoVigente() : EstadoDirectorio
+    +permanecerConSusDosCapas() : void
+    +suprimirConSusDosCapas() : void
+  }
+
+  class CapsulaDePerfil {
+    -moodSelfReport : MoodSelfReport [0..1]
+    -energySelfReport : EnergySelfReport [0..1]
+    -conversationGoal : ConversationGoal [0..1]
+    -responseStyle : ResponseStyle [0..1]
+    -character : Character {readOnly}
+    -schemaVersion : String
+    -consentVersion : String
+    +armarConLoRespondido(schemaVersion : String, consentVersion : String) : CapsulaDePerfil
+    -dejarSinDefaultsLosOmitidos() : void
+    +escribirCharacter(character : Character) : void
+    +consultarCharacterSinReescribirlo() : Character
+    +conservarCharacter() : void
+    +marcarLosCuatroAutorreportesParaDescarte() : void
+    +existeConCharacter() : Boolean
+    +materializarContextoV1() : ContextoInicialConversacionalV1
+    +dejaraDeOrientarLaConversacion() : void
+    +enumerarQueElBorradoAlcanzaTambienCharacter() : AlcanceDeBorrado
+    +borrarCompleta() : void
+    -dejarDeExistir() : void
+    -deshacerElBorradoIncompleto() : void
+    +suprimir() : void
+  }
+}
+
+package "Acompanamiento" {
+
+  class Conversacion {
+    -estado : EstadoConversacion
+    +abrir() : Conversacion
+    +cerrar() : void
+    +fijarPersonajeDeLaSesion(personaje : Personaje) : void
+    +cambiarPersonajeSinCerrarse(personaje : Personaje) : void
+    +alcanzoElLimiteDeSesion() : Boolean
+    +suspenderChatOrdinario() : void
+    +abrirNuevaSesionDeAcompanamiento() : Conversacion
+    +cerrarYDescartarSuContenido() : void
+    +aplicarNuevoEstadoDeInmediato(estado : EstadoDisponibilidad) : void
+    +desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor() : void
+  }
+
+  class Mensaje {
+    -texto : String
+    -momento : DateTime
+    +validarLongitudYEstructura(maxCaracteres : Integer) : Boolean
+    +obtenerTextoDelTurno() : String
+    +ultimosIntercambiosDeLaSesion(maxIntercambios : Integer) : List<Mensaje>
+    +descartarContenido() : void
+    +descartarContenidoDelTurno() : void
+    +suspenderRespuestaOrdinariaDelTurno() : void
+  }
+
+  abstract class Personaje {
+    -persona : String
+    -tono : String
+    +obtenerPersona() : Persona
+    +identificarInterlocutorElegido() : Personaje
+    +sustituirInterlocutorDeLaSesion(personaje : Personaje) : void
+  }
+
+  class Alan {
+    .. sin atributos propios: especializa los VALORES de persona y tono, no la estructura ..
+    +describirRolYEstilo() : Persona
+    +ofrecerseComoActivacion() : Persona
+  }
+
+  class Aura {
+    .. sin atributos propios: especializa los VALORES de persona y tono, no la estructura ..
+    +describirRolYEstilo() : Persona
+    +ofrecerseComoCalma() : Persona
+  }
+}
+
+package "Seguridad" {
+
+  class EventoDeSeguridad {
+    -momento : DateTime
+    -modo : String
+    +documentarSinContenidoIndividual() : void
+    +documentarSinConservarElTexto() : void
+    +marcarTurnoComoSafetyFallback() : void
+    +noContabilizarClasificacionDeRiesgo() : void
+  }
+
+  class RecursoDeAyuda {
+    .. sin atributos persistidos: RN-06 - se aprovisionan por entorno, nunca embebidos ..
+    +obtenerAprovisionadosPorEntorno() : List<ReferenciaDeDerivacion>
+  }
+}
+
+package "Operacion de la plataforma" {
+
+  class DisponibilidadDelChatbot {
+    -estado : EstadoDisponibilidad
+    +estaHabilitado() : Boolean
+    +leerEstadoGlobal() : EstadoDisponibilidad
+    +consultarEstadoGlobal() : EstadoDisponibilidad
+    +consultarEstadoGlobalSinObedecerlo() : EstadoDisponibilidad
+    +contrastarConElEstadoGlobal(estadoElegido : EstadoDisponibilidad) : Boolean
+    +cambiarEstadoGlobal(estadoNuevo : EstadoDisponibilidad) : void
+  }
+
+  class ContadorDeUsoDiario {
+    .. sin atributos: PER-H4 abierto - campos y llave no especificados en ningun artefacto ..
+    +dentroDeLimites(porMinuto : Integer, porDia : Integer) : Boolean
+    +registrarSolicitud() : void
+    +suprimirLosContadoresDelUsuario() : void
+  }
+
+  class EventoOperativo {
+    -momento : DateTime
+    -resultado : String
+    -latencia : Integer
+    -modelo : String
+    -versionPrompt : String
+    +registrarSinContenido(momento : DateTime, resultado : String, latencia : Integer, modelo : String, versionPrompt : String) : void
+    +conservarSinIdentidad() : void
+    +contarLlamadasAlChatDeLosUltimos7Dias() : Integer
+    +calcularTasaTecnicaDeExitoYError() : Decimal
+  }
+}
+
+' =====================================================================
+' ESPACIO DE LA SOLUCION - clases que NO estan en MD-01 y nacen del diseno.
+' Todas marcadas <<solucion>>. La declaracion ES su procedencia.
+' =====================================================================
+
+package "Solucion · control y seguridad" <<Rectangle>> {
+
+  class "Gate de seguridad" as C_GateDeSeguridad <<solucion>> {
+    .. clase controladora justificada: SEG-R1..R6 la definen como componente propio ..
+    +evaluarPeligroExplicito(mensaje : Mensaje) : Boolean
+    +aplicarGuardasDeSalida(texto : String) : String
+    -sustituirPorRespuestaSegura() : String
+  }
+
+  class "Fallback de seguridad" as C_FallbackDeSeguridad <<solucion>> {
+    .. clase controladora justificada: SEG-R2, SEG-R3, SEG-R5 - determinista y local ..
+    +activar(veredictoDePeligroExplicito : Boolean) : void
+    -mantenerModoSeguro() : void
+    -continuarSinDegradacion() : void
+  }
+}
+
+package "Solucion · auditoria de operacion" <<Rectangle>> {
+
+  class AccionAdministrativa <<solucion>> {
+    -autor : String
+    -fecha : DateTime
+    -accion : String
+    +registrarAccion(autor : Administrador, fecha : DateTime) : void
+  }
+}
+
+package "Solucion · frontera con sistemas externos" <<Rectangle>> {
+
+  class "Frontera con el Proveedor LLM" as B_FronteraProveedorLLM <<solucion>> {
+    +generar(contextoMinimo : ContextoInicialConversacionalV1) : String
+    -vigilarPlazoDeEspera(segundos : Integer) : void
+    -reintentarUnaVez() : String
+    -extraerSoloContenidoFinal() : String
+    -limitarA350Tokens() : String
+  }
+}
+
+package "Solucion · frontera de presentacion" <<Rectangle>> {
+
+  class "Presentacion / landing (P-01)" as B_PaginaPresentacion <<solucion>> {
+    -mostrarEstadoDeIndisponibilidad() : void
+    -mostrarPropositoNoClinicoLimitesYAccesos() : void
+    -mantenerVisiblesLosAccesos() : void
+    +exigirCuentaYMantenerVisibleElAccesoAlRegistro() : void
+    +cerrarSesionYConfirmarQueNoQuedaDatoRecuperable() : void
+  }
+
+  class "Registro (P-02)" as B_FormularioRegistro <<solucion>> {
+    +dirigirAlAccesoDeRegistro() : void
+    -pedirUnicamenteUsernameAliasYContrasena() : void
+    -validarFormatoDeLosCampos() : Boolean
+    -mostrarErrorDeValidacionSinCrearLaCuenta() : void
+    -indicarQueEstaEnUsoYSolicitarOtro() : void
+    -confirmarElAlta() : void
+  }
+
+  class "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion <<solucion>> {
+    +dirigirAlAccesoDeInicioDeSesion() : void
+    +invitarAIniciarSesion() : void
+    +solicitarReingresoPorCU03() : void
+    +solicitarAutenticacionSinCerrarNada() : void
+    -mostrarMensajeGenericoSinRevelarQueCampoFallo() : void
+    -denegarAccesoAdministrativoSinConcederPrivilegios() : void
+  }
+
+  class "Inicio de sesion de administracion (P-04)" as B_LoginAdmin <<solucion>> {
+    +solicitarReingresoPorCU03() : void
+    +denegarPorRolConRedireccionSegura() : void
+  }
+
+  class "Onboarding - disclosure de IA (P-05)" as B_PantallaDisclosure <<solucion>> {
+    +dirigirAlOnboardingPendiente() : void
+    -mostrarQueSeConversaConUnaIA() : void
+  }
+
+  class "Onboarding - declaracion de edad (P-06)" as B_PantallaEdad <<solucion>> {
+    +solicitarDeclaracionDeMayoriaDeEdad() : void
+    -cerrarSesionPorMinoriaDeEdad() : void
+  }
+
+  class "Onboarding - consentimiento capa base (P-07)" as B_PantallaConsentimiento <<solucion>> {
+    +mostrarAlcanceDeLaCapaBase() : void
+    +redirigirParaOtorgarCapaBase() : void
+    -impedirAvanceYVolverAlPaso4() : void
+    -finalizarSinConversacionNiCapsula() : void
+  }
+
+  class "Onboarding - caracterizacion y capa de personalizacion (P-08)" as B_PantallaCaracterizacion <<solucion>> {
+    +ofrecerPersonalizacionYLosCuatroAutorreportes() : void
+    +ofrecerRehacerDesdeElPaso6DeCU05() : void
+    -mostrarRevisaTusRespuestas() : void
+    -invocarEleccionDeAcompanante() : void
+  }
+
+  class "Onboarding - elegir Alan o Aura (P-09)" as B_PantallaEleccionPersonaje <<solucion>> {
+    -presentarEleccionDeInterlocutor() : void
+    -sustituirSeleccionSinEscribirNada() : void
+    -devolverControlACU05() : void
+  }
+
+  class "Chat con el acompanante (P-10)" as B_InterfazDeChat <<solucion>> {
+    +dirigirALaConversacion() : void
+    +desviarADerivacionDeCU07() : void
+    +impedirSeguirConversandoEnLaSesion() : void
+    +reabrirElAcompanamiento() : void
+    -verificarSesionYRol() : Boolean
+    -abrirDialogoConElPersonaje() : void
+    -mostrarRespuestaDelPersonaje() : void
+    -informarLimiteDeSesionSinErrorCrudo() : void
+    -mostrarSelectorDePersonaje() : void
+    -continuarSinCambioObservable() : void
+    -informarIndisponibilidadTemporal() : void
+    -confirmarCambioSinCerrarLaConversacion() : void
+  }
+
+  class "Chat - error y degradacion (P-11)" as B_EstadosDeError <<solucion>> {
+    +denegarAcceso() : void
+    +informarIndisponibilidadTemporal() : void
+    +solicitarReingresoPorCU03() : void
+    +informarEntradaInvalida() : void
+    +informarLimiteYTiempoDeEspera() : void
+    +informarFalloDelProveedor() : void
+  }
+
+  class "Contencion y derivacion (P-12)" as B_PantallaContencion <<solucion>> {
+    +presentarContencionYDerivacion() : void
+    +mantenerContencionYDerivacionVisibles() : void
+    -resolverTextoFijoDeContencion() : String
+    -mostrarContencionQueDeclaraSerUnaIA() : void
+    -presentarOrientacionMinimaInvariable() : void
+    -mostrarRecursosDeDerivacion() : void
+    -orientarAEmergenciasSinNumerosEmbebidos() : void
+  }
+
+  class "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta <<solucion>> {
+    .. sirve TRES casos de uso: CU-04, CU-11 y CU-12 (DIS-00 §3). Ver MC-00 §Hallazgos H-K ..
+    -verificarSesionYRol() : Boolean
+    -advertirQueLaAccionEsIrreversible() : void
+    -cancelarDejandoLaCuentaIntacta() : void
+    -denegarPorPermisoSinSuprimirNada() : void
+    -informarPeticionInvalidaYVolverAlPaso1() : void
+    -informarQueLaAccionNoSeCompleto() : void
+    -denegarPorPermisoSinBorrarNada() : void
+    -declararQueElChatQuedaInhabilitado() : void
+    -advertirDelAlcanceIrreversible() : void
+    -cancelarDejandoLaCapsulaCompleta() : void
+    -informarQueNoHayCaracterizacionQueReiniciar() : void
+    -denegarPorPermisoSinCambios() : void
+    -informarQueYaEstabaRevocadaSinRepetirElCambio() : void
+    -declararQueElChatSeguiraDisponible() : void
+    -cancelarSinModificarElConsentimiento() : void
+    -mostrarPeticionMalFormadaYPermitirReintentar() : void
+    -confirmarQuePuedeSeguirConversando() : void
+  }
+
+  class "Directorio de usuarios (P-14)" as B_DirectorioDeUsuarios <<solucion>> {
+    +dirigirAlPanelAdministrativoSinPasarPorOnboarding() : void
+    -verificarSesionYRolDeAdministrador() : Boolean
+    -restringirAlConjuntoMinimoDeRN0302() : List<FilaDeDirectorio>
+    -denegarPorSesionAusenteSinMostrarElDirectorio() : void
+    -denegarPorRolSinMostrarElDirectorio() : void
+    -informarDirectorioVacioSinError() : void
+  }
+
+  class "Metricas de uso (P-15)" as B_MetricasDeUso <<solucion>> {
+    -verificarSesionYRolDeAdministrador() : Boolean
+    -mostrarLosAgregadosEnCeroComoCifraValida() : void
+    -restringirACifrasAgregadasDeRN0303() : AgregadoDeUso
+    -senalarElEstadoJuntoALosAgregados() : void
+    -denegarPorSesionAusenteSinMostrarCifras() : void
+    -denegarPorRolSinMostrarCifras() : void
+  }
+
+  class "Kill switch - control de disponibilidad (P-16)" as B_ControlDisponibilidad <<solucion>> {
+    +cancelarSinCambiarElEstado() : void
+    +rechazarConfirmacionInvalidaYVolverAlPaso1() : void
+    -verificarSesionYRolDeAdministrador() : Boolean
+    -mostrarEstadoActual() : EstadoDisponibilidad
+    -informarEstadoYaVigenteSinRegistrarAccion() : void
+  }
+
+  class "Dialogo de confirmacion del cambio" as B_DialogoConfirmacion <<solucion>> {
+    .. estado «modal de confirmacion» de P-16, no una pantalla propia de DIS-00 ..
+    +solicitarConfirmacionDeLaAccion() : Boolean
+  }
+}
+
+' =====================================================================
+' DOMINIOS DE VALOR - literales de MV-01 §13.1, salvo los dos ultimos.
+' =====================================================================
+
+package "Dominios de valor" <<Rectangle>> {
+
+  enum Character {
+    alan
+    aura
+  }
+
+  enum MoodSelfReport {
+    muy_mal
+    mal
+    neutral
+    bien
+    muy_bien
+    prefiero_no_responder
+  }
+
+  enum EnergySelfReport {
+    baja
+    media
+    alta
+    prefiero_no_responder
+  }
+
+  enum ConversationGoal {
+    sentirme_escuchado
+    calmarme
+    ordenar_ideas
+    dar_un_paso_pequeno
+    recibir_una_sugerencia_breve
+    prefiero_no_responder
+  }
+
+  enum ResponseStyle {
+    breve_y_directo
+    equilibrado
+    pausado_y_reflexivo
+    sin_preferencia
+  }
+
+  enum EstadoConsentimiento {
+    otorgado
+    revocado
+  }
+
+  enum EstadoConversacion {
+    activa
+    cerrada
+  }
+
+  enum EstadoDisponibilidad {
+    habilitado
+    deshabilitado
+  }
+
+  enum CapaConsentimiento {
+    base
+    personalizacion
+  }
+
+  enum Rol {
+    usuario
+    administrador
+  }
+
+  enum EstadoDirectorio {
+    activo
+    sin_consentimiento_vigente
+  }
+}
+
+' =====================================================================
+' RELACIONES DEL ESPACIO DEL PROBLEMA
+' Las 17 de MD-01 v1.4, intactas. Multiplicidades SOLO donde MV-01 §13.3 o
+' PER-01 §3.3 las declaran; ausentes donde nadie las ha declarado todavia
+' (Fowler: una multiplicidad ausente NO significa 1).
+' =====================================================================
+
+TitularDeCuenta <|-- Usuario
+TitularDeCuenta <|-- Administrador
+Personaje <|-- Alan
+Personaje <|-- Aura
+
+Visitante -- TitularDeCuenta : precede a
+Usuario "1" -- "1..2" Consentimiento : otorga
+Usuario "1" -- "1" CapsulaDePerfil : posee
+Usuario "1" -- "0..*" Conversacion : mantiene
+Usuario -- ContadorDeUsoDiario : tiene
+CapsulaDePerfil -- Conversacion : orienta
+Conversacion "0..*" -- "1" Personaje : acompanada por
+Conversacion "1" *-- "1..*" Mensaje : contiene
+Conversacion -- EventoOperativo : se documenta con
+Mensaje "1" -- "0..1" EventoDeSeguridad : se documenta con
+EventoDeSeguridad "1" -- "1..*" RecursoDeAyuda : remite a
+Administrador "1" -- "1" DisponibilidadDelChatbot : tiene a cargo
+DisponibilidadDelChatbot "1" -- "0..*" Conversacion : condiciona
+
+' --- Tipado de atributos por dominio de valor ---
+Usuario ..> EstadoDirectorio
+TitularDeCuenta ..> Rol
+Consentimiento ..> CapaConsentimiento
+Consentimiento ..> EstadoConsentimiento
+Conversacion ..> EstadoConversacion
+DisponibilidadDelChatbot ..> EstadoDisponibilidad
+CapsulaDePerfil ..> Character
+CapsulaDePerfil ..> MoodSelfReport
+CapsulaDePerfil ..> EnergySelfReport
+CapsulaDePerfil ..> ConversationGoal
+CapsulaDePerfil ..> ResponseStyle
+
+' =====================================================================
+' RELACIONES DEL ESPACIO DE LA SOLUCION
+' Solo las que una operacion EXIGE navegar. Fowler: mostrar todas las
+' dependencias es «an exercise in futility». Direccion unica: la
+' presentacion depende del dominio, nunca al reves.
+' =====================================================================
+
+C_GateDeSeguridad ..> Mensaje
+C_GateDeSeguridad ..> EventoDeSeguridad
+C_FallbackDeSeguridad ..> Mensaje
+C_FallbackDeSeguridad ..> EventoDeSeguridad
+C_FallbackDeSeguridad ..> Conversacion
+C_FallbackDeSeguridad ..> DisponibilidadDelChatbot
+Administrador ..> AccionAdministrativa
+
+B_PaginaPresentacion ..> Visitante
+B_FormularioRegistro ..> Visitante
+B_FormularioRegistro ..> TitularDeCuenta
+B_PaginaInicioSesion ..> TitularDeCuenta
+B_PaginaInicioSesion ..> Consentimiento
+B_PaginaInicioSesion ..> CapsulaDePerfil
+B_PantallaEdad ..> Usuario
+B_PantallaConsentimiento ..> Consentimiento
+B_PantallaCaracterizacion ..> Consentimiento
+B_PantallaCaracterizacion ..> CapsulaDePerfil
+B_PantallaEleccionPersonaje ..> Personaje
+B_InterfazDeChat ..> Consentimiento
+B_InterfazDeChat ..> DisponibilidadDelChatbot
+B_InterfazDeChat ..> Conversacion
+B_InterfazDeChat ..> Personaje
+B_InterfazDeChat ..> Mensaje
+B_InterfazDeChat ..> ContadorDeUsoDiario
+B_InterfazDeChat ..> CapsulaDePerfil
+B_InterfazDeChat ..> EventoOperativo
+B_InterfazDeChat ..> C_GateDeSeguridad
+B_InterfazDeChat ..> C_FallbackDeSeguridad
+B_InterfazDeChat ..> B_FronteraProveedorLLM
+B_InterfazDeChat ..> B_EstadosDeError
+B_PantallaContencion ..> RecursoDeAyuda
+B_PantallaContencion ..> Conversacion
+B_PaginaGestionCuenta ..> Usuario
+B_PaginaGestionCuenta ..> CapsulaDePerfil
+B_PaginaGestionCuenta ..> Consentimiento
+B_PaginaGestionCuenta ..> Conversacion
+B_DirectorioDeUsuarios ..> Usuario
+B_MetricasDeUso ..> Usuario
+B_MetricasDeUso ..> EventoOperativo
+B_MetricasDeUso ..> DisponibilidadDelChatbot
+B_ControlDisponibilidad ..> DisponibilidadDelChatbot
+B_DialogoConfirmacion ..> DisponibilidadDelChatbot
+B_FronteraProveedorLLM ..> C_GateDeSeguridad
+
+note as N_Infraestructura
+  <b>Capa de infraestructura: NO EJECUTADA</b>, heredando <b>E-1 de DS-00</b>.
+  El diseno fisico —claves de DynamoDB, tabla de <i>endpoints</i>, inventario de S3,
+  IAM y red— es <b>ARQ-01</b>, posterior a este modelo y a su <b>CDR</b> (ADR-002 §1).
+  Por eso <b>no hay ninguna clase INF_</b>, ni repositorio, ni DAO, ni sesion como clase.
+  <b>Lo que esto cuesta, dicho y no disimulado:</b> la fuente advierte que omitir la
+  infraestructura produce <i>«leaps of logic»</i>. Se ejecuta la primera mitad del
+  anti-patron #6 (primero el dominio, despues la infraestructura). La cierra ARQ-01.
+end note
+
+note as N_PER_H5
+  <b>PER-H5 — hallazgo de canon abierto, declarado en el modelo y no tapado.</b>
+  <code>Usuario.suprimirEnCascada()</code> alcanza CapsulaDePerfil, Consentimiento y
+  ContadorDeUsoDiario (PER-T1). <b>No alcanza el respaldo en S3</b> que ADR-002-D6
+  introdujo, y el versionado agrava el punto: borrar un objeto no lo borra.
+  Por tanto <b>RF-24 no se cumple de extremo a extremo</b>. Se cierra en ARQ-01,
+  y su plazo no es de calendario sino material: <b>antes de que haya personas reales</b>.
+end note
+
+note as N_Ausencias
+  <b>Seis clases sin atributos, cada una con causa declarada aguas arriba.</b>
+  No es anemia ni descuido: es lo que las fuentes sostienen, y rellenarlas seria inventar.
+  · <b>ContadorDeUsoDiario</b> — PER-H4 abierto: campos y llave sin especificar en
+    ningun artefacto del proyecto. Se declara el hueco, no se fabrica un esquema.
+  · <b>RecursoDeAyuda</b> — RN-06 y SD-12: se aprovisiona <b>por entorno</b>, nunca
+    embebido. No tiene estado persistido que modelar.
+  · <b>Visitante</b> — RN-04.5: solo consulta la presentacion; DS-01 no captura
+    ningun dato y no crea sesion.
+  · <b>Administrador</b> — hereda identidad y acceso de TitularDeCuenta. Que no tenga
+    estado propio es la realizacion de RN-03.5: el admin no posee dato de usuario.
+  · <b>Alan</b> y <b>Aura</b> — especializan los <b>valores</b> de <code>persona</code> y
+    <code>tono</code>, no la estructura. Anadirles campos duplicaria el supertipo.
+end note
+
+N_Infraestructura .. N_PER_H5
+N_PER_H5 .. N_Ausencias
+
+@enduml
