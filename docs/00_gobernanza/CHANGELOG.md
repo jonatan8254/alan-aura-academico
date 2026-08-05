@@ -3,6 +3,21 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v0.26.0 · `SD-42`: el instrumental, que era la causa
+
+- **Las tres fases anteriores cerraron síntomas; ésta cierra las causas.** Los defectos de propagación se repetían porque el verificador no podía verlos, y eso ya no es así.
+- **`VI-08` — de 4 hechos vigilados a 9.** `SD-39` movió **seis** cifras canónicas sin declarar obsoleta ninguna, contra la regla de `§Mantenimiento` de `HECHOS_CANONICOS`. Con solo cuatro entradas en `VALORES_OBSOLETOS`, el bloque 1 no podía cazar ni una: por eso `SD-40` tuvo que barrer **once puntos a mano**. Cada patrón nuevo va anclado a su **sustantivo de unidad** —«282 mensajes», no «282»— porque un número suelto dispara por todo el corpus y un bloque ruidoso deja de leerse.
+- **`H-24` — el ID compuesto.** El patrón admite ahora `TRZ-DS-01`, que se leía como `DS-01` y **se saltaba en silencio**. Esa versión hubo que corregirla a mano en `SD-40` y otra vez en `SD-41`.
+- **`VI-07` — el verde que se creía más ancho.** Entra `--base <ref>` para auditar una rama comiteada, y el rótulo de los bloques 3 y 5 dice contra qué comparan.
+- **`SD-40-H1` — la guarda que no podía disparar.** El alias se captura entero: antes `(\w+)` lo cortaba en el guion, así que la comprobación recaía sobre un alias ya truncado, **válido por construcción**. Emitía `B_Landing` donde el modelo decía `B_Landing-P01`, en silencio — el modo de fallo exacto que la regla #2 del CDR existe para cazar. **Cero cambios sobre el `MC-01` real.**
+- **Entra el bloque 6, y es el que más rindió.** El bloque 3 vigila el **momento** de editar y solo ve lo no comiteado; si un defecto entra y se comitea, ya no lo ve nadie. El 6 es un **invariante** sobre el árbol entero. **Al escribirlo destapó dos artefactos más con el defecto `H-25`** —`PER-01` y `CP-00`, total **ocho**— y, con la comprobación de orden, **ocho historiales desordenados**, uno de ellos mezclando las dos direcciones en la misma tabla. Los diez reparados.
+- **La convención de orden se estableció midiendo, no suponiendo:** 23 artefactos descendentes contra 3 ascendentes y 5 sin orden.
+- **`H-28` no entra a la vigilancia automática, y se dice por qué:** 21 y 27 son **ambos correctos** según la capa. Vigilarlo marcaría como defecto una medición correcta. Vive en `HECHOS_CANONICOS §Nota sobre H-28`, que es donde puede razonarse.
+- **Cada arreglo se probó haciéndolo fallar**, sobre copia fuera del repositorio, comparando la versión anterior contra la nueva ante el mismo sabotaje. Los cuatro pasaron esa prueba.
+- **Tres errores propios, declarados:** el script de subida de fichas insertó en `MD-01` una fila de 3 columnas en una tabla de 2 —cazado **revisando**, no por el validador—; los patrones nuevos dieron al principio **6 falsos positivos** que eran procedencia legítima, resueltos exentando la línea de `**Insumos:**` y añadiendo `CDR-01` a los archivos históricos, **donde faltaba desde `SD-37`** pese a que sus dos actas hermanas sí estaban; y la nota de recuento dijo «14 cerradas» cuando eran 13.
+- **Ninguna cifra canónica se movió** y ninguna afirmación de ningún artefacto cambió. Las diez reparaciones son de **registro**.
+- **Tablero: 13 cerradas, 9 abiertas, 1 declarada sin acción** (la 17, que es de la skill y no de este repositorio).
+
 ## 2026-08-05 — v0.25.0 · `SD-41` fase 3: `VI-03`, y la tercera vez que el acta se queda corta
 
 - **`ECU-08` se contradecía consigo mismo.** `H-17` corrigió `RE-04` en `SD-39` —retiró la promesa de «no permitir señalar a una persona», incumplible en un directorio donde cada fila **es** un titular— y **dejó el resto del documento prometiéndola**.

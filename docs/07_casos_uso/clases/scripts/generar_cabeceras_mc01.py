@@ -70,7 +70,17 @@ RAIZ = Path(__file__).resolve().parents[4]
 CLASES_POR_DEFECTO = RAIZ / "docs/07_casos_uso/clases/MC-01_modelo_clases_diseno.puml"
 
 # `class "Etiqueta" as Alias` — la unica forma que produce el desajuste.
-DECL_CON_ALIAS = re.compile(r'^\s*(?:abstract\s+)?class\s+"([^"]*)"\s+as\s+(\w+)', re.M)
+#
+# El alias se captura ENTERO, hasta el espacio o la llave, y no con `(\w+)`.
+# Con `(\w+)` la captura se cortaba en el primer caracter no-palabra, de modo que
+# `as B_Landing-P01` se leia como `B_Landing`: un identificador valido POR
+# CONSTRUCCION. Eso volvia INALCANZABLE la segunda guarda —la que comprueba
+# `IDENTIFICADOR.match(nuevo)`—, porque nunca podia recibir un alias invalido.
+# Y era peor que no disparar: el script emitia la clase con un identificador
+# DISTINTO del que el modelo declara, en silencio, que es exactamente el modo de
+# fallo que la regla #2 del CDR existe para cazar. Hallazgo `SD-40-H1`, detectado
+# al ejercitar las guardas con un generador simulado; corregido en SD-42.
+DECL_CON_ALIAS = re.compile(r'^\s*(?:abstract\s+)?class\s+"([^"]*)"\s+as\s+([^\s{]+)', re.M)
 # La linea que el generador emite por clase.
 DECL_EMITIDA = re.compile(r'^public (?:abstract )?(?:class|enum|interface) ')
 IDENTIFICADOR = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*$')

@@ -6,20 +6,31 @@ Los cuatro validadores de las skills ICONIX cubren MD-01, DCU-01, las 14 ECU y
 los 14 DR. No cubren los cinco documentos mas densos del paquete —MV-01, REQ-01,
 PER-01, PRIV-01 y PLAN-01—, que se editan a mano. Este script cubre ese hueco.
 
-Cuatro comprobaciones:
+Seis comprobaciones:
 
   1. HECHOS CANONICOS  — que las cifras repetidas entre documentos coincidan, y
      que ningun valor obsoleto sobreviva como afirmacion viva.
   2. RESIDUOS DE STACK — que los nombres del stack superado por ADR-002 solo
      aparezcan donde son cita historica.
   3. DISCIPLINA DE FICHA — que todo archivo tocado suba su version y anote su
-     fila de historial.
+     fila de historial. Depende de git y de `--base`.
   4. VERSIONES DECLARADAS — que el inventario de INDICE_MAESTRO diga, de cada
      artefacto, la version que ese artefacto dice tener en su propia ficha.
   5. ARTEFACTOS DERIVADOS — que ningun `.svg` ni las cabeceras de codigo queden
      mas antiguos que el `.puml` del que se generan. Anadido en SD-39: en el
      retrabajo del CDR-01 hubo diez desfasados a la vez y solo se cazaron con un
-     barrido a mano.
+     barrido a mano. Depende de git y de `--base`.
+  6. HISTORIAL COMPLETO — que todo artefacto con ficha e historial tenga fila
+     para la version que declara. Anadido en SD-42: es un INVARIANTE sobre el
+     arbol entero, no una guarda de edicion, y por eso caza lo que el bloque 3
+     no puede — un defecto ya comiteado. El bloque 3 vigila el momento de
+     editar; este vigila el estado.
+
+Los bloques 3 y 5 son guardas PRECOMMIT (VI-07). Con `--base HEAD`, su valor por
+defecto, solo ven cambios sin comitear: sobre una rama ya comiteada pasan en
+verde sin haber comprobado nada. Para auditar una rama, pasa su base explicita.
+El rotulo de cada bloque dice contra que compara, para que un verde no se lea
+como mas amplio de lo que es.
 
 La distincion que hace util a (1) y (2): un valor viejo dentro de un bloque de
 historial, changelog o registro de decisiones es CORRECTO —describe lo que se
@@ -28,8 +39,9 @@ aceptacion o descripcion del sistema es un DEFECTO. El script implementa
 exactamente esa regla; la documenta `docs/00_gobernanza/HECHOS_CANONICOS.md`.
 
 Uso:
-    python scripts/verificar_coherencia.py            # las tres comprobaciones
-    python scripts/verificar_coherencia.py --sin-git  # omite (3)
+    python scripts/verificar_coherencia.py                # las seis comprobaciones
+    python scripts/verificar_coherencia.py --sin-git      # omite (3) y (5)
+    python scripts/verificar_coherencia.py --base main    # audita una rama comiteada
 
 Salida: lista de errores y codigo de salida 1 si hay alguno. Es instrumental
 documental, no codigo de la aplicacion: por eso sigue en Python pese a ADR-002-D4.
@@ -60,6 +72,12 @@ ARCHIVOS_HISTORICOS = {
     "HECHOS_CANONICOS.md",             # documenta los valores obsoletos a proposito
     "PDR-01_primera_pasada_correcciones.md",
     "RPD-01_revision_preliminar_diseno.md",
+    # El acta del CDR es la TERCERA de la serie y faltaba: esta lista se escribio
+    # en SD-29 y `CDR-01` nacio en SD-37. Un acta de revision es por naturaleza un
+    # registro fechado —describe el paquete TAL COMO SE RECIBIO—, igual que las
+    # dos anteriores, y su propio §1 lo declara: «el diseño detallado al cierre de
+    # SD-32». Sus recuentos vigentes viven en §8-quinquies. Añadida en SD-42.
+    "CDR-01_revision_critica_diseno.md",
     "RET-01_retroalimentacion_docente.md",
     "ADR-001_decisiones_tecnicas.md",  # superada en parte; su texto se conserva
     "ADR-002_reversion_stack_serverless.md",  # explica de que se viene
@@ -70,7 +88,14 @@ ARCHIVOS_HISTORICOS = {
 LINEA_HISTORICA = re.compile(
     r"^\s*(?:\*\*Cambio v|>?\s*\|\s*v\d+\.\d+)"
     r"|Historial de cambios"
-    r"|^\*\*ID:\*\*.*\*\*Versi[oó]n:\*\*",  # la ficha cita el motivo del cambio
+    r"|^\*\*ID:\*\*.*\*\*Versi[oó]n:\*\*"     # la ficha cita el motivo del cambio
+    # La linea de `**Insumos:**` es PROCEDENCIA por construccion: dice contra que
+    # version se construyo el artefacto y cuanto contenia ESA version —«`DOP-01
+    # v1.1` (192 operaciones)»—. La cifra esta atada a la version citada, asi que
+    # no afirma el estado actual. Sin esta regla, cada cifra que se mueva produce
+    # un falso positivo en todos los artefactos que consumieron la version vieja,
+    # y un bloque ruidoso deja de leerse. Añadida en SD-42.
+    r"|^\*\*Insumos:\*\*",
     re.IGNORECASE,
 )
 
@@ -126,6 +151,28 @@ VALORES_OBSOLETOS = [
     ("H-13", "casos de uso", r"\b10\s+casos de uso\b", r"\b14\s+casos de uso\b", "14"),
     ("H-10", "campos de la capsula", r"c[aá]psula de\s+3\s+campos",
      r"5\s*(?:de contenido|campos|\+)", "5 de contenido + 2 metadatos"),
+    # --- Los cinco que SD-39 movio y nadie vigilaba (VI-08, cerrado en SD-42) ---
+    #
+    # Por que importa que falten. SD-39 movio SEIS hechos canonicos y no declaro
+    # obsoleto ninguno, contra la regla de §Mantenimiento de HECHOS_CANONICOS. Con
+    # solo cuatro entradas vigiladas de veintinueve, este bloque no podia cazar ni
+    # uno: por eso SD-40 tuvo que barrer ONCE puntos vivos a mano, cuatro de ellos
+    # invisibles para el acta. Cada patron va anclado a su SUSTANTIVO DE UNIDAD
+    # —«282 mensajes», no «282»— porque un numero suelto dispara por todo el
+    # corpus, y el propio comentario de este archivo advierte que un bloque
+    # ruidoso deja de leerse y entonces no vigila nada.
+    ("H-22", "mensajes de secuencia", r"\b282\s+mensajes\b", r"\b283\b", "283"),
+    ("H-23", "operaciones del delta", r"\b192\s+operaciones\b", r"\b193\b", "193"),
+    ("H-25", "clases del modelo de diseno", r"\b37\s+clases\b", r"\b43\b", "43"),
+    ("H-26", "operaciones del modelo de clases", r"\b200\s+operaciones\b", r"\b201\b", "201"),
+    ("H-27", "atributos del modelo de clases", r"\b35\s+atributos\b", r"\b51\b", "51"),
+    # H-28 (21 -> 27 clases de solucion) NO entra, y no es un olvido:
+    # los dos valores son CORRECTOS segun la capa. `MC-01` tiene 27 porque H-04 le
+    # sumo los seis tipos de transferencia; `DOP-01` y `DS-00` tienen 21 porque
+    # ningun diagrama de secuencia contiene un tipo de transferencia. Vigilarlo
+    # aqui marcaria como defecto una medicion correcta. La distincion esta escrita
+    # en HECHOS_CANONICOS §Nota sobre H-28, que es donde puede razonarse; un regex
+    # de una linea no puede. Declarado en SD-42.
 ]
 
 # (id, archivo duenno, patron que DEBE aparecer)
@@ -223,8 +270,15 @@ ARCHIVOS_INVENTARIO = {"INDICE_MAESTRO.md"}
 
 # «MD-01 v1.4» — el ID pegado a su version, sin otro ID de por medio, para que
 # «DS-00 v1.3 · DS-01…14 v1.0» no ate el v1.0 al DS-00.
+#
+# El tramo `(?:-[A-Z]{2,4})?` admite IDs COMPUESTOS y cierra `H-24` (SD-42).
+# Sin el, `TRZ-DS-01` —el unico ID compuesto del repositorio— se leia como
+# `DS-01`, se atribuia la version a un artefacto distinto que ademas es un
+# `.puml` sin ficha, y la comparacion se SALTABA EN SILENCIO. El defecto se
+# detecto en SD-39 y hubo que corregir esa version a mano dos veces (SD-40 y
+# SD-41) porque el bloque no podia verla.
 MENCION_VERSION = re.compile(
-    r"\b([A-Z]{2,4}-\d{2}(?:-\d{2})?)\b[^A-Z|\n]{0,14}?\b(v\d+\.\d+)\b")
+    r"\b([A-Z]{2,4}(?:-[A-Z]{2,4})?-\d{2}(?:-\d{2})?)\b[^A-Z|\n]{0,14}?\b(v\d+\.\d+)\b")
 
 
 def version_de_ficha(archivo: Path) -> str | None:
@@ -242,11 +296,14 @@ def indice_de_fichas() -> dict[str, tuple[str, str]]:
     El ID se toma del nombre del archivo: `MD-01_modelo_dominio.md` -> `MD-01`.
     Si dos archivos reclaman el mismo ID, gana ninguno: se omite, porque no
     hay una respuesta unica que exigir.
+
+    El patron admite IDs COMPUESTOS (`TRZ-DS-01`) desde SD-42: sin eso, ese
+    archivo no entraba al indice de fichas y su version quedaba sin vigilar.
     """
     fichas: dict[str, tuple[str, str]] = {}
     duplicados: set[str] = set()
     for archivo in archivos_markdown():
-        m = re.match(r"([A-Z]{2,4}-\d{2}(?:-\d{2})?)_", archivo.name)
+        m = re.match(r"([A-Z]{2,4}(?:-[A-Z]{2,4})?-\d{2}(?:-\d{2})?)_", archivo.name)
         if not m:
             continue
         ident = m.group(1)
@@ -349,20 +406,24 @@ def comprobar_residuos() -> list[str]:
     return errores
 
 
-def comprobar_fichas() -> list[str]:
+def comprobar_fichas(base: str = "HEAD") -> list[str]:
     """Todo archivo tocado que tenga ficha debe subir version; si ademas tiene
     tabla de historial, debe anotar fila nueva.
 
-    PUNTO CIEGO, declarado: se apoya en `git diff HEAD`, asi que solo ve cambios
-    SIN COMITEAR. Una vez comiteada la rama, esta comprobacion pasa en verde sin
-    haber comprobado nada, y tampoco ve archivos nuevos no rastreados. Es util
-    ANTES de comitear; despues, no significa nada. Para auditar una rama ya
-    comiteada hay que comparar contra su base (p. ej. `git diff main...HEAD`).
+    PUNTO CIEGO, acotado en SD-42 (`VI-07`): se apoya en `git diff <base>`. Con
+    el valor por defecto —`HEAD`— solo ve cambios SIN COMITEAR, asi que sobre una
+    rama ya comiteada pasa en verde sin haber comprobado nada; tampoco ve
+    archivos nuevos no rastreados. Para auditar una rama comiteada, pasa su base:
+    `--base main`. El rotulo de la salida dice cual se uso, para que un verde no
+    se lea como mas amplio de lo que es.
+
+    Lo que este bloque NO puede garantizar, y por eso existe ademas el bloque 6:
+    si una version entra sin su fila y se comitea, aqui ya no aparece nunca.
     """
     errores: list[str] = []
     try:
         tocados = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD"],
+            ["git", "diff", "--name-only", base],
             cwd=RAIZ, capture_output=True, text=True, check=True,
             encoding="utf-8", errors="replace",
         ).stdout.split()
@@ -382,7 +443,7 @@ def comprobar_fichas() -> list[str]:
             continue
 
         diff = subprocess.run(
-            ["git", "diff", "-U0", "HEAD", "--", rel],
+            ["git", "diff", "-U0", base, "--", rel],
             cwd=RAIZ, capture_output=True, text=True,
             encoding="utf-8", errors="replace",
         ).stdout
@@ -394,6 +455,64 @@ def comprobar_fichas() -> list[str]:
             re.match(r"\s*\|\s*\*{0,2}v\d+\.\d+\*{0,2}\s*\|", l) for l in anadidas
         ):
             errores.append(f"[FICHA] {rel} — editado sin anadir fila al Historial de cambios")
+    return errores
+
+
+# --------------------------------------------------------------------------
+# 6. HISTORIAL COMPLETO
+# --------------------------------------------------------------------------
+#
+# Por que existe, y por que no bastaba el bloque 3. El bloque 3 vigila el
+# MOMENTO de la edicion y solo ve cambios sin comitear: si una version se sube
+# sin su fila y el commit entra, ese defecto queda dentro para siempre y ningun
+# barrido posterior lo encuentra. Es exactamente lo que paso: la version
+# declarada sin fila de historial —`H-25` del acta— aparecio en OCHO artefactos
+# distintos (`COD-01`, `DOP-01`, `HECHOS_CANONICOS`, `CDR-01`, `TRZ-DS-01`,
+# `CP-04`, y `PER-01` y `CP-00`, estos dos hallados por esta misma comprobacion
+# al escribirla). Se reporto ocho veces y se corrigio ocho veces a mano.
+#
+# Este bloque es un INVARIANTE, no una guarda de edicion: se cumple o no en
+# cualquier momento, sobre el arbol entero, este o no comiteado. Añadido en
+# SD-42.
+FILA_HISTORIAL = re.compile(r"^\s*\|\s*\*{0,2}(v\d+\.\d+)\*{0,2}\s*\|")
+
+
+def comprobar_historial() -> list[str]:
+    """Todo artefacto con ficha e historial tiene fila para la version que declara."""
+    errores: list[str] = []
+    for archivo in archivos_markdown():
+        lineas = leer(archivo)
+        texto = "\n".join(lineas)
+        # `## 15. Changelog` es como lo titulan las ECU; el resto usa el rotulo largo.
+        if "Historial de cambios" not in texto and "Changelog" not in texto:
+            continue
+        version = version_de_ficha(archivo)
+        if version is None:
+            continue
+        orden = [m.group(1) for l in lineas if (m := FILA_HISTORIAL.match(l))]
+        if not orden:
+            continue          # no es una tabla de historial, sino otra cosa
+        rel = archivo.relative_to(RAIZ).as_posix()
+
+        if version not in set(orden):
+            errores.append(
+                f"[HISTORIAL] {rel} — la ficha declara {version} y el historial "
+                f"no tiene su fila (defecto H-25)")
+
+        # El orden es DESCENDENTE, y la convencion se establecio MIDIENDO: 23
+        # artefactos descendentes contra 3 ascendentes y 5 sin orden alguno.
+        # El CHANGELOG ya habia declarado el ascendente un defecto en su v0.21.1.
+        # Ocho historiales estaban desordenados y nadie lo vigilaba —uno de ellos,
+        # `ECU-04`, mezclaba las dos direcciones en la misma tabla—. Añadido en
+        # SD-42, en la misma pasada que los reordeno.
+        def clave(v: str) -> tuple[int, int]:
+            may, men = v[1:].split(".")
+            return (int(may), int(men))
+
+        if len(orden) > 1 and orden != sorted(orden, key=clave, reverse=True):
+            errores.append(
+                f"[HISTORIAL] {rel} — las filas no van en orden descendente: "
+                f"{orden}")
     return errores
 
 
@@ -425,7 +544,7 @@ def derivados_de(rel: str) -> list[Path]:
     return [c for c in candidatos if c.exists()]
 
 
-def comprobar_derivados() -> list[str]:
+def comprobar_derivados(base: str = "HEAD") -> list[str]:
     """Ningun artefacto derivado puede ser mas antiguo que su `.puml`.
 
     PUNTO CIEGO, declarado, y es el mismo que el bloque 3: se apoya en
@@ -445,7 +564,7 @@ def comprobar_derivados() -> list[str]:
     errores: list[str] = []
     try:
         tocados = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD"],
+            ["git", "diff", "--name-only", base],
             cwd=RAIZ, capture_output=True, text=True, check=True,
             encoding="utf-8", errors="replace",
         ).stdout.split()
@@ -474,19 +593,33 @@ def comprobar_derivados() -> list[str]:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Verifica la coherencia del paquete documental.")
     ap.add_argument("--sin-git", action="store_true",
-                    help="omite la comprobacion de disciplina de ficha")
+                    help="omite las comprobaciones que dependen de git (3 y 5)")
+    ap.add_argument("--base", default="HEAD", metavar="REF",
+                    help="referencia contra la que comparan los bloques 3 y 5. "
+                         "Por defecto HEAD, que solo ve cambios SIN COMITEAR. "
+                         "Para auditar una rama ya comiteada, pasa su base "
+                         "(p. ej. --base main o --base <sha>). Cierra VI-07.")
     args = ap.parse_args()
+
+    # VI-07, declarado en la salida y no solo en un comentario. Con --base HEAD
+    # los bloques 3 y 5 son guardas PRECOMMIT: sobre una rama ya comiteada pasan
+    # en verde sin haber comprobado nada, y quien lea ese verde puede creer que
+    # audito la rama. Decirlo en el rotulo es mas barato que una nota que nadie
+    # abre.
+    ambito = ("solo cambios sin comitear" if args.base == "HEAD"
+              else f"contra {args.base}")
 
     bloques = [
         ("1. HECHOS CANONICOS", comprobar_hechos()),
         ("2. RESIDUOS DE STACK", comprobar_residuos()),
         ("4. VERSIONES DECLARADAS", comprobar_versiones()),
+        ("6. HISTORIAL COMPLETO (arbol entero)", comprobar_historial()),
     ]
     if not args.sin_git:
-        bloques.insert(2, ("3. DISCIPLINA DE FICHA (solo cambios sin comitear)",
-                           comprobar_fichas()))
-        bloques.append(("5. ARTEFACTOS DERIVADOS (solo cambios sin comitear)",
-                        comprobar_derivados()))
+        bloques.insert(2, (f"3. DISCIPLINA DE FICHA ({ambito})",
+                           comprobar_fichas(args.base)))
+        bloques.insert(4, (f"5. ARTEFACTOS DERIVADOS ({ambito})",
+                           comprobar_derivados(args.base)))
 
     total = 0
     print("Verificacion de coherencia — «Alan & Aura Academico»")

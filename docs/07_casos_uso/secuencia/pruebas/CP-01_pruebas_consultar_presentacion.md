@@ -1,6 +1,6 @@
 # CP-01 — Casos de prueba de CU-01 «Consultar presentación del servicio»
 
-**ID:** CP-01 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto.
+**ID:** CP-01 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-42: historial reordenado a descendente; ninguna afirmación cambia). v1.1 · **Estado:** Propuesto.
 **Insumos:** `DR-01 v2.1` (7 controladores), `DS-01 v1.0`, `ECU-01` (§11 `CA-01…CA-08`).
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador**.
 
@@ -42,5 +42,6 @@ porque lo que se verifica es que **nada existe**.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
-| v1.0 | 2026-08-01 | J. Sánchez | Creación. 7 casos desde los 7 controladores de `DR-01`. |
+| v1.2 | 2026-08-05 | J. Sánchez | **SD-42 — reparación del registro, no del contenido.** El historial iba desordenado y se reordena a **descendente**, que es la convención del repositorio: se estableció **midiendo** —23 artefactos descendentes contra 3 ascendentes y 5 sin orden— y el `CHANGELOG` ya la había declarado en su `v0.21.1`. **Ninguna afirmación de este artefacto cambia.** El desorden alcanzaba a **ocho** archivos y no lo vigilaba nada; desde esta versión lo comprueba el **bloque 6** de `verificar_coherencia.py`. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** `H-8` resuelto a favor de `ECU-01`; `CP-507` pasa de dirigir a P-02 a volver a P-01. |
+| v1.0 | 2026-08-01 | J. Sánchez | Creación. 7 casos desde los 7 controladores de `DR-01`. |

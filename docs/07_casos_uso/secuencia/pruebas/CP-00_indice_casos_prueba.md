@@ -1,6 +1,6 @@
 # CP-00 — Índice de casos de prueba y matriz de cobertura
 
-**ID:** CP-00 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.4 (SD-35: ya no hay nada sin `CP` por un hallazgo abierto). v1.3 (SD-34: §6 deja de citar `PER-H5` —cerrado— y pasa a `PER-H2`). v1.2 · **Estado:** Propuesto.
+**ID:** CP-00 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.5 (SD-42: se repone la fila `v1.4` que faltaba en el historial y se reordena — defecto `H-25`). v1.4 (SD-35: ya no hay nada sin `CP` por un hallazgo abierto). v1.3 (SD-34: §6 deja de citar `PER-H5` —cerrado— y pasa a `PER-H2`). v1.2 · **Estado:** Propuesto.
 **Propósito:** índice de los **181 casos de prueba** derivados de los **150 Controladores** de `DR-01…DR-14`, con la matriz de cobertura por caso de uso y por operador de fragmento.
 **Insumos:** `DR-01…DR-14 v2.0`, `DS-01…DS-14 v1.0`, `ECU-01…ECU-14 v2.0` (sus criterios de aceptación), `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-sequence-diagram`. Borradores por subagentes, **auditados por el orquestador** contra los `.puml`.
@@ -111,7 +111,9 @@ la validación legal, no se prueba con un caso: la resuelve una persona con crit
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
-| v1.0 | 2026-08-01 | J. Sánchez | Creación. Índice de los 177 casos derivados de los 149 controladores, con la cobertura desagregada por operador y el inventario de los casos que prueban ausencias. |
-| v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** entra `CP-813`; 178 casos y 150/150 controladores. `CA-11` deja de figurar como hueco. |
+| v1.5 | 2026-08-05 | J. Sánchez | **SD-42 — reparación del registro, no del contenido.** La ficha declaraba `v1.4` desde `SD-35` y el historial nunca la registró; las filas iban además desordenadas (v1.0, v1.1, v1.3, v1.2). Defecto `H-25`, el octavo artefacto afectado. Hallado por el **bloque 6** de `verificar_coherencia.py` al escribirlo. **Ningún caso de prueba cambia.** |
+| v1.4 | 2026-08-04 | J. Sánchez | **SD-35.** §6 declaraba que quedaba algo sin caso de prueba por un hallazgo abierto; con `PER-H2` cerrado por `ADR-004-D1`, **ya no hay ninguno**: los 181 casos cubren los 150 controladores sin excepción pendiente. *(Fila repuesta en `SD-42`: la versión existía en la ficha desde SD-35 y el historial nunca la registró — defecto `H-25`.)* |
 | v1.3 | 2026-08-04 | J. Sánchez | **SD-34.** §6 decía que lo único sin caso de prueba era `PER-H5` —los respaldos en S3 escapando a la cascada—. `ADR-003` lo cerró **quitando el respaldo**, así que dejó de haber nada que probar por esa vía. Lo único sin `CP` pasa a ser **`PER-H2`**, la ventana de «+30 días», que es **retención y no comportamiento**. **Los 181 casos no cambian.** |
 | v1.2 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1a`.** `CU-06` pasa de 31 a **34** casos: la granularidad por turno obligó a fijar el volumen en la frontera (`CP-032`) y a decidir **qué llamadas cuentan** para `MET-07` — la fallida sí (`CP-033`), la cortada por límite de tasa no (`CP-034`). Total **181**; 150/150 controladores sin cambio. |
+| v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** entra `CP-813`; 178 casos y 150/150 controladores. `CA-11` deja de figurar como hueco. |
+| v1.0 | 2026-08-01 | J. Sánchez | Creación. Índice de los 177 casos derivados de los 149 controladores, con la cobertura desagregada por operador y el inventario de los casos que prueban ausencias. |
