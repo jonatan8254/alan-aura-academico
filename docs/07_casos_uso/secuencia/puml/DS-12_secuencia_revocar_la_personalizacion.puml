@@ -1,5 +1,12 @@
 @startuml
 ' DS-12 - Secuencia de CU-12 «Revocar la personalizacion»
+' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FA-03 y FE-03 vuelven de opt a BREAK.
+'       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
+'       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
+'       `break` ejecuta su operando EN LUGAR DEL RESTO: es esa semantica exacta.
+'       `opt` solo saltaba su cuerpo y el flujo caia al exito.
+'       Consecuencia declarada: para estos casos el `break` ORIGINAL era correcto y
+'       esa parte de H-01 fue un falso positivo. Ver DS-00 §12.
 ' v1.1 (CDR-01, H-01): FA-03 y FE-03 pasan de break a opt — su texto declara «Vuelve».
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-12 v2.0 (9 controladores), ECU-12 v2.0, MD-01 v1.4, DCU-01 v2.1,
@@ -47,11 +54,11 @@ end
 B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatSeguiraDisponible()
 ACT_Usuario -> B_PaginaGestionCuenta : confirmar la revocacion
 
-opt FA-03 cancela en la confirmacion
+break FA-03 cancela en la confirmacion
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarSinModificarElConsentimiento()
 end
 
-opt FE-03 peticion mal formada
+break FE-03 peticion mal formada
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : mostrarPeticionMalFormadaYPermitirReintentar()
 end
 

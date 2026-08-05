@@ -31,11 +31,11 @@
 <text x="117.4" y="1428" font-size="10" fill="#993C1D">[FA-03 el estado elegido ya es el vigente]</text>
 <rect x="467.1" y="1792.0" width="505.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="467.1000000000001,1792 529.1000000000001,1792 529.1000000000001,1804 521.1000000000001,1812 467.1000000000001,1812" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="476.1000000000001" y="1806" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="476.1000000000001" y="1806" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="539.1000000000001" y="1806" font-size="10" fill="#993C1D">[FA-02 el Administrador no confirma]</text>
 <rect x="467.1" y="1876.0" width="505.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="467.1000000000001,1876 529.1000000000001,1876 529.1000000000001,1888 521.1000000000001,1896 467.1000000000001,1896" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="476.1000000000001" y="1890" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="476.1000000000001" y="1890" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="539.1000000000001" y="1890" font-size="10" fill="#993C1D">[FE-03 la confirmacion llega mal formada]</text>
 <line x1="63.4" y1="796.0" x2="2536.2" y2="796.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="1222.2" y="785.0" width="155.1" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>

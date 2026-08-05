@@ -1,5 +1,12 @@
 @startuml
 ' DS-05 - Secuencia de CU-05 «Otorgar consentimiento y crear la capsula de perfil»
+' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FE-02 y FE-03 vuelven de opt a BREAK.
+'       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
+'       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
+'       `break` ejecuta su operando EN LUGAR DEL RESTO: es esa semantica exacta.
+'       `opt` solo saltaba su cuerpo y el flujo caia al exito.
+'       Consecuencia declarada: para estos casos el `break` ORIGINAL era correcto y
+'       esa parte de H-01 fue un falso positivo. Ver DS-00 §12.
 ' v1.1 (CDR-01, H-01): FE-02 y FE-03 pasan de break a opt — su texto declara «Vuelve».
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-05 v2.0 (16 controladores), ECU-05 v2.0, MD-01 v1.4, DCU-01 v2.1,
@@ -61,7 +68,7 @@ end note
 B_PantallaEdad -> B_PantallaConsentimiento : mostrarAlcanceDeLaCapaBase()
 ACT_Usuario -> B_PantallaConsentimiento : otorgar la capa base
 
-opt FE-02 no otorga la capa base
+break FE-02 no otorga la capa base
   B_PantallaConsentimiento -> B_PantallaConsentimiento : impedirAvanceYVolverAlPaso4()
 end
 
@@ -95,7 +102,7 @@ end
 
 ACT_Usuario -> B_PantallaCaracterizacion : responder u omitir cada autorreporte
 
-opt FE-03 autorreportes mal formados
+break FE-03 autorreportes mal formados
   B_PantallaCaracterizacion -> B_PantallaCaracterizacion : mostrarRevisaTusRespuestas()
 end
 

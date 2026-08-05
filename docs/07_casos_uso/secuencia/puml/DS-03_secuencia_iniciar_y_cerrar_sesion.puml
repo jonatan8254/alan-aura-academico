@@ -1,5 +1,12 @@
 @startuml
 ' DS-03 - Secuencia de CU-03 «Iniciar y cerrar sesion»
+' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FE-01 vuelven de opt a BREAK.
+'       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
+'       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
+'       `break` ejecuta su operando EN LUGAR DEL RESTO: es esa semantica exacta.
+'       `opt` solo saltaba su cuerpo y el flujo caia al exito.
+'       Consecuencia declarada: para estos casos el `break` ORIGINAL era correcto y
+'       esa parte de H-01 fue un falso positivo. Ver DS-00 §12.
 ' v1.1 (CDR-01, H-01): FE-01 pasa de break a opt — ECU-03 declara «Vuelve al paso 2».
 '       FE-02 y FE-03 conservan break: su texto dice «Termina», y ahi break es correcto.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
@@ -40,7 +47,7 @@ note right of E_TitularDeCuenta
   (RNF-08): ningun mensaje transporta un rol propuesto por el cliente.
 end note
 
-opt FE-01 las credenciales no coinciden
+break FE-01 las credenciales no coinciden
   B_PaginaInicioSesion -> B_PaginaInicioSesion : mostrarMensajeGenericoSinRevelarQueCampoFallo()
 end
 

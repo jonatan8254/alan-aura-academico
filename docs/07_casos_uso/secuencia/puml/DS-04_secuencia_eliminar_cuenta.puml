@@ -1,5 +1,12 @@
 @startuml
 ' DS-04 - Secuencia de CU-04 «Eliminar cuenta»
+' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FA-03, FE-03 y FE-04 vuelven de opt a BREAK.
+'       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
+'       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
+'       `break` ejecuta su operando EN LUGAR DEL RESTO: es esa semantica exacta.
+'       `opt` solo saltaba su cuerpo y el flujo caia al exito.
+'       Consecuencia declarada: para estos casos el `break` ORIGINAL era correcto y
+'       esa parte de H-01 fue un falso positivo. Ver DS-00 §12.
 ' v1.1 (CDR-01): H-01 — FA-03, FE-03 y FE-04 pasan de break a opt.
 '       H-02 (Mayor) — la cascada se REORDENA (Consentimiento primero, Usuario al final) y
 '       FE-04 deja de deshacer: conserva lo suprimido y ofrece reintento. Ver ECU-04 v2.4.
@@ -38,7 +45,7 @@ E_Usuario --> B_PaginaGestionCuenta : alcance de la supresion
 B_PaginaGestionCuenta -> B_PaginaGestionCuenta : advertirQueLaAccionEsIrreversible()
 ACT_Usuario -> B_PaginaGestionCuenta : confirmar explicitamente la eliminacion
 
-opt FA-03 el Usuario no confirma y cancela
+break FA-03 el Usuario no confirma y cancela
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarDejandoLaCuentaIntacta()
 end
 
@@ -48,7 +55,7 @@ break FE-02 rol no autorizado o cuenta ajena
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : denegarPorPermisoSinSuprimirNada()
 end
 
-opt FE-03 solicitud mal formada o sin confirmacion explicita
+break FE-03 solicitud mal formada o sin confirmacion explicita
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarPeticionInvalidaYVolverAlPaso1()
 end
 
@@ -92,7 +99,7 @@ note right of E_Usuario
   La operacion existe para que esa propiedad sea <b>verificable</b> (`CA-11`), no tacita.
 end note
 
-opt FE-04 el almacenamiento falla a mitad de la cascada
+break FE-04 el almacenamiento falla a mitad de la cascada
   E_Usuario -> E_Usuario : conservarLoYaSuprimido()
   E_Usuario --> B_PaginaGestionCuenta : la supresion quedo a medias
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueQuedoAMediasYOfrecerReintento()

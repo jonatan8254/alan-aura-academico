@@ -1,24 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4457 3129" width="4457" height="3129" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4457 3377" width="4457" height="3377" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-06 - Secuencia de CU-06 «Conversar con el acompanante»</title>
 <desc id="d">Diagrama de secuencia UML. 16 participantes, 49 mensajes.</desc>
-<rect x="0" y="0" width="4457" height="3129" fill="#FFFFFF"/>
+<rect x="0" y="0" width="4457" height="3377" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-06 - Secuencia de CU-06 «Conversar con el acompanante»</text>
-<line x1="77.3" y1="103.0" x2="77.3" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="482.0" y1="80.0" x2="482.0" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="886.4" y1="80.0" x2="886.4" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1183.6" y1="93.0" x2="1183.6" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1438.5" y1="67.0" x2="1438.5" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1774.7" y1="67.0" x2="1774.7" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2071.9" y1="67.0" x2="2071.9" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2297.9" y1="67.0" x2="2297.9" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2523.9" y1="67.0" x2="2523.9" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2749.9" y1="67.0" x2="2749.9" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3016.8" y1="67.0" x2="3016.8" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3259.6" y1="67.0" x2="3259.6" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3514.4" y1="67.0" x2="3514.4" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3757.2" y1="67.0" x2="3757.2" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3999.9" y1="80.0" x2="3999.9" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="4361.4" y1="103.0" x2="4361.4" y2="3101.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="77.3" y1="103.0" x2="77.3" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="482.0" y1="80.0" x2="482.0" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="886.4" y1="80.0" x2="886.4" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1183.6" y1="93.0" x2="1183.6" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1438.5" y1="67.0" x2="1438.5" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1774.7" y1="67.0" x2="1774.7" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2071.9" y1="67.0" x2="2071.9" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2297.9" y1="67.0" x2="2297.9" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2523.9" y1="67.0" x2="2523.9" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2749.9" y1="67.0" x2="2749.9" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3016.8" y1="67.0" x2="3016.8" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3259.6" y1="67.0" x2="3259.6" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3514.4" y1="67.0" x2="3514.4" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3757.2" y1="67.0" x2="3757.2" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3999.9" y1="80.0" x2="3999.9" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="4361.4" y1="103.0" x2="4361.4" y2="3349.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <rect x="444.0" y="273.0" width="480.4" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="444.0,273 506.0,273 506.0,285 498.0,293 444.0,293" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="453.0" y="287" font-size="10" font-weight="600" fill="#993C1D">break</text>
@@ -31,7 +31,7 @@
 <polygon points="444.0,521 506.0,521 506.0,533 498.0,541 444.0,541" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="453.0" y="535" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="516.0" y="535" font-size="10" fill="#993C1D">[FE-04 el kill switch esta activo]</text>
-<rect x="39.3" y="863.0" width="4360.1" height="1946.0" fill="none" stroke="#5F5E5A" stroke-width="1" rx="3"/>
+<rect x="39.3" y="863.0" width="4360.1" height="1930.0" fill="none" stroke="#5F5E5A" stroke-width="1" rx="3"/>
 <polygon points="39.349999999999994,863 101.35,863 101.35,875 93.35,883 39.349999999999994,883" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
 <text x="48.349999999999994" y="877" font-size="10" font-weight="600" fill="#5F5E5A">loop</text>
 <text x="111.35" y="877" font-size="10" fill="#5F5E5A">[1..20 mensajes de usuario]</text>
@@ -39,43 +39,43 @@
 <polygon points="434.0,1005 496.0,1005 496.0,1017 488.0,1025 434.0,1025" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="443.0" y="1019" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="506.0" y="1019" font-size="10" fill="#993C1D">[FE-01 sesion ausente en el turno]</text>
-<rect x="434.0" y="1129.0" width="500.4" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="434.0,1129 496.0,1129 496.0,1141 488.0,1149 434.0,1149" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="443.0" y="1143" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="506.0" y="1143" font-size="10" fill="#993C1D">[FE-03 mensaje mal formado o excedido]</text>
-<rect x="434.0" y="1253.0" width="500.4" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="434.0,1253 496.0,1253 496.0,1265 488.0,1273 434.0,1273" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="443.0" y="1267" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="506.0" y="1267" font-size="10" fill="#993C1D">[FE-05 supera el limite de tasa]</text>
-<rect x="434.0" y="1457.0" width="3128.4" height="106.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="434.0,1457 496.0,1457 496.0,1469 488.0,1477 434.0,1477" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="443.0" y="1471" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="506.0" y="1471" font-size="10" fill="#993C1D">[FE-08 el gate decide peligro explicito]</text>
-<rect x="838.4" y="1927.0" width="3209.5" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="838.4000000000001,1927 900.4000000000001,1927 900.4000000000001,1939 892.4000000000001,1947 838.4000000000001,1947" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="847.4000000000001" y="1941" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="910.4000000000001" y="1941" font-size="10" fill="#993C1D">[FE-06 el proveedor no responde]</text>
-<rect x="838.4" y="2077.0" width="3209.5" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="838.4000000000001,2077 900.4000000000001,2077 900.4000000000001,2089 892.4000000000001,2097 838.4000000000001,2097" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="847.4000000000001" y="2091" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="910.4000000000001" y="2091" font-size="10" fill="#993C1D">[FE-07 se agotan los 20 segundos de espera]</text>
-<rect x="1390.5" y="2307.0" width="96.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="1390.45,2307 1452.45,2307 1452.45,2319 1444.45,2327 1390.45,2327" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="1399.45" y="2321" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="1462.45" y="2321" font-size="10" fill="#993C1D">[FA-02 la]</text>
-<rect x="434.0" y="2669.0" width="1911.9" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="434.0,2669 496.0,2669 496.0,2681 488.0,2689 434.0,2689" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="443.0" y="2683" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="506.0" y="2683" font-size="10" fill="#993C1D">[FA-01 se alcanzan los 20 mensajes de la sesion]</text>
+<rect x="434.0" y="1169.0" width="3975.4" height="1616.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="434.0,1169 496.0,1169 496.0,1181 488.0,1189 434.0,1189" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="443.0" y="1183" font-size="10" font-weight="600" fill="#993C1D">alt</text>
+<text x="506.0" y="1183" font-size="10" fill="#993C1D">[FE-03 mensaje mal formado o excedido]</text>
+<line x1="434.0" y1="1237.0" x2="4409.4" y2="1237.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="444.0" y="1250.0" font-size="10" fill="#993C1D">[FE-05 supera el limite de tasa]</text>
+<line x1="434.0" y1="1295.0" x2="4409.4" y2="1295.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="444.0" y="1308.0" font-size="10" fill="#993C1D">[el turno es admisible]</text>
+<rect x="424.0" y="1441.0" width="3148.4" height="106.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="424.0,1441 486.0,1441 486.0,1453 478.0,1461 424.0,1461" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="433.0" y="1455" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="496.0" y="1455" font-size="10" fill="#993C1D">[FE-08 el gate decide peligro explicito]</text>
+<rect x="424.0" y="1911.0" width="3995.4" height="866.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="424.0,1911 486.0,1911 486.0,1923 478.0,1931 424.0,1931" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="433.0" y="1925" font-size="10" font-weight="600" fill="#993C1D">alt</text>
+<text x="496.0" y="1925" font-size="10" fill="#993C1D">[FE-06 el proveedor no responde]</text>
+<line x1="424.0" y1="2045.0" x2="4419.4" y2="2045.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="434.0" y="2058.0" font-size="10" fill="#993C1D">[FE-07 se agotan los 20 segundos de espera]</text>
+<line x1="424.0" y1="2103.0" x2="4419.4" y2="2103.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="434.0" y="2116.0" font-size="10" fill="#993C1D">[el proveedor responde dentro del plazo]</text>
+<rect x="1370.5" y="2275.0" width="136.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="1370.45,2275 1432.45,2275 1432.45,2287 1424.45,2295 1370.45,2295" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="1379.45" y="2289" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="1442.45" y="2289" font-size="10" fill="#993C1D">[FA-02 la]</text>
+<rect x="414.0" y="2637.0" width="1951.9" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="414.0,2637 476.0,2637 476.0,2649 468.0,2657 414.0,2657" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="423.0" y="2651" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="486.0" y="2651" font-size="10" fill="#993C1D">[FA-01 se alcanzan los 20 mensajes de la sesion]</text>
 <line x1="57.3" y1="143.0" x2="4381.4" y2="143.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="2099.5" y="132.0" width="239.8" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
 <text x="2219.4" y="147.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 1 - Apertura de la conversacion</text>
 <line x1="57.3" y1="839.0" x2="4381.4" y2="839.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="2102.5" y="828.0" width="233.8" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
 <text x="2219.4" y="843.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 2 a 7 - Turno de conversacion</text>
-<line x1="57.3" y1="2835.0" x2="4381.4" y2="2835.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="2108.6" y="2824.0" width="221.7" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="2219.4" y="2839.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 8 - Cierre y no persistencia</text>
+<line x1="57.3" y1="3083.0" x2="4381.4" y2="3083.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="2108.6" y="3072.0" width="221.7" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="2219.4" y="3087.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 8 - Cierre y no persistencia</text>
 <line x1="77.3" y1="187.0" x2="482.0" y2="187.0" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="480.0,187 473.0,183.6 473.0,190.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="162.9" y="162.0" width="233.5" height="15.0" fill="#FFFFFF"/>
@@ -140,147 +140,166 @@
 <polygon points="2747.8500000000004,1109 2740.8500000000004,1105.6 2740.8500000000004,1112.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="1490.9" y="1084.0" width="250.0" height="15.0" fill="#FFFFFF"/>
 <text x="1494.9" y="1096.0" font-size="10" fill="#2C2C2A">validarLongitudYEstructura(2.500 caracteres)</text>
-<line x1="482.0" y1="1185.0" x2="886.4" y2="1185.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="884.4000000000001,1185 877.4000000000001,1181.6 877.4000000000001,1188.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="611.5" y="1160.0" width="145.5" height="15.0" fill="#FFFFFF"/>
-<text x="615.5" y="1172.0" font-size="10" fill="#2C2C2A">informarEntradaInvalida()</text>
-<line x1="482.0" y1="1233.0" x2="3016.8" y2="1233.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="3014.8,1233 3007.8,1229.6 3007.8,1236.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1662.9" y="1208.0" width="173.0" height="15.0" fill="#FFFFFF"/>
-<text x="1666.9" y="1220.0" font-size="10" fill="#2C2C2A">dentroDeLimites(3/min, 30/dia)</text>
-<line x1="482.0" y1="1309.0" x2="886.4" y2="1309.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="884.4000000000001,1309 877.4000000000001,1305.6 877.4000000000001,1312.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="595.0" y="1284.0" width="178.5" height="15.0" fill="#FFFFFF"/>
-<text x="599.0" y="1296.0" font-size="10" fill="#2C2C2A">informarLimiteYTiempoDeEspera()</text>
-<line x1="482.0" y1="1357.0" x2="3016.8" y2="1357.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="3014.8,1357 3007.8,1353.6 3007.8,1360.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1690.4" y="1332.0" width="118.0" height="15.0" fill="#FFFFFF"/>
-<text x="1694.4" y="1344.0" font-size="10" fill="#2C2C2A">registrarSolicitud()</text>
-<line x1="482.0" y1="1397.0" x2="1438.5" y2="1397.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1436.45,1397 1429.45,1393.6 1429.45,1400.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="868.2" y="1372.0" width="184.0" height="15.0" fill="#FFFFFF"/>
-<text x="872.2" y="1384.0" font-size="10" fill="#2C2C2A">evaluarPeligroExplicito(mensaje)</text>
-<line x1="1438.5" y1="1437.0" x2="2749.9" y2="1437.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2747.8500000000004,1437 2740.8500000000004,1433.6 2740.8500000000004,1440.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2029.7" y="1412.0" width="129.0" height="15.0" fill="#FFFFFF"/>
-<text x="2033.7" y="1424.0" font-size="10" fill="#2C2C2A">obtenerTextoDelTurno()</text>
-<line x1="1438.5" y1="1513.0" x2="3514.4" y2="1513.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="3512.4000000000005,1513 3505.4000000000005,1509.6 3505.4000000000005,1516.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2378.9" y="1488.0" width="195.0" height="15.0" fill="#FFFFFF"/>
-<text x="2382.9" y="1500.0" font-size="10" fill="#2C2C2A">documentarSinContenidoIndividual()</text>
-<line x1="1438.5" y1="1553.0" x2="482.0" y2="1553.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="484.0,1553 491.0,1549.6 491.0,1556.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="884.7" y="1528.0" width="151.0" height="15.0" fill="#FFFFFF"/>
-<text x="888.7" y="1540.0" font-size="10" fill="#2C2C2A">desviarADerivacionDeCU07()</text>
-<line x1="482.0" y1="1601.0" x2="3259.6" y2="1601.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="3257.55,1601 3250.55,1597.6 3250.55,1604.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1800.8" y="1576.0" width="140.0" height="15.0" fill="#FFFFFF"/>
-<text x="1804.8" y="1588.0" font-size="10" fill="#2C2C2A">materializarContextoV1()</text>
-<line x1="3259.6" y1="1641.0" x2="1774.7" y2="1641.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1776.65,1641 1783.65,1637.6 1783.65,1644.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2427.9" y="1616.0" width="178.5" height="15.0" fill="#FFFFFF"/>
-<text x="2431.9" y="1628.0" font-size="10" fill="#2C2C2A">estaOtorgadaLaPersonalizacion()</text>
-<line x1="3259.6" y1="1681.0" x2="2523.9" y2="1681.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2525.8500000000004,1681 2532.8500000000004,1677.6 2532.8500000000004,1684.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2843.7" y="1656.0" width="96.0" height="15.0" fill="#FFFFFF"/>
-<text x="2847.7" y="1668.0" font-size="10" fill="#2C2C2A">obtenerPersona()</text>
-<line x1="3259.6" y1="1721.0" x2="2749.9" y2="1721.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2751.8500000000004,1721 2758.8500000000004,1717.6 2758.8500000000004,1724.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2912.7" y="1696.0" width="184.0" height="15.0" fill="#FFFFFF"/>
-<text x="2916.7" y="1708.0" font-size="10" fill="#2C2C2A">ultimosIntercambiosDeLaSesion(4)</text>
-<line x1="3259.6" y1="1761.0" x2="482.0" y2="1761.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
-<polygon points="484.0,1761 491.0,1757.6 491.0,1764.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="1781.5" y="1736.0" width="178.5" height="15.0" fill="#FFFFFF"/>
-<text x="1785.5" y="1748.0" font-size="10" fill="#2C2C2A">ContextoInicialConversacionalV1</text>
-<line x1="482.0" y1="1801.0" x2="3999.9" y2="1801.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="3997.9000000000005,1801 3990.9000000000005,1797.6 3990.9000000000005,1804.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2171.0" y="1776.0" width="140.0" height="15.0" fill="#FFFFFF"/>
-<text x="2175.0" y="1788.0" font-size="10" fill="#2C2C2A">generar(contexto minimo)</text>
-<polyline points="3999.9,1841.0 4041.9,1841.0 4041.9,1867.0 4008.9,1867.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="4001.9000000000005,1867 4008.9000000000005,1863.6 4008.9000000000005,1870.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="4047.9" y="1816.0" width="151.0" height="15.0" fill="#FFFFFF"/>
-<text x="4051.9" y="1828.0" font-size="10" fill="#2C2C2A">vigilarPlazoDeEspera(20 s)</text>
-<line x1="3999.9" y1="1907.0" x2="4361.4" y2="1907.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="4359.400000000001,1907 4352.400000000001,1903.6 4352.400000000001,1910.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="4085.9" y="1882.0" width="189.5" height="15.0" fill="#FFFFFF"/>
-<text x="4089.9" y="1894.0" font-size="10" fill="#2C2C2A">solicitar la generacion del texto</text>
-<polyline points="3999.9,1983.0 4041.9,1983.0 4041.9,2009.0 4008.9,2009.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="4001.9000000000005,2009 4008.9000000000005,2005.6 4008.9000000000005,2012.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="4047.9" y="1958.0" width="107.0" height="15.0" fill="#FFFFFF"/>
-<text x="4051.9" y="1970.0" font-size="10" fill="#2C2C2A">reintentarUnaVez()</text>
-<line x1="3999.9" y1="2049.0" x2="886.4" y2="2049.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="888.4000000000001,2049 895.4000000000001,2045.6 895.4000000000001,2052.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2364.9" y="2024.0" width="156.5" height="15.0" fill="#FFFFFF"/>
-<text x="2368.9" y="2036.0" font-size="10" fill="#2C2C2A">informarFalloDelProveedor()</text>
-<line x1="3999.9" y1="2133.0" x2="886.4" y2="2133.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="888.4000000000001,2133 895.4000000000001,2129.6 895.4000000000001,2136.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2364.9" y="2108.0" width="156.5" height="15.0" fill="#FFFFFF"/>
-<text x="2368.9" y="2120.0" font-size="10" fill="#2C2C2A">informarFalloDelProveedor()</text>
-<line x1="4361.4" y1="2181.0" x2="3999.9" y2="2181.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="4001.9000000000005,2181 4008.9000000000005,2177.6 4008.9000000000005,2184.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="4138.2" y="2156.0" width="85.0" height="15.0" fill="#FFFFFF"/>
-<text x="4142.2" y="2168.0" font-size="10" fill="#2C2C2A">texto generado</text>
-<polyline points="3999.9,2221.0 4041.9,2221.0 4041.9,2247.0 4008.9,2247.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="4001.9000000000005,2247 4008.9000000000005,2243.6 4008.9000000000005,2250.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="4047.9" y="2196.0" width="156.5" height="15.0" fill="#FFFFFF"/>
-<text x="4051.9" y="2208.0" font-size="10" fill="#2C2C2A">extraerSoloContenidoFinal()</text>
-<line x1="3999.9" y1="2287.0" x2="1438.5" y2="2287.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1440.45,2287 1447.45,2283.6 1447.45,2290.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2635.4" y="2262.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="2639.4" y="2274.0" font-size="10" fill="#2C2C2A">aplicarGuardasDeSalida(texto)</text>
-<polyline points="1438.5,2363.0 1480.5,2363.0 1480.5,2389.0 1447.5,2389.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1440.45,2389 1447.45,2385.6 1447.45,2392.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1486.5" y="2338.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="1490.5" y="2350.0" font-size="10" fill="#2C2C2A">sustituirPorRespuestaSegura()</text>
-<line x1="1438.5" y1="2437.0" x2="3999.9" y2="2437.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
-<polygon points="3997.9000000000005,2437 3990.9000000000005,2433.6 3990.9000000000005,2440.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="2671.2" y="2412.0" width="96.0" height="15.0" fill="#FFFFFF"/>
-<text x="2675.2" y="2424.0" font-size="10" fill="#2C2C2A">salida admisible</text>
-<polyline points="3999.9,2477.0 4041.9,2477.0 4041.9,2503.0 4008.9,2503.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="4001.9000000000005,2503 4008.9000000000005,2499.6 4008.9000000000005,2506.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="4047.9" y="2452.0" width="112.5" height="15.0" fill="#FFFFFF"/>
-<text x="4051.9" y="2464.0" font-size="10" fill="#2C2C2A">limitarA350Tokens()</text>
-<line x1="3999.9" y1="2543.0" x2="482.0" y2="2543.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
-<polygon points="484.0,2543 491.0,2539.6 491.0,2546.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="2173.7" y="2518.0" width="134.5" height="15.0" fill="#FFFFFF"/>
-<text x="2177.7" y="2530.0" font-size="10" fill="#2C2C2A">respuesta del personaje</text>
-<polyline points="482.0,2583.0 524.0,2583.0 524.0,2609.0 491.0,2609.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="484.0,2609 491.0,2605.6 491.0,2612.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="530.0" y="2558.0" width="173.0" height="15.0" fill="#FFFFFF"/>
-<text x="534.0" y="2570.0" font-size="10" fill="#2C2C2A">mostrarRespuestaDelPersonaje()</text>
-<line x1="482.0" y1="2649.0" x2="3757.2" y2="2649.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="3755.1500000000005,2649 3748.1500000000005,2645.6 3748.1500000000005,2652.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1928.6" y="2624.0" width="382.0" height="15.0" fill="#FFFFFF"/>
-<text x="1932.6" y="2636.0" font-size="10" fill="#2C2C2A">registrarSinContenido(momento, resultado, latencia, modelo, version)</text>
-<line x1="482.0" y1="2725.0" x2="2297.9" y2="2725.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2295.8500000000004,2725 2288.8500000000004,2721.6 2288.8500000000004,2728.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1317.2" y="2700.0" width="145.5" height="15.0" fill="#FFFFFF"/>
-<text x="1321.2" y="2712.0" font-size="10" fill="#2C2C2A">alcanzoElLimiteDeSesion()</text>
-<polyline points="482.0,2765.0 524.0,2765.0 524.0,2791.0 491.0,2791.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="484.0,2791 491.0,2787.6 491.0,2794.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="530.0" y="2740.0" width="211.5" height="15.0" fill="#FFFFFF"/>
-<text x="534.0" y="2752.0" font-size="10" fill="#2C2C2A">informarLimiteDeSesionSinErrorCrudo()</text>
-<line x1="77.3" y1="2879.0" x2="482.0" y2="2879.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="480.0,2879 473.0,2875.6 473.0,2882.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="215.2" y="2854.0" width="129.0" height="15.0" fill="#FFFFFF"/>
-<text x="219.2" y="2866.0" font-size="10" fill="#2C2C2A">cerrar la conversacion</text>
-<line x1="482.0" y1="2919.0" x2="2297.9" y2="2919.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2295.8500000000004,2919 2288.8500000000004,2915.6 2288.8500000000004,2922.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1363.9" y="2894.0" width="52.0" height="15.0" fill="#FFFFFF"/>
-<text x="1367.9" y="2906.0" font-size="10" fill="#2C2C2A">cerrar()</text>
-<line x1="482.0" y1="2959.0" x2="2749.9" y2="2959.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2747.8500000000004,2959 2740.8500000000004,2955.6 2740.8500000000004,2962.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1556.9" y="2934.0" width="118.0" height="15.0" fill="#FFFFFF"/>
-<text x="1560.9" y="2946.0" font-size="10" fill="#2C2C2A">descartarContenido()</text>
-<rect x="2659.9" y="2971.0" width="1207.3" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="2667.9" y="2989.0" font-size="9.5" fill="#2C2C2A">No persistencia (RF-13, RNF-03, PRIV-R2). El contenido se descarta al cerrar.</text>
-<text x="2667.9" y="3002.0" font-size="9.5" fill="#2C2C2A">Lo que NO existe en este diagrama es la afirmacion: ningun mensaje guarda el texto</text>
-<text x="2667.9" y="3015.0" font-size="9.5" fill="#2C2C2A">de la Conversacion ni de sus Mensaje, y no hay ninguna cache de pares</text>
-<text x="2667.9" y="3028.0" font-size="9.5" fill="#2C2C2A">mensaje-respuesta (no-objetivo declarado en ADR-002-D6).</text>
-<text x="2667.9" y="3041.0" font-size="9.5" fill="#2C2C2A">El cierre ya no registra nada (v1.1, hallazgo H-1a de DS-00). El evento</text>
-<text x="2667.9" y="3054.0" font-size="9.5" fill="#2C2C2A">operativo se escribe dentro del loop, un registro por llamada al proveedor,</text>
-<text x="2667.9" y="3067.0" font-size="9.5" fill="#2C2C2A">porque latencia, resultado, modelo y version son valores de UNA peticion y MET-07</text>
-<text x="2667.9" y="3080.0" font-size="9.5" fill="#2C2C2A">mide peticiones sobre el total. Al cerrar no hay una latencia unica que registrar.</text>
+<line x1="482.0" y1="1149.0" x2="3016.8" y2="1149.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="3014.8,1149 3007.8,1145.6 3007.8,1152.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1662.9" y="1124.0" width="173.0" height="15.0" fill="#FFFFFF"/>
+<text x="1666.9" y="1136.0" font-size="10" fill="#2C2C2A">dentroDeLimites(3/min, 30/dia)</text>
+<line x1="482.0" y1="1225.0" x2="886.4" y2="1225.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="884.4000000000001,1225 877.4000000000001,1221.6 877.4000000000001,1228.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="611.5" y="1200.0" width="145.5" height="15.0" fill="#FFFFFF"/>
+<text x="615.5" y="1212.0" font-size="10" fill="#2C2C2A">informarEntradaInvalida()</text>
+<line x1="482.0" y1="1283.0" x2="886.4" y2="1283.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="884.4000000000001,1283 877.4000000000001,1279.6 877.4000000000001,1286.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="595.0" y="1258.0" width="178.5" height="15.0" fill="#FFFFFF"/>
+<text x="599.0" y="1270.0" font-size="10" fill="#2C2C2A">informarLimiteYTiempoDeEspera()</text>
+<line x1="482.0" y1="1341.0" x2="3016.8" y2="1341.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="3014.8,1341 3007.8,1337.6 3007.8,1344.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1690.4" y="1316.0" width="118.0" height="15.0" fill="#FFFFFF"/>
+<text x="1694.4" y="1328.0" font-size="10" fill="#2C2C2A">registrarSolicitud()</text>
+<line x1="482.0" y1="1381.0" x2="1438.5" y2="1381.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1436.45,1381 1429.45,1377.6 1429.45,1384.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="868.2" y="1356.0" width="184.0" height="15.0" fill="#FFFFFF"/>
+<text x="872.2" y="1368.0" font-size="10" fill="#2C2C2A">evaluarPeligroExplicito(mensaje)</text>
+<line x1="1438.5" y1="1421.0" x2="2749.9" y2="1421.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2747.8500000000004,1421 2740.8500000000004,1417.6 2740.8500000000004,1424.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2029.7" y="1396.0" width="129.0" height="15.0" fill="#FFFFFF"/>
+<text x="2033.7" y="1408.0" font-size="10" fill="#2C2C2A">obtenerTextoDelTurno()</text>
+<line x1="1438.5" y1="1497.0" x2="3514.4" y2="1497.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="3512.4000000000005,1497 3505.4000000000005,1493.6 3505.4000000000005,1500.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2378.9" y="1472.0" width="195.0" height="15.0" fill="#FFFFFF"/>
+<text x="2382.9" y="1484.0" font-size="10" fill="#2C2C2A">documentarSinContenidoIndividual()</text>
+<line x1="1438.5" y1="1537.0" x2="482.0" y2="1537.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="484.0,1537 491.0,1533.6 491.0,1540.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="884.7" y="1512.0" width="151.0" height="15.0" fill="#FFFFFF"/>
+<text x="888.7" y="1524.0" font-size="10" fill="#2C2C2A">desviarADerivacionDeCU07()</text>
+<line x1="482.0" y1="1585.0" x2="3259.6" y2="1585.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="3257.55,1585 3250.55,1581.6 3250.55,1588.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1800.8" y="1560.0" width="140.0" height="15.0" fill="#FFFFFF"/>
+<text x="1804.8" y="1572.0" font-size="10" fill="#2C2C2A">materializarContextoV1()</text>
+<line x1="3259.6" y1="1625.0" x2="1774.7" y2="1625.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1776.65,1625 1783.65,1621.6 1783.65,1628.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2427.9" y="1600.0" width="178.5" height="15.0" fill="#FFFFFF"/>
+<text x="2431.9" y="1612.0" font-size="10" fill="#2C2C2A">estaOtorgadaLaPersonalizacion()</text>
+<line x1="3259.6" y1="1665.0" x2="2523.9" y2="1665.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2525.8500000000004,1665 2532.8500000000004,1661.6 2532.8500000000004,1668.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2843.7" y="1640.0" width="96.0" height="15.0" fill="#FFFFFF"/>
+<text x="2847.7" y="1652.0" font-size="10" fill="#2C2C2A">obtenerPersona()</text>
+<line x1="3259.6" y1="1705.0" x2="2749.9" y2="1705.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2751.8500000000004,1705 2758.8500000000004,1701.6 2758.8500000000004,1708.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2912.7" y="1680.0" width="184.0" height="15.0" fill="#FFFFFF"/>
+<text x="2916.7" y="1692.0" font-size="10" fill="#2C2C2A">ultimosIntercambiosDeLaSesion(4)</text>
+<line x1="3259.6" y1="1745.0" x2="482.0" y2="1745.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="484.0,1745 491.0,1741.6 491.0,1748.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="1781.5" y="1720.0" width="178.5" height="15.0" fill="#FFFFFF"/>
+<text x="1785.5" y="1732.0" font-size="10" fill="#2C2C2A">ContextoInicialConversacionalV1</text>
+<line x1="482.0" y1="1785.0" x2="3999.9" y2="1785.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="3997.9000000000005,1785 3990.9000000000005,1781.6 3990.9000000000005,1788.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2171.0" y="1760.0" width="140.0" height="15.0" fill="#FFFFFF"/>
+<text x="2175.0" y="1772.0" font-size="10" fill="#2C2C2A">generar(contexto minimo)</text>
+<polyline points="3999.9,1825.0 4041.9,1825.0 4041.9,1851.0 4008.9,1851.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="4001.9000000000005,1851 4008.9000000000005,1847.6 4008.9000000000005,1854.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="4047.9" y="1800.0" width="151.0" height="15.0" fill="#FFFFFF"/>
+<text x="4051.9" y="1812.0" font-size="10" fill="#2C2C2A">vigilarPlazoDeEspera(20 s)</text>
+<line x1="3999.9" y1="1891.0" x2="4361.4" y2="1891.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="4359.400000000001,1891 4352.400000000001,1887.6 4352.400000000001,1894.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="4085.9" y="1866.0" width="189.5" height="15.0" fill="#FFFFFF"/>
+<text x="4089.9" y="1878.0" font-size="10" fill="#2C2C2A">solicitar la generacion del texto</text>
+<polyline points="3999.9,1967.0 4041.9,1967.0 4041.9,1993.0 4008.9,1993.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="4001.9000000000005,1993 4008.9000000000005,1989.6 4008.9000000000005,1996.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="4047.9" y="1942.0" width="107.0" height="15.0" fill="#FFFFFF"/>
+<text x="4051.9" y="1954.0" font-size="10" fill="#2C2C2A">reintentarUnaVez()</text>
+<line x1="3999.9" y1="2033.0" x2="886.4" y2="2033.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="888.4000000000001,2033 895.4000000000001,2029.6 895.4000000000001,2036.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2364.9" y="2008.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="2368.9" y="2020.0" font-size="10" fill="#2C2C2A">informarFalloDelProveedor()</text>
+<line x1="3999.9" y1="2091.0" x2="886.4" y2="2091.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="888.4000000000001,2091 895.4000000000001,2087.6 895.4000000000001,2094.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2364.9" y="2066.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="2368.9" y="2078.0" font-size="10" fill="#2C2C2A">informarFalloDelProveedor()</text>
+<line x1="4361.4" y1="2149.0" x2="3999.9" y2="2149.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="4001.9000000000005,2149 4008.9000000000005,2145.6 4008.9000000000005,2152.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="4138.2" y="2124.0" width="85.0" height="15.0" fill="#FFFFFF"/>
+<text x="4142.2" y="2136.0" font-size="10" fill="#2C2C2A">texto generado</text>
+<polyline points="3999.9,2189.0 4041.9,2189.0 4041.9,2215.0 4008.9,2215.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="4001.9000000000005,2215 4008.9000000000005,2211.6 4008.9000000000005,2218.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="4047.9" y="2164.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="4051.9" y="2176.0" font-size="10" fill="#2C2C2A">extraerSoloContenidoFinal()</text>
+<line x1="3999.9" y1="2255.0" x2="1438.5" y2="2255.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1440.45,2255 1447.45,2251.6 1447.45,2258.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2635.4" y="2230.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="2639.4" y="2242.0" font-size="10" fill="#2C2C2A">aplicarGuardasDeSalida(texto)</text>
+<polyline points="1438.5,2331.0 1480.5,2331.0 1480.5,2357.0 1447.5,2357.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1440.45,2357 1447.45,2353.6 1447.45,2360.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1486.5" y="2306.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="1490.5" y="2318.0" font-size="10" fill="#2C2C2A">sustituirPorRespuestaSegura()</text>
+<line x1="1438.5" y1="2405.0" x2="3999.9" y2="2405.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="3997.9000000000005,2405 3990.9000000000005,2401.6 3990.9000000000005,2408.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="2671.2" y="2380.0" width="96.0" height="15.0" fill="#FFFFFF"/>
+<text x="2675.2" y="2392.0" font-size="10" fill="#2C2C2A">salida admisible</text>
+<polyline points="3999.9,2445.0 4041.9,2445.0 4041.9,2471.0 4008.9,2471.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="4001.9000000000005,2471 4008.9000000000005,2467.6 4008.9000000000005,2474.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="4047.9" y="2420.0" width="112.5" height="15.0" fill="#FFFFFF"/>
+<text x="4051.9" y="2432.0" font-size="10" fill="#2C2C2A">limitarA350Tokens()</text>
+<line x1="3999.9" y1="2511.0" x2="482.0" y2="2511.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="484.0,2511 491.0,2507.6 491.0,2514.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="2173.7" y="2486.0" width="134.5" height="15.0" fill="#FFFFFF"/>
+<text x="2177.7" y="2498.0" font-size="10" fill="#2C2C2A">respuesta del personaje</text>
+<polyline points="482.0,2551.0 524.0,2551.0 524.0,2577.0 491.0,2577.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="484.0,2577 491.0,2573.6 491.0,2580.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="530.0" y="2526.0" width="173.0" height="15.0" fill="#FFFFFF"/>
+<text x="534.0" y="2538.0" font-size="10" fill="#2C2C2A">mostrarRespuestaDelPersonaje()</text>
+<line x1="482.0" y1="2617.0" x2="3757.2" y2="2617.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="3755.1500000000005,2617 3748.1500000000005,2613.6 3748.1500000000005,2620.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1928.6" y="2592.0" width="382.0" height="15.0" fill="#FFFFFF"/>
+<text x="1932.6" y="2604.0" font-size="10" fill="#2C2C2A">registrarSinContenido(momento, resultado, latencia, modelo, version)</text>
+<line x1="482.0" y1="2693.0" x2="2297.9" y2="2693.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2295.8500000000004,2693 2288.8500000000004,2689.6 2288.8500000000004,2696.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1317.2" y="2668.0" width="145.5" height="15.0" fill="#FFFFFF"/>
+<text x="1321.2" y="2680.0" font-size="10" fill="#2C2C2A">alcanzoElLimiteDeSesion()</text>
+<polyline points="482.0,2733.0 524.0,2733.0 524.0,2759.0 491.0,2759.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="484.0,2759 491.0,2755.6 491.0,2762.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="530.0" y="2708.0" width="211.5" height="15.0" fill="#FFFFFF"/>
+<text x="534.0" y="2720.0" font-size="10" fill="#2C2C2A">informarLimiteDeSesionSinErrorCrudo()</text>
+<line x1="77.3" y1="3127.0" x2="482.0" y2="3127.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="480.0,3127 473.0,3123.6 473.0,3130.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="215.2" y="3102.0" width="129.0" height="15.0" fill="#FFFFFF"/>
+<text x="219.2" y="3114.0" font-size="10" fill="#2C2C2A">cerrar la conversacion</text>
+<line x1="482.0" y1="3167.0" x2="2297.9" y2="3167.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2295.8500000000004,3167 2288.8500000000004,3163.6 2288.8500000000004,3170.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1363.9" y="3142.0" width="52.0" height="15.0" fill="#FFFFFF"/>
+<text x="1367.9" y="3154.0" font-size="10" fill="#2C2C2A">cerrar()</text>
+<line x1="482.0" y1="3207.0" x2="2749.9" y2="3207.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2747.8500000000004,3207 2740.8500000000004,3203.6 2740.8500000000004,3210.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1556.9" y="3182.0" width="118.0" height="15.0" fill="#FFFFFF"/>
+<text x="1560.9" y="3194.0" font-size="10" fill="#2C2C2A">descartarContenido()</text>
+<rect x="392.0" y="2803.0" width="3717.9" height="250.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="400.0" y="2821.0" font-size="9.5" fill="#2C2C2A">Por que aqui es `alt` y no `break` (`VI-01` del `CDR-01 v1.4`, `SD-41`).</text>
+<text x="400.0" y="2834.0" font-size="9.5" fill="#2C2C2A">Este diagrama es el unico de los siete corregidos cuyos flujos viven dentro</text>
+<text x="400.0" y="2847.0" font-size="9.5" fill="#2C2C2A">de un `loop`, y eso cambia cual es el operador correcto:</text>
+<text x="400.0" y="2860.0" font-size="9.5" fill="#2C2C2A">· `opt` era el defecto: solo salta su cuerpo, asi que un mensaje invalido o</text>
+<text x="400.0" y="2873.0" font-size="9.5" fill="#2C2C2A">pasado de tasa seguia hasta el proveedor, y un fallo del proveedor seguia</text>
+<text x="400.0" y="2886.0" font-size="9.5" fill="#2C2C2A">hasta «texto generado». Eso es lo que `VI-01` encontro.</text>
+<text x="400.0" y="2899.0" font-size="9.5" fill="#2C2C2A">· `break` tampoco sirve aqui: abandonaria el fragmento envolvente, que es</text>
+<text x="400.0" y="2912.0" font-size="9.5" fill="#2C2C2A">el `loop`, y terminaria la conversacion entera. Pero `ECU-06` dice «Vuelve al</text>
+<text x="400.0" y="2925.0" font-size="9.5" fill="#2C2C2A">paso 2» (`FE-03`, `FE-05`) y «Vuelve al paso 4» (`FE-06`, `FE-07`): la persona</text>
+<text x="400.0" y="2938.0" font-size="9.5" fill="#2C2C2A">sigue conversando en la misma sesion.</text>
+<text x="400.0" y="2951.0" font-size="9.5" fill="#2C2C2A">· `alt` es el que dice la verdad: el fallo y la continuacion son mutuamente</text>
+<text x="400.0" y="2964.0" font-size="9.5" fill="#2C2C2A">excluyentes dentro del turno, y el `loop` ya modela la vuelta.</text>
+<text x="400.0" y="2977.0" font-size="9.5" fill="#2C2C2A">Los `break` que quedan —`FE-01`, `FE-08`, `FA-01`— si terminan la conversacion,</text>
+<text x="400.0" y="2990.0" font-size="9.5" fill="#2C2C2A">y por eso no se tocaron.</text>
+<text x="400.0" y="3003.0" font-size="9.5" fill="#2C2C2A">Precio declarado: el anidamiento sube a 3-4 niveles y el validador emite 4</text>
+<text x="400.0" y="3016.0" font-size="9.5" fill="#2C2C2A">advertencias nuevas. No se contorsiona el diagrama para callarlas: la propia</text>
+<text x="400.0" y="3029.0" font-size="9.5" fill="#2C2C2A">advertencia dice que lo que sobra es tamano del caso de uso, no estructura del</text>
+<text x="400.0" y="3042.0" font-size="9.5" fill="#2C2C2A">diagrama. Queda como hallazgo enrutado, no aplicado.</text>
+<rect x="2659.9" y="3219.0" width="1207.3" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2667.9" y="3237.0" font-size="9.5" fill="#2C2C2A">No persistencia (RF-13, RNF-03, PRIV-R2). El contenido se descarta al cerrar.</text>
+<text x="2667.9" y="3250.0" font-size="9.5" fill="#2C2C2A">Lo que NO existe en este diagrama es la afirmacion: ningun mensaje guarda el texto</text>
+<text x="2667.9" y="3263.0" font-size="9.5" fill="#2C2C2A">de la Conversacion ni de sus Mensaje, y no hay ninguna cache de pares</text>
+<text x="2667.9" y="3276.0" font-size="9.5" fill="#2C2C2A">mensaje-respuesta (no-objetivo declarado en ADR-002-D6).</text>
+<text x="2667.9" y="3289.0" font-size="9.5" fill="#2C2C2A">El cierre ya no registra nada (v1.1, hallazgo H-1a de DS-00). El evento</text>
+<text x="2667.9" y="3302.0" font-size="9.5" fill="#2C2C2A">operativo se escribe dentro del loop, un registro por llamada al proveedor,</text>
+<text x="2667.9" y="3315.0" font-size="9.5" fill="#2C2C2A">porque latencia, resultado, modelo y version son valores de UNA peticion y MET-07</text>
+<text x="2667.9" y="3328.0" font-size="9.5" fill="#2C2C2A">mide peticiones sobre el total. Al cerrar no hay una latencia unica que registrar.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
 <rect x="401.4" y="34.0" width="161.2" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>

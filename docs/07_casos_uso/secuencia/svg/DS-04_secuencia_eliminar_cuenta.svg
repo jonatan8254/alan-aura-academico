@@ -20,7 +20,7 @@
 <text x="511.05000000000007" y="286" font-size="10" fill="#993C1D">[FE-01 la sesion expira]</text>
 <rect x="439.1" y="542.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,542 501.05000000000007,542 501.05000000000007,554 493.05000000000007,562 439.05000000000007,562" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="448.05000000000007" y="556" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="448.05000000000007" y="556" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="511.05000000000007" y="556" font-size="10" fill="#993C1D">[FA-03 el]</text>
 <rect x="439.1" y="692.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,692 501.05000000000007,692 501.05000000000007,704 493.05000000000007,712 439.05000000000007,712" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
@@ -28,7 +28,7 @@
 <text x="511.05000000000007" y="706" font-size="10" fill="#993C1D">[FE-02]</text>
 <rect x="439.1" y="802.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,802 501.05000000000007,802 501.05000000000007,814 493.05000000000007,822 439.05000000000007,822" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="448.05000000000007" y="816" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="448.05000000000007" y="816" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="511.05000000000007" y="816" font-size="10" fill="#993C1D">[FE-03]</text>
 <rect x="439.1" y="944.0" width="2101.4" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,944 501.05000000000007,944 501.05000000000007,956 493.05000000000007,964 439.05000000000007,964" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
@@ -42,7 +42,7 @@
 <text x="1397.1" y="1175.0" font-size="10" fill="#993C1D">[existen capsula, consentimiento y contadores]</text>
 <rect x="439.1" y="1611.0" width="1024.0" height="198.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,1611 501.05000000000007,1611 501.05000000000007,1623 493.05000000000007,1631 439.05000000000007,1631" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="448.05000000000007" y="1625" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="448.05000000000007" y="1625" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="511.05000000000007" y="1625" font-size="10" fill="#993C1D">[FE-04 el almacenamiento falla a mitad de la cascada]</text>
 <line x1="57.3" y1="142.0" x2="2991.2" y2="142.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="1365.1" y="131.0" width="318.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>

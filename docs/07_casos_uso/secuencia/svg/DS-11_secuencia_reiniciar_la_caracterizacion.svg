@@ -24,11 +24,11 @@
 <text x="111.35" y="563" font-size="10" fill="#993C1D">[FA-01 no existe capsula porque ya se reinicio antes]</text>
 <rect x="39.3" y="753.0" width="508.7" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="39.349999999999994,753 101.35,753 101.35,765 93.35,773 39.349999999999994,773" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="48.349999999999994" y="767" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="48.349999999999994" y="767" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="111.35" y="767" font-size="10" fill="#993C1D">[FA-03 el Usuario cancela la advertencia]</text>
 <rect x="39.3" y="837.0" width="508.7" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="39.349999999999994,837 101.35,837 101.35,849 93.35,857 39.349999999999994,857" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="48.349999999999994" y="851" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="48.349999999999994" y="851" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="111.35" y="851" font-size="10" fill="#993C1D">[FE-03 llega sin confirmacion explicita o mal formada]</text>
 <rect x="472.1" y="953.0" width="1245.8" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="472.05000000000007,953 534.0500000000001,953 534.0500000000001,965 526.0500000000001,973 472.05000000000007,973" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
@@ -36,7 +36,7 @@
 <text x="544.0500000000001" y="967" font-size="10" fill="#993C1D">[FA-02 la capsula solo tiene character y sus metadatos]</text>
 <rect x="472.1" y="1143.0" width="1245.8" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="472.05000000000007,1143 534.0500000000001,1143 534.0500000000001,1155 526.0500000000001,1163 472.05000000000007,1163" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="481.05000000000007" y="1157" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="481.05000000000007" y="1157" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="544.0500000000001" y="1157" font-size="10" fill="#993C1D">[FE-04 el sistema no logra ejecutar el borrado]</text>
 <line x1="57.3" y1="251.0" x2="1964.5" y2="251.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="848.7" y="240.0" width="324.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>

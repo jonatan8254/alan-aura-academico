@@ -20,7 +20,7 @@
 <text x="120.42500000000001" y="220" font-size="10" fill="#993C1D">[FA-02 entra por el acceso separado de administracion]</text>
 <rect x="406.9" y="466.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="406.875,466 468.875,466 468.875,478 460.875,486 406.875,486" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="415.875" y="480" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="415.875" y="480" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="478.875" y="480" font-size="10" fill="#993C1D">[FE-01]</text>
 <rect x="1966.1" y="648.0" width="676.1" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="1966.075,648 2028.075,648 2028.075,660 2020.075,668 1966.075,668" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>

@@ -1,5 +1,12 @@
 @startuml
 ' DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»
+' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FA-02 y FE-03 vuelven de opt a BREAK.
+'       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
+'       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
+'       `break` ejecuta su operando EN LUGAR DEL RESTO: es esa semantica exacta.
+'       `opt` solo saltaba su cuerpo y el flujo caia al exito.
+'       Consecuencia declarada: para estos casos el `break` ORIGINAL era correcto y
+'       esa parte de H-01 fue un falso positivo. Ver DS-00 §12.
 ' v1.1 (CDR-01): H-01 — FA-02 y FE-03 pasan de break a opt.
 '       H-18 — el dialogo NOMBRA EL EFECTO antes de confirmar, no solo pide confirmacion.
 '       H-20 — alias B_LoginAdmin unificado a B_PaginaInicioSesionAdmin (era divergente con DS-03).
@@ -72,11 +79,11 @@ note right of B_DialogoConfirmacion
   `advertirDelAlcanceIrreversible()`.
 end note
 
-opt FA-02 el Administrador no confirma
+break FA-02 el Administrador no confirma
   B_DialogoConfirmacion -> B_ControlDisponibilidad : cancelarSinCambiarElEstado()
 end
 
-opt FE-03 la confirmacion llega mal formada
+break FE-03 la confirmacion llega mal formada
   B_DialogoConfirmacion -> B_ControlDisponibilidad : rechazarConfirmacionInvalidaYVolverAlPaso1()
 end
 

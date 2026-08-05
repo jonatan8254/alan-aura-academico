@@ -1,5 +1,11 @@
 @startuml
 ' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
+' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FE-03, FE-05, FE-06 y FE-07 pasan de opt a ALT.
+'       Unico diagrama cuyos flujos viven dentro de un `loop`: ahi `break` abandonaria
+'       el bucle y terminaria la conversacion, contra el «Vuelve al paso 2/4» de ECU-06.
+'       `alt` hace excluyentes fallo y continuacion dentro del turno; el `loop` da la vuelta.
+'       Precio declarado: el anidamiento sube a 3-4 niveles, +4 advertencias. Ver la nota
+'       del diagrama y DS-00 §12.
 ' v1.1 (SD-30): registrarSinContenido() se mueve del cierre a DENTRO del loop — un evento por
 '      llamada al proveedor, no uno por conversacion. Hallazgo H-1a de DS-00.
 ' v1.1 (CDR-01, H-01): FE-03, FE-05, FE-06 y FE-07 pasan de break a opt.
@@ -69,64 +75,83 @@ loop 1..20 mensajes de usuario
   end
 
   B_InterfazDeChat -> E_Mensaje : validarLongitudYEstructura(2.500 caracteres)
-
-  opt FE-03 mensaje mal formado o excedido
-    B_InterfazDeChat -> B_EstadosDeError : informarEntradaInvalida()
-  end
-
   B_InterfazDeChat -> E_ContadorDeUsoDiario : dentroDeLimites(3/min, 30/dia)
 
-  opt FE-05 supera el limite de tasa
+  alt FE-03 mensaje mal formado o excedido
+    B_InterfazDeChat -> B_EstadosDeError : informarEntradaInvalida()
+  else FE-05 supera el limite de tasa
     B_InterfazDeChat -> B_EstadosDeError : informarLimiteYTiempoDeEspera()
-  end
+  else el turno es admisible
 
-  B_InterfazDeChat -> E_ContadorDeUsoDiario : registrarSolicitud()
-  B_InterfazDeChat -> C_GateDeSeguridad : evaluarPeligroExplicito(mensaje)
-  C_GateDeSeguridad -> E_Mensaje : obtenerTextoDelTurno()
+    B_InterfazDeChat -> E_ContadorDeUsoDiario : registrarSolicitud()
+    B_InterfazDeChat -> C_GateDeSeguridad : evaluarPeligroExplicito(mensaje)
+    C_GateDeSeguridad -> E_Mensaje : obtenerTextoDelTurno()
 
-  break FE-08 el gate decide peligro explicito
-    C_GateDeSeguridad -> E_EventoDeSeguridad : documentarSinContenidoIndividual()
-    C_GateDeSeguridad -> B_InterfazDeChat : desviarADerivacionDeCU07()
-  end
+    break FE-08 el gate decide peligro explicito
+      C_GateDeSeguridad -> E_EventoDeSeguridad : documentarSinContenidoIndividual()
+      C_GateDeSeguridad -> B_InterfazDeChat : desviarADerivacionDeCU07()
+    end
 
-  B_InterfazDeChat -> E_CapsulaDePerfil : materializarContextoV1()
-  E_CapsulaDePerfil -> E_Consentimiento : estaOtorgadaLaPersonalizacion()
-  E_CapsulaDePerfil -> E_Personaje : obtenerPersona()
-  E_CapsulaDePerfil -> E_Mensaje : ultimosIntercambiosDeLaSesion(4)
-  E_CapsulaDePerfil --> B_InterfazDeChat : ContextoInicialConversacionalV1
+    B_InterfazDeChat -> E_CapsulaDePerfil : materializarContextoV1()
+    E_CapsulaDePerfil -> E_Consentimiento : estaOtorgadaLaPersonalizacion()
+    E_CapsulaDePerfil -> E_Personaje : obtenerPersona()
+    E_CapsulaDePerfil -> E_Mensaje : ultimosIntercambiosDeLaSesion(4)
+    E_CapsulaDePerfil --> B_InterfazDeChat : ContextoInicialConversacionalV1
 
-  B_InterfazDeChat -> B_FronteraProveedorLLM : generar(contexto minimo)
-  B_FronteraProveedorLLM -> B_FronteraProveedorLLM : vigilarPlazoDeEspera(20 s)
-  B_FronteraProveedorLLM -> ACT_ProveedorLLM : solicitar la generacion del texto
+    B_InterfazDeChat -> B_FronteraProveedorLLM : generar(contexto minimo)
+    B_FronteraProveedorLLM -> B_FronteraProveedorLLM : vigilarPlazoDeEspera(20 s)
+    B_FronteraProveedorLLM -> ACT_ProveedorLLM : solicitar la generacion del texto
 
-  opt FE-06 el proveedor no responde
-    B_FronteraProveedorLLM -> B_FronteraProveedorLLM : reintentarUnaVez()
-    B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
-  end
+    alt FE-06 el proveedor no responde
+      B_FronteraProveedorLLM -> B_FronteraProveedorLLM : reintentarUnaVez()
+      B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
+    else FE-07 se agotan los 20 segundos de espera
+      B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
+    else el proveedor responde dentro del plazo
 
-  opt FE-07 se agotan los 20 segundos de espera
-    B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
-  end
+      ACT_ProveedorLLM -> B_FronteraProveedorLLM : texto generado
+      B_FronteraProveedorLLM -> B_FronteraProveedorLLM : extraerSoloContenidoFinal()
+      B_FronteraProveedorLLM -> C_GateDeSeguridad : aplicarGuardasDeSalida(texto)
 
-  ACT_ProveedorLLM -> B_FronteraProveedorLLM : texto generado
-  B_FronteraProveedorLLM -> B_FronteraProveedorLLM : extraerSoloContenidoFinal()
-  B_FronteraProveedorLLM -> C_GateDeSeguridad : aplicarGuardasDeSalida(texto)
+      opt FA-02 la postvalidacion detecta riesgo o claim clinico
+        C_GateDeSeguridad -> C_GateDeSeguridad : sustituirPorRespuestaSegura()
+      end
 
-  opt FA-02 la postvalidacion detecta riesgo o claim clinico
-    C_GateDeSeguridad -> C_GateDeSeguridad : sustituirPorRespuestaSegura()
-  end
+      C_GateDeSeguridad --> B_FronteraProveedorLLM : salida admisible
+      B_FronteraProveedorLLM -> B_FronteraProveedorLLM : limitarA350Tokens()
+      B_FronteraProveedorLLM --> B_InterfazDeChat : respuesta del personaje
+      B_InterfazDeChat -> B_InterfazDeChat : mostrarRespuestaDelPersonaje()
+      B_InterfazDeChat -> E_EventoOperativo : registrarSinContenido(momento, resultado, latencia, modelo, version)
 
-  C_GateDeSeguridad --> B_FronteraProveedorLLM : salida admisible
-  B_FronteraProveedorLLM -> B_FronteraProveedorLLM : limitarA350Tokens()
-  B_FronteraProveedorLLM --> B_InterfazDeChat : respuesta del personaje
-  B_InterfazDeChat -> B_InterfazDeChat : mostrarRespuestaDelPersonaje()
-  B_InterfazDeChat -> E_EventoOperativo : registrarSinContenido(momento, resultado, latencia, modelo, version)
+      break FA-01 se alcanzan los 20 mensajes de la sesion
+        B_InterfazDeChat -> E_Conversacion : alcanzoElLimiteDeSesion()
+        B_InterfazDeChat -> B_InterfazDeChat : informarLimiteDeSesionSinErrorCrudo()
+      end
 
-  break FA-01 se alcanzan los 20 mensajes de la sesion
-    B_InterfazDeChat -> E_Conversacion : alcanzoElLimiteDeSesion()
-    B_InterfazDeChat -> B_InterfazDeChat : informarLimiteDeSesionSinErrorCrudo()
+    end
   end
 end
+
+note over B_InterfazDeChat, B_FronteraProveedorLLM
+  <b>Por que aqui es `alt` y no `break`</b> (`VI-01` del `CDR-01 v1.4`, `SD-41`).
+  Este diagrama es el <b>unico</b> de los siete corregidos cuyos flujos viven dentro
+  de un <b>`loop`</b>, y eso cambia cual es el operador correcto:
+  · <b>`opt` era el defecto</b>: solo salta su cuerpo, asi que un mensaje invalido o
+    pasado de tasa <b>seguia hasta el proveedor</b>, y un fallo del proveedor seguia
+    hasta «texto generado». Eso es lo que `VI-01` encontro.
+  · <b>`break` tampoco sirve aqui</b>: abandonaria el <b>fragmento envolvente</b>, que es
+    el `loop`, y terminaria la conversacion entera. Pero `ECU-06` dice «<b>Vuelve</b> al
+    paso 2» (`FE-03`, `FE-05`) y «<b>Vuelve</b> al paso 4» (`FE-06`, `FE-07`): la persona
+    sigue conversando en la misma sesion.
+  · <b>`alt` es el que dice la verdad</b>: el fallo y la continuacion son mutuamente
+    excluyentes <b>dentro del turno</b>, y el `loop` ya modela la vuelta.
+  Los `break` que quedan —`FE-01`, `FE-08`, `FA-01`— <b>si</b> terminan la conversacion,
+  y por eso <b>no se tocaron</b>.
+  <b>Precio declarado:</b> el anidamiento sube a 3-4 niveles y el validador emite 4
+  advertencias nuevas. No se contorsiona el diagrama para callarlas: la propia
+  advertencia dice que lo que sobra es <b>tamano del caso de uso</b>, no estructura del
+  diagrama. Queda como hallazgo enrutado, no aplicado.
+end note
 
 == Paso 8 - Cierre y no persistencia ==
 

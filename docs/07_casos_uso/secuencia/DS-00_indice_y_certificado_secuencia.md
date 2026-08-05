@@ -1,6 +1,6 @@
 # DS-00 — Índice y certificado de los diagramas de secuencia
 
-**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.7 (SD-40: la **tabla** de §2 seguía en 282 y su fila de `DS-10` en 20 mensajes, dos líneas por encima de la nota que ya declaraba `H-22` = 283). v1.6 (SD-39: `H-22` 282 → **283** y `H-23` 192 → **193**, por el retrabajo del `CDR-01`). v1.5 (SD-36: `E-3` decía diez mensajes a un actor y son **once**). v1.4 (SD-32: etiquetas de P-08/P-10 corregidas en su raíz de robustez, participantes de DS-09, y E-3/E-4 declaradas). v1.3 (SD-31: §11 pasa de orientación a hecho — los 14 SVG de robustez regenerados en cero colisiones — y §10 corrige el alcance que declaraba al revés). v1.2: SD-30 cerrado, los **siete** hallazgos aplicados; robustez en **262 elementos** y 150 controladores; **181** casos de prueba · **Estado:** Propuesto.
+**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.8 (SD-41: **`VI-01` corregido** — los 17 `opt` se adjudican en dos grupos según si viven dentro de un `loop`; entra §12 con el criterio y `E-5` con su precio. Trece `break` originales resultan correctos: esa parte de `H-01` era falso positivo). v1.7 (SD-40: la **tabla** de §2 seguía en 282 y su fila de `DS-10` en 20 mensajes, dos líneas por encima de la nota que ya declaraba `H-22` = 283). v1.6 (SD-39: `H-22` 282 → **283** y `H-23` 192 → **193**, por el retrabajo del `CDR-01`). v1.5 (SD-36: `E-3` decía diez mensajes a un actor y son **once**). v1.4 (SD-32: etiquetas de P-08/P-10 corregidas en su raíz de robustez, participantes de DS-09, y E-3/E-4 declaradas). v1.3 (SD-31: §11 pasa de orientación a hecho — los 14 SVG de robustez regenerados en cero colisiones — y §10 corrige el alcance que declaraba al revés). v1.2: SD-30 cerrado, los **siete** hallazgos aplicados; robustez en **262 elementos** y 150 controladores; **181** casos de prueba · **Estado:** Propuesto.
 **Propósito:** índice de los **14 diagramas de secuencia** (`DS-01…DS-14`) derivados de `DR-01…DR-14`, con su certificado de auditoría, las capas declaradas, las excepciones y la trazabilidad hacia adelante.
 **Insumos:** `DR-01…DR-14 v2.1` (**262 elementos**, **150 controladores**), `ECU-01…ECU-14 v2.1`, `MD-01 v1.4`, `DCU-01 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `DIS-00`, `SEG-01 v1.2`, `PER-01 v1.2`, `PRIV-01`, `MV-01 §7`, `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-sequence-diagram`, modo **Generar**. **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores en los 14**.
@@ -38,7 +38,7 @@ llegó a **anidamiento de nivel 7**. Ver §5.
 | [DS-12](puml/DS-12_secuencia_revocar_la_personalizacion.puml) | CU-12 Revocar la personalización | 7 | 17 | 9/9 | ✅ 0 · 1 |
 | [DS-13](puml/DS-13_secuencia_cambiar_de_acompanante.puml) | CU-13 Cambiar de acompañante | 9 | 16 | 6/6 | ✅ 0 · 1 |
 | [DS-14](puml/DS-14_secuencia_elegir_acompanante.puml) | CU-14 Elegir acompañante (Alan o Aura) | 7 | 13 | 6/6 | ✅ 0 · 1 |
-| | **Total** | | **283** | **150/150** | **0 errores · 6 advertencias** |
+| | **Total** | | **283** | **150/150** | **0 errores · 10 advertencias** |
 
 > **Los conteos del paquete son ahora hechos canónicos:** `H-22` (283 mensajes), `H-23` (193
 > operaciones) y `H-24` (181 casos de prueba) viven en `HECHOS_CANONICOS`, no aquí. Si discrepan,
@@ -157,10 +157,21 @@ Renombrar cualquiera de las dos rompe una traza. **Consecuencia práctica, decla
 herramienta que empareje participantes **por etiqueta** —incluido el validador del modelo de
 clases— confunde las dos. La desambiguación se hace por el prefijo del alias (`ACT_` frente a `E_`).
 
+**`E-5` de `DS-00` · `DS-06` anida a 3-4 niveles, y es el precio de `VI-01`.** *(Añadida en `SD-41`.)*
+Las cuatro advertencias de anidamiento de `DS-06` son **consecuencia directa** de la corrección de
+`VI-01`: hacer mutuamente excluyentes el fallo y la continuación exige un `alt` que **contenga** el
+resto del turno, y eso empuja un nivel hacia abajo a los tres fragmentos que ya vivían dentro del
+`loop`. El validador sugiere partir el caso de uso; **no se hace**, y no por comodidad: la decisión
+de no partir `CU-06` ya está tomada y heredada de `DR-00 §5 E-2` (párrafo siguiente). Contorsionar
+el diagrama para bajar el anidamiento sería reintroducir el defecto que `VI-01` señaló.
+
 **Excepción heredada de `DR-00 §5 E-2`, re-declarada sin reabrirse:** `CU-06` **no se parte** pese
 a que `DS-06` es el mayor del paquete (16 participantes, 49 mensajes). Sus once flujos no básicos
 son de un solo nivel; el tamaño viene de la tabla de códigos HTTP (`RF-26`), no de complejidad
-oculta.
+oculta. *(`SD-41` mantiene la decisión y añade el dato nuevo: tras corregir `VI-01`, cuatro de esos
+flujos **dejan de ser de un solo nivel**. Eso no reabre la excepción, pero sí es el argumento más
+fuerte que ha tenido en contra, y queda escrito para que la próxima revisión lo pese con el dato
+delante en vez de heredarlo.)*
 
 ## 7. Delta de *object discovery* — tres clases nuevas
 
@@ -275,12 +286,43 @@ crecen en alto —`DR-06` llega a 2.488 px—, que es el precio de que quepan si
 > el diagrama se **lea bien**: eso se comprobó a ojo sobre `DR-06` y `DR-14`, el más denso y el más
 > simple.
 
+## 12. `VI-01`: el criterio con que se eligió el operador, y por qué no fue uno solo (`SD-41`)
+
+La verificación independiente (`CDR-01 v1.4`) encontró que los **17** fragmentos que `SD-39` pasó de
+`break` a `opt` estaban mal: `opt` solo salta su cuerpo, así que **el flujo caía al sufijo de éxito**.
+El caso que lo prueba sin discusión es `DS-04`: el usuario cancelaba la eliminación y la secuencia
+continuaba hasta la cascada de borrado, contra `ECU-04 FA-03` —«El Sistema **no suprime nada**»—.
+
+**Lo que esta pasada añade es que la corrección no es una, sino dos**, y depende de un dato
+estructural que ninguna de las dos revisiones anteriores había mirado: **si el fragmento vive dentro
+de un `loop`.**
+
+| Grupo | Dónde | Operador | Por qué |
+|---|---|---|---|
+| **A — 13 fragmentos** | `DS-03`, `DS-04`, `DS-05`, `DS-10`, `DS-11`, `DS-12`, todos a **profundidad 0** | **`break`** | El fragmento envolvente es la interacción entera. UML 2.5: `break` ejecuta su operando **en lugar del resto** del fragmento envolvente — que es exactamente lo que dicen sus filas de `ECU`: «no ejecuta la supresión», «no aplica el cambio», «no modifica el `Consentimiento`», «no permite avanzar» |
+| **B — 4 fragmentos** | `DS-06:80,105`, dentro de `loop 1..20` | **`alt`/`else`** | Ahí `break` abandonaría **el `loop`** y terminaría la conversación, contra el «**Vuelve** al paso 2 / al paso 4» de `ECU-06`. `alt` hace excluyentes fallo y continuación **dentro del turno**, y el `loop` ya modela la vuelta |
+
+**Consecuencia que hay que decir, porque corrige a una revisión anterior:** para los **13** del grupo
+A, el **`break` original era correcto**, y esa parte de `H-01` fue un **falso positivo**. `H-01` acertó
+en el diagnóstico general —el operador se había elegido por categoría (`FE`→`break`) y no por
+desenlace— y acertó de lleno en el grupo B, donde `break` sí rompía el reintento. Pero al aplicar un
+**único** remedio a los 17, convirtió trece aciertos en defectos. `VI-01` cazó el resultado; el
+criterio que faltaba es el de esta tabla.
+
+**Lo que no cambió, y se comprobó:** los **33** `break` restantes siguen siendo correctos —sus filas
+dicen «Termina»— y **no se tocaron**. Dentro de `DS-06`, los tres que quedan (`FE-01`, `FE-08`,
+`FA-01`) sí terminan la conversación, así que siguen siendo `break`.
+
+**Medición de cierre:** **283 mensajes** (`H-22` intacto), 14 diagramas en **0 errores**, y las
+advertencias suben de **6 a 10** — las 4 nuevas son el anidamiento de `DS-06` declarado en `E-5`.
+
 ---
 
 **Historial de cambios**
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.8 | 2026-08-05 | J. Sánchez | **SD-41 — `VI-01` del `CDR-01 v1.4`, y una corrección a `H-01`.** Los **17** fragmentos que `SD-39` pasó de `break` a `opt` estaban mal —`opt` salta su cuerpo y el flujo **cae al éxito**: en `DS-04` el usuario cancelaba la eliminación y la secuencia seguía hasta la cascada—. Pero el remedio **no es uno solo**, y el dato que lo decide no lo había mirado ninguna de las dos revisiones anteriores: **si el fragmento vive dentro de un `loop`**. **Grupo A, 13 fragmentos a profundidad 0** (`DS-03/04/05/10/11/12`) → **`break`**, porque el envolvente es la interacción entera y sus `ECU` dicen que el remanente no se ejecuta. **Grupo B, 4 dentro de `loop 1..20`** (`DS-06`) → **`alt`/`else`**, porque allí `break` terminaría la conversación contra el «Vuelve al paso 2/4» de `ECU-06`. **Consecuencia declarada: para los 13 del grupo A el `break` original era correcto y esa parte de `H-01` fue un falso positivo** — acertó el diagnóstico y falló al aplicar un único remedio a los 17. Entra **§12** con el criterio y **`E-5`** con su precio: el anidamiento de `DS-06` sube a 3-4 niveles y las advertencias de **6 a 10**; no se contorsiona el diagrama para callarlas, porque `CU-06` ya está declarado como no partible. **Verificado:** **283 mensajes** (`H-22` intacto), 14 diagramas en **0 errores**, 14 SVG regenerados sin colisiones. |
 | v1.7 | 2026-08-05 | J. Sánchez | **SD-40 — el archivo se contradecía a dos líneas.** `v1.6` movió `H-22` a **283** en la ficha y en la nota de §2, pero **no tocó la tabla**: su fila de totales seguía en **282**, justo encima del párrafo que declara «`H-22` (283 mensajes)». Contado sobre los catorce `.puml`, el total real es **283** y la discrepancia estaba localizada en una sola fila: **`DS-10` declaraba 20 mensajes y tiene 21** — el que añadió `H-18` al hacer que el diálogo del *kill switch* nombre el efecto antes de confirmar. Corregidas la fila y el total. Es la clase de defecto que el `CDR-01 v1.4` no podía ver: su hallazgo `VI-06` listó los consumidores del canon, no las tablas internas de cada artefacto. |
 | v1.6 | 2026-08-05 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`.** Dos hechos canónicos del paquete se mueven y se propagan aquí: **`H-22` 282 → 283 mensajes** —`H-01` convirtió 17 `break` en `opt` y `H-02`/`H-15`/`H-18` reescribieron mensajes en `DS-04`, `DS-10` y `DS-11`— y **`H-23` 192 → 193 operaciones**. Los dos **se remidieron de primera mano** antes de escribirlos: los 283 los contó el propio `generar_svg_secuencia.py` al regenerar, no una heurística. **Ningún diagrama pierde ni gana participantes**, y los 14 siguen en **0 errores y 6 advertencias** —la línea base exacta de `E-2`—, con la capa «cierre de participantes contra `DR-XX`» ejecutada 14/14. |
 | v1.5 | 2026-08-04 | J. Sánchez | **SD-36.** `E-3` declaraba **diez** mensajes dirigidos a un actor y son **once** — contados por diagrama: `DS-06` 1, `DS-08` 3, `DS-09` 2, `DS-10` 1, `DS-11` 4. La cifra importa más de lo que su magnitud sugiere: `E-3` es una **excepción declarada** cuyo valor entero es que la sostiene una medición, y un número que no cuadra debilita justo eso. |

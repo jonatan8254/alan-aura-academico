@@ -1,5 +1,12 @@
 @startuml
 ' DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»
+' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FA-03, FE-03 y FE-04 vuelven de opt a BREAK.
+'       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
+'       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
+'       `break` ejecuta su operando EN LUGAR DEL RESTO: es esa semantica exacta.
+'       `opt` solo saltaba su cuerpo y el flujo caia al exito.
+'       Consecuencia declarada: para estos casos el `break` ORIGINAL era correcto y
+'       esa parte de H-01 fue un falso positivo. Ver DS-00 §12.
 ' v1.1 (CDR-01): H-01 — FA-03, FE-03 y FE-04 pasan de break a opt.
 '       H-15 — FE-04 deja de deshacer un borrado parcial que sobre UNA entidad no puede existir.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
@@ -49,11 +56,11 @@ E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acces
 B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
 ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita
 
-opt FA-03 el Usuario cancela la advertencia
+break FA-03 el Usuario cancela la advertencia
   B_PaginaGestionCuenta --> ACT_Usuario : cancelarDejandoLaCapsulaCompleta()
 end
 
-opt FE-03 llega sin confirmacion explicita o mal formada
+break FE-03 llega sin confirmacion explicita o mal formada
   B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso1()
 end
 
@@ -66,7 +73,7 @@ end
 B_PaginaGestionCuenta -> E_CapsulaDePerfil : borrarCompleta()
 E_CapsulaDePerfil -> E_CapsulaDePerfil : dejarDeExistir()
 
-opt FE-04 el sistema no logra ejecutar el borrado
+break FE-04 el sistema no logra ejecutar el borrado
   E_CapsulaDePerfil --> B_PaginaGestionCuenta : sigue intacta, con character
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarElFalloSinHaberSuprimidoNada()
 end
