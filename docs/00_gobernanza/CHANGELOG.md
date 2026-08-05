@@ -3,6 +3,16 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v0.25.0 · `SD-41` fase 3: `VI-03`, y la tercera vez que el acta se queda corta
+
+- **`ECU-08` se contradecía consigo mismo.** `H-17` corrigió `RE-04` en `SD-39` —retiró la promesa de «no permitir señalar a una persona», incumplible en un directorio donde cada fila **es** un titular— y **dejó el resto del documento prometiéndola**.
+- **Eran cinco, no tres.** El acta listaba `:32`, `:92` y `:147`. El barrido **por concepto** —no por número de línea— encontró dos más: **`RA-04`** descartaba el buscador por alias invocando «la reidentificación que `RE-04` evita», y el **checklist #20** apelaba a un «canon anti-reidentificación». Las dos se apoyaban en la promesa retirada. `RA-04` pasa a descartarse por **`RE-03`**, que es el motivo real: buscar por alias convierte la observación en **ir a por alguien**.
+- **Una que resultó ser cita fiel, y por eso no se tocó.** `:147` glosa `OBJ-6`, y **`VIS-01 §3.2` dice literalmente «sin acceder a contenido sensible ni a datos individuales»**. Falsear la cita habría sido peor que el defecto: se conserva **literal** y se le añade la lectura correcta.
+- **Hallazgo nuevo hacia fuera (`RA-07`, fila 23 del tablero):** la sobrepromesa **sigue viva en `VIS-01`**, que además **se contradice consigo mismo** — su §Alcance dice «sin acceder a datos **sensibles**». `RF-15` exige mostrar filas individuales, así que la formulación de `OBJ-6` es la incumplible. Señalado, no corregido: `VIS-01` tiene su propia cadena de propagación.
+- **Alcance intacto:** `RE-04` **no se tocó** y las cinco columnas de `RF-15` siguen enteras. Esto era alinear **lenguaje**, no recortar el directorio.
+- **Verificado:** rebarrido por concepto con **0 promesas vivas** restantes —las 9 menciones que quedan son historial o explican el cambio, comprobadas una a una—; validador de la skill sobre **14/14 especificaciones en 0 errores y 0 advertencias**, igual que la línea base; los cinco bloques en 0.
+- **Declarado:** el validador de especificaciones aplicado a **`ECU-00`** emite un error («falta postcondiciones»), pero `ECU-00` es el **índice**, no una especificación: es un error de categoría del validador, preexistente y ajeno a esta pasada.
+
 ## 2026-08-05 — v0.24.0 · `SD-41`: los dos Mayores del CDR, cerrados — y trece `break` que estaban bien
 
 - **`VI-01` no eran diecisiete defectos: eran cuatro.** Al releer las diecisiete filas de `ECU` una por una, **trece decían «Termina»** y no «Vuelve»: su `break` era **correcto**, y `SD-39` los había cambiado a `opt` sin necesidad. Solo `DS-04:41`, `DS-04:51`, `DS-06:73` y `DS-06:79` caían de verdad al flujo de éxito. Esos cuatro pasan a `alt`, con el sufijo de éxito en la rama excluyente.
