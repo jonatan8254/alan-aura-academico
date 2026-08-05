@@ -1,6 +1,6 @@
 # DOP-01 — Delta de operaciones
 
-**ID:** DOP-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (SD-39: retrabajo del `CDR-01` — `H-20`). v1.2 (SD-32: desviarADerivacionDeCU07 cambia de receptora y §8 corrige el recuento del espacio de la solución a 21). v1.1 · **Estado:** Propuesto — cubre los **14** diagramas.
+**ID:** DOP-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.4 (SD-40: §8 decía **192** operaciones distintas cuando `H-23` va por **193** desde `SD-39` — y este es el artefacto **dueño** del hecho, contradiciendo su propia §8 bis; se precisa además que sus **21** clases de solución son las del delta de secuencia y no las 27 de `MC-01`). v1.3 (SD-39: retrabajo del `CDR-01` — `H-20`). v1.2 (SD-32: desviarADerivacionDeCU07 cambia de receptora y §8 corrige el recuento del espacio de la solución a 21). v1.1 · **Estado:** Propuesto — cubre los **14** diagramas.
 **Propósito:** registrar, operación por operación, **qué clase la recibe y por qué**. Es la entrada del diagrama de clases de diseño y la única parte del paso 4 que queda auditable.
 **Insumos:** `DR-01…DR-14` v2.0 (los **150** controladores), `DS-01…DS-14` v1.0, `MD-01 v1.4`, `SEG-01 v1.2`, `PER-01 v1.2`, `MV-01 §7`.
 **Generado con:** skill `uml-sequence-diagram` (modo Generar). **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores** en los 14.
@@ -163,9 +163,9 @@ sistema donde los personajes se distinguen como objetos. En el resto gobierna el
 |---|---|
 | Diagramas | **14** |
 | Controladores cubiertos | **150 / 150** |
-| Operaciones distintas | **192** |
+| Operaciones distintas | **193** |
 | Clases del problema con operaciones | **16 / 16** |
-| Clases nuevas del espacio de la solución | **21** — 2 de control, 1 de auditoría y 18 de frontera *(v1.2, `H-B`)* |
+| Clases nuevas del espacio de la solución **en el delta de secuencia** | **21** — 2 de control, 1 de auditoría y 18 de frontera *(v1.2, `H-B`)*. **No son las 27 de `H-28`:** ese hecho cuenta `MC-01`, que sumó **6 tipos de transferencia** en `H-04` del `CDR-01`. Ningún diagrama de secuencia los contiene, así que aquí **21 es el valor correcto** y no una cifra sin propagar |
 | — de ellas, **clases controladoras** | **2** — `C_GateDeSeguridad`, `C_FallbackDeSeguridad` |
 | — de ellas, auditoría de operación | **1** — `AccionAdministrativa` |
 | — de ellas, **fronteras** | **18** — 16 pantallas de `DIS-00` + el diálogo de confirmación de P-16 + la frontera con el proveedor |
@@ -185,6 +185,7 @@ considera el techo razonable para clases controladoras, y ninguna es un `XContro
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.4 | 2026-08-05 | J. Sánchez | **SD-40 — la cifra que este artefacto era dueño de vigilar y llevaba mal.** §8 declaraba **192** operaciones distintas cuando `H-23` vale **193** desde `SD-39`, y lo hacía **contradiciendo su propia §8 bis**, que ya decía 193 trece líneas más abajo. Que el defecto viviera en el **dueño del hecho** es lo que lo hacía grave: cualquier consumidor que lo citara heredaba el error. Se corrige a **193**. En la misma pasada se precisa la fila de clases de solución: sus **21** son las del **delta de secuencia** (2 control + 1 auditoría + 18 frontera) y **no** las 27 de `H-28`, que cuentan `MC-01` con los seis tipos de transferencia que `H-04` añadió — ningún diagrama de secuencia contiene uno, así que 21 es aquí el valor correcto y no una cifra sin propagar. |
 | v1.3 | 2026-08-04 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`, hallazgo `H-20`.** §2 nombraba la receptora de `redirigirParaOtorgarCapaBase()` con el alias que usa `DR-06`, no con el que dibuja `DS-06:46` — y **manda la flecha del `DS`**, como ya estableció `v1.2` para `desviarADerivacionDeCU07()`. Al unificarse el alias de P-07 en `DR-06`, las dos familias vuelven a decir lo mismo. **Las 192 operaciones no cambian**: ninguna se añade, se quita ni cambia de dueño; cambia el **nombre con que se escribe** la receptora. *(En esta versión se reordena también el historial: la fila `v0.1` estaba en cabeza, por encima de `v1.2`.)* |
 | v1.2 | 2026-08-04 | J. Sánchez | **SD-32, hallazgos `H-A` y `H-B` de `MC-00`.** `desviarADerivacionDeCU07()` cambia de clase receptora —de `C_GateDeSeguridad` a `B_InterfazDeChat`— porque `DS-06:87` dibuja la flecha hacia el borde y **manda la flecha**; `C_GateDeSeguridad` pasa de 4 a **3** operaciones. Y §8 deja de contar «3 clases nuevas del espacio de la solución»: eran las **controladoras**, no el espacio entero. El inventario real es **21** (2 de control + 1 de auditoría + 18 de frontera). **Las 192 operaciones no cambian**: ninguna se añade ni se quita, una cambia de dueño. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1a`.** `registrarSinContenido()` cambia de firma —`(momento, resultado, latencia, modelo, version)`, unificada contra el plan §4.15— y de sitio: se invoca **dentro del `loop`**, una vez por llamada al proveedor, no al cerrar la conversación. Misma clase receptora, mismo espacio: **192 operaciones sin cambio**. |

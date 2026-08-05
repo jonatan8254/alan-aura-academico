@@ -1,6 +1,6 @@
 # COD-01 — Insumos estructurados para código
 
-**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.4 (SD-39: entra §6.1, la capa de tipos de transferencia — **43** clases). v1.3 (SD-39: retrabajo del `CDR-01` — `H-20`). v1.2 (SD-35: borrado físico sin marca de baja). v1.1 (SD-33: `PER-H5` cerrado — la cascada de `suprimirEnCascada()` es completa; queda `PER-H2`). v1.0 · **Estado:** Propuesto.
+**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.5 (SD-40: la tabla de capas de §2 seguía sumando **37** y sin la fila de tipos de transferencia que la ficha ya declaraba desde v1.4). v1.4 (SD-39: entra §6.1, la capa de tipos de transferencia — **43** clases). v1.3 (SD-39: retrabajo del `CDR-01` — `H-20`). v1.2 (SD-35: borrado físico sin marca de baja). v1.1 (SD-33: `PER-H5` cerrado — la cascada de `suprimirEnCascada()` es completa; queda `PER-H2`). v1.0 · **Estado:** Propuesto.
 **Propósito:** clase · atributos · operaciones con firma · capa, en forma tabular, para que la fase de construcción y el CDR trabajen sobre una lista y no sobre un diagrama.
 **Insumos:** **`MC-01_modelo_clases_diseno.puml` y nada más.**
 **Consumidores:** el **CDR** (guía #2, *«generate the code headers for your classes»*), la fase de construcción, `ARQ-01`.
@@ -32,7 +32,8 @@ La palabra «capa» aquí significa **capa de diseño**, no capa física: el dis
 | **Frontera · presentación** | Una por pantalla de `DIS-00` (P-01…P-16) + el diálogo de confirmación | 17 |
 | **Frontera · sistema externo** | La única aprobada, en `DR-06` | 1 |
 | **Auditoría de operación** | Fuera de `MD-01` por decisión declarada | 1 |
-| | | **37** |
+| **Tipos de transferencia** | Los seis que `H-04` del `CDR-01` dio forma; detalle en §6.1. `Sesion` queda **sin declarar a propósito** (su mecanismo es `ARQ-01`) | 6 |
+| | | **43** |
 
 **Ninguna capa de infraestructura**, y es deliberado: sin repositorios, sin DAO, sin sesión como clase. `ARQ-01` la añadirá tras el CDR.
 
@@ -360,6 +361,7 @@ Honestidad antes que completitud: esto **no** está listo para escribir código 
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.5 | 2026-08-05 | J. Sánchez | **SD-40 — la tabla de capas contradecía a la ficha del propio archivo.** §2 seguía listando **cinco** capas y sumando **37**, mientras la ficha y el DoD ya decían **43** desde `v1.4`. `SD-39` añadió §6.1 con los seis tipos de transferencia pero **no tocó la tabla que los cuenta**, así que el archivo afirmaba dos totales distintos a treinta líneas de distancia. Entra la sexta fila —**Tipos de transferencia · 6**, con `Sesion` declarada como ausencia deliberada— y el total pasa a **43**. **No se toca `:78` ni `:128`**, las dos operaciones de reversión que `VI-02` marca: ésas son rework de diseño y van a su skill dueña, no a una pasada de propagación. |
 | v1.4 | 2026-08-05 | J. Sánchez | **SD-39 — entra §6.1, la capa de tipos de transferencia.** `H-04` del `CDR-01` dio forma a **seis** tipos que hasta entonces eran retorno **con nombre y sin clase**, y este archivo —que es la proyección de `MC-01` y el insumo de la construcción— seguía describiéndolos en §7 como *«los siete tipos con nombre no tienen clase que los declare»*, afirmación **ya falsa para seis de ellos**. Se añade una sección con los seis y sus atributos, **leídos de la `ECU` que origina cada uno**, no inventados; §7 se reescribe para decir cuáles tienen clase y cuáles no; el conteo del DoD pasa de **37 a 43**. Los dos que siguen sin clase se declaran con su motivo: `ContextoInicialConversacionalV1` no tiene línea de vida en ningún `DS` y `Sesion` es el mecanismo de sesión, diferido a `ARQ-01` por `E-1`. **Consecuencia dicha, no disimulada:** con esos dos sin resolver, las cabeceras de la regla #2 no compilan tal cual. |
 | v1.3 | 2026-08-04 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`, hallazgo `H-20`.** La fila de P-04 nombraba la clase con el alias **minoritario**, heredado de `MC-01`, que a su vez lo heredaba de `DR-10`. Pasa al mayoritario, el que usan `DR-03`, `DS-03` y `DS-10`. **Es el único de los tres alias divergentes que llegaba hasta aquí, y por eso importaba más que los otros dos:** este archivo es el insumo con el que la **regla #2 del CDR** genera las cabeceras de código, así que la clase habría nacido en el código con el nombre que solo usaba un diagrama. La etiqueta «P-04 Inicio de sesión de administración» no cambia. **Ninguna clase, atributo, operación ni firma cambia**, y ninguna cifra se mueve. |
 | v1.2 | 2026-08-04 | J. Sánchez | **SD-35.** `ADR-004-D1` cierra `PER-H2`: la supresión de cuenta es **física e inmediata**, sin ventana de gracia ni marca de baja. §8 retira la fila de `PER-H2` y `RF-24` pasa a cumplirse según el diseño, con sus dos excepciones cerradas. **Ninguna clase, atributo, operación ni firma cambia.** *(Fila añadida en v1.3: la versión constaba en la ficha desde SD-35 pero nunca se escribió aquí — mismo hueco de propagación que tenía `MC-00`, cerrado en la misma pasada.)* |

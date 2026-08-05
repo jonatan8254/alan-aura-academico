@@ -1,6 +1,6 @@
 # TRZ-DS-01 — Matriz de trazabilidad del paquete de secuencia
 
-**ID:** TRZ-DS-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (SD-35: `RF-24` pasa a cumplirse). v1.2 (SD-33: `PER-H5` cerrado; §4 pasa a citar `PER-H2`). v1.1 (SD-32: §3 corrige «tres clases del espacio de la solución» a 21). v1.0 · **Estado:** Propuesto.
+**ID:** TRZ-DS-01 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.4 (SD-40: la fila de totales y la de «hechos canónicos» declaraban **282** mensajes y **192** operaciones; se repone además la fila `v1.3` que faltaba en el historial). v1.3 (SD-35: `RF-24` pasa a cumplirse). v1.2 (SD-33: `PER-H5` cerrado; §4 pasa a citar `PER-H2`). v1.1 (SD-32: §3 corrige «tres clases del espacio de la solución» a 21). v1.0 · **Estado:** Propuesto.
 **Propósito:** cerrar la cadena **paso del texto → mensaje → operación → clase receptora → caso de prueba**, para los 14 casos de uso. Es el quinto entregable de la skill `uml-sequence-diagram` y la evidencia de que **ningún requisito quedó huérfano** al pasar de análisis a diseño detallado.
 **Insumos:** `ECU-01…ECU-14 v2.1`, `DR-01…DR-14 v2.1` (**262 elementos**, 150 controladores), `DS-01…DS-14 v1.1` (**282 mensajes**), `DOP-01 v1.1` (**192 operaciones**), `CP-00…CP-14 v1.2` (**181 casos**), `MD-01 v1.6`, `HECHOS_CANONICOS` (`H-20`…`H-24`).
 **Consumidores:** `TRZ-01` (matriz maestra), `uml-design-class-model`, el CDR.
@@ -42,9 +42,9 @@ impide probar algo distinto de lo que se diseñó.
 | CU-12 Revocar personalización | `ECU-12` | `DR-12` · 9 ctrl | `DS-12` · 17 msg | 4: `Usuario`, `Consentimiento`, `CapsulaDePerfil`, `Conversacion` | `CP-1301…1311` · 11 |
 | CU-13 Cambiar de acompañante | `ECU-13` | `DR-13` · 6 ctrl | `DS-13` · 16 msg | 6: `Alan`, `Aura`, `Personaje`, `Conversacion`, `CapsulaDePerfil`, `DisponibilidadDelChatbot` | `CP-301…308` · 8 |
 | CU-14 Elegir acompañante | `ECU-14` | `DR-14` · 6 ctrl | `DS-14` · 13 msg | 4: `Alan`, `Aura`, `Personaje`, `CapsulaDePerfil` | `CP-401…407` · 7 |
-| | | **150** | **282** | **16/16** distintas · **192** operaciones (`DOP-01`) | **181** |
+| | | **150** | **283** | **16/16** distintas · **193** operaciones (`DOP-01`) | **181** |
 
-**Los cuatro totales son hechos canónicos:** `H-21` (150), `H-22` (282), `H-23` (192), `H-24` (181).
+**Los cuatro totales son hechos canónicos:** `H-21` (150), `H-22` (283), `H-23` (193), `H-24` (181).
 Si esta tabla discrepa de `HECHOS_CANONICOS`, manda esa tabla.
 
 ## 3. Cobertura del modelo de dominio — las 16 clases
@@ -104,6 +104,8 @@ donde los dos espacios convergen. El inventario con su justificación vive en
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.4 | 2026-08-05 | J. Sánchez | **SD-40 — la matriz declaraba como canónicos dos valores que ya no lo eran.** Su fila de totales daba **282** mensajes y **192** operaciones, y el párrafo siguiente los repetía bajo el rótulo «**Los cuatro totales son hechos canónicos**», que es la forma más eficaz de propagar un error: quien lo lea deja de comprobarlo. Desde `SD-39` valen **283** (`H-22`) y **193** (`H-23`). Corregidos ambos en la tabla y en el párrafo. **Y se repone la fila `v1.3`**, que faltaba pese a que la ficha la declaraba —el mismo defecto que el `CDR-01 v1.4` encontró en el acta y catalogó como `VI-05`, aquí en un segundo artefacto—. |
+| v1.3 | 2026-08-04 | J. Sánchez | **SD-35.** `ADR-004-D1` cierra `PER-H2`: la supresión de cuenta es física e inmediata, sin ventana de gracia ni marca de baja, así que **`RF-24` pasa a cumplirse** — según el diseño, con la verificación contra implementación diferida a fase 4. *(Fila repuesta en `SD-40`: la versión existía en la ficha y su historial nunca la registró.)* |
 | v1.2 | 2026-08-04 | J. Sánchez | **SD-33.** §4 deja de declarar que `RF-24` no se cumple «de extremo a extremo» por `PER-H5` —cerrado en `ADR-003`— y pasa a declarar que no se cumple de forma **inmediata** por `PER-H2`. Ningún conteo cambia. |
 | v1.1 | 2026-08-04 | J. Sánchez | **SD-32, hallazgo `H-B` de `MC-00`.** §3 decía «tres clases del espacio de la solución» y nombraba tres ejemplos, con una lista además **distinta** de la de `DOP-01 §8`. Las reales son **21**. Ningún conteo de la matriz por caso de uso cambia: los 150 controladores, los 282 mensajes, las 192 operaciones y los 181 casos de prueba se mantienen. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación (SD-30). Cierra la cadena paso → mensaje → operación → clase → `CP` para los 14 casos de uso, con los cinco totales reproducidos contra los artefactos y la verificación de que las **16 clases** de `MD-01` reciben comportamiento. |
