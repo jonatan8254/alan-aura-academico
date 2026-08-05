@@ -1,6 +1,6 @@
 # COD-01 — Insumos estructurados para código
 
-**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.5 (SD-40: la tabla de capas de §2 seguía sumando **37** y sin la fila de tipos de transferencia que la ficha ya declaraba desde v1.4). v1.4 (SD-39: entra §6.1, la capa de tipos de transferencia — **43** clases). v1.3 (SD-39: retrabajo del `CDR-01` — `H-20`). v1.2 (SD-35: borrado físico sin marca de baja). v1.1 (SD-33: `PER-H5` cerrado — la cascada de `suprimirEnCascada()` es completa; queda `PER-H2`). v1.0 · **Estado:** Propuesto.
+**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.6 (SD-41, `VI-02`: la proyección declaraba **tres** operaciones que `MC-01` ya no tiene o tiene con otra firma — `deshacerLoSuprimido`, `deshacerElBorradoIncompleto` y `revocarCapaBase` sin su parámetro). v1.5 (SD-40: la tabla de capas de §2 seguía sumando **37** y sin la fila de tipos de transferencia que la ficha ya declaraba desde v1.4). v1.4 (SD-39: entra §6.1, la capa de tipos de transferencia — **43** clases). v1.3 (SD-39: retrabajo del `CDR-01` — `H-20`). v1.2 (SD-35: borrado físico sin marca de baja). v1.1 (SD-33: `PER-H5` cerrado — la cascada de `suprimirEnCascada()` es completa; queda `PER-H2`). v1.0 · **Estado:** Propuesto.
 **Propósito:** clase · atributos · operaciones con firma · capa, en forma tabular, para que la fase de construcción y el CDR trabajen sobre una lista y no sobre un diagrama.
 **Insumos:** **`MC-01_modelo_clases_diseno.puml` y nada más.**
 **Consumidores:** el **CDR** (guía #2, *«generate the code headers for your classes»*), la fase de construcción, `ARQ-01`.
@@ -76,7 +76,7 @@ La palabra «capa» aquí significa **capa de diseño**, no capa física: el dis
 +identificarTitularDelConsentimiento() : Usuario
 +permanecerIntacta() : void
 -noHayDependientesQueSuprimir() : Boolean
--deshacerLoSuprimido() : void
+-conservarLoYaSuprimido() : void
 -marcarLaFilaConEseEstadoSinExcluirla(estado : EstadoDirectorio) : void
 ```
 > `estado` es **derivado**, no almacenado (`PER-T4`, `SD-26`). Al generar la cabecera debe salir como propiedad calculada, no como campo.
@@ -96,7 +96,7 @@ La palabra «capa» aquí significa **capa de diseño**, no capa física: el dis
 +anadirCapaDePersonalizacion() : void
 +conservarSoloLaCapaBase() : void
 +conservarLaCapaBaseOtorgada() : void
-+revocarCapaBase() : void
++revocarCapaBase(fecha : DateTime) : void
 +revocarCapaDePersonalizacion(fecha : DateTime) : void
 +existeLaCapaBaseOtorgada() : Boolean
 +estaVigenteLaCapaBase() : Boolean
@@ -126,7 +126,6 @@ La palabra «capa» aquí significa **capa de diseño**, no capa física: el dis
 +suprimir() : void
 -dejarSinDefaultsLosOmitidos() : void
 -dejarDeExistir() : void
--deshacerElBorradoIncompleto() : void
 ```
 > **`[0..1]` significa ausente, no nulo.** `PER-01 §3.3`: «un campo omitido **no se guarda**; no se guarda vacío ni con valor por defecto». `dejarSinDefaultsLosOmitidos()` existe para que esa prohibición sea verificable.
 > `borrarCompleta()` (CU-11) y `suprimir()` (cascada de CU-04) **no son duplicado**: `PER-T7` distingue reiniciar de eliminar.
@@ -361,6 +360,7 @@ Honestidad antes que completitud: esto **no** está listo para escribir código 
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.6 | 2026-08-05 | J. Sánchez | **SD-41 — `VI-02`, y una tercera desviación que el acta no había visto.** Este artefacto se declara **proyección tabular de `MC-01`, no fuente propia**, así que toda desviación es defecto por definición. Había tres: `Usuario` proyectaba `deshacerLoSuprimido()` —retirada por `H-02`— cuando `MC-01` declara `conservarLoYaSuprimido()`; `CapsulaDePerfil` proyectaba `deshacerElBorradoIncompleto()`, retirada por `H-15`; y **la tercera no estaba en `VI-02`**: `Consentimiento` proyectaba `revocarCapaBase()` **sin parámetro**, cuando `H-11` le añadió `fecha : DateTime` y `SD-39` lo aplicó en `MC-01` sin propagarlo aquí. **Encontrada comparando clase por clase**, no leyendo. Las tres corregidas; `H-25`/`H-26` no se mueven, porque `MC-01` no se toca. |
 | v1.5 | 2026-08-05 | J. Sánchez | **SD-40 — la tabla de capas contradecía a la ficha del propio archivo.** §2 seguía listando **cinco** capas y sumando **37**, mientras la ficha y el DoD ya decían **43** desde `v1.4`. `SD-39` añadió §6.1 con los seis tipos de transferencia pero **no tocó la tabla que los cuenta**, así que el archivo afirmaba dos totales distintos a treinta líneas de distancia. Entra la sexta fila —**Tipos de transferencia · 6**, con `Sesion` declarada como ausencia deliberada— y el total pasa a **43**. **No se toca `:78` ni `:128`**, las dos operaciones de reversión que `VI-02` marca: ésas son rework de diseño y van a su skill dueña, no a una pasada de propagación. |
 | v1.4 | 2026-08-05 | J. Sánchez | **SD-39 — entra §6.1, la capa de tipos de transferencia.** `H-04` del `CDR-01` dio forma a **seis** tipos que hasta entonces eran retorno **con nombre y sin clase**, y este archivo —que es la proyección de `MC-01` y el insumo de la construcción— seguía describiéndolos en §7 como *«los siete tipos con nombre no tienen clase que los declare»*, afirmación **ya falsa para seis de ellos**. Se añade una sección con los seis y sus atributos, **leídos de la `ECU` que origina cada uno**, no inventados; §7 se reescribe para decir cuáles tienen clase y cuáles no; el conteo del DoD pasa de **37 a 43**. Los dos que siguen sin clase se declaran con su motivo: `ContextoInicialConversacionalV1` no tiene línea de vida en ningún `DS` y `Sesion` es el mecanismo de sesión, diferido a `ARQ-01` por `E-1`. **Consecuencia dicha, no disimulada:** con esos dos sin resolver, las cabeceras de la regla #2 no compilan tal cual. |
 | v1.3 | 2026-08-04 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`, hallazgo `H-20`.** La fila de P-04 nombraba la clase con el alias **minoritario**, heredado de `MC-01`, que a su vez lo heredaba de `DR-10`. Pasa al mayoritario, el que usan `DR-03`, `DS-03` y `DS-10`. **Es el único de los tres alias divergentes que llegaba hasta aquí, y por eso importaba más que los otros dos:** este archivo es el insumo con el que la **regla #2 del CDR** genera las cabeceras de código, así que la clase habría nacido en el código con el nombre que solo usaba un diagrama. La etiqueta «P-04 Inicio de sesión de administración» no cambia. **Ninguna clase, atributo, operación ni firma cambia**, y ninguna cifra se mueve. |

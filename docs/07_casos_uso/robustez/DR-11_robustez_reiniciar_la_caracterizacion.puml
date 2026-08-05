@@ -1,5 +1,10 @@
 @startuml
 ' DR-11 — Analisis de robustez de CU-11 «Reiniciar la caracterizacion»
+' v2.2 (SD-41, VI-02 del CDR-01 v1.4): el controlador de FE-04 pasa de «Deshacer el borrado
+'      incompleto» a «Informar el fallo sin haber suprimido nada». Sustitucion 1:1: el conteo
+'      de controladores no se mueve. Es la propagacion a robustez de H-15, que SD-39 aplico en
+'      ECU-11 y DS-11 pero no aqui. El estado que la rama anterior protegia NO PUEDE EXISTIR:
+'      el borrado es de una sola entidad. Reverso de H-02 — alli imposible, aqui innecesaria.
 ' Insumos: ECU-11 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-13; destinos P-08, P-03), PRIV-01, PER-01
 ' Nuevo en el PDR-01 fase D.4. Los elementos proceden del flujo alternativo «Reiniciar
 ' caracterizacion» de DR-04 v1.0, que salio de alli cuando paso a ser caso de uso propio.
@@ -23,7 +28,7 @@ control "Cancelar el reinicio" as C_CancelarReinicio #LightCoral
 control "Denegar por permiso insuficiente" as C_DenegarPorPermiso #LightCoral
 control "Informar la confirmacion ausente o la peticion invalida" as C_MsgPeticionInvalida #LightCoral
 control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
-control "Deshacer el borrado incompleto" as C_DeshacerBorrado #LightCoral
+control "Informar el fallo sin haber suprimido nada" as C_InformarFalloSinSuprimir #LightCoral
 
 entity "Usuario" as E_Usuario
 entity "CapsulaDePerfil" as E_CapsulaDePerfil
@@ -55,9 +60,9 @@ B_PaginaGestionCuenta -- C_DenegarPorPermiso : FE-02 el rol no esta autorizado
 C_DenegarPorPermiso -- B_PaginaGestionCuenta : FE-02 termina; 403 sin borrar nada
 C_RecibirConfirmacion -- C_MsgPeticionInvalida : FE-03 llega sin confirmacion explicita o mal formada
 C_MsgPeticionInvalida -- B_PaginaGestionCuenta : FE-03 vuelve al paso 1; 400 sin ejecutar el borrado
-C_BorrarCapsulaCompleta -- C_DeshacerBorrado : FE-04 el sistema no logra completar el borrado
-C_DeshacerBorrado -- E_CapsulaDePerfil : FE-04 deshace lo iniciado; la capsula queda como estaba, con character
-C_DeshacerBorrado -- B_PaginaGestionCuenta : FE-04 vuelve al paso 1; 500 sin estados intermedios
+C_BorrarCapsulaCompleta -- C_InformarFalloSinSuprimir : FE-04 el sistema no logra ejecutar el borrado
+C_InformarFalloSinSuprimir -- E_CapsulaDePerfil : FE-04 la capsula sigue intacta, con character; no hubo estado intermedio que deshacer
+C_InformarFalloSinSuprimir -- B_PaginaGestionCuenta : FE-04 informa el fallo sin haber suprimido nada; 500
 
 legend right
   <b>Convencion de color</b>
@@ -94,9 +99,9 @@ note as N_DR11
   FE-02 Permiso insuficiente (paso 1): 403; sin cambios. Termina.
   FE-03 Confirmacion ausente o peticion mal formada (paso 2): 400; no ejecuta el borrado.
         Vuelve al paso 1.
-  FE-04 Borrado incompleto (paso 3): el sistema no logra completar el borrado de la
-        CapsulaDePerfil; deshace lo iniciado y la deja como estaba, con character
-        (RE-04, sin estados intermedios). 500; vuelve al paso 1.
+  FE-04 Borrado no ejecutado (paso 3): el sistema no logra ejecutar el borrado de la
+        CapsulaDePerfil; la capsula sigue INTACTA, con character, y el sistema informa el
+        fallo sin haber suprimido nada. 500; vuelve al paso 1.
 
   <b>Postcondicion</b> La CapsulaDePerfil deja de existir; la cuenta y el Consentimiento
   permanecen; el chat queda inhabilitado hasta rehacer CU-05 desde su paso 6.
@@ -104,6 +109,13 @@ note as N_DR11
   <b>Pantallas</b> P-13 compartida con CU-04 y CU-12; P-08 al ofrecer rehacer; P-03 en FE-01.
 
   <b>Notas de modelado</b>
+  - <b>FE-04 dejo de deshacer porque no habia nada que deshacer</b> (H-15 del CDR-01;
+    propagado aqui en SD-41 por VI-02). Este diagrama dibujaba «Deshacer el borrado
+    incompleto», que protegia contra un <b>estado que no puede existir</b>: el borrado alcanza
+    a UNA sola entidad, la CapsulaDePerfil, y sobre una entidad unica o la operacion pasa o no
+    pasa. Es el <b>reverso de H-02</b> en DR-04: alli la atomicidad era <b>imposible</b> -cuatro
+    entidades sin transaccion-; aqui era <b>innecesaria</b>. La rama ahora informa el fallo sin
+    haber suprimido nada, que es lo unico que puede ocurrir de verdad.
   - <b>Reiniciar no es revocar, y el diagrama lo dice.</b> Aqui el arco a CapsulaDePerfil borra
     la capsula ENTERA, character incluido, y por RN-01.6 eso inhabilita el chat. En DR-12 el
     arco equivalente conserva character y el Usuario sigue conversando. Los dos casos de uso

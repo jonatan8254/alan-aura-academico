@@ -1,17 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2915 2721" width="2915" height="2721" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2915 2985" width="2915" height="2985" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-05 - Secuencia de CU-05 «Otorgar consentimiento y crear la capsula de perfil»</title>
 <desc id="d">Diagrama de secuencia UML. 9 participantes, 24 mensajes.</desc>
-<rect x="0" y="0" width="2915" height="2721" fill="#FFFFFF"/>
+<rect x="0" y="0" width="2915" height="2985" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-05 - Secuencia de CU-05 «Otorgar consentimiento y crear la capsula de perfil»</text>
-<line x1="77.3" y1="103.0" x2="77.3" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="421.5" y1="80.0" x2="421.5" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="823.7" y1="80.0" x2="823.7" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1225.9" y1="93.0" x2="1225.9" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1657.5" y1="106.0" x2="1657.5" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2029.5" y1="80.0" x2="2029.5" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2255.5" y1="67.0" x2="2255.5" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2492.2" y1="67.0" x2="2492.2" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2834.4" y1="67.0" x2="2834.4" y2="2693.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="77.3" y1="103.0" x2="77.3" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="421.5" y1="80.0" x2="421.5" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="823.7" y1="80.0" x2="823.7" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1225.9" y1="93.0" x2="1225.9" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1657.5" y1="106.0" x2="1657.5" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2029.5" y1="80.0" x2="2029.5" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2255.5" y1="67.0" x2="2255.5" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2492.2" y1="67.0" x2="2492.2" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2834.4" y1="67.0" x2="2834.4" y2="2957.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <rect x="785.7" y="583.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="785.7,583 847.7,583 847.7,595 839.7,603 785.7,603" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="794.7" y="597" font-size="10" font-weight="600" fill="#993C1D">break</text>
@@ -20,44 +20,44 @@
 <polygon points="1187.9,914 1249.9,914 1249.9,926 1241.9,934 1187.9,934" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="1196.9" y="928" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="1259.9" y="928" font-size="10" fill="#993C1D">[FE-02 no]</text>
-<rect x="1187.9" y="1024.0" width="879.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="1187.9,1024 1249.9,1024 1249.9,1036 1241.9,1044 1187.9,1044" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="1196.9" y="1038" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="1259.9" y="1038" font-size="10" fill="#993C1D">[FE-04 la sesion expira en cualquier paso]</text>
-<rect x="1187.9" y="1148.0" width="1342.2" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="1187.9,1148 1249.9,1148 1249.9,1160 1241.9,1168 1187.9,1168" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="1196.9" y="1162" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="1259.9" y="1162" font-size="10" fill="#993C1D">[FA-03 retira la capa base que acababa de otorgar]</text>
-<rect x="39.3" y="1370.0" width="2490.8" height="164.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="39.349999999999994,1370 101.35,1370 101.35,1382 93.35,1390 39.349999999999994,1390" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="48.349999999999994" y="1384" font-size="10" font-weight="600" fill="#993C1D">alt</text>
-<text x="111.35" y="1384" font-size="10" fill="#993C1D">[FA-01 no otorga la personalizacion y rechaza la caracterizacion]</text>
-<line x1="39.3" y1="1438.0" x2="2530.2" y2="1438.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
-<text x="49.3" y="1451.0" font-size="10" fill="#993C1D">[otorga la capa de personalizacion]</text>
-<rect x="1619.5" y="1552.0" width="910.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="1619.5000000000002,1552 1681.5000000000002,1552 1681.5000000000002,1564 1673.5000000000002,1572 1619.5000000000002,1572" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="1628.5000000000002" y="1566" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="1691.5000000000002" y="1566" font-size="10" fill="#993C1D">[FA-04 retira solo la personalizacion en el onboarding]</text>
-<rect x="1619.5" y="1708.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="1619.5000000000002,1708 1681.5000000000002,1708 1681.5000000000002,1720 1673.5000000000002,1728 1619.5000000000002,1728" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="1628.5000000000002" y="1722" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="1691.5000000000002" y="1722" font-size="10" fill="#993C1D">[FE-03]</text>
-<rect x="2796.4" y="1858.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="2796.4,1858 2858.4,1858 2858.4,1870 2850.4,1878 2796.4,1878" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="2805.4" y="1872" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="2868.4" y="1872" font-size="10" fill="#993C1D">[FA-02 el]</text>
+<rect x="1187.9" y="1064.0" width="879.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="1187.9,1064 1249.9,1064 1249.9,1076 1241.9,1084 1187.9,1084" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="1196.9" y="1078" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="1259.9" y="1078" font-size="10" fill="#993C1D">[FE-04 la sesion expira despues de otorgar la capa base]</text>
+<rect x="1187.9" y="1412.0" width="1342.2" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="1187.9,1412 1249.9,1412 1249.9,1424 1241.9,1432 1187.9,1432" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="1196.9" y="1426" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="1259.9" y="1426" font-size="10" fill="#993C1D">[FA-03 retira la capa base que acababa de otorgar]</text>
+<rect x="39.3" y="1634.0" width="2490.8" height="164.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="39.349999999999994,1634 101.35,1634 101.35,1646 93.35,1654 39.349999999999994,1654" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="48.349999999999994" y="1648" font-size="10" font-weight="600" fill="#993C1D">alt</text>
+<text x="111.35" y="1648" font-size="10" fill="#993C1D">[FA-01 no otorga la personalizacion y rechaza la caracterizacion]</text>
+<line x1="39.3" y1="1702.0" x2="2530.2" y2="1702.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="49.3" y="1715.0" font-size="10" fill="#993C1D">[otorga la capa de personalizacion]</text>
+<rect x="1619.5" y="1816.0" width="910.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="1619.5000000000002,1816 1681.5000000000002,1816 1681.5000000000002,1828 1673.5000000000002,1836 1619.5000000000002,1836" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="1628.5000000000002" y="1830" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="1691.5000000000002" y="1830" font-size="10" fill="#993C1D">[FA-04 retira solo la personalizacion en el onboarding]</text>
+<rect x="1619.5" y="1972.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="1619.5000000000002,1972 1681.5000000000002,1972 1681.5000000000002,1984 1673.5000000000002,1992 1619.5000000000002,1992" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="1628.5000000000002" y="1986" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="1691.5000000000002" y="1986" font-size="10" fill="#993C1D">[FE-03]</text>
+<rect x="2796.4" y="2122.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="2796.4,2122 2858.4,2122 2858.4,2134 2850.4,2142 2796.4,2142" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="2805.4" y="2136" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="2868.4" y="2136" font-size="10" fill="#993C1D">[FA-02 el]</text>
 <line x1="57.3" y1="264.0" x2="2854.4" y2="264.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="1305.7" y="253.0" width="300.3" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
 <text x="1455.9" y="268.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 1 a 3 - Disclosure y declaracion de edad</text>
 <line x1="57.3" y1="810.0" x2="2854.4" y2="810.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="1317.8" y="799.0" width="276.1" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
 <text x="1455.9" y="814.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 4 y 5 - Capa base del consentimiento</text>
-<line x1="57.3" y1="1306.0" x2="2854.4" y2="1306.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="1333.0" y="1295.0" width="245.9" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1455.9" y="1310.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 6 y 7 - Capa de personalizacion</text>
-<line x1="57.3" y1="1644.0" x2="2854.4" y2="1644.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="1299.7" y="1633.0" width="312.4" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1455.9" y="1648.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 8 - Capsula de perfil e invocacion de CU-14</text>
+<line x1="57.3" y1="1570.0" x2="2854.4" y2="1570.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="1333.0" y="1559.0" width="245.9" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1455.9" y="1574.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 6 y 7 - Capa de personalizacion</text>
+<line x1="57.3" y1="1908.0" x2="2854.4" y2="1908.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="1299.7" y="1897.0" width="312.4" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1455.9" y="1912.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 8 - Capsula de perfil e invocacion de CU-14</text>
 <line x1="77.3" y1="308.0" x2="421.5" y2="308.0" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="419.5,308 412.5,304.6 412.5,311.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="187.7" y="283.0" width="123.5" height="15.0" fill="#FFFFFF"/>
@@ -98,62 +98,62 @@
 <polygon points="1227.9,996 1234.9,992.6 1234.9,999.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="1273.9" y="945.0" width="167.5" height="15.0" fill="#FFFFFF"/>
 <text x="1277.9" y="957.0" font-size="10" fill="#2C2C2A">impedirAvanceYVolverAlPaso4()</text>
-<line x1="1225.9" y1="1080.0" x2="2029.5" y2="1080.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2027.4500000000003,1080 2020.4500000000003,1076.6 2020.4500000000003,1083.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1549.4" y="1055.0" width="156.5" height="15.0" fill="#FFFFFF"/>
-<text x="1553.4" y="1067.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
-<line x1="1225.9" y1="1128.0" x2="2492.2" y2="1128.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2490.15,1128 2483.15,1124.6 2483.15,1131.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1783.5" y="1103.0" width="151.0" height="15.0" fill="#FFFFFF"/>
-<text x="1787.5" y="1115.0" font-size="10" fill="#2C2C2A">crearConCapaBaseOtorgada()</text>
-<line x1="1225.9" y1="1204.0" x2="2492.2" y2="1204.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2490.15,1204 2483.15,1200.6 2483.15,1207.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1808.3" y="1179.0" width="101.5" height="15.0" fill="#FFFFFF"/>
-<text x="1812.3" y="1191.0" font-size="10" fill="#2C2C2A">revocarCapaBase()</text>
-<polyline points="1225.9,1244.0 1267.9,1244.0 1267.9,1270.0 1234.9,1270.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1227.9,1270 1234.9,1266.6 1234.9,1273.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1273.9" y="1219.0" width="200.5" height="15.0" fill="#FFFFFF"/>
-<text x="1277.9" y="1231.0" font-size="10" fill="#2C2C2A">finalizarSinConversacionNiCapsula()</text>
-<line x1="1225.9" y1="1350.0" x2="1657.5" y2="1350.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1655.5000000000002,1350 1648.5000000000002,1346.6 1648.5000000000002,1353.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1308.5" y="1325.0" width="266.5" height="15.0" fill="#FFFFFF"/>
-<text x="1312.5" y="1337.0" font-size="10" fill="#2C2C2A">ofrecerPersonalizacionYLosCuatroAutorreportes()</text>
-<line x1="1657.5" y1="1426.0" x2="2492.2" y2="1426.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2490.15,1426 2483.15,1422.6 2483.15,1429.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2002.1" y="1401.0" width="145.5" height="15.0" fill="#FFFFFF"/>
-<text x="2006.1" y="1413.0" font-size="10" fill="#2C2C2A">conservarSoloLaCapaBase()</text>
-<line x1="77.3" y1="1484.0" x2="1657.5" y2="1484.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1655.5000000000002,1484 1648.5000000000002,1480.6 1648.5000000000002,1487.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="769.9" y="1459.0" width="195.0" height="15.0" fill="#FFFFFF"/>
-<text x="773.9" y="1471.0" font-size="10" fill="#2C2C2A">otorgar la capa de personalizacion</text>
-<line x1="1657.5" y1="1524.0" x2="2492.2" y2="1524.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2490.15,1524 2483.15,1520.6 2483.15,1527.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1991.1" y="1499.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="1995.1" y="1511.0" font-size="10" fill="#2C2C2A">anadirCapaDePersonalizacion()</text>
-<line x1="1657.5" y1="1608.0" x2="2492.2" y2="1608.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2490.15,1608 2483.15,1604.6 2483.15,1611.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1988.3" y="1583.0" width="173.0" height="15.0" fill="#FFFFFF"/>
-<text x="1992.3" y="1595.0" font-size="10" fill="#2C2C2A">revocarCapaDePersonalizacion()</text>
-<line x1="77.3" y1="1688.0" x2="1657.5" y2="1688.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1655.5000000000002,1688 1648.5000000000002,1684.6 1648.5000000000002,1691.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="764.4" y="1663.0" width="206.0" height="15.0" fill="#FFFFFF"/>
-<text x="768.4" y="1675.0" font-size="10" fill="#2C2C2A">responder u omitir cada autorreporte</text>
-<polyline points="1657.5,1764.0 1699.5,1764.0 1699.5,1790.0 1666.5,1790.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1659.5000000000002,1790 1666.5000000000002,1786.6 1666.5000000000002,1793.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1705.5" y="1739.0" width="162.0" height="15.0" fill="#FFFFFF"/>
-<text x="1709.5" y="1751.0" font-size="10" fill="#2C2C2A">mostrarRevisaTusRespuestas()</text>
-<line x1="1657.5" y1="1838.0" x2="2834.4" y2="1838.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2832.4,1838 2825.4,1834.6 2825.4,1841.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2096.2" y="1813.0" width="299.5" height="15.0" fill="#FFFFFF"/>
-<text x="2100.2" y="1825.0" font-size="10" fill="#2C2C2A">armarConLoRespondido(schema_version, consent_version)</text>
-<polyline points="2834.4,1914.0 2876.4,1914.0 2876.4,1940.0 2843.4,1940.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2836.4,1940 2843.4,1936.6 2843.4,1943.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="2882.4" y="1889.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="2886.4" y="1901.0" font-size="10" fill="#2C2C2A">dejarSinDefaultsLosOmitidos()</text>
-<polyline points="1657.5,2551.0 1699.5,2551.0 1699.5,2577.0 1666.5,2577.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1659.5000000000002,2577 1666.5000000000002,2573.6 1666.5000000000002,2580.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1705.5" y="2526.0" width="173.0" height="15.0" fill="#FFFFFF"/>
-<text x="1709.5" y="2538.0" font-size="10" fill="#2C2C2A">invocarEleccionDeAcompanante()</text>
+<line x1="1225.9" y1="1044.0" x2="2492.2" y2="1044.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2490.15,1044 2483.15,1040.6 2483.15,1047.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1783.5" y="1019.0" width="151.0" height="15.0" fill="#FFFFFF"/>
+<text x="1787.5" y="1031.0" font-size="10" fill="#2C2C2A">crearConCapaBaseOtorgada()</text>
+<line x1="1225.9" y1="1120.0" x2="2029.5" y2="1120.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2027.4500000000003,1120 2020.4500000000003,1116.6 2020.4500000000003,1123.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1549.4" y="1095.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="1553.4" y="1107.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
+<line x1="1225.9" y1="1468.0" x2="2492.2" y2="1468.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2490.15,1468 2483.15,1464.6 2483.15,1471.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1808.3" y="1443.0" width="101.5" height="15.0" fill="#FFFFFF"/>
+<text x="1812.3" y="1455.0" font-size="10" fill="#2C2C2A">revocarCapaBase()</text>
+<polyline points="1225.9,1508.0 1267.9,1508.0 1267.9,1534.0 1234.9,1534.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1227.9,1534 1234.9,1530.6 1234.9,1537.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1273.9" y="1483.0" width="200.5" height="15.0" fill="#FFFFFF"/>
+<text x="1277.9" y="1495.0" font-size="10" fill="#2C2C2A">finalizarSinConversacionNiCapsula()</text>
+<line x1="1225.9" y1="1614.0" x2="1657.5" y2="1614.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1655.5000000000002,1614 1648.5000000000002,1610.6 1648.5000000000002,1617.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1308.5" y="1589.0" width="266.5" height="15.0" fill="#FFFFFF"/>
+<text x="1312.5" y="1601.0" font-size="10" fill="#2C2C2A">ofrecerPersonalizacionYLosCuatroAutorreportes()</text>
+<line x1="1657.5" y1="1690.0" x2="2492.2" y2="1690.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2490.15,1690 2483.15,1686.6 2483.15,1693.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2002.1" y="1665.0" width="145.5" height="15.0" fill="#FFFFFF"/>
+<text x="2006.1" y="1677.0" font-size="10" fill="#2C2C2A">conservarSoloLaCapaBase()</text>
+<line x1="77.3" y1="1748.0" x2="1657.5" y2="1748.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1655.5000000000002,1748 1648.5000000000002,1744.6 1648.5000000000002,1751.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="769.9" y="1723.0" width="195.0" height="15.0" fill="#FFFFFF"/>
+<text x="773.9" y="1735.0" font-size="10" fill="#2C2C2A">otorgar la capa de personalizacion</text>
+<line x1="1657.5" y1="1788.0" x2="2492.2" y2="1788.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2490.15,1788 2483.15,1784.6 2483.15,1791.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1991.1" y="1763.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="1995.1" y="1775.0" font-size="10" fill="#2C2C2A">anadirCapaDePersonalizacion()</text>
+<line x1="1657.5" y1="1872.0" x2="2492.2" y2="1872.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2490.15,1872 2483.15,1868.6 2483.15,1875.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1988.3" y="1847.0" width="173.0" height="15.0" fill="#FFFFFF"/>
+<text x="1992.3" y="1859.0" font-size="10" fill="#2C2C2A">revocarCapaDePersonalizacion()</text>
+<line x1="77.3" y1="1952.0" x2="1657.5" y2="1952.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1655.5000000000002,1952 1648.5000000000002,1948.6 1648.5000000000002,1955.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="764.4" y="1927.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="768.4" y="1939.0" font-size="10" fill="#2C2C2A">responder u omitir cada autorreporte</text>
+<polyline points="1657.5,2028.0 1699.5,2028.0 1699.5,2054.0 1666.5,2054.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1659.5000000000002,2054 1666.5000000000002,2050.6 1666.5000000000002,2057.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1705.5" y="2003.0" width="162.0" height="15.0" fill="#FFFFFF"/>
+<text x="1709.5" y="2015.0" font-size="10" fill="#2C2C2A">mostrarRevisaTusRespuestas()</text>
+<line x1="1657.5" y1="2102.0" x2="2834.4" y2="2102.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2832.4,2102 2825.4,2098.6 2825.4,2105.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2096.2" y="2077.0" width="299.5" height="15.0" fill="#FFFFFF"/>
+<text x="2100.2" y="2089.0" font-size="10" fill="#2C2C2A">armarConLoRespondido(schema_version, consent_version)</text>
+<polyline points="2834.4,2178.0 2876.4,2178.0 2876.4,2204.0 2843.4,2204.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2836.4,2204 2843.4,2200.6 2843.4,2207.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2882.4" y="2153.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="2886.4" y="2165.0" font-size="10" fill="#2C2C2A">dejarSinDefaultsLosOmitidos()</text>
+<polyline points="1657.5,2815.0 1699.5,2815.0 1699.5,2841.0 1666.5,2841.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1659.5000000000002,2841 1666.5000000000002,2837.6 1666.5000000000002,2844.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1705.5" y="2790.0" width="173.0" height="15.0" fill="#FFFFFF"/>
+<text x="1709.5" y="2802.0" font-size="10" fill="#2C2C2A">invocarEleccionDeAcompanante()</text>
 <rect x="331.5" y="140.0" width="1436.0" height="94.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
 <text x="339.5" y="158.0" font-size="9.5" fill="#2C2C2A">Las dos capas del Consentimiento (definicion canonica en ECU-12 §4.1).</text>
 <text x="339.5" y="171.0" font-size="9.5" fill="#2C2C2A">Capa base: autoriza procesar lo minimo para conversar (edad, character, el turno).</text>
@@ -169,55 +169,74 @@
 <text x="2289.5" y="743.0" font-size="9.5" fill="#2C2C2A">RN-04.2: se guarda una declaracion booleana mas la version del disclosure,</text>
 <text x="2289.5" y="756.0" font-size="9.5" fill="#2C2C2A">nunca una fecha de nacimiento. Menores fuera de alcance (FE-01): no se crea</text>
 <text x="2289.5" y="769.0" font-size="9.5" fill="#2C2C2A">Consentimiento ni CapsulaDePerfil.</text>
-<rect x="2852.4" y="1960.0" width="56.4" height="549.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="2860.4" y="1978.0" font-size="9.5" fill="#2C2C2A">FA-02 -</text>
-<text x="2860.4" y="1991.0" font-size="9.5" fill="#2C2C2A">respuestas</text>
-<text x="2860.4" y="2004.0" font-size="9.5" fill="#2C2C2A">parciales.</text>
-<text x="2860.4" y="2017.0" font-size="9.5" fill="#2C2C2A">La</text>
-<text x="2860.4" y="2030.0" font-size="9.5" fill="#2C2C2A">capsula</text>
-<text x="2860.4" y="2043.0" font-size="9.5" fill="#2C2C2A">se arma</text>
-<text x="2860.4" y="2056.0" font-size="9.5" fill="#2C2C2A">solo con</text>
-<text x="2860.4" y="2069.0" font-size="9.5" fill="#2C2C2A">lo</text>
-<text x="2860.4" y="2082.0" font-size="9.5" fill="#2C2C2A">respondido.</text>
-<text x="2860.4" y="2095.0" font-size="9.5" fill="#2C2C2A">La</text>
-<text x="2860.4" y="2108.0" font-size="9.5" fill="#2C2C2A">operacion</text>
-<text x="2860.4" y="2121.0" font-size="9.5" fill="#2C2C2A">`dejarSinDefaultsLosOmitidos`</text>
-<text x="2860.4" y="2134.0" font-size="9.5" fill="#2C2C2A">existe</text>
-<text x="2860.4" y="2147.0" font-size="9.5" fill="#2C2C2A">para que</text>
-<text x="2860.4" y="2160.0" font-size="9.5" fill="#2C2C2A">la</text>
-<text x="2860.4" y="2173.0" font-size="9.5" fill="#2C2C2A">prohibicion</text>
-<text x="2860.4" y="2186.0" font-size="9.5" fill="#2C2C2A">sea</text>
-<text x="2860.4" y="2199.0" font-size="9.5" fill="#2C2C2A">visible</text>
-<text x="2860.4" y="2212.0" font-size="9.5" fill="#2C2C2A">y</text>
-<text x="2860.4" y="2225.0" font-size="9.5" fill="#2C2C2A">verificable,</text>
-<text x="2860.4" y="2238.0" font-size="9.5" fill="#2C2C2A">no</text>
-<text x="2860.4" y="2251.0" font-size="9.5" fill="#2C2C2A">tacita:</text>
-<text x="2860.4" y="2264.0" font-size="9.5" fill="#2C2C2A">ningun</text>
-<text x="2860.4" y="2277.0" font-size="9.5" fill="#2C2C2A">mensaje</text>
-<text x="2860.4" y="2290.0" font-size="9.5" fill="#2C2C2A">de este</text>
-<text x="2860.4" y="2303.0" font-size="9.5" fill="#2C2C2A">diagrama</text>
-<text x="2860.4" y="2316.0" font-size="9.5" fill="#2C2C2A">rellena</text>
-<text x="2860.4" y="2329.0" font-size="9.5" fill="#2C2C2A">un hueco</text>
-<text x="2860.4" y="2342.0" font-size="9.5" fill="#2C2C2A">con un</text>
-<text x="2860.4" y="2355.0" font-size="9.5" fill="#2C2C2A">valor</text>
-<text x="2860.4" y="2368.0" font-size="9.5" fill="#2C2C2A">inventado.</text>
-<text x="2860.4" y="2381.0" font-size="9.5" fill="#2C2C2A">RN-01.4:</text>
-<text x="2860.4" y="2394.0" font-size="9.5" fill="#2C2C2A">ningun</text>
-<text x="2860.4" y="2407.0" font-size="9.5" fill="#2C2C2A">autorreporte</text>
-<text x="2860.4" y="2420.0" font-size="9.5" fill="#2C2C2A">es</text>
-<text x="2860.4" y="2433.0" font-size="9.5" fill="#2C2C2A">obligatorio;</text>
-<text x="2860.4" y="2446.0" font-size="9.5" fill="#2C2C2A">el</text>
-<text x="2860.4" y="2459.0" font-size="9.5" fill="#2C2C2A">Usuario</text>
-<text x="2860.4" y="2472.0" font-size="9.5" fill="#2C2C2A">puede</text>
-<text x="2860.4" y="2485.0" font-size="9.5" fill="#2C2C2A">omitirlos</text>
-<text x="2860.4" y="2498.0" font-size="9.5" fill="#2C2C2A">todos.</text>
-<rect x="1531.9" y="2589.0" width="1376.9" height="94.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="1539.9" y="2607.0" font-size="9.5" fill="#2C2C2A">&lt;&lt;include&gt;&gt; de CU-14. El control pasa a DS-14, que escribe `character` y</text>
-<text x="1539.9" y="2620.0" font-size="9.5" fill="#2C2C2A">devuelve. Aqui no se reimplementa: Alan, Aura y Personaje no son</text>
-<text x="1539.9" y="2633.0" font-size="9.5" fill="#2C2C2A">participantes de este diagrama, y por eso no aparecen.</text>
-<text x="1539.9" y="2646.0" font-size="9.5" fill="#2C2C2A">Postcondicion: existe un Consentimiento con su capa base otorgada y</text>
-<text x="1539.9" y="2659.0" font-size="9.5" fill="#2C2C2A">siempre una CapsulaDePerfil — cuatro autorreportes opcionales, `character`</text>
-<text x="1539.9" y="2672.0" font-size="9.5" fill="#2C2C2A">obligatorio escrito por CU-14, mas los dos metadatos. El Usuario puede iniciar CU-06.</text>
+<rect x="2510.2" y="1140.0" width="398.6" height="250.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2518.2" y="1158.0" font-size="9.5" fill="#2C2C2A">La expiracion se dibuja AQUI, y no antes (`H-16` del `CDR-01`; propagado</text>
+<text x="2518.2" y="1171.0" font-size="9.5" fill="#2C2C2A">en `SD-41`</text>
+<text x="2518.2" y="1184.0" font-size="9.5" fill="#2C2C2A">por `VI-02`). La version anterior la colocaba antes de esta linea, con la</text>
+<text x="2518.2" y="1197.0" font-size="9.5" fill="#2C2C2A">etiqueta</text>
+<text x="2518.2" y="1210.0" font-size="9.5" fill="#2C2C2A">«en cualquier paso», y asi el diagrama seguia siendo compatible con una</text>
+<text x="2518.2" y="1223.0" font-size="9.5" fill="#2C2C2A">promesa que</text>
+<text x="2518.2" y="1236.0" font-size="9.5" fill="#2C2C2A">`ECU-05` ya retiro: que «nada de lo no confirmado quedo escrito».</text>
+<text x="2518.2" y="1249.0" font-size="9.5" fill="#2C2C2A">Lo que de verdad ocurre: el `Consentimiento` con su capa base se crea en</text>
+<text x="2518.2" y="1262.0" font-size="9.5" fill="#2C2C2A">este paso</text>
+<text x="2518.2" y="1275.0" font-size="9.5" fill="#2C2C2A">porque el Usuario ya la otorgo explicitamente, asi que si la sesion</text>
+<text x="2518.2" y="1288.0" font-size="9.5" fill="#2C2C2A">expira despues,</text>
+<text x="2518.2" y="1301.0" font-size="9.5" fill="#2C2C2A">ese consentimiento permanece — y debe permanecer: retirarlo seria</text>
+<text x="2518.2" y="1314.0" font-size="9.5" fill="#2C2C2A">descartar una</text>
+<text x="2518.2" y="1327.0" font-size="9.5" fill="#2C2C2A">decision que la persona si tomo. `CA-10` lo dice ahora con esas palabras.</text>
+<text x="2518.2" y="1340.0" font-size="9.5" fill="#2C2C2A">Expirar antes de esta linea no necesita fragmento propio: no se habia</text>
+<text x="2518.2" y="1353.0" font-size="9.5" fill="#2C2C2A">escrito nada,</text>
+<text x="2518.2" y="1366.0" font-size="9.5" fill="#2C2C2A">asi que no hay desenlace que distinga. El fragmento vive donde el</text>
+<text x="2518.2" y="1379.0" font-size="9.5" fill="#2C2C2A">desenlace cambia.</text>
+<rect x="2852.4" y="2224.0" width="56.4" height="549.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2860.4" y="2242.0" font-size="9.5" fill="#2C2C2A">FA-02 -</text>
+<text x="2860.4" y="2255.0" font-size="9.5" fill="#2C2C2A">respuestas</text>
+<text x="2860.4" y="2268.0" font-size="9.5" fill="#2C2C2A">parciales.</text>
+<text x="2860.4" y="2281.0" font-size="9.5" fill="#2C2C2A">La</text>
+<text x="2860.4" y="2294.0" font-size="9.5" fill="#2C2C2A">capsula</text>
+<text x="2860.4" y="2307.0" font-size="9.5" fill="#2C2C2A">se arma</text>
+<text x="2860.4" y="2320.0" font-size="9.5" fill="#2C2C2A">solo con</text>
+<text x="2860.4" y="2333.0" font-size="9.5" fill="#2C2C2A">lo</text>
+<text x="2860.4" y="2346.0" font-size="9.5" fill="#2C2C2A">respondido.</text>
+<text x="2860.4" y="2359.0" font-size="9.5" fill="#2C2C2A">La</text>
+<text x="2860.4" y="2372.0" font-size="9.5" fill="#2C2C2A">operacion</text>
+<text x="2860.4" y="2385.0" font-size="9.5" fill="#2C2C2A">`dejarSinDefaultsLosOmitidos`</text>
+<text x="2860.4" y="2398.0" font-size="9.5" fill="#2C2C2A">existe</text>
+<text x="2860.4" y="2411.0" font-size="9.5" fill="#2C2C2A">para que</text>
+<text x="2860.4" y="2424.0" font-size="9.5" fill="#2C2C2A">la</text>
+<text x="2860.4" y="2437.0" font-size="9.5" fill="#2C2C2A">prohibicion</text>
+<text x="2860.4" y="2450.0" font-size="9.5" fill="#2C2C2A">sea</text>
+<text x="2860.4" y="2463.0" font-size="9.5" fill="#2C2C2A">visible</text>
+<text x="2860.4" y="2476.0" font-size="9.5" fill="#2C2C2A">y</text>
+<text x="2860.4" y="2489.0" font-size="9.5" fill="#2C2C2A">verificable,</text>
+<text x="2860.4" y="2502.0" font-size="9.5" fill="#2C2C2A">no</text>
+<text x="2860.4" y="2515.0" font-size="9.5" fill="#2C2C2A">tacita:</text>
+<text x="2860.4" y="2528.0" font-size="9.5" fill="#2C2C2A">ningun</text>
+<text x="2860.4" y="2541.0" font-size="9.5" fill="#2C2C2A">mensaje</text>
+<text x="2860.4" y="2554.0" font-size="9.5" fill="#2C2C2A">de este</text>
+<text x="2860.4" y="2567.0" font-size="9.5" fill="#2C2C2A">diagrama</text>
+<text x="2860.4" y="2580.0" font-size="9.5" fill="#2C2C2A">rellena</text>
+<text x="2860.4" y="2593.0" font-size="9.5" fill="#2C2C2A">un hueco</text>
+<text x="2860.4" y="2606.0" font-size="9.5" fill="#2C2C2A">con un</text>
+<text x="2860.4" y="2619.0" font-size="9.5" fill="#2C2C2A">valor</text>
+<text x="2860.4" y="2632.0" font-size="9.5" fill="#2C2C2A">inventado.</text>
+<text x="2860.4" y="2645.0" font-size="9.5" fill="#2C2C2A">RN-01.4:</text>
+<text x="2860.4" y="2658.0" font-size="9.5" fill="#2C2C2A">ningun</text>
+<text x="2860.4" y="2671.0" font-size="9.5" fill="#2C2C2A">autorreporte</text>
+<text x="2860.4" y="2684.0" font-size="9.5" fill="#2C2C2A">es</text>
+<text x="2860.4" y="2697.0" font-size="9.5" fill="#2C2C2A">obligatorio;</text>
+<text x="2860.4" y="2710.0" font-size="9.5" fill="#2C2C2A">el</text>
+<text x="2860.4" y="2723.0" font-size="9.5" fill="#2C2C2A">Usuario</text>
+<text x="2860.4" y="2736.0" font-size="9.5" fill="#2C2C2A">puede</text>
+<text x="2860.4" y="2749.0" font-size="9.5" fill="#2C2C2A">omitirlos</text>
+<text x="2860.4" y="2762.0" font-size="9.5" fill="#2C2C2A">todos.</text>
+<rect x="1531.9" y="2853.0" width="1376.9" height="94.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="1539.9" y="2871.0" font-size="9.5" fill="#2C2C2A">&lt;&lt;include&gt;&gt; de CU-14. El control pasa a DS-14, que escribe `character` y</text>
+<text x="1539.9" y="2884.0" font-size="9.5" fill="#2C2C2A">devuelve. Aqui no se reimplementa: Alan, Aura y Personaje no son</text>
+<text x="1539.9" y="2897.0" font-size="9.5" fill="#2C2C2A">participantes de este diagrama, y por eso no aparecen.</text>
+<text x="1539.9" y="2910.0" font-size="9.5" fill="#2C2C2A">Postcondicion: existe un Consentimiento con su capa base otorgada y</text>
+<text x="1539.9" y="2923.0" font-size="9.5" fill="#2C2C2A">siempre una CapsulaDePerfil — cuatro autorreportes opcionales, `character`</text>
+<text x="1539.9" y="2936.0" font-size="9.5" fill="#2C2C2A">obligatorio escrito por CU-14, mas los dos metadatos. El Usuario puede iniciar CU-06.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
 <rect x="340.9" y="34.0" width="161.2" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>

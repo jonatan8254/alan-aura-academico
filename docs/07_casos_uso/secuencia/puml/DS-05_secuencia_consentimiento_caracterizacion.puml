@@ -1,5 +1,11 @@
 @startuml
 ' DS-05 - Secuencia de CU-05 «Otorgar consentimiento y crear la capsula de perfil»
+' v1.3 (VI-02 del CDR-01 v1.4, SD-41): FE-04 se mueve DESPUES de crearConCapaBaseOtorgada().
+'       Estaba antes, con la etiqueta «en cualquier paso», y asi el diagrama seguia siendo
+'       compatible con la promesa que ECU-05 retiro en H-16 —«nada de lo no confirmado quedo
+'       escrito»—. El Consentimiento de la capa base se crea en el paso 5 porque el Usuario ya
+'       la otorgo, asi que expirar despues lo encuentra escrito, y debe dejarlo. Expirar antes
+'       no necesita fragmento: no se habia escrito nada. Sin cambio en el conteo de mensajes.
 ' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FE-02 y FE-03 vuelven de opt a BREAK.
 '       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
 '       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
@@ -72,11 +78,24 @@ break FE-02 no otorga la capa base
   B_PantallaConsentimiento -> B_PantallaConsentimiento : impedirAvanceYVolverAlPaso4()
 end
 
-break FE-04 la sesion expira en cualquier paso
+B_PantallaConsentimiento -> E_Consentimiento : crearConCapaBaseOtorgada()
+
+break FE-04 la sesion expira despues de otorgar la capa base
   B_PantallaConsentimiento -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
 end
 
-B_PantallaConsentimiento -> E_Consentimiento : crearConCapaBaseOtorgada()
+note right of E_Consentimiento
+  <b>La expiracion se dibuja AQUI, y no antes</b> (`H-16` del `CDR-01`; propagado en `SD-41`
+  por `VI-02`). La version anterior la colocaba <b>antes</b> de esta linea, con la etiqueta
+  «en cualquier paso», y asi el diagrama seguia siendo compatible con una promesa que
+  `ECU-05` ya retiro: que «nada de lo no confirmado quedo escrito».
+  <b>Lo que de verdad ocurre:</b> el `Consentimiento` con su capa base se crea en este paso
+  porque el Usuario <b>ya la otorgo explicitamente</b>, asi que si la sesion expira despues,
+  <b>ese consentimiento permanece</b> — y debe permanecer: retirarlo seria descartar una
+  decision que la persona si tomo. `CA-10` lo dice ahora con esas palabras.
+  <b>Expirar antes de esta linea no necesita fragmento propio:</b> no se habia escrito nada,
+  asi que no hay desenlace que distinga. El fragmento vive donde el desenlace cambia.
+end note
 
 break FA-03 retira la capa base que acababa de otorgar
   B_PantallaConsentimiento -> E_Consentimiento : revocarCapaBase()

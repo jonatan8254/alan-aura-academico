@@ -1,5 +1,10 @@
 @startuml
 ' DR-04 — Analisis de robustez de CU-04 «Eliminar cuenta»
+' v2.2 (SD-41, VI-02 del CDR-01 v1.4): el controlador de FE-04 pasa de «Deshacer la cascada
+'      interrumpida» a «Conservar lo ya suprimido y ofrecer reintento». Sustitucion 1:1: el
+'      conteo de controladores no se mueve. Es la propagacion a robustez de H-02, que SD-39
+'      aplico en ECU-04 y DS-04 pero no aqui. Se corrige tambien el INVARIANTE de la nota,
+'      que seguia prometiendo un borrado ATOMICO — la promesa que H-02 declaro sin mecanismo.
 ' v2.1 (SD-30): entra EventoOperativo con su controlador «Conservar la telemetria sin
 '      identidad». ECU-04 §7 lo declaraba como concepto involucrado —«permanece: la cascada
 '      no lo alcanza, y por eso debe ser irreidentificable (RE-06)»— y este diagrama lo habia
@@ -25,7 +30,7 @@ control "Suprimir la cuenta y ejecutar el borrado en cascada" as C_EliminarEnCas
 control "Cerrar la sesion y confirmar la supresion" as C_CerrarSesionYConfirmar
 control "Cerrar la conversacion abierta y descartar su contenido" as C_CerrarConversacionAbierta #LightCoral
 control "Cancelar la eliminacion" as C_CancelarEliminacion #LightCoral
-control "Deshacer la cascada interrumpida" as C_DeshacerCascada #LightCoral
+control "Conservar lo ya suprimido y ofrecer reintento" as C_ConservarYOfrecerReintento #LightCoral
 control "Denegar por permiso insuficiente" as C_DenegarPorPermiso #LightCoral
 control "Informar la peticion invalida" as C_MsgPeticionInvalida #LightCoral
 control "Solicitar el reingreso por sesion expirada" as C_SolicitarReingreso #LightCoral
@@ -68,9 +73,9 @@ C_ComprobarTitularidad -- C_DenegarPorPermiso : FE-02 rol no autorizado o solici
 C_DenegarPorPermiso -- B_PaginaGestionCuenta : FE-02 termina; 403 sin suprimir nada
 C_ComprobarTitularidad -- C_MsgPeticionInvalida : FE-03 solicitud mal formada o sin confirmacion explicita
 C_MsgPeticionInvalida -- B_PaginaGestionCuenta : FE-03 vuelve al paso 1; 400 sin ejecutar la supresion
-C_EliminarEnCascada -- C_DeshacerCascada : FE-04 el almacenamiento falla a mitad de la cascada
-C_DeshacerCascada -- E_Usuario : FE-04 deshace lo suprimido; la cuenta queda como estaba
-C_DeshacerCascada -- B_PaginaGestionCuenta : FE-04 termina; no confirma la eliminacion e informa que no se completo
+C_EliminarEnCascada -- C_ConservarYOfrecerReintento : FE-04 el almacenamiento falla a mitad de la cascada
+C_ConservarYOfrecerReintento -- E_Usuario : FE-04 conserva lo ya suprimido, NO lo restaura; el Usuario sigue existiendo y el reintento sabe que le falta borrar
+C_ConservarYOfrecerReintento -- B_PaginaGestionCuenta : FE-04 no confirma la eliminacion; informa que quedo a medias y ofrece reintentar
 
 legend right
   <b>Convencion de color</b>
@@ -104,13 +109,17 @@ note as N_DR04
   FE-01 Sesion ausente (cualquier paso): 401; no suprime nada. Termina; reingresar por CU-03.
   FE-02 Permiso insuficiente (paso 2): 403; ninguna cuenta se toca. Termina.
   FE-03 Entrada invalida (paso 2): 400; no ejecuta la supresion. Vuelve al paso 1.
-  FE-04 Cascada interrumpida (paso 3): el almacenamiento falla a mitad; deshace lo suprimido
-        y NO confirma la eliminacion. Termina informando que la accion no se completo.
+  FE-04 Cascada interrumpida (paso 3): el almacenamiento falla a mitad; CONSERVA lo ya
+        suprimido -no lo restaura-, NO confirma la eliminacion, informa que quedo a medias
+        y ofrece reintentar.
 
   <b>Postcondicion (lo esencial)</b> Ningun registro asociado a la cuenta queda recuperable
   desde la aplicacion (RF-24, PRIV-R11).
-  <b>Invariante</b> El borrado en cascada es ATOMICO: si no puede completarse, el sistema no
-  deja registros a medio suprimir ni confirma la eliminacion (FE-04).
+  <b>Invariante</b> El borrado en cascada es ORDENADO, tolerante a fallo parcial y
+  REINTENTABLE: el Consentimiento se suprime primero -desde ese momento el Sistema ya no
+  tiene base para procesar a esa persona, aunque la cascada no haya terminado- y el Usuario
+  al final, de modo que mientras exista, el reintento sabe a quien le falta borrar. Si no
+  puede completarse, el sistema NO confirma la eliminacion (FE-04).
   <b>Reglas</b> RN-04.4, RN-04.1. <b>Traza</b> RF-24 -> OBJ-7.
   <b>Pantallas</b> P-13 compartida con CU-11 y CU-12; P-01 al terminar; P-03 en FE-01.
 
@@ -133,6 +142,15 @@ note as N_DR04
   - <b>FE-04 es nuevo y no estaba exigido en ningun artefacto previo.</b> Sin el, "no queda
     dato recuperable" no seria verificable ante un fallo a mitad de camino. Se declara como
     decision de la especificacion, no como requisito heredado.
+  - <b>FE-04 dejo de deshacer, y esa es la correccion de H-02</b> (Mayor del CDR-01; propagado
+    aqui en SD-41 por VI-02). Este diagrama dibujaba «Deshacer la cascada interrumpida», una
+    compensacion que <b>ningun mecanismo puede implementar</b>: la cascada toca cuatro
+    entidades, ADR-002-D5 fija DynamoDB -que no revierte escrituras confirmadas fuera de
+    TransactWriteItems- y ADR-003 deja el almacen <b>sin respaldo</b>. Lo borrado no vuelve.
+    <b>Lo que sostiene la garantia es el ORDEN, no la reversion</b>, y por eso el invariante
+    de arriba dejo de decir ATOMICO. La promesa que le importa a la persona -«al borrar mi
+    cuenta dejo de poder usar el sistema y mis datos desaparecen»- la entrega el orden de
+    borrado sin transacciones y sin adelantar ARQ-01.
 end note
 
 @enduml

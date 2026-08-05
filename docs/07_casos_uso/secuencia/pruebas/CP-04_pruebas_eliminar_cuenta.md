@@ -1,6 +1,6 @@
 # CP-04 — Casos de prueba de CU-04 «Eliminar cuenta»
 
-**ID:** CP-04 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (SD-35: las dos excepciones de `RF-24` cerradas). v1.2 (SD-34: `PER-H5` cerrado; la cascada que estos casos prueban es toda la que existe). v1.1 · **Estado:** Propuesto.
+**ID:** CP-04 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.4 (SD-41: `CP-811` deja de exigir que se **deshaga** el borrado y pasa a exigir que se **conserve** y se ofrezca reintento — `VI-02`; se repone la fila `v1.3` que faltaba y se reordena el historial). v1.3 (SD-35: las dos excepciones de `RF-24` cerradas). v1.2 (SD-34: `PER-H5` cerrado; la cascada que estos casos prueban es toda la que existe). v1.1 · **Estado:** Propuesto.
 **Insumos:** `DR-04 v2.1` (12 controladores), `DS-04 v1.0`, `ECU-04 v2.1` (`CA-01…CA-11`), `PER-01 v1.2` (`PER-T1`), `PRIV-01`.
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador**.
 
@@ -20,7 +20,7 @@ Numeración global: `CU-04` ocupa **`CP-801`…`CP-813`**.
 | CP-808 | `C_CerrarConversacionAbierta` | **FA-02** | Titularidad comprobada; hay una `Conversacion` en curso. | Se confirma con la conversación abierta. | La conversación se cierra y **su contenido se descarta antes** de suprimir la cuenta; una inspección posterior **no lo encuentra en ninguna parte**. | CA-05 |
 | CP-809 | `C_EliminarEnCascada` | Básico p.3 — **existen los tres dependientes** | Existen `CapsulaDePerfil`, `Consentimiento` y `ContadorDeUsoDiario`. | Ejecuta el borrado en cascada. | El `Usuario` **y los tres dependientes dejan de existir**; una inspección del almacenamiento **no encuentra ninguno de los cuatro**. | CA-01 |
 | CP-810 | `C_EliminarEnCascada` | **FA-01** | La cuenta **nunca completó el onboarding**: sin cápsula ni consentimiento. | Ejecuta el borrado en cascada. | La supresión del `Usuario` y su contador **termina con éxito**; la ausencia de los otros dos **no provoca error**; continúa al paso 4. | CA-04 |
-| CP-811 | `C_DeshacerCascada` | **FE-04** | La cascada está en curso cuando el almacenamiento falla a mitad. | El fallo ocurre tras suprimir parte de los registros. | El sistema **deshace lo ya suprimido** —la cuenta queda como antes, **sin registros a medio borrar**— **y no confirma** la eliminación. | CA-10 |
+| CP-811 | `C_ConservarYOfrecerReintento` | **FE-04** | La cascada está en curso cuando el almacenamiento falla a mitad. | El fallo ocurre tras suprimir el `Consentimiento` y antes de suprimir el `Usuario`. | El sistema **conserva lo ya suprimido** —el `Consentimiento` **sigue borrado**, no se restaura—, **no confirma** la eliminación, informa que quedó a medias y **ofrece reintentar**. Una inspección inmediata muestra el `Usuario` **aún presente**, que es lo que permite al reintento saber qué falta borrar. | CA-10 |
 | CP-812 | `C_CerrarSesionYConfirmar` | Básico p.4 | Borrado completado (`CP-809` o `CP-810`). | El sistema cierra la sesión. | Sesión cerrada; P-01 confirma; **las credenciales anteriores ya no dan acceso**; la persona queda en la condición de `Visitante`. | CA-02 |
 | CP-813 | `C_ConservarTelemetriaSinIdentidad` | Básico p.3 · **`RE-06`** | Cuenta ya eliminada, con `EventoOperativo` anteriores a la supresión. | Se inspecciona la telemetría superviviente. | Los `EventoOperativo` **permanecen** —la cascada no los alcanza— y **ninguno lleva alias ni username**; cruzarlos entre sí **no permite reconstruir que esa cuenta existió ni qué hizo**. | CA-11 · RE-06 · PER-T2 |
 
@@ -34,10 +34,20 @@ Básico ✓ · `FA-01` (810) · `FA-02` (808) · `FA-03` tomado (805) y no tomad
 
 ## `CP-811` es el caso que más importa
 
-`FE-04` es la única ruta en que el sistema puede quedar **a medias**, y `RF-24` no admite medias
-tintas. El caso exige dos cosas simultáneas: que **deshaga** lo ya suprimido y que **no confirme**
-la eliminación. Un sistema que deshiciera pero confirmara dejaría a la persona creyendo que su
-cuenta desapareció cuando sigue ahí; uno que confirmara sin deshacer dejaría registros huérfanos.
+`FE-04` es la única ruta en que el sistema puede quedar **a medias**, y lo que `RF-24` no admite es
+que se **confirme** una eliminación que no ocurrió. El caso exige dos cosas simultáneas: que
+**conserve** lo ya suprimido —sin intentar restaurarlo— y que **no confirme** la eliminación. Un
+sistema que confirmara dejaría a la persona creyendo que su cuenta desapareció cuando sigue ahí.
+
+**Por qué conservar y no deshacer** (`H-02` del `CDR-01`, propagado aquí en `SD-41` por `VI-02`).
+La versión anterior de este caso exigía **deshacer** lo suprimido, y eso **ningún mecanismo puede
+implementarlo**: la cascada toca cuatro entidades, `ADR-002-D5` fija DynamoDB —que no revierte
+escrituras confirmadas fuera de `TransactWriteItems`— y `ADR-003` deja el almacén **sin respaldo**.
+Lo borrado no vuelve. **La garantía la da el orden, no la reversión:** el `Consentimiento` se
+suprime primero, así que desde ese instante el Sistema ya no tiene base para procesar a esa
+persona aunque la cascada no haya terminado; y el `Usuario` se suprime al final, de modo que
+mientras exista, el reintento sabe a quién le falta borrar. Por eso el caso ahora **verifica que el
+`Usuario` sigue presente** en vez de verificar una restauración imposible.
 
 ## Un hueco cerrado y otro que sigue abierto
 
@@ -60,6 +70,8 @@ implementación contra la que medir. Es fase 4.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
-| v1.0 | 2026-08-01 | J. Sánchez | Creación. 12 casos desde los 11 controladores de `DR-04`, con `FE-04` verificando deshacer **y** no confirmar. |
+| v1.4 | 2026-08-05 | J. Sánchez | **SD-41 — `VI-02` del `CDR-01 v1.4`.** `CP-811` verificaba `C_DeshacerCascada` y exigía que el sistema **deshiciera** lo ya suprimido. Esa reversión es la que `H-02` declaró **sin mecanismo posible**: cuatro entidades, DynamoDB sin `TransactWriteItems` (`ADR-002-D5`) y sin respaldo (`ADR-003`). El caso pasa a verificar la semántica que `ECU-04` y `DS-04` ya tenían desde `SD-39`: **conserva** lo suprimido, **no confirma** la eliminación, informa que quedó a medias y **ofrece reintentar** — y comprueba que el `Usuario` **sigue presente**, que es lo que permite al reintento saber qué falta borrar. Se reescribe también el párrafo de justificación, que seguía razonando sobre deshacer. **Se repone la fila `v1.3`**, que la ficha declaraba y el historial no tenía, y **se reordena el historial**, que iba v1.0-v1.2-v1.1. |
+| v1.3 | 2026-08-04 | J. Sánchez | **SD-35.** `ADR-004-D1` cierra `PER-H2` y `ADR-003` había cerrado `PER-H5`: las **dos excepciones de `RF-24`** quedan cerradas, así que estos casos dejan de probar una cascada con salvedades. *(Fila repuesta en `SD-41`: la versión existía en la ficha y el historial nunca la registró — el mismo defecto que `H-25` catalogó en otros tres artefactos.)* |  había cerrado : las **dos excepciones de ** quedan cerradas, así que estos casos dejan de probar una cascada con salvedades. *(Fila repuesta en : la versión existía en la ficha y el historial nunca la registró — el mismo defecto que  catalogó en otros tres artefactos.)* |
 | v1.2 | 2026-08-04 | J. Sánchez | **SD-34.** El bloque decía «`PER-H5` sigue abierto: los respaldos en S3 escapan al borrado en cascada». `ADR-003` lo cerró quitando el respaldo del almacén operativo, así que **la cascada que estos trece casos prueban es toda la que existe**. Lo que sigue abierto es `PER-H2`, y por eso `RF-24` no se cumple de forma **inmediata**. **Ningún caso de prueba cambia.** |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** entra `CP-813` desde el controlador nuevo `C_ConservarTelemetriaSinIdentidad` de `DR-04 v2.1`. `CA-11` deja de estar sin prueba; el hallazgo `H-9` queda cerrado. Quedan 13 casos y 12/12 controladores. |
+| v1.0 | 2026-08-01 | J. Sánchez | Creación. 12 casos desde los 11 controladores de `DR-04`, con `FE-04` verificando deshacer **y** no confirmar. |

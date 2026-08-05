@@ -126,7 +126,8 @@
 <rect x="615" y="887" width="275" height="68" rx="4" fill="#FAECE7" stroke="#993C1D"/>
 <g fill="none" stroke="#993C1D" stroke-width="1.3"><circle cx="632" cy="921.0" r="5.5"/><polyline points="630.5,913.5 634.5,915.8 630.2,918.2"/></g>
 <g font-size="11" fill="#4A1B0C">
-<text x="647" y="924">Deshacer el borrado incompleto</text>
+<text x="647" y="917">Informar el fallo sin haber suprimido</text>
+<text x="647" y="932">nada</text>
 </g>
 <rect x="1140" y="80" width="165" height="68" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
 <g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1157" cy="112.5" r="5.5"/><line x1="1150.5" y1="120.0" x2="1163.5" y2="120.0"/></g>
@@ -183,7 +184,7 @@
 <rect x="664" y="1025" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="685" y="1034" text-anchor="middle" fill="#4A1B0C">FE-01</text><text x="714" y="1034" fill="#5F5E5A">Sesion ausente (cualquier paso)</text>
 <rect x="24" y="1041" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1050" text-anchor="middle" fill="#4A1B0C">FE-02</text><text x="74" y="1050" fill="#5F5E5A">Permiso insuficiente (paso 1)</text>
 <rect x="664" y="1041" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="685" y="1050" text-anchor="middle" fill="#4A1B0C">FE-03</text><text x="714" y="1050" fill="#5F5E5A">Confirmacion ausente o peticion mal formada (paso 2)</text>
-<rect x="24" y="1057" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1066" text-anchor="middle" fill="#4A1B0C">FE-04</text><text x="74" y="1066" fill="#5F5E5A">Borrado incompleto (paso 3)</text>
+<rect x="24" y="1057" width="42" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/><text x="45" y="1066" text-anchor="middle" fill="#4A1B0C">FE-04</text><text x="74" y="1066" fill="#5F5E5A">Borrado no ejecutado (paso 3)</text>
 </g>
 
 <line x1="24" y1="1083" x2="1305" y2="1083" stroke="#B4B2A9" stroke-width="1"/>
