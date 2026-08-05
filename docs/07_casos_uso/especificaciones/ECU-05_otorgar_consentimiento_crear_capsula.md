@@ -1,5 +1,5 @@
 # ECU-05 — Especificación de caso de uso: «Otorgar consentimiento y crear la cápsula de perfil» (CU-05)
-**ID documento:** DOC-CU-05 · **Caso de uso:** CU-05 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Alias en DCU-01:** `CU_Onb` · **Fecha:** 2026-07-30 · **Versión:** v2.1 · **Estado:** Propuesto.
+**ID documento:** DOC-CU-05 · **Caso de uso:** CU-05 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Alias en DCU-01:** `CU_Onb` · **Fecha:** 2026-07-30 · **Versión:** v2.2 (`CDR-01` `H-16`: `CA-10` prometía que «nada de lo no confirmado quedó escrito» y el diseño no lo entrega — el `Consentimiento` se crea en el paso 5, antes que la cápsula). v2.1 · **Estado:** Propuesto.
 **Forma:** **completa** (24 secciones de la skill `use-case-specifier`, §1–§23) — caso de uso **canon-sensible** (consentimiento, minimización, solo adultos).
 **Insumos:** DCU-01 v2.1, MV-01 §Vista Onboarding, MD-01 v1.4, REQ-01 (RF-01…RF-05), PRIV-01, VIS-01, contrato, plan §3.1/§3.3/§3.4. **Nomenclatura:** Alan / Aura. **Idioma:** español (Colombia).
 
@@ -21,6 +21,7 @@
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| **v2.2** | 2026-08-04 | J. Sánchez | **`CDR-01`, hallazgo `H-16` — retrabajo `SD-39`.** `CA-10` prometía que, tras expirar la sesión, «nada de lo no confirmado quedó escrito», y **el diseño no lo entrega**: `DS-05` crea el `Consentimiento` en el paso 5 —que el Usuario otorga explícitamente— antes de armar la cápsula en el paso 8, así que una expiración entre ambos deja el consentimiento escrito. Es el mismo patrón que `H-02` en un tercer sitio: una promesa de reversión sin mecanismo. **`CA-10` pasa a prometer la garantía observable** —el chat no queda habilitado y ningún autorreporte sin confirmar queda escrito— y **declara** lo que sí puede quedar. |
 | v2.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-4` de `DS-00`.** El armado de la `CapsulaDePerfil` estaba numerado en el **paso 8** por §11 y en el **7** por §15 (`CA-05`), §18 y `RN-01.3`. Manda **§11**, que es el flujo básico: el paso 7 otorga la capa de personalización, el 8 arma la cápsula. `DS-05` ya lo modelaba así. Corregidas las tres referencias y añadida la nota que distingue los dos pasos. |
 | v1.0 | 2026-07-16 | J. Sánchez | Creación (fase 2 ICONIX, paso 3). |
 | v2.0 | 2026-07-30 | J. Sánchez | **PDR-01, fase D.3, tanda 1.** Renombrado a «crear la cápsula de perfil» («perfil» a secas es término prohibido por el control terminológico de §7). Los **pasos 8 y 9** salen a **CU-14** vía `<<include>>`. Se separa el `Consentimiento` en **capas base y personalización** (§4.1), lo que resuelve el hallazgo D-01. Se ancla el tercer flujo alternativo a un paso concreto (D-06), se declara quién cierra la sesión del menor (D-07), se añade `RN-01.6` y se define `RN-07` en §15 (D-14), y se unifica la versión (D-15). |
@@ -250,7 +251,7 @@
 | CA-07 | Dado un usuario que retira la capa base en el paso 5, cuando el onboarding termina, entonces el chat **no queda habilitado**. | FA-03 | Prueba de acceso al chat |
 | CA-08 | Dado un usuario que retira solo la capa de personalización, cuando termina el onboarding, entonces conserva la capa base, **puede conversar** y sus autorreportes no orientan la conversación. | FA-04 | Prueba de conversación e inspección de *payload* |
 | CA-09 | Dado un autorreporte mal formado, cuando el usuario lo envía, entonces el sistema responde `400` y **no pierde** lo que ya había respondido válidamente. | FE-03 | Prueba de entrada inválida |
-| CA-10 | Dada una sesión que expira a mitad del onboarding, cuando el usuario reingresa, entonces nada de lo no confirmado quedó escrito. | FE-04 | Prueba de expiración |
+| CA-10 | Dada una sesión que expira a mitad del onboarding, cuando el usuario reingresa, entonces **el chat no queda habilitado y ningún autorreporte sin confirmar quedó escrito**; lo que sí puede haber quedado es el `Consentimiento` con su capa base, que el paso 5 ya había otorgado explícitamente. | FE-04 | Prueba de expiración: se corta la sesión entre el paso 5 y el 8 y se comprueba que no hay acceso al chat |
 
 > El criterio de v1.1 que verificaba «ve a Alan y Aura y puede elegir» **migró a CU-14**, junto con la segunda mitad del que comprobaba que la cápsula existe con `character` cuando se omiten los cuatro autorreportes.
 
