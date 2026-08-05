@@ -2,6 +2,8 @@
 ' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
 ' v1.1 (SD-30): registrarSinContenido() se mueve del cierre a DENTRO del loop — un evento por
 '      llamada al proveedor, no uno por conversacion. Hallazgo H-1a de DS-00.
+' v1.1 (CDR-01, H-01): FE-03, FE-05, FE-06 y FE-07 pasan de break a opt.
+'       El peor era FE-07, el plazo de 20 s: ECU-06 dice «Vuelve al paso 4» y break lo abandonaba.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-06 v2.1 (25 controladores), ECU-06 v2.1, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-07, P-10, P-11), SEG-01 v1.2, PER-01 v1.2, PRIV-01, MV-01 §7,
@@ -68,13 +70,13 @@ loop 1..20 mensajes de usuario
 
   B_InterfazDeChat -> E_Mensaje : validarLongitudYEstructura(2.500 caracteres)
 
-  break FE-03 mensaje mal formado o excedido
+  opt FE-03 mensaje mal formado o excedido
     B_InterfazDeChat -> B_EstadosDeError : informarEntradaInvalida()
   end
 
   B_InterfazDeChat -> E_ContadorDeUsoDiario : dentroDeLimites(3/min, 30/dia)
 
-  break FE-05 supera el limite de tasa
+  opt FE-05 supera el limite de tasa
     B_InterfazDeChat -> B_EstadosDeError : informarLimiteYTiempoDeEspera()
   end
 
@@ -97,12 +99,12 @@ loop 1..20 mensajes de usuario
   B_FronteraProveedorLLM -> B_FronteraProveedorLLM : vigilarPlazoDeEspera(20 s)
   B_FronteraProveedorLLM -> ACT_ProveedorLLM : solicitar la generacion del texto
 
-  break FE-06 el proveedor no responde
+  opt FE-06 el proveedor no responde
     B_FronteraProveedorLLM -> B_FronteraProveedorLLM : reintentarUnaVez()
     B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
   end
 
-  break FE-07 se agotan los 20 segundos de espera
+  opt FE-07 se agotan los 20 segundos de espera
     B_FronteraProveedorLLM -> B_EstadosDeError : informarFalloDelProveedor()
   end
 

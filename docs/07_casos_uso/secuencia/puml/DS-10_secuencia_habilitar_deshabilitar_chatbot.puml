@@ -1,5 +1,8 @@
 @startuml
 ' DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»
+' v1.1 (CDR-01): H-01 — FA-02 y FE-03 pasan de break a opt.
+'       H-18 — el dialogo NOMBRA EL EFECTO antes de confirmar, no solo pide confirmacion.
+'       H-20 — alias B_LoginAdmin unificado a B_PaginaInicioSesionAdmin (era divergente con DS-03).
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-10 v2.0 (11 controladores), ECU-10 v2.0, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-16; destino P-04), MV-01 RN-03.4/RN-03.7, PER-01 v1.2.
@@ -12,7 +15,7 @@ skinparam responseMessageBelowArrow true
 actor "Administrador de plataforma" as ACT_Administrador
 boundary "Kill switch - control de disponibilidad (P-16)" as B_ControlDisponibilidad
 boundary "Dialogo de confirmacion del cambio" as B_DialogoConfirmacion
-boundary "Inicio de sesion de administracion (P-04)" as B_LoginAdmin
+boundary "Inicio de sesion de administracion (P-04)" as B_PaginaInicioSesionAdmin
 entity "Administrador" as E_Administrador
 entity "DisponibilidadDelChatbot" as E_DisponibilidadDelChatbot
 entity "Conversacion" as E_Conversacion
@@ -32,11 +35,11 @@ ACT_Administrador -> B_ControlDisponibilidad : abrir el control de disponibilida
 B_ControlDisponibilidad -> B_ControlDisponibilidad : verificarSesionYRolDeAdministrador()
 
 break FE-01 sesion ausente
-  B_ControlDisponibilidad -> B_LoginAdmin : solicitarReingresoPorCU03()
+  B_ControlDisponibilidad -> B_PaginaInicioSesionAdmin : solicitarReingresoPorCU03()
 end
 
 break FE-02 rol no administrador aunque manipule el cliente
-  B_ControlDisponibilidad -> B_LoginAdmin : denegarPorRolConRedireccionSegura()
+  B_ControlDisponibilidad -> B_PaginaInicioSesionAdmin : denegarPorRolConRedireccionSegura()
 end
 
 B_ControlDisponibilidad -> E_DisponibilidadDelChatbot : leerEstadoGlobal()
@@ -57,13 +60,23 @@ break FA-03 el estado elegido ya es el vigente
 end
 
 B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
+B_DialogoConfirmacion -> B_DialogoConfirmacion : nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()
 ACT_Administrador -> B_DialogoConfirmacion : confirmar o no confirmar el cambio
 
-break FA-02 el Administrador no confirma
+note right of B_DialogoConfirmacion
+  <b>El dialogo dice QUE va a pasar, no solo pide un si</b> (`H-18` del `CDR-01`).
+  `ECU-10` exige que nombre el efecto <b>antes</b> de la confirmacion, y la version
+  anterior solo la solicitaba. Deshabilitar corta la apertura de conversaciones a
+  todos los usuarios: quien confirma debe leerlo primero.
+  <b>El patron correcto ya estaba en el paquete:</b> `DS-11` hace lo mismo con
+  `advertirDelAlcanceIrreversible()`.
+end note
+
+opt FA-02 el Administrador no confirma
   B_DialogoConfirmacion -> B_ControlDisponibilidad : cancelarSinCambiarElEstado()
 end
 
-break FE-03 la confirmacion llega mal formada
+opt FE-03 la confirmacion llega mal formada
   B_DialogoConfirmacion -> B_ControlDisponibilidad : rechazarConfirmacionInvalidaYVolverAlPaso1()
 end
 

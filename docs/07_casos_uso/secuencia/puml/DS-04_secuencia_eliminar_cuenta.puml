@@ -1,5 +1,8 @@
 @startuml
 ' DS-04 - Secuencia de CU-04 «Eliminar cuenta»
+' v1.1 (CDR-01): H-01 — FA-03, FE-03 y FE-04 pasan de break a opt.
+'       H-02 (Mayor) — la cascada se REORDENA (Consentimiento primero, Usuario al final) y
+'       FE-04 deja de deshacer: conserva lo suprimido y ofrece reintento. Ver ECU-04 v2.4.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-04 v2.0 (11 controladores), ECU-04 v2.0, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-13; destinos P-01, P-03), PER-01 v1.2 (PER-T1), PRIV-01.
@@ -35,7 +38,7 @@ E_Usuario --> B_PaginaGestionCuenta : alcance de la supresion
 B_PaginaGestionCuenta -> B_PaginaGestionCuenta : advertirQueLaAccionEsIrreversible()
 ACT_Usuario -> B_PaginaGestionCuenta : confirmar explicitamente la eliminacion
 
-break FA-03 el Usuario no confirma y cancela
+opt FA-03 el Usuario no confirma y cancela
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarDejandoLaCuentaIntacta()
 end
 
@@ -45,7 +48,7 @@ break FE-02 rol no autorizado o cuenta ajena
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : denegarPorPermisoSinSuprimirNada()
 end
 
-break FE-03 solicitud mal formada o sin confirmacion explicita
+opt FE-03 solicitud mal formada o sin confirmacion explicita
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarPeticionInvalidaYVolverAlPaso1()
 end
 
@@ -60,10 +63,18 @@ B_PaginaGestionCuenta -> E_Usuario : suprimirEnCascada()
 alt FA-01 la cuenta nunca completo el onboarding
   E_Usuario -> E_Usuario : noHayDependientesQueSuprimir()
 else existen capsula, consentimiento y contadores
-  E_Usuario -> E_CapsulaDePerfil : suprimir()
   E_Usuario -> E_Consentimiento : suprimirConSusDosCapas()
+  E_Usuario -> E_CapsulaDePerfil : suprimir()
   E_Usuario -> E_ContadorDeUsoDiario : suprimirLosContadoresDelUsuario()
 end
+
+note right of E_Consentimiento
+  <b>El orden es la garantia, y por eso el `Consentimiento` va primero</b>
+  (`ECU-04` `RE-04` v2.4, hallazgo `H-02` del `CDR-01`). Desde que se suprime,
+  el Sistema <b>ya no tiene base para procesar a esa persona</b>, aunque el resto
+  de la cascada no haya terminado. El `Usuario` se suprime <b>al final</b>, en el
+  paso 4: mientras exista, el reintento sabe a quien le falta borrar.
+end note
 
 E_Usuario -> E_EventoOperativo : conservarSinIdentidad()
 
@@ -81,11 +92,22 @@ note right of E_Usuario
   La operacion existe para que esa propiedad sea <b>verificable</b> (`CA-11`), no tacita.
 end note
 
-break FE-04 el almacenamiento falla a mitad de la cascada
-  E_Usuario -> E_Usuario : deshacerLoSuprimido()
-  E_Usuario --> B_PaginaGestionCuenta : la cuenta queda como estaba
-  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueLaAccionNoSeCompleto()
+opt FE-04 el almacenamiento falla a mitad de la cascada
+  E_Usuario -> E_Usuario : conservarLoYaSuprimido()
+  E_Usuario --> B_PaginaGestionCuenta : la supresion quedo a medias
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueQuedoAMediasYOfrecerReintento()
 end
+
+note over E_Usuario, B_PaginaGestionCuenta
+  <b>Aqui no se deshace nada, y esa es la correccion</b> (`H-02`, Mayor). La version
+  anterior dibujaba `deshacerLoSuprimido()`, una compensacion que <b>ningun mecanismo
+  puede implementar</b>: la cascada toca cuatro entidades, `ADR-002-D5` fija DynamoDB
+  —que no revierte escrituras confirmadas fuera de `TransactWriteItems`— y `ADR-003`
+  deja el almacen <b>sin respaldo</b>. Lo borrado no vuelve.
+  <b>Lo que sostiene la garantia es el orden, no la reversion:</b> si el fallo ocurre,
+  el `Consentimiento` ya no esta, asi que la persona <b>deja de ser procesada igual</b>,
+  y el reintento retoma desde donde quedo porque cada supresion es idempotente.
+end note
 
 == Paso 4 - Cierre de sesion y condicion de Visitante ==
 

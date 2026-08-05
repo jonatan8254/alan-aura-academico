@@ -1,5 +1,7 @@
 @startuml
 ' DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»
+' v1.1 (CDR-01): H-01 — FA-03, FE-03 y FE-04 pasan de break a opt.
+'       H-15 — FE-04 deja de deshacer un borrado parcial que sobre UNA entidad no puede existir.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-11 v2.0 (11 controladores), ECU-11 v2.0, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-13; destinos P-08, P-03), PER-01 v1.2 (PER-T7), RN-01.6.
@@ -47,11 +49,11 @@ E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acces
 B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
 ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita
 
-break FA-03 el Usuario cancela la advertencia
+opt FA-03 el Usuario cancela la advertencia
   B_PaginaGestionCuenta --> ACT_Usuario : cancelarDejandoLaCapsulaCompleta()
 end
 
-break FE-03 llega sin confirmacion explicita o mal formada
+opt FE-03 llega sin confirmacion explicita o mal formada
   B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso1()
 end
 
@@ -64,10 +66,21 @@ end
 B_PaginaGestionCuenta -> E_CapsulaDePerfil : borrarCompleta()
 E_CapsulaDePerfil -> E_CapsulaDePerfil : dejarDeExistir()
 
-break FE-04 el sistema no logra completar el borrado
-  E_CapsulaDePerfil -> E_CapsulaDePerfil : deshacerElBorradoIncompleto()
-  E_CapsulaDePerfil --> B_PaginaGestionCuenta : queda como estaba, con character
+opt FE-04 el sistema no logra ejecutar el borrado
+  E_CapsulaDePerfil --> B_PaginaGestionCuenta : sigue intacta, con character
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarElFalloSinHaberSuprimidoNada()
 end
+
+note right of E_CapsulaDePerfil
+  <b>Aqui no hay nada que deshacer, y esa es la correccion</b> (`H-15` del `CDR-01`).
+  La version anterior dibujaba `deshacerElBorradoIncompleto()`, protegiendo contra un
+  borrado a medias de <b>una sola entidad</b>. Ese estado <b>no puede existir</b>: la
+  capsula se suprime entera o no se suprime, y una capsula sin `character` es lo que
+  `RN-01.6` declara imposible.
+  <b>Contraste con `H-02` (`DS-04`), que parece igual y no lo es:</b> alli la atomicidad
+  era <b>imposible</b> —cuatro entidades sin transaccion—; aqui era <b>innecesaria</b>.
+  Dos defectos distintos con la misma cara.
+end note
 
 == Pasos 4 y 5 - Alcance declarado y oferta de rehacer ==
 

@@ -1,5 +1,7 @@
 @startuml
 ' DS-03 - Secuencia de CU-03 «Iniciar y cerrar sesion»
+' v1.1 (CDR-01, H-01): FE-01 pasa de break a opt — ECU-03 declara «Vuelve al paso 2».
+'       FE-02 y FE-03 conservan break: su texto dice «Termina», y ahi break es correcto.
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-03 v2.0 (12 controladores), ECU-03 v2.0, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-03, P-04; destinos P-05, P-10, P-14), REQ-01 (RNF-08).
@@ -38,7 +40,7 @@ note right of E_TitularDeCuenta
   (RNF-08): ningun mensaje transporta un rol propuesto por el cliente.
 end note
 
-break FE-01 las credenciales no coinciden
+opt FE-01 las credenciales no coinciden
   B_PaginaInicioSesion -> B_PaginaInicioSesion : mostrarMensajeGenericoSinRevelarQueCampoFallo()
 end
 

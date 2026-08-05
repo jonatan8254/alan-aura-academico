@@ -18,7 +18,7 @@
 <text x="857.7" y="597" font-size="10" fill="#993C1D">[FE-01]</text>
 <rect x="1187.9" y="914.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="1187.9,914 1249.9,914 1249.9,926 1241.9,934 1187.9,934" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="1196.9" y="928" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="1196.9" y="928" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="1259.9" y="928" font-size="10" fill="#993C1D">[FE-02 no]</text>
 <rect x="1187.9" y="1024.0" width="879.6" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="1187.9,1024 1249.9,1024 1249.9,1036 1241.9,1044 1187.9,1044" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
@@ -40,7 +40,7 @@
 <text x="1691.5000000000002" y="1566" font-size="10" fill="#993C1D">[FA-04 retira solo la personalizacion en el onboarding]</text>
 <rect x="1619.5" y="1708.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="1619.5000000000002,1708 1681.5000000000002,1708 1681.5000000000002,1720 1673.5000000000002,1728 1619.5000000000002,1728" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="1628.5000000000002" y="1722" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="1628.5000000000002" y="1722" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="1691.5000000000002" y="1722" font-size="10" fill="#993C1D">[FE-03]</text>
 <rect x="2796.4" y="1858.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="2796.4,1858 2858.4,1858 2858.4,1870 2850.4,1878 2796.4,1878" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>

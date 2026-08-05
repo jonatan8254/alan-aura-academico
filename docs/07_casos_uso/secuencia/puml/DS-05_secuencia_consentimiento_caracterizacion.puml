@@ -1,5 +1,6 @@
 @startuml
 ' DS-05 - Secuencia de CU-05 «Otorgar consentimiento y crear la capsula de perfil»
+' v1.1 (CDR-01, H-01): FE-02 y FE-03 pasan de break a opt — su texto declara «Vuelve».
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-05 v2.0 (16 controladores), ECU-05 v2.0, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-05..P-08; destino P-03), PRIV-01, MV-01 §7.
@@ -60,7 +61,7 @@ end note
 B_PantallaEdad -> B_PantallaConsentimiento : mostrarAlcanceDeLaCapaBase()
 ACT_Usuario -> B_PantallaConsentimiento : otorgar la capa base
 
-break FE-02 no otorga la capa base
+opt FE-02 no otorga la capa base
   B_PantallaConsentimiento -> B_PantallaConsentimiento : impedirAvanceYVolverAlPaso4()
 end
 
@@ -94,7 +95,7 @@ end
 
 ACT_Usuario -> B_PantallaCaracterizacion : responder u omitir cada autorreporte
 
-break FE-03 autorreportes mal formados
+opt FE-03 autorreportes mal formados
   B_PantallaCaracterizacion -> B_PantallaCaracterizacion : mostrarRevisaTusRespuestas()
 end
 

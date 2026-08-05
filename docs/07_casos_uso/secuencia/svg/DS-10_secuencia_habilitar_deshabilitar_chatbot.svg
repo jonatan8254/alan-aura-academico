@@ -1,21 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2442 2181" width="2442" height="2181" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2612 2355" width="2612" height="2355" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»</title>
-<desc id="d">Diagrama de secuencia UML. 8 participantes, 20 mensajes.</desc>
-<rect x="0" y="0" width="2442" height="2181" fill="#FFFFFF"/>
+<desc id="d">Diagrama de secuencia UML. 8 participantes, 21 mensajes.</desc>
+<rect x="0" y="0" width="2612" height="2355" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»</text>
-<line x1="83.4" y1="116.0" x2="83.4" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="505.1" y1="80.0" x2="505.1" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="934.3" y1="80.0" x2="934.3" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1213.3" y1="80.0" x2="1213.3" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1444.0" y1="67.0" x2="1444.0" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1788.6" y1="67.0" x2="1788.6" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2073.2" y1="67.0" x2="2073.2" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2346.2" y1="67.0" x2="2346.2" y2="2153.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="467.1" y="926.0" width="784.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<line x1="83.4" y1="116.0" x2="83.4" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="505.1" y1="80.0" x2="505.1" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="934.3" y1="80.0" x2="934.3" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1383.3" y1="80.0" x2="1383.3" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1614.0" y1="67.0" x2="1614.0" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1958.6" y1="67.0" x2="1958.6" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2243.2" y1="67.0" x2="2243.2" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2516.2" y1="67.0" x2="2516.2" y2="2327.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="467.1" y="926.0" width="954.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="467.1000000000001,926 529.1000000000001,926 529.1000000000001,938 521.1000000000001,946 467.1000000000001,946" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="476.1000000000001" y="940" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="539.1000000000001" y="940" font-size="10" fill="#993C1D">[FE-01 sesion ausente]</text>
-<rect x="467.1" y="1010.0" width="784.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<rect x="467.1" y="1010.0" width="954.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="467.1000000000001,1010 529.1000000000001,1010 529.1000000000001,1022 521.1000000000001,1030 467.1000000000001,1030" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="476.1000000000001" y="1024" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="539.1000000000001" y="1024" font-size="10" fill="#993C1D">[FE-02 rol no administrador aunque manipule el cliente]</text>
@@ -25,27 +25,27 @@
 <text x="117.4" y="1286" font-size="10" fill="#993C1D">[FA-01 elige habilitar el chatbot]</text>
 <line x1="45.4" y1="1340.0" x2="543.1" y2="1340.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
 <text x="55.4" y="1353.0" font-size="10" fill="#993C1D">[elige deshabilitar el chatbot]</text>
-<rect x="45.4" y="1414.0" width="1781.2" height="106.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<rect x="45.4" y="1414.0" width="1951.2" height="106.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="45.400000000000006,1414 107.4,1414 107.4,1426 99.4,1434 45.400000000000006,1434" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="54.400000000000006" y="1428" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="117.4" y="1428" font-size="10" fill="#993C1D">[FA-03 el estado elegido ya es el vigente]</text>
-<rect x="467.1" y="1618.0" width="505.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="467.1000000000001,1618 529.1000000000001,1618 529.1000000000001,1630 521.1000000000001,1638 467.1000000000001,1638" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="476.1000000000001" y="1632" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="539.1000000000001" y="1632" font-size="10" fill="#993C1D">[FA-02 el Administrador no confirma]</text>
-<rect x="467.1" y="1702.0" width="505.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="467.1000000000001,1702 529.1000000000001,1702 529.1000000000001,1714 521.1000000000001,1722 467.1000000000001,1722" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="476.1000000000001" y="1716" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="539.1000000000001" y="1716" font-size="10" fill="#993C1D">[FE-03 la confirmacion llega mal formada]</text>
-<line x1="63.4" y1="796.0" x2="2366.2" y2="796.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="1137.2" y="785.0" width="155.1" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1214.8" y="800.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 1 - Estado actual</text>
-<line x1="63.4" y1="1248.0" x2="2366.2" y2="1248.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="1107.0" y="1237.0" width="215.6" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1214.8" y="1252.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 2 - Eleccion y confirmacion</text>
-<line x1="63.4" y1="1794.0" x2="2366.2" y2="1794.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="1073.7" y="1783.0" width="282.2" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1214.8" y="1798.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 3 y 4 - Cambio, registro y aplicacion</text>
+<rect x="467.1" y="1792.0" width="505.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="467.1000000000001,1792 529.1000000000001,1792 529.1000000000001,1804 521.1000000000001,1812 467.1000000000001,1812" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="476.1000000000001" y="1806" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="539.1000000000001" y="1806" font-size="10" fill="#993C1D">[FA-02 el Administrador no confirma]</text>
+<rect x="467.1" y="1876.0" width="505.2" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="467.1000000000001,1876 529.1000000000001,1876 529.1000000000001,1888 521.1000000000001,1896 467.1000000000001,1896" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="476.1000000000001" y="1890" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="539.1000000000001" y="1890" font-size="10" fill="#993C1D">[FE-03 la confirmacion llega mal formada]</text>
+<line x1="63.4" y1="796.0" x2="2536.2" y2="796.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="1222.2" y="785.0" width="155.1" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1299.8" y="800.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 1 - Estado actual</text>
+<line x1="63.4" y1="1248.0" x2="2536.2" y2="1248.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="1192.0" y="1237.0" width="215.6" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1299.8" y="1252.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 2 - Eleccion y confirmacion</text>
+<line x1="63.4" y1="1968.0" x2="2536.2" y2="1968.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="1158.7" y="1957.0" width="282.2" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1299.8" y="1972.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 3 y 4 - Cambio, registro y aplicacion</text>
 <line x1="83.4" y1="840.0" x2="505.1" y2="840.0" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="503.1000000000001,840 496.1000000000001,836.6 496.1000000000001,843.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="196.8" y="815.0" width="195.0" height="15.0" fill="#FFFFFF"/>
@@ -54,22 +54,22 @@
 <polygon points="507.1000000000001,906 514.1000000000001,902.6 514.1000000000001,909.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="553.1" y="855.0" width="206.0" height="15.0" fill="#FFFFFF"/>
 <text x="557.1" y="867.0" font-size="10" fill="#2C2C2A">verificarSesionYRolDeAdministrador()</text>
-<line x1="505.1" y1="982.0" x2="1213.3" y2="982.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1211.3000000000002,982 1204.3000000000002,978.6 1204.3000000000002,985.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="781.0" y="957.0" width="156.5" height="15.0" fill="#FFFFFF"/>
-<text x="785.0" y="969.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
-<line x1="505.1" y1="1066.0" x2="1213.3" y2="1066.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1211.3000000000002,1066 1204.3000000000002,1062.6 1204.3000000000002,1069.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="759.0" y="1041.0" width="200.5" height="15.0" fill="#FFFFFF"/>
-<text x="763.0" y="1053.0" font-size="10" fill="#2C2C2A">denegarPorRolConRedireccionSegura()</text>
-<line x1="505.1" y1="1114.0" x2="1788.6" y2="1114.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1786.6499999999999,1114 1779.6499999999999,1110.6 1779.6499999999999,1117.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1093.4" y="1089.0" width="107.0" height="15.0" fill="#FFFFFF"/>
-<text x="1097.4" y="1101.0" font-size="10" fill="#2C2C2A">leerEstadoGlobal()</text>
-<line x1="1788.6" y1="1154.0" x2="505.1" y2="1154.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<line x1="505.1" y1="982.0" x2="1383.3" y2="982.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1381.3000000000002,982 1374.3000000000002,978.6 1374.3000000000002,985.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="866.0" y="957.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="870.0" y="969.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
+<line x1="505.1" y1="1066.0" x2="1383.3" y2="1066.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1381.3000000000002,1066 1374.3000000000002,1062.6 1374.3000000000002,1069.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="844.0" y="1041.0" width="200.5" height="15.0" fill="#FFFFFF"/>
+<text x="848.0" y="1053.0" font-size="10" fill="#2C2C2A">denegarPorRolConRedireccionSegura()</text>
+<line x1="505.1" y1="1114.0" x2="1958.6" y2="1114.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1956.6499999999999,1114 1949.6499999999999,1110.6 1949.6499999999999,1117.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1178.4" y="1089.0" width="107.0" height="15.0" fill="#FFFFFF"/>
+<text x="1182.4" y="1101.0" font-size="10" fill="#2C2C2A">leerEstadoGlobal()</text>
+<line x1="1958.6" y1="1154.0" x2="505.1" y2="1154.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
 <polygon points="507.1000000000001,1154 514.1000000000001,1150.6 514.1000000000001,1157.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="1071.4" y="1129.0" width="151.0" height="15.0" fill="#FFFFFF"/>
-<text x="1075.4" y="1141.0" font-size="10" fill="#2C2C2A">habilitado o deshabilitado</text>
+<rect x="1156.4" y="1129.0" width="151.0" height="15.0" fill="#FFFFFF"/>
+<text x="1160.4" y="1141.0" font-size="10" fill="#2C2C2A">habilitado o deshabilitado</text>
 <polyline points="505.1,1194.0 547.1,1194.0 547.1,1220.0 514.1,1220.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="507.1000000000001,1220 514.1000000000001,1216.6 514.1000000000001,1223.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="553.1" y="1169.0" width="123.5" height="15.0" fill="#FFFFFF"/>
@@ -82,10 +82,10 @@
 <polygon points="503.1000000000001,1386 496.1000000000001,1382.6 496.1000000000001,1389.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="238.0" y="1361.0" width="112.5" height="15.0" fill="#FFFFFF"/>
 <text x="242.0" y="1373.0" font-size="10" fill="#2C2C2A">elegir deshabilitar</text>
-<line x1="505.1" y1="1470.0" x2="1788.6" y2="1470.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1786.6499999999999,1470 1779.6499999999999,1466.6 1779.6499999999999,1473.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1063.1" y="1445.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="1067.1" y="1457.0" font-size="10" fill="#2C2C2A">contrastarConElEstadoGlobal()</text>
+<line x1="505.1" y1="1470.0" x2="1958.6" y2="1470.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1956.6499999999999,1470 1949.6499999999999,1466.6 1949.6499999999999,1473.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1148.1" y="1445.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="1152.1" y="1457.0" font-size="10" fill="#2C2C2A">contrastarConElEstadoGlobal()</text>
 <line x1="505.1" y1="1510.0" x2="83.4" y2="1510.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
 <polygon points="85.4,1510 92.4,1506.6 92.4,1513.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
 <rect x="172.0" y="1485.0" width="244.5" height="15.0" fill="#FFFFFF"/>
@@ -94,96 +94,107 @@
 <polygon points="932.2500000000001,1558 925.2500000000001,1554.6 925.2500000000001,1561.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="624.9" y="1533.0" width="189.5" height="15.0" fill="#FFFFFF"/>
 <text x="628.9" y="1545.0" font-size="10" fill="#2C2C2A">solicitarConfirmacionDeLaAccion()</text>
-<line x1="83.4" y1="1598.0" x2="934.3" y2="1598.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="932.2500000000001,1598 925.2500000000001,1594.6 925.2500000000001,1601.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="411.3" y="1573.0" width="195.0" height="15.0" fill="#FFFFFF"/>
-<text x="415.3" y="1585.0" font-size="10" fill="#2C2C2A">confirmar o no confirmar el cambio</text>
-<line x1="934.3" y1="1674.0" x2="505.1" y2="1674.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="507.1000000000001,1674 514.1000000000001,1670.6 514.1000000000001,1677.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="638.7" y="1649.0" width="162.0" height="15.0" fill="#FFFFFF"/>
-<text x="642.7" y="1661.0" font-size="10" fill="#2C2C2A">cancelarSinCambiarElEstado()</text>
-<line x1="934.3" y1="1758.0" x2="505.1" y2="1758.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="507.1000000000001,1758 514.1000000000001,1754.6 514.1000000000001,1761.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="594.7" y="1733.0" width="250.0" height="15.0" fill="#FFFFFF"/>
-<text x="598.7" y="1745.0" font-size="10" fill="#2C2C2A">rechazarConfirmacionInvalidaYVolverAlPaso1()</text>
-<line x1="934.3" y1="1838.0" x2="1788.6" y2="1838.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1786.6499999999999,1838 1779.6499999999999,1834.6 1779.6499999999999,1841.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1299.7" y="1813.0" width="123.5" height="15.0" fill="#FFFFFF"/>
-<text x="1303.7" y="1825.0" font-size="10" fill="#2C2C2A">cambiarEstadoGlobal()</text>
-<line x1="1788.6" y1="1878.0" x2="1444.0" y2="1878.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1445.95,1878 1452.95,1874.6 1452.95,1881.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1532.5" y="1853.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="1536.5" y="1865.0" font-size="10" fill="#2C2C2A">identificarAlAutorDelCambio()</text>
-<line x1="1444.0" y1="1918.0" x2="2346.2" y2="1918.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2344.15,1918 2337.15,1914.6 2337.15,1921.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1811.3" y="1893.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="1815.3" y="1905.0" font-size="10" fill="#2C2C2A">registrarAccion(autor, fecha)</text>
-<line x1="1788.6" y1="1958.0" x2="2073.2" y2="1958.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2071.15,1958 2064.15,1954.6 2064.15,1961.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1841.7" y="1933.0" width="178.5" height="15.0" fill="#FFFFFF"/>
-<text x="1845.7" y="1945.0" font-size="10" fill="#2C2C2A">aplicarNuevoEstadoDeInmediato()</text>
-<line x1="1788.6" y1="1998.0" x2="505.1" y2="1998.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
-<polygon points="507.1000000000001,1998 514.1000000000001,1994.6 514.1000000000001,2001.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="1043.9" y="1973.0" width="206.0" height="15.0" fill="#FFFFFF"/>
-<text x="1047.9" y="1985.0" font-size="10" fill="#2C2C2A">estado vigente reflejado en el panel</text>
-<rect x="2248.7" y="139.0" width="71.5" height="627.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="2256.7" y="157.0" font-size="9.5" fill="#2C2C2A">No se</text>
-<text x="2256.7" y="170.0" font-size="9.5" fill="#2C2C2A">declara</text>
-<text x="2256.7" y="183.0" font-size="9.5" fill="#2C2C2A">`entity`,</text>
-<text x="2256.7" y="196.0" font-size="9.5" fill="#2C2C2A">y es</text>
-<text x="2256.7" y="209.0" font-size="9.5" fill="#2C2C2A">deliberado.</text>
-<text x="2256.7" y="222.0" font-size="9.5" fill="#2C2C2A">`AccionAdministrativa`</text>
-<text x="2256.7" y="235.0" font-size="9.5" fill="#2C2C2A">esta</text>
-<text x="2256.7" y="248.0" font-size="9.5" fill="#2C2C2A">fuera de</text>
-<text x="2256.7" y="261.0" font-size="9.5" fill="#2C2C2A">MD-01 por</text>
-<text x="2256.7" y="274.0" font-size="9.5" fill="#2C2C2A">decision</text>
-<text x="2256.7" y="287.0" font-size="9.5" fill="#2C2C2A">declarada</text>
-<text x="2256.7" y="300.0" font-size="9.5" fill="#2C2C2A">(`DR-00</text>
-<text x="2256.7" y="313.0" font-size="9.5" fill="#2C2C2A">§6`,</text>
-<text x="2256.7" y="326.0" font-size="9.5" fill="#2C2C2A">reafirmada</text>
-<text x="2256.7" y="339.0" font-size="9.5" fill="#2C2C2A">en</text>
-<text x="2256.7" y="352.0" font-size="9.5" fill="#2C2C2A">`RPD-01`</text>
-<text x="2256.7" y="365.0" font-size="9.5" fill="#2C2C2A">H-02):</text>
-<text x="2256.7" y="378.0" font-size="9.5" fill="#2C2C2A">es</text>
-<text x="2256.7" y="391.0" font-size="9.5" fill="#2C2C2A">auditoria</text>
-<text x="2256.7" y="404.0" font-size="9.5" fill="#2C2C2A">de</text>
-<text x="2256.7" y="417.0" font-size="9.5" fill="#2C2C2A">operacion,</text>
-<text x="2256.7" y="430.0" font-size="9.5" fill="#2C2C2A">no</text>
-<text x="2256.7" y="443.0" font-size="9.5" fill="#2C2C2A">concepto</text>
-<text x="2256.7" y="456.0" font-size="9.5" fill="#2C2C2A">del</text>
-<text x="2256.7" y="469.0" font-size="9.5" fill="#2C2C2A">problema.</text>
-<text x="2256.7" y="482.0" font-size="9.5" fill="#2C2C2A">Declararla</text>
-<text x="2256.7" y="495.0" font-size="9.5" fill="#2C2C2A">como</text>
-<text x="2256.7" y="508.0" font-size="9.5" fill="#2C2C2A">entidad</text>
-<text x="2256.7" y="521.0" font-size="9.5" fill="#2C2C2A">del</text>
-<text x="2256.7" y="534.0" font-size="9.5" fill="#2C2C2A">dominio</text>
-<text x="2256.7" y="547.0" font-size="9.5" fill="#2C2C2A">produciria</text>
-<text x="2256.7" y="560.0" font-size="9.5" fill="#2C2C2A">un falso</text>
-<text x="2256.7" y="573.0" font-size="9.5" fill="#2C2C2A">hallazgo</text>
-<text x="2256.7" y="586.0" font-size="9.5" fill="#2C2C2A">de</text>
-<text x="2256.7" y="599.0" font-size="9.5" fill="#2C2C2A">trazabilidad.</text>
-<text x="2256.7" y="612.0" font-size="9.5" fill="#2C2C2A">Va al</text>
-<text x="2256.7" y="625.0" font-size="9.5" fill="#2C2C2A">delta como</text>
-<text x="2256.7" y="638.0" font-size="9.5" fill="#2C2C2A">clase del</text>
-<text x="2256.7" y="651.0" font-size="9.5" fill="#2C2C2A">espacio de</text>
-<text x="2256.7" y="664.0" font-size="9.5" fill="#2C2C2A">la</text>
-<text x="2256.7" y="677.0" font-size="9.5" fill="#2C2C2A">solucion,</text>
-<text x="2256.7" y="690.0" font-size="9.5" fill="#2C2C2A">que es lo</text>
-<text x="2256.7" y="703.0" font-size="9.5" fill="#2C2C2A">que el</text>
-<text x="2256.7" y="716.0" font-size="9.5" fill="#2C2C2A">metodo</text>
-<text x="2256.7" y="729.0" font-size="9.5" fill="#2C2C2A">espera en</text>
-<text x="2256.7" y="742.0" font-size="9.5" fill="#2C2C2A">diseno</text>
-<text x="2256.7" y="755.0" font-size="9.5" fill="#2C2C2A">detallado.</text>
-<rect x="1962.7" y="2010.0" width="473.0" height="133.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="1970.7" y="2028.0" font-size="9.5" fill="#2C2C2A">RN-03.4: el cambio exige confirmacion y queda registrado. Las dos cosas,</text>
-<text x="1970.7" y="2041.0" font-size="9.5" fill="#2C2C2A">no una: por eso hay un dialogo propio y un registro propio.</text>
-<text x="1970.7" y="2054.0" font-size="9.5" fill="#2C2C2A">PER-T2 se realiza como una ausencia: `registrarAccion` recibe autor y fecha</text>
-<text x="1970.7" y="2067.0" font-size="9.5" fill="#2C2C2A">y nada mas. Ningun mensaje le pasa alias, username ni dato de usuario alguno, asi que</text>
-<text x="1970.7" y="2080.0" font-size="9.5" fill="#2C2C2A">la</text>
-<text x="1970.7" y="2093.0" font-size="9.5" fill="#2C2C2A">telemetria no permite reconstruir que hizo una persona concreta.</text>
-<text x="1970.7" y="2106.0" font-size="9.5" fill="#2C2C2A">Efecto en CU-06: deshabilitado, ningun usuario inicia conversacion (409);</text>
-<text x="1970.7" y="2119.0" font-size="9.5" fill="#2C2C2A">habilitado, CU-06 vuelve a estar disponible. Una derivacion de seguridad ya en curso</text>
-<text x="1970.7" y="2132.0" font-size="9.5" fill="#2C2C2A">no se interrumpe — eso lo decide CU-07 (`FE-03` de `DS-07`), no este caso de uso.</text>
+<polyline points="934.3,1598.0 976.3,1598.0 976.3,1624.0 943.3,1624.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="936.2500000000001,1624 943.2500000000001,1620.6 943.2500000000001,1627.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="982.3" y="1573.0" width="310.5" height="15.0" fill="#FFFFFF"/>
+<text x="986.3" y="1585.0" font-size="10" fill="#2C2C2A">nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()</text>
+<line x1="83.4" y1="1664.0" x2="934.3" y2="1664.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="932.2500000000001,1664 925.2500000000001,1660.6 925.2500000000001,1667.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="411.3" y="1639.0" width="195.0" height="15.0" fill="#FFFFFF"/>
+<text x="415.3" y="1651.0" font-size="10" fill="#2C2C2A">confirmar o no confirmar el cambio</text>
+<line x1="934.3" y1="1848.0" x2="505.1" y2="1848.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="507.1000000000001,1848 514.1000000000001,1844.6 514.1000000000001,1851.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="638.7" y="1823.0" width="162.0" height="15.0" fill="#FFFFFF"/>
+<text x="642.7" y="1835.0" font-size="10" fill="#2C2C2A">cancelarSinCambiarElEstado()</text>
+<line x1="934.3" y1="1932.0" x2="505.1" y2="1932.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="507.1000000000001,1932 514.1000000000001,1928.6 514.1000000000001,1935.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="594.7" y="1907.0" width="250.0" height="15.0" fill="#FFFFFF"/>
+<text x="598.7" y="1919.0" font-size="10" fill="#2C2C2A">rechazarConfirmacionInvalidaYVolverAlPaso1()</text>
+<line x1="934.3" y1="2012.0" x2="1958.6" y2="2012.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1956.6499999999999,2012 1949.6499999999999,2008.6 1949.6499999999999,2015.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1384.7" y="1987.0" width="123.5" height="15.0" fill="#FFFFFF"/>
+<text x="1388.7" y="1999.0" font-size="10" fill="#2C2C2A">cambiarEstadoGlobal()</text>
+<line x1="1958.6" y1="2052.0" x2="1614.0" y2="2052.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1615.95,2052 1622.95,2048.6 1622.95,2055.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1702.5" y="2027.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="1706.5" y="2039.0" font-size="10" fill="#2C2C2A">identificarAlAutorDelCambio()</text>
+<line x1="1614.0" y1="2092.0" x2="2516.2" y2="2092.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2514.15,2092 2507.15,2088.6 2507.15,2095.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1981.3" y="2067.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="1985.3" y="2079.0" font-size="10" fill="#2C2C2A">registrarAccion(autor, fecha)</text>
+<line x1="1958.6" y1="2132.0" x2="2243.2" y2="2132.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2241.15,2132 2234.15,2128.6 2234.15,2135.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="2011.7" y="2107.0" width="178.5" height="15.0" fill="#FFFFFF"/>
+<text x="2015.7" y="2119.0" font-size="10" fill="#2C2C2A">aplicarNuevoEstadoDeInmediato()</text>
+<line x1="1958.6" y1="2172.0" x2="505.1" y2="2172.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="507.1000000000001,2172 514.1000000000001,2168.6 514.1000000000001,2175.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="1128.9" y="2147.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="1132.9" y="2159.0" font-size="10" fill="#2C2C2A">estado vigente reflejado en el panel</text>
+<rect x="2418.7" y="139.0" width="71.5" height="627.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2426.7" y="157.0" font-size="9.5" fill="#2C2C2A">No se</text>
+<text x="2426.7" y="170.0" font-size="9.5" fill="#2C2C2A">declara</text>
+<text x="2426.7" y="183.0" font-size="9.5" fill="#2C2C2A">`entity`,</text>
+<text x="2426.7" y="196.0" font-size="9.5" fill="#2C2C2A">y es</text>
+<text x="2426.7" y="209.0" font-size="9.5" fill="#2C2C2A">deliberado.</text>
+<text x="2426.7" y="222.0" font-size="9.5" fill="#2C2C2A">`AccionAdministrativa`</text>
+<text x="2426.7" y="235.0" font-size="9.5" fill="#2C2C2A">esta</text>
+<text x="2426.7" y="248.0" font-size="9.5" fill="#2C2C2A">fuera de</text>
+<text x="2426.7" y="261.0" font-size="9.5" fill="#2C2C2A">MD-01 por</text>
+<text x="2426.7" y="274.0" font-size="9.5" fill="#2C2C2A">decision</text>
+<text x="2426.7" y="287.0" font-size="9.5" fill="#2C2C2A">declarada</text>
+<text x="2426.7" y="300.0" font-size="9.5" fill="#2C2C2A">(`DR-00</text>
+<text x="2426.7" y="313.0" font-size="9.5" fill="#2C2C2A">§6`,</text>
+<text x="2426.7" y="326.0" font-size="9.5" fill="#2C2C2A">reafirmada</text>
+<text x="2426.7" y="339.0" font-size="9.5" fill="#2C2C2A">en</text>
+<text x="2426.7" y="352.0" font-size="9.5" fill="#2C2C2A">`RPD-01`</text>
+<text x="2426.7" y="365.0" font-size="9.5" fill="#2C2C2A">H-02):</text>
+<text x="2426.7" y="378.0" font-size="9.5" fill="#2C2C2A">es</text>
+<text x="2426.7" y="391.0" font-size="9.5" fill="#2C2C2A">auditoria</text>
+<text x="2426.7" y="404.0" font-size="9.5" fill="#2C2C2A">de</text>
+<text x="2426.7" y="417.0" font-size="9.5" fill="#2C2C2A">operacion,</text>
+<text x="2426.7" y="430.0" font-size="9.5" fill="#2C2C2A">no</text>
+<text x="2426.7" y="443.0" font-size="9.5" fill="#2C2C2A">concepto</text>
+<text x="2426.7" y="456.0" font-size="9.5" fill="#2C2C2A">del</text>
+<text x="2426.7" y="469.0" font-size="9.5" fill="#2C2C2A">problema.</text>
+<text x="2426.7" y="482.0" font-size="9.5" fill="#2C2C2A">Declararla</text>
+<text x="2426.7" y="495.0" font-size="9.5" fill="#2C2C2A">como</text>
+<text x="2426.7" y="508.0" font-size="9.5" fill="#2C2C2A">entidad</text>
+<text x="2426.7" y="521.0" font-size="9.5" fill="#2C2C2A">del</text>
+<text x="2426.7" y="534.0" font-size="9.5" fill="#2C2C2A">dominio</text>
+<text x="2426.7" y="547.0" font-size="9.5" fill="#2C2C2A">produciria</text>
+<text x="2426.7" y="560.0" font-size="9.5" fill="#2C2C2A">un falso</text>
+<text x="2426.7" y="573.0" font-size="9.5" fill="#2C2C2A">hallazgo</text>
+<text x="2426.7" y="586.0" font-size="9.5" fill="#2C2C2A">de</text>
+<text x="2426.7" y="599.0" font-size="9.5" fill="#2C2C2A">trazabilidad.</text>
+<text x="2426.7" y="612.0" font-size="9.5" fill="#2C2C2A">Va al</text>
+<text x="2426.7" y="625.0" font-size="9.5" fill="#2C2C2A">delta como</text>
+<text x="2426.7" y="638.0" font-size="9.5" fill="#2C2C2A">clase del</text>
+<text x="2426.7" y="651.0" font-size="9.5" fill="#2C2C2A">espacio de</text>
+<text x="2426.7" y="664.0" font-size="9.5" fill="#2C2C2A">la</text>
+<text x="2426.7" y="677.0" font-size="9.5" fill="#2C2C2A">solucion,</text>
+<text x="2426.7" y="690.0" font-size="9.5" fill="#2C2C2A">que es lo</text>
+<text x="2426.7" y="703.0" font-size="9.5" fill="#2C2C2A">que el</text>
+<text x="2426.7" y="716.0" font-size="9.5" fill="#2C2C2A">metodo</text>
+<text x="2426.7" y="729.0" font-size="9.5" fill="#2C2C2A">espera en</text>
+<text x="2426.7" y="742.0" font-size="9.5" fill="#2C2C2A">diseno</text>
+<text x="2426.7" y="755.0" font-size="9.5" fill="#2C2C2A">detallado.</text>
+<rect x="960.3" y="1676.0" width="460.0" height="94.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="968.3" y="1694.0" font-size="9.5" fill="#2C2C2A">El dialogo dice QUE va a pasar, no solo pide un si (`H-18` del `CDR-01`).</text>
+<text x="968.3" y="1707.0" font-size="9.5" fill="#2C2C2A">`ECU-10` exige que nombre el efecto antes de la confirmacion, y la version</text>
+<text x="968.3" y="1720.0" font-size="9.5" fill="#2C2C2A">anterior solo la solicitaba. Deshabilitar corta la apertura de conversaciones a</text>
+<text x="968.3" y="1733.0" font-size="9.5" fill="#2C2C2A">todos los usuarios: quien confirma debe leerlo primero.</text>
+<text x="968.3" y="1746.0" font-size="9.5" fill="#2C2C2A">El patron correcto ya estaba en el paquete: `DS-11` hace lo mismo con</text>
+<text x="968.3" y="1759.0" font-size="9.5" fill="#2C2C2A">`advertirDelAlcanceIrreversible()`.</text>
+<rect x="2132.7" y="2184.0" width="473.0" height="133.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2140.7" y="2202.0" font-size="9.5" fill="#2C2C2A">RN-03.4: el cambio exige confirmacion y queda registrado. Las dos cosas,</text>
+<text x="2140.7" y="2215.0" font-size="9.5" fill="#2C2C2A">no una: por eso hay un dialogo propio y un registro propio.</text>
+<text x="2140.7" y="2228.0" font-size="9.5" fill="#2C2C2A">PER-T2 se realiza como una ausencia: `registrarAccion` recibe autor y fecha</text>
+<text x="2140.7" y="2241.0" font-size="9.5" fill="#2C2C2A">y nada mas. Ningun mensaje le pasa alias, username ni dato de usuario alguno, asi que</text>
+<text x="2140.7" y="2254.0" font-size="9.5" fill="#2C2C2A">la</text>
+<text x="2140.7" y="2267.0" font-size="9.5" fill="#2C2C2A">telemetria no permite reconstruir que hizo una persona concreta.</text>
+<text x="2140.7" y="2280.0" font-size="9.5" fill="#2C2C2A">Efecto en CU-06: deshabilitado, ningun usuario inicia conversacion (409);</text>
+<text x="2140.7" y="2293.0" font-size="9.5" fill="#2C2C2A">habilitado, CU-06 vuelve a estar disponible. Una derivacion de seguridad ya en curso</text>
+<text x="2140.7" y="2306.0" font-size="9.5" fill="#2C2C2A">no se interrumpe — eso lo decide CU-07 (`FE-03` de `DS-07`), no este caso de uso.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="83.4" cy="46" r="9"/><line x1="83.4" y1="55" x2="83.4" y2="77"/><line x1="71.4" y1="64" x2="95.4" y2="64"/><line x1="83.4" y1="77" x2="73.4" y2="92"/><line x1="83.4" y1="77" x2="93.4" y2="92"/></g>
 <text x="83.4" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Administrador de</text>
 <text x="83.4" y="110.0" font-size="11" text-anchor="middle" fill="#2C2C2A">plataforma</text>
@@ -195,20 +206,20 @@
 <g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="860.6750000000001" y1="51.0" x2="860.6750000000001" y2="63.0"/><line x1="860.6750000000001" y1="57.0" x2="864.6750000000001" y2="57.0"/><circle cx="869.6750000000001" cy="57.0" r="5"/></g>
 <text x="944.3" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Dialogo de confirmacion</text>
 <text x="944.3" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">del cambio</text>
-<rect x="1138.8" y="34.0" width="149.1" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="1145.775" y1="51.0" x2="1145.775" y2="63.0"/><line x1="1145.775" y1="57.0" x2="1149.775" y2="57.0"/><circle cx="1154.775" cy="57.0" r="5"/></g>
-<text x="1223.3" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>
-<text x="1223.3" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">administracion (P-04)</text>
-<rect x="1393.6" y="34.0" width="100.7" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1407.625" cy="49.0" r="5.5"/><line x1="1401.125" y1="56.5" x2="1414.125" y2="56.5"/></g>
-<text x="1454.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Administrador</text>
-<rect x="1705.0" y="34.0" width="167.2" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1719.05" cy="49.0" r="5.5"/><line x1="1712.55" y1="56.5" x2="1725.55" y2="56.5"/></g>
-<text x="1798.6" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">DisponibilidadDelChatbot</text>
-<rect x="2025.2" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="2039.15" cy="49.0" r="5.5"/><line x1="2032.65" y1="56.5" x2="2045.65" y2="56.5"/></g>
-<text x="2083.2" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Conversacion</text>
-<rect x="2274.7" y="34.0" width="143.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="2288.65" cy="49.0" r="5.5"/><line x1="2282.15" y1="56.5" x2="2295.15" y2="56.5"/></g>
-<text x="2356.2" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">AccionAdministrativa</text>
+<rect x="1308.8" y="34.0" width="149.1" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="1315.775" y1="51.0" x2="1315.775" y2="63.0"/><line x1="1315.775" y1="57.0" x2="1319.775" y2="57.0"/><circle cx="1324.775" cy="57.0" r="5"/></g>
+<text x="1393.3" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>
+<text x="1393.3" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">administracion (P-04)</text>
+<rect x="1563.6" y="34.0" width="100.7" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1577.625" cy="49.0" r="5.5"/><line x1="1571.125" y1="56.5" x2="1584.125" y2="56.5"/></g>
+<text x="1624.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Administrador</text>
+<rect x="1875.0" y="34.0" width="167.2" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1889.05" cy="49.0" r="5.5"/><line x1="1882.55" y1="56.5" x2="1895.55" y2="56.5"/></g>
+<text x="1968.6" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">DisponibilidadDelChatbot</text>
+<rect x="2195.2" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="2209.15" cy="49.0" r="5.5"/><line x1="2202.65" y1="56.5" x2="2215.65" y2="56.5"/></g>
+<text x="2253.2" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Conversacion</text>
+<rect x="2444.7" y="34.0" width="143.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="2458.65" cy="49.0" r="5.5"/><line x1="2452.15" y1="56.5" x2="2465.15" y2="56.5"/></g>
+<text x="2526.2" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">AccionAdministrativa</text>
 </svg>

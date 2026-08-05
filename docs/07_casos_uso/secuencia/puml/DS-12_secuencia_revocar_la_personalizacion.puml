@@ -1,5 +1,6 @@
 @startuml
 ' DS-12 - Secuencia de CU-12 «Revocar la personalizacion»
+' v1.1 (CDR-01, H-01): FA-03 y FE-03 pasan de break a opt — su texto declara «Vuelve».
 ' v1.0 (fase de diseno detallado, ICONIX paso 6)
 ' Insumos: DR-12 v2.0 (9 controladores), ECU-12 v2.0, MD-01 v1.4, DCU-01 v2.1,
 '          DIS-00 (P-13; destino P-03), PRIV-01 (PRIV-R3), PER-01 v1.2 (PER-T7).
@@ -46,11 +47,11 @@ end
 B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatSeguiraDisponible()
 ACT_Usuario -> B_PaginaGestionCuenta : confirmar la revocacion
 
-break FA-03 cancela en la confirmacion
+opt FA-03 cancela en la confirmacion
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarSinModificarElConsentimiento()
 end
 
-break FE-03 peticion mal formada
+opt FE-03 peticion mal formada
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : mostrarPeticionMalFormadaYPermitirReintentar()
 end
 

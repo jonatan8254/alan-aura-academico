@@ -1,6 +1,6 @@
 # DS-00 — Índice y certificado de los diagramas de secuencia
 
-**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.5 (SD-36: `E-3` decía diez mensajes a un actor y son **once**). v1.4 (SD-32: etiquetas de P-08/P-10 corregidas en su raíz de robustez, participantes de DS-09, y E-3/E-4 declaradas). v1.3 (SD-31: §11 pasa de orientación a hecho — los 14 SVG de robustez regenerados en cero colisiones — y §10 corrige el alcance que declaraba al revés). v1.2: SD-30 cerrado, los **siete** hallazgos aplicados; robustez en **262 elementos** y 150 controladores; **181** casos de prueba · **Estado:** Propuesto.
+**ID:** DS-00 · **Familia:** DS (secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/` · **Fecha:** 2026-08-01 · **Versión:** v1.6 (SD-39: `H-22` 282 → **283** y `H-23` 192 → **193**, por el retrabajo del `CDR-01`). v1.5 (SD-36: `E-3` decía diez mensajes a un actor y son **once**). v1.4 (SD-32: etiquetas de P-08/P-10 corregidas en su raíz de robustez, participantes de DS-09, y E-3/E-4 declaradas). v1.3 (SD-31: §11 pasa de orientación a hecho — los 14 SVG de robustez regenerados en cero colisiones — y §10 corrige el alcance que declaraba al revés). v1.2: SD-30 cerrado, los **siete** hallazgos aplicados; robustez en **262 elementos** y 150 controladores; **181** casos de prueba · **Estado:** Propuesto.
 **Propósito:** índice de los **14 diagramas de secuencia** (`DS-01…DS-14`) derivados de `DR-01…DR-14`, con su certificado de auditoría, las capas declaradas, las excepciones y la trazabilidad hacia adelante.
 **Insumos:** `DR-01…DR-14 v2.1` (**262 elementos**, **150 controladores**), `ECU-01…ECU-14 v2.1`, `MD-01 v1.4`, `DCU-01 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `DIS-00`, `SEG-01 v1.2`, `PER-01 v1.2`, `PRIV-01`, `MV-01 §7`, `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-sequence-diagram`, modo **Generar**. **Validador:** `validate_sequence_puml.py` con las cuatro banderas → **0 errores en los 14**.
@@ -40,7 +40,7 @@ llegó a **anidamiento de nivel 7**. Ver §5.
 | [DS-14](puml/DS-14_secuencia_elegir_acompanante.puml) | CU-14 Elegir acompañante (Alan o Aura) | 7 | 13 | 6/6 | ✅ 0 · 1 |
 | | **Total** | | **282** | **150/150** | **0 errores · 6 advertencias** |
 
-> **Los conteos del paquete son ahora hechos canónicos:** `H-22` (282 mensajes), `H-23` (192
+> **Los conteos del paquete son ahora hechos canónicos:** `H-22` (283 mensajes), `H-23` (193
 > operaciones) y `H-24` (181 casos de prueba) viven en `HECHOS_CANONICOS`, no aquí. Si discrepan,
 > manda esa tabla.
 
@@ -52,7 +52,7 @@ Flujos sin fragmento: **0** en los 14.
 ```
 docs/07_casos_uso/secuencia/
 ├── DS-00_indice_y_certificado_secuencia.md   este archivo
-├── DOP-01_delta_operaciones.md               150 controladores -> 192 operaciones
+├── DOP-01_delta_operaciones.md               150 controladores -> 193 operaciones
 ├── CERT-DS-piloto.md                         certificado del piloto (DS-06, DS-07)
 ├── puml/    los 14 .puml    (FUENTE DE VERDAD)
 ├── svg/     los 14 .svg     (vista derivada)
@@ -79,7 +79,7 @@ Ninguna capa queda en silencio. Esa es la exigencia del método y el motivo de e
 | 4 | Cobertura de controladores (guía #7) | ✅ **150/150** |
 | 5 | Cobertura de flujos alternativos | ✅ **0 flujos sin fragmento** en los 14 |
 | 6 | Barrido texto ↔ mensajes (guía #6) | ✅ Ejecutado **a mano**, línea a línea, contra las 14 `ECU` y contra los **18 pasos del plan §4.11** que `ECU-06` delega expresamente a `DS-06` |
-| 7 | Asignación de comportamiento (paso 4) | ✅ `DOP-01` registra las **192 operaciones** con su clase y su justificación |
+| 7 | Asignación de comportamiento (paso 4) | ✅ `DOP-01` registra las **193 operaciones** con su clase y su justificación |
 | 8 | Legibilidad del `.svg` | ✅ Generador propio con verificación geométrica `R9`; **0 colisiones** en los 14; títulos no vacíos |
 | 9 | Cifras contra `HECHOS_CANONICOS` | ✅ `H-01` a `H-06` correctas; **cero apariciones del valor obsoleto 1.500** |
 | 10 | Derivación de casos de prueba | ✅ **178 `CP`** desde los 150 controladores, en los 14 casos de uso. Cobertura desagregada por operador: `opt`/`break` con rama tomada y no tomada, `loop` con sus fronteras. Índice en [`pruebas/CP-00`](pruebas/CP-00_indice_casos_prueba.md) |
@@ -178,7 +178,7 @@ inducen.
 > Esta sección lista el *object discovery* **de clases con nombre propio**. Pero las **18 fronteras**
 > —las 16 pantallas de `DIS-00`, el diálogo de confirmación de P-16 y la frontera con el proveedor—
 > también son espacio de la solución: son pantallas y adaptadores, ninguna está en `MD-01`, y entre
-> las tres de arriba y ellas reciben las 192 operaciones. **El total es 21**, y el inventario con su
+> las tres de arriba y ellas reciben las 193 operaciones. **El total es 21**, y el inventario con su
 > justificación vive en `MC-01_matriz_procedencia.md §4`.
 
 ## 8. Hallazgos sobre los artefactos de entrada
@@ -281,6 +281,7 @@ crecen en alto —`DR-06` llega a 2.488 px—, que es el precio de que quepan si
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.6 | 2026-08-05 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`.** Dos hechos canónicos del paquete se mueven y se propagan aquí: **`H-22` 282 → 283 mensajes** —`H-01` convirtió 17 `break` en `opt` y `H-02`/`H-15`/`H-18` reescribieron mensajes en `DS-04`, `DS-10` y `DS-11`— y **`H-23` 192 → 193 operaciones**. Los dos **se remidieron de primera mano** antes de escribirlos: los 283 los contó el propio `generar_svg_secuencia.py` al regenerar, no una heurística. **Ningún diagrama pierde ni gana participantes**, y los 14 siguen en **0 errores y 6 advertencias** —la línea base exacta de `E-2`—, con la capa «cierre de participantes contra `DR-XX`» ejecutada 14/14. |
 | v1.5 | 2026-08-04 | J. Sánchez | **SD-36.** `E-3` declaraba **diez** mensajes dirigidos a un actor y son **once** — contados por diagrama: `DS-06` 1, `DS-08` 3, `DS-09` 2, `DS-10` 1, `DS-11` 4. La cifra importa más de lo que su magnitud sugiere: `E-3` es una **excepción declarada** cuyo valor entero es que la sostiene una medición, y un número que no cuadra debilita justo eso. |
 | v1.4 | 2026-08-04 | J. Sánchez | **SD-32, hallazgos del modelo de clases (`MC-00 §6`).** (a) **`H-D`, corregido en su raíz:** las etiquetas divergentes de P-08 y P-10 nacían en **`DR-11` y `DR-13`**, no aquí — `DS-11` y `DS-13` copiaban fielmente su robustez, que es lo que la capa 2 exige. Corregidas las dos en robustez y alineados `DS-06`, `DS-11`, `DS-12` y `DS-13`; SVG de ambas familias regenerados sin colisiones. (b) **`H-P`:** la tabla de §2 declaraba **6** participantes para `DS-09` y son **5** — residuo de `SD-30`, cuando `H-1b` sacó `E_Conversacion` del diagrama y nadie bajó el conteo. (c) **`H-C` evaluado y NO aplicado:** se propuso convertir en auto-llamadas los 10 mensajes dirigidos a un actor; al medirlo, el validador subió de 6 a 10 advertencias, sacó a `DS-09` de la banda declarada en `E-2` (62-78 % → 83 %) y creó dos avisos de auto-llamadas consecutivas. **Revertido:** un mensaje frontera→actor es UML legítimo. Queda como `E-3`. (d) **`H-N` declarado, no corregible:** `actor "Visitante"` y `entity "Visitante"` comparten etiqueta porque una viene de `DCU-01` y la otra de `MD-01`; renombrar cualquiera rompe una traza. **Verificación: los 14 en 0 errores y 6 advertencias, idéntico a la línea base tomada antes de empezar.** |
 | v1.3 | 2026-08-02 | J. Sánchez | **SD-31.** §11 deja de ser una orientación pendiente: **los 14 SVG de robustez están regenerados en cero colisiones**. Al medir la demanda real apareció que el alcance declarado era doblemente erróneo: no era `DR-06` —**los catorce** desbordaban algún canal— y `MD-01.svg`/`DCU-01.svg` **no entraban**, porque los produce PlantUML y no el generador propio. La fila de §10 decía justo lo contrario y queda corregida. |

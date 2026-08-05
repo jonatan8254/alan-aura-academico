@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2082 1622" width="2082" height="1622" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2022 1834" width="2022" height="1834" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»</title>
 <desc id="d">Diagrama de secuencia UML. 7 participantes, 19 mensajes.</desc>
-<rect x="0" y="0" width="2082" height="1622" fill="#FFFFFF"/>
+<rect x="0" y="0" width="2022" height="1834" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»</text>
-<line x1="77.3" y1="103.0" x2="77.3" y2="1594.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="510.1" y1="67.0" x2="510.1" y2="1594.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="933.2" y1="106.0" x2="933.2" y2="1594.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1200.1" y1="80.0" x2="1200.1" y2="1594.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1426.1" y1="67.0" x2="1426.1" y2="1594.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1668.8" y1="67.0" x2="1668.8" y2="1594.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2005.0" y1="67.0" x2="2005.0" y2="1594.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="472.1" y="315.0" width="766.0" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<line x1="77.3" y1="103.0" x2="77.3" y2="1806.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="510.1" y1="67.0" x2="510.1" y2="1806.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="944.2" y1="106.0" x2="944.2" y2="1806.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1211.1" y1="80.0" x2="1211.1" y2="1806.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1437.1" y1="67.0" x2="1437.1" y2="1806.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1679.8" y1="67.0" x2="1679.8" y2="1806.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1944.5" y1="67.0" x2="1944.5" y2="1806.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="472.1" y="315.0" width="777.0" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="472.05000000000007,315 534.0500000000001,315 534.0500000000001,327 526.0500000000001,335 472.05000000000007,335" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="481.05000000000007" y="329" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="544.0500000000001" y="329" font-size="10" fill="#993C1D">[FE-01 la sesion expira]</text>
@@ -24,53 +24,53 @@
 <text x="111.35" y="563" font-size="10" fill="#993C1D">[FA-01 no existe capsula porque ya se reinicio antes]</text>
 <rect x="39.3" y="753.0" width="508.7" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="39.349999999999994,753 101.35,753 101.35,765 93.35,773 39.349999999999994,773" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="48.349999999999994" y="767" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="48.349999999999994" y="767" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="111.35" y="767" font-size="10" fill="#993C1D">[FA-03 el Usuario cancela la advertencia]</text>
 <rect x="39.3" y="837.0" width="508.7" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="39.349999999999994,837 101.35,837 101.35,849 93.35,857 39.349999999999994,857" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="48.349999999999994" y="851" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="48.349999999999994" y="851" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="111.35" y="851" font-size="10" fill="#993C1D">[FE-03 llega sin confirmacion explicita o mal formada]</text>
-<rect x="472.1" y="953.0" width="1234.8" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<rect x="472.1" y="953.0" width="1245.8" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="472.05000000000007,953 534.0500000000001,953 534.0500000000001,965 526.0500000000001,973 472.05000000000007,973" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="481.05000000000007" y="967" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="544.0500000000001" y="967" font-size="10" fill="#993C1D">[FA-02 la capsula solo tiene character y sus metadatos]</text>
-<rect x="472.1" y="1143.0" width="1234.8" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<rect x="472.1" y="1143.0" width="1245.8" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="472.05000000000007,1143 534.0500000000001,1143 534.0500000000001,1155 526.0500000000001,1163 472.05000000000007,1163" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="481.05000000000007" y="1157" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="544.0500000000001" y="1157" font-size="10" fill="#993C1D">[FE-04 el sistema no logra completar el borrado]</text>
-<line x1="57.3" y1="251.0" x2="2025.0" y2="251.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="878.9" y="240.0" width="324.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1041.2" y="255.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 1 y 2 - Advertencia y confirmacion explicita</text>
-<line x1="57.3" y1="929.0" x2="2025.0" y2="929.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="912.2" y="918.0" width="258.0" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1041.2" y="933.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 3 - Borrado completo de la capsula</text>
-<line x1="57.3" y1="1301.0" x2="2025.0" y2="1301.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="875.9" y="1290.0" width="330.6" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1041.2" y="1305.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 4 y 5 - Alcance declarado y oferta de rehacer</text>
+<text x="481.05000000000007" y="1157" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="544.0500000000001" y="1157" font-size="10" fill="#993C1D">[FE-04 el sistema no logra ejecutar el borrado]</text>
+<line x1="57.3" y1="251.0" x2="1964.5" y2="251.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="848.7" y="240.0" width="324.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1010.9" y="255.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 1 y 2 - Advertencia y confirmacion explicita</text>
+<line x1="57.3" y1="929.0" x2="1964.5" y2="929.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="882.0" y="918.0" width="258.0" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1010.9" y="933.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 3 - Borrado completo de la capsula</text>
+<line x1="57.3" y1="1513.0" x2="1964.5" y2="1513.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="845.7" y="1502.0" width="330.6" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1010.9" y="1517.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 4 y 5 - Alcance declarado y oferta de rehacer</text>
 <line x1="77.3" y1="295.0" x2="510.1" y2="295.0" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="508.05000000000007,295 501.05000000000007,291.6 501.05000000000007,298.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="193.5" y="270.0" width="200.5" height="15.0" fill="#FFFFFF"/>
 <text x="197.5" y="282.0" font-size="10" fill="#2C2C2A">elegir reiniciar la caracterizacion</text>
-<line x1="510.1" y1="371.0" x2="1200.1" y2="371.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1198.1,371 1191.1,367.6 1191.1,374.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="776.8" y="346.0" width="156.5" height="15.0" fill="#FFFFFF"/>
-<text x="780.8" y="358.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
+<line x1="510.1" y1="371.0" x2="1211.1" y2="371.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1209.1,371 1202.1,367.6 1202.1,374.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="782.3" y="346.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="786.3" y="358.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
 <polyline points="510.1,455.0 552.1,455.0 552.1,481.0 519.1,481.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="512.0500000000001,481 519.0500000000001,477.6 519.0500000000001,484.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="558.1" y="430.0" width="184.0" height="15.0" fill="#FFFFFF"/>
 <text x="562.1" y="442.0" font-size="10" fill="#2C2C2A">denegarPorPermisoSinBorrarNada()</text>
-<line x1="510.1" y1="529.0" x2="1668.8" y2="529.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1666.85,529 1659.85,525.6 1659.85,532.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="961.7" y="504.0" width="255.5" height="15.0" fill="#FFFFFF"/>
-<text x="965.7" y="516.0" font-size="10" fill="#2C2C2A">enumerarQueElBorradoAlcanzaTambienCharacter()</text>
+<line x1="510.1" y1="529.0" x2="1679.8" y2="529.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1677.85,529 1670.85,525.6 1670.85,532.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="967.2" y="504.0" width="255.5" height="15.0" fill="#FFFFFF"/>
+<text x="971.2" y="516.0" font-size="10" fill="#2C2C2A">enumerarQueElBorradoAlcanzaTambienCharacter()</text>
 <line x1="510.1" y1="605.0" x2="77.3" y2="605.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
 <polygon points="79.35,605 86.35,601.6 86.35,608.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
 <rect x="166.0" y="580.0" width="255.5" height="15.0" fill="#FFFFFF"/>
 <text x="170.0" y="592.0" font-size="10" fill="#2C2C2A">informarQueNoHayCaracterizacionQueReiniciar()</text>
-<line x1="1668.8" y1="653.0" x2="510.1" y2="653.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<line x1="1679.8" y1="653.0" x2="510.1" y2="653.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
 <polygon points="512.0500000000001,653 519.0500000000001,649.6 519.0500000000001,656.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="967.2" y="628.0" width="244.5" height="15.0" fill="#FFFFFF"/>
-<text x="971.2" y="640.0" font-size="10" fill="#2C2C2A">es irreversible y dejara sin acceso al chat</text>
+<rect x="972.7" y="628.0" width="244.5" height="15.0" fill="#FFFFFF"/>
+<text x="976.7" y="640.0" font-size="10" fill="#2C2C2A">es irreversible y dejara sin acceso al chat</text>
 <line x1="510.1" y1="693.0" x2="77.3" y2="693.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
 <polygon points="79.35,693 86.35,689.6 86.35,696.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
 <rect x="201.7" y="668.0" width="184.0" height="15.0" fill="#FFFFFF"/>
@@ -87,76 +87,91 @@
 <polygon points="79.35,893 86.35,889.6 86.35,896.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
 <rect x="179.7" y="868.0" width="228.0" height="15.0" fill="#FFFFFF"/>
 <text x="183.7" y="880.0" font-size="10" fill="#2C2C2A">informarPeticionInvalidaYVolverAlPaso1()</text>
-<line x1="1668.8" y1="1009.0" x2="510.1" y2="1009.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<line x1="1679.8" y1="1009.0" x2="510.1" y2="1009.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
 <polygon points="512.0500000000001,1009 519.0500000000001,1005.6 519.0500000000001,1012.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="934.2" y="984.0" width="310.5" height="15.0" fill="#FFFFFF"/>
-<text x="938.2" y="996.0" font-size="10" fill="#2C2C2A">el borrado alcanza igualmente character y los metadatos</text>
-<line x1="510.1" y1="1057.0" x2="1668.8" y2="1057.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1666.85,1057 1659.85,1053.6 1659.85,1060.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1041.5" y="1032.0" width="96.0" height="15.0" fill="#FFFFFF"/>
-<text x="1045.5" y="1044.0" font-size="10" fill="#2C2C2A">borrarCompleta()</text>
-<polyline points="1668.8,1097.0 1710.8,1097.0 1710.8,1123.0 1677.8,1123.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1670.85,1123 1677.85,1119.6 1677.85,1126.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1716.8" y="1072.0" width="96.0" height="15.0" fill="#FFFFFF"/>
-<text x="1720.8" y="1084.0" font-size="10" fill="#2C2C2A">dejarDeExistir()</text>
-<polyline points="1668.8,1199.0 1710.8,1199.0 1710.8,1225.0 1677.8,1225.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1670.85,1225 1677.85,1221.6 1677.85,1228.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1716.8" y="1174.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="1720.8" y="1186.0" font-size="10" fill="#2C2C2A">deshacerElBorradoIncompleto()</text>
-<line x1="1668.8" y1="1265.0" x2="510.1" y2="1265.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
-<polygon points="512.0500000000001,1265 519.0500000000001,1261.6 519.0500000000001,1268.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="997.5" y="1240.0" width="184.0" height="15.0" fill="#FFFFFF"/>
-<text x="1001.5" y="1252.0" font-size="10" fill="#2C2C2A">queda como estaba, con character</text>
-<line x1="510.1" y1="1345.0" x2="1426.1" y2="1345.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1424.1,1345 1417.1,1341.6 1417.1,1348.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="911.8" y="1320.0" width="112.5" height="15.0" fill="#FFFFFF"/>
-<text x="915.8" y="1332.0" font-size="10" fill="#2C2C2A">permanecerIntacta()</text>
-<line x1="510.1" y1="1385.0" x2="2005.0" y2="1385.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2003.0499999999997,1385 1996.0499999999997,1381.6 1996.0499999999997,1388.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1182.0" y="1360.0" width="151.0" height="15.0" fill="#FFFFFF"/>
-<text x="1186.0" y="1372.0" font-size="10" fill="#2C2C2A">permanecerConSusDosCapas()</text>
-<polyline points="510.1,1425.0 552.1,1425.0 552.1,1451.0 519.1,1451.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="512.0500000000001,1451 519.0500000000001,1447.6 519.0500000000001,1454.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="558.1" y="1400.0" width="206.0" height="15.0" fill="#FFFFFF"/>
-<text x="562.1" y="1412.0" font-size="10" fill="#2C2C2A">declararQueElChatQuedaInhabilitado()</text>
-<line x1="510.1" y1="1491.0" x2="933.2" y2="1491.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="931.1500000000001,1491 924.1500000000001,1487.6 924.1500000000001,1494.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="624.1" y="1466.0" width="195.0" height="15.0" fill="#FFFFFF"/>
-<text x="628.1" y="1478.0" font-size="10" fill="#2C2C2A">ofrecerRehacerDesdeElPaso6DeCU05()</text>
-<rect x="381.4" y="140.0" width="1695.0" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<rect x="939.7" y="984.0" width="310.5" height="15.0" fill="#FFFFFF"/>
+<text x="943.7" y="996.0" font-size="10" fill="#2C2C2A">el borrado alcanza igualmente character y los metadatos</text>
+<line x1="510.1" y1="1057.0" x2="1679.8" y2="1057.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1677.85,1057 1670.85,1053.6 1670.85,1060.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1047.0" y="1032.0" width="96.0" height="15.0" fill="#FFFFFF"/>
+<text x="1051.0" y="1044.0" font-size="10" fill="#2C2C2A">borrarCompleta()</text>
+<polyline points="1679.8,1097.0 1721.8,1097.0 1721.8,1123.0 1688.8,1123.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1681.85,1123 1688.85,1119.6 1688.85,1126.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1727.8" y="1072.0" width="96.0" height="15.0" fill="#FFFFFF"/>
+<text x="1731.8" y="1084.0" font-size="10" fill="#2C2C2A">dejarDeExistir()</text>
+<line x1="1679.8" y1="1199.0" x2="510.1" y2="1199.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="512.0500000000001,1199 519.0500000000001,1195.6 519.0500000000001,1202.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="1014.0" y="1174.0" width="162.0" height="15.0" fill="#FFFFFF"/>
+<text x="1018.0" y="1186.0" font-size="10" fill="#2C2C2A">sigue intacta, con character</text>
+<polyline points="510.1,1239.0 552.1,1239.0 552.1,1265.0 519.1,1265.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="512.0500000000001,1265 519.0500000000001,1261.6 519.0500000000001,1268.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="558.1" y="1214.0" width="217.0" height="15.0" fill="#FFFFFF"/>
+<text x="562.1" y="1226.0" font-size="10" fill="#2C2C2A">informarElFalloSinHaberSuprimidoNada()</text>
+<line x1="510.1" y1="1557.0" x2="1437.1" y2="1557.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1435.1,1557 1428.1,1553.6 1428.1,1560.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="917.3" y="1532.0" width="112.5" height="15.0" fill="#FFFFFF"/>
+<text x="921.3" y="1544.0" font-size="10" fill="#2C2C2A">permanecerIntacta()</text>
+<line x1="510.1" y1="1597.0" x2="1944.5" y2="1597.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1942.5499999999997,1597 1935.5499999999997,1593.6 1935.5499999999997,1600.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1151.8" y="1572.0" width="151.0" height="15.0" fill="#FFFFFF"/>
+<text x="1155.8" y="1584.0" font-size="10" fill="#2C2C2A">permanecerConSusDosCapas()</text>
+<polyline points="510.1,1637.0 552.1,1637.0 552.1,1663.0 519.1,1663.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="512.0500000000001,1663 519.0500000000001,1659.6 519.0500000000001,1666.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="558.1" y="1612.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="562.1" y="1624.0" font-size="10" fill="#2C2C2A">declararQueElChatQuedaInhabilitado()</text>
+<line x1="510.1" y1="1703.0" x2="944.2" y2="1703.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="942.1500000000001,1703 935.1500000000001,1699.6 935.1500000000001,1706.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="629.6" y="1678.0" width="195.0" height="15.0" fill="#FFFFFF"/>
+<text x="633.6" y="1690.0" font-size="10" fill="#2C2C2A">ofrecerRehacerDesdeElPaso6DeCU05()</text>
+<rect x="381.4" y="140.0" width="1634.5" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
 <text x="389.4" y="158.0" font-size="9.5" fill="#2C2C2A">PER-T7 - reiniciar NO es revocar. Reiniciar borra la CapsulaDePerfil</text>
 <text x="389.4" y="171.0" font-size="9.5" fill="#2C2C2A">entera, incluido `character`, y por eso el Usuario pierde el acceso al chat</text>
 <text x="389.4" y="184.0" font-size="9.5" fill="#2C2C2A">hasta rehacer CU-05. Revocar la personalizacion (CU-12, DS-12) solo hace que deje de</text>
 <text x="389.4" y="197.0" font-size="9.5" fill="#2C2C2A">alimentar la conversacion y no es punitivo. Dos operaciones distintas sobre</text>
 <text x="389.4" y="210.0" font-size="9.5" fill="#2C2C2A">estados distintos.</text>
-<rect x="1540.2" y="1503.0" width="536.2" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="1548.2" y="1521.0" font-size="9.5" fill="#2C2C2A">La consecuencia aceptada y documentada (SD-26): como `character` vive en la</text>
-<text x="1548.2" y="1534.0" font-size="9.5" fill="#2C2C2A">capsula y esta deja de existir, el Usuario queda sin poder conversar hasta</text>
-<text x="1548.2" y="1547.0" font-size="9.5" fill="#2C2C2A">rehacer CU-05. No es un efecto colateral: es lo que el paso 4 declara por escrito.</text>
-<text x="1548.2" y="1560.0" font-size="9.5" fill="#2C2C2A">FE-04 sin estados intermedios (RE-04): o la capsula desaparece entera o</text>
-<text x="1548.2" y="1573.0" font-size="9.5" fill="#2C2C2A">queda como estaba, con `character`. Ninguna rama la deja a medias.</text>
+<rect x="1697.8" y="1285.0" width="318.0" height="198.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="1705.8" y="1303.0" font-size="9.5" fill="#2C2C2A">Aqui no hay nada que deshacer, y esa es la correccion</text>
+<text x="1705.8" y="1316.0" font-size="9.5" fill="#2C2C2A">(`H-15` del `CDR-01`).</text>
+<text x="1705.8" y="1329.0" font-size="9.5" fill="#2C2C2A">La version anterior dibujaba</text>
+<text x="1705.8" y="1342.0" font-size="9.5" fill="#2C2C2A">`deshacerElBorradoIncompleto()`, protegiendo contra un</text>
+<text x="1705.8" y="1355.0" font-size="9.5" fill="#2C2C2A">borrado a medias de una sola entidad. Ese estado no puede</text>
+<text x="1705.8" y="1368.0" font-size="9.5" fill="#2C2C2A">existir: la</text>
+<text x="1705.8" y="1381.0" font-size="9.5" fill="#2C2C2A">capsula se suprime entera o no se suprime, y una capsula</text>
+<text x="1705.8" y="1394.0" font-size="9.5" fill="#2C2C2A">sin `character` es lo que</text>
+<text x="1705.8" y="1407.0" font-size="9.5" fill="#2C2C2A">`RN-01.6` declara imposible.</text>
+<text x="1705.8" y="1420.0" font-size="9.5" fill="#2C2C2A">Contraste con `H-02` (`DS-04`), que parece igual y no lo</text>
+<text x="1705.8" y="1433.0" font-size="9.5" fill="#2C2C2A">es: alli la atomicidad</text>
+<text x="1705.8" y="1446.0" font-size="9.5" fill="#2C2C2A">era imposible —cuatro entidades sin transaccion—; aqui</text>
+<text x="1705.8" y="1459.0" font-size="9.5" fill="#2C2C2A">era innecesaria.</text>
+<text x="1705.8" y="1472.0" font-size="9.5" fill="#2C2C2A">Dos defectos distintos con la misma cara.</text>
+<rect x="1551.2" y="1715.0" width="464.7" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="1559.2" y="1733.0" font-size="9.5" fill="#2C2C2A">La consecuencia aceptada y documentada (SD-26): como `character` vive en la</text>
+<text x="1559.2" y="1746.0" font-size="9.5" fill="#2C2C2A">capsula y esta deja de existir, el Usuario queda sin poder conversar hasta</text>
+<text x="1559.2" y="1759.0" font-size="9.5" fill="#2C2C2A">rehacer CU-05. No es un efecto colateral: es lo que el paso 4 declara por escrito.</text>
+<text x="1559.2" y="1772.0" font-size="9.5" fill="#2C2C2A">FE-04 sin estados intermedios (RE-04): o la capsula desaparece entera o</text>
+<text x="1559.2" y="1785.0" font-size="9.5" fill="#2C2C2A">queda como estaba, con `character`. Ninguna rama la deja a medias.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
 <rect x="426.5" y="34.0" width="167.2" height="33.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
 <g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="433.45000000000005" y1="44.5" x2="433.45000000000005" y2="56.5"/><line x1="433.45000000000005" y1="50.5" x2="437.45000000000005" y2="50.5"/><circle cx="442.45000000000005" cy="50.5" r="5"/></g>
 <text x="520.1" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Gestion de cuenta (P-13)</text>
-<rect x="855.6" y="34.0" width="155.1" height="72.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="862.6000000000001" y1="64.0" x2="862.6000000000001" y2="76.0"/><line x1="862.6000000000001" y1="70.0" x2="866.6000000000001" y2="70.0"/><circle cx="871.6000000000001" cy="70.0" r="5"/></g>
-<text x="943.2" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Onboarding -</text>
-<text x="943.2" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">caracterizacion y capa</text>
-<text x="943.2" y="80.5" font-size="11" text-anchor="middle" fill="#0C447C">de personalizacion</text>
-<text x="943.2" y="93.5" font-size="11" text-anchor="middle" fill="#0C447C">(P-08)</text>
-<rect x="1131.6" y="34.0" width="136.9" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="1138.625" y1="51.0" x2="1138.625" y2="63.0"/><line x1="1138.625" y1="57.0" x2="1142.625" y2="57.0"/><circle cx="1147.625" cy="57.0" r="5"/></g>
-<text x="1210.1" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>
-<text x="1210.1" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">usuario (P-03)</text>
-<rect x="1378.1" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1392.1" cy="49.0" r="5.5"/><line x1="1385.6" y1="56.5" x2="1398.6" y2="56.5"/></g>
-<text x="1436.1" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Usuario</text>
-<rect x="1612.5" y="34.0" width="112.8" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1626.475" cy="49.0" r="5.5"/><line x1="1619.975" y1="56.5" x2="1632.975" y2="56.5"/></g>
-<text x="1678.8" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">CapsulaDePerfil</text>
-<rect x="1951.7" y="34.0" width="106.7" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1965.6999999999998" cy="49.0" r="5.5"/><line x1="1959.1999999999998" y1="56.5" x2="1972.1999999999998" y2="56.5"/></g>
-<text x="2015.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Consentimiento</text>
+<rect x="866.6" y="34.0" width="155.1" height="72.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="873.6000000000001" y1="64.0" x2="873.6000000000001" y2="76.0"/><line x1="873.6000000000001" y1="70.0" x2="877.6000000000001" y2="70.0"/><circle cx="882.6000000000001" cy="70.0" r="5"/></g>
+<text x="954.2" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Onboarding -</text>
+<text x="954.2" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">caracterizacion y capa</text>
+<text x="954.2" y="80.5" font-size="11" text-anchor="middle" fill="#0C447C">de personalizacion</text>
+<text x="954.2" y="93.5" font-size="11" text-anchor="middle" fill="#0C447C">(P-08)</text>
+<rect x="1142.6" y="34.0" width="136.9" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="1149.625" y1="51.0" x2="1149.625" y2="63.0"/><line x1="1149.625" y1="57.0" x2="1153.625" y2="57.0"/><circle cx="1158.625" cy="57.0" r="5"/></g>
+<text x="1221.1" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>
+<text x="1221.1" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">usuario (P-03)</text>
+<rect x="1389.1" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1403.1" cy="49.0" r="5.5"/><line x1="1396.6" y1="56.5" x2="1409.6" y2="56.5"/></g>
+<text x="1447.1" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Usuario</text>
+<rect x="1623.5" y="34.0" width="112.8" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1637.475" cy="49.0" r="5.5"/><line x1="1630.975" y1="56.5" x2="1643.975" y2="56.5"/></g>
+<text x="1689.8" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">CapsulaDePerfil</text>
+<rect x="1891.2" y="34.0" width="106.7" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1905.1999999999998" cy="49.0" r="5.5"/><line x1="1898.6999999999998" y1="56.5" x2="1911.6999999999998" y2="56.5"/></g>
+<text x="1954.5" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Consentimiento</text>
 </svg>

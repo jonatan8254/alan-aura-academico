@@ -41,11 +41,11 @@
 <text x="506.0" y="1019" font-size="10" fill="#993C1D">[FE-01 sesion ausente en el turno]</text>
 <rect x="434.0" y="1129.0" width="500.4" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="434.0,1129 496.0,1129 496.0,1141 488.0,1149 434.0,1149" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="443.0" y="1143" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="443.0" y="1143" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="506.0" y="1143" font-size="10" fill="#993C1D">[FE-03 mensaje mal formado o excedido]</text>
 <rect x="434.0" y="1253.0" width="500.4" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="434.0,1253 496.0,1253 496.0,1265 488.0,1273 434.0,1273" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="443.0" y="1267" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="443.0" y="1267" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="506.0" y="1267" font-size="10" fill="#993C1D">[FE-05 supera el limite de tasa]</text>
 <rect x="434.0" y="1457.0" width="3128.4" height="106.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="434.0,1457 496.0,1457 496.0,1469 488.0,1477 434.0,1477" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
@@ -53,11 +53,11 @@
 <text x="506.0" y="1471" font-size="10" fill="#993C1D">[FE-08 el gate decide peligro explicito]</text>
 <rect x="838.4" y="1927.0" width="3209.5" height="132.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="838.4000000000001,1927 900.4000000000001,1927 900.4000000000001,1939 892.4000000000001,1947 838.4000000000001,1947" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="847.4000000000001" y="1941" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="847.4000000000001" y="1941" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="910.4000000000001" y="1941" font-size="10" fill="#993C1D">[FE-06 el proveedor no responde]</text>
 <rect x="838.4" y="2077.0" width="3209.5" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="838.4000000000001,2077 900.4000000000001,2077 900.4000000000001,2089 892.4000000000001,2097 838.4000000000001,2097" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="847.4000000000001" y="2091" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="847.4000000000001" y="2091" font-size="10" font-weight="600" fill="#993C1D">opt</text>
 <text x="910.4000000000001" y="2091" font-size="10" fill="#993C1D">[FE-07 se agotan los 20 segundos de espera]</text>
 <rect x="1390.5" y="2307.0" width="96.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="1390.45,2307 1452.45,2307 1452.45,2319 1444.45,2327 1390.45,2327" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
