@@ -1,4 +1,8 @@
 @startuml
+' Titulo anadido en el retrabajo del CDR-01 (SD-39): el .svg salia sin identificarse,
+' el mismo defecto que PDR-01 §7 encontro en 9 de 14 diagramas al rasterizar y mirar.
+title DCU-01 — Diagrama de casos de uso del MVP «Alan & Aura Academico»
+
 left to right direction
 skinparam linetype ortho
 skinparam packageStyle rectangle
