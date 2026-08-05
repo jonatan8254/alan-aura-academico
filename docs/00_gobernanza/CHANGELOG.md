@@ -3,6 +3,18 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v0.24.0 · `SD-41`: los dos Mayores del CDR, cerrados — y trece `break` que estaban bien
+
+- **`VI-01` no eran diecisiete defectos: eran cuatro.** Al releer las diecisiete filas de `ECU` una por una, **trece decían «Termina»** y no «Vuelve»: su `break` era **correcto**, y `SD-39` los había cambiado a `opt` sin necesidad. Solo `DS-04:41`, `DS-04:51`, `DS-06:73` y `DS-06:79` caían de verdad al flujo de éxito. Esos cuatro pasan a `alt`, con el sufijo de éxito en la rama excluyente.
+- **El caso que lo ilustra, y que da la medida del defecto:** en `DS-04` el Usuario **cancelaba la eliminación y el flujo continuaba a la cascada de borrado**, contra `ECU-04 FA-03`, que dice «El Sistema no suprime nada».
+- **La causa de fondo, que se repitió dos veces.** `H-01` eligió `break` porque el flujo era `FE`; su corrección en `SD-39` eligió `opt` porque el flujo era alternativo. **Ninguna de las dos leyó la fila.** La regla que faltaba queda escrita: **el operador se elige por el desenlace que el texto declara, no por la categoría del flujo**.
+- **Coste declarado y no disimulado:** el `alt` empuja tres fragmentos un nivel más abajo en `DS-06` y el anidamiento llega a 3–4 niveles, así que las advertencias del validador de secuencia suben de **6 a 10**. No son errores. Se declaran como excepción **`E-5`** en `DS-00` en vez de contorsionar el diagrama para callarlas.
+- **`VI-02`: la costura `DR→DOP→COD→CP` repetida**, con la skill dueña de cada capa y **sustitución 1:1** en robustez, así que **262 elementos y 150 controladores no se movieron** — comprobado contando sobre los 14 `.puml` y confirmado por el propio generador de SVG.
+- **Dos hallazgos que el acta no había visto**, ambos una capa más adentro de lo que `VI-02` señalaba: la **nota** de `DR-04` seguía declarando el borrado en cascada **ATÓMICO** —la promesa exacta que `H-02` derribó—, y **`COD-01` proyectaba `revocarCapaBase()` sin el parámetro `fecha`** que `H-11` le añadió y `SD-39` aplicó solo en `MC-01`. El segundo apareció **comparando clase por clase con un script**, no leyendo.
+- **Un sexto artefacto con el defecto de `H-25`:** `CP-04` declaraba `v1.3` sin fila de historial, y encima lo tenía desordenado. Van seis. Deja de parecer descuido y pasa a ser un hueco de comprobación; se suma al pendiente 22.
+- **Verificado al cerrar:** **283** mensajes · **262** elementos (15/38/150/59) · **43/201/51/80** en `MC-01` · 28 SVG sin colisiones · validador de robustez **0 errores** · validador de secuencia **0 errores** y 10 advertencias · `COD-01` proyecta fielmente a `MC-01` · los **cinco bloques** en 0.
+- **Lo que falta, y no es corregir más:** **volver a verificar.** Quien aplicó `SD-41` es Claude Opus, el mismo que aplicó `SD-39`, así que el paquete no puede autodeclararse corregido. Vuelve a **Codex `gpt-5.6-sol`**. Queda además `VI-03` (Moderado, `ECU-08`). **El veredicto lo determina el líder.**
+
 ## 2026-08-05 — v0.23.0 · `SD-40`: la verificación independiente la hizo otro modelo, y refutó dos correcciones
 
 - **Quién verificó, que es lo que cambia respecto de lo planeado.** `SD-39` previó una «sesión aparte» del **mismo** modelo. La ejecutó **OpenAI Codex, `gpt-5.6-sol`**, sobre el retrabajo de **Claude Opus**, con encuadre **adversarial** y permiso de escritura sobre **un solo archivo**. Un modelo distinto no comparte los puntos ciegos del que aplicó — y se notó.
