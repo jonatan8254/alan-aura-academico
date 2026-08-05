@@ -1,6 +1,6 @@
 # MC-00 — Índice y certificado del modelo de clases de diseño
 
-**ID:** MC-00 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.2 (SD-35: `PER-H2` cerrado tras emitir el modelo). v1.1 (SD-33: `PER-H5` cerrado por `ADR-003` tras emitir este modelo). v1.0 · **Estado:** Propuesto.
+**ID:** MC-00 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.8 (SD-39: propagación de cifras — 43 clases, 201 operaciones, 51 atributos, 80 relaciones, 11 paquetes). v1.7 (SD-39: `MC-01_cabeceras.txt` se versiona y `verificar_coherencia.py` gana el bloque 5 de frescura). v1.6 (SD-39: regla #2 ejecutada — §5.4, y `scripts/generar_cabeceras_mc01.py`). v1.5 (SD-39: título en los tres diagramas de PlantUML y las 9 dependencias a los tipos de transferencia — relaciones **71 → 80**). v1.4 (SD-39: `E-2` cerrado — el `.svg` está generado y mirado). v1.3 (SD-39: retrabajo del `CDR-01` — `H-10` y `H-12`). v1.2 (SD-35: `PER-H2` cerrado tras emitir el modelo). v1.1 (SD-33: `PER-H5` cerrado por `ADR-003` tras emitir este modelo). v1.0 · **Estado:** Propuesto.
 **Propósito:** índice del paquete `MC`, certificado de auditoría con las capas ejecutadas **y las no ejecutadas**, hallazgos sobre los artefactos de entrada, delta al modelo de dominio y paquete para el CDR.
 **Insumos:** `DS-01…DS-14 v1.1` (282 mensajes), `DOP-01 v1.1` (192 operaciones), `MD-01 v1.4/v1.6` (16 clases, 17 relaciones), `ECU-01…ECU-14 v2.1`, `DR-01…DR-14 v2.1`, `RPD-01` (*Aceptado con verificación de retrabajo*), `PER-01 v1.3`, `MV-01 §13`, `ECU-12 §4.1`, `DIS-00`, `SEG-01 v1.2`, `PRIV-01 v1.5`, `HECHOS_CANONICOS`.
 **Generado con:** skill `uml-design-class-model`, modo **Ensamblar**.
@@ -24,9 +24,12 @@ Es **el modelo estático del diseño detallado**: donde converge el pipeline. Ag
 docs/07_casos_uso/clases/
 ├── MC-00_indice_y_certificado_clases.md    este archivo
 ├── MC-01_modelo_clases_diseno.puml         EL MODELO (fuente de verdad)
+├── MC-01_modelo_clases_diseno.svg          vista derivada (SD-39; PlantUML 1.2026.6)
 ├── MC-01_matriz_procedencia.md             elemento ↔ artefacto ↔ localizador
 ├── COD-01_insumos_para_codigo.md           clase · atributo · operación · firma · capa
-└── scripts/verificar_procedencia_mc01.py   verificación EXACTA de procedencia
+├── MC-01_cabeceras.txt                     regla #2 del CDR: cabeceras para inspección (SD-39)
+├── scripts/verificar_procedencia_mc01.py   verificación EXACTA de procedencia
+└── scripts/generar_cabeceras_mc01.py       regla #2 del CDR, con el alias como identificador (SD-39)
 ```
 
 El `.puml` es la **fuente de verdad**. `COD-01` es una **proyección tabular suya**, no una segunda fuente.
@@ -35,17 +38,18 @@ El `.puml` es la **fuente de verdad**. `COD-01` es una **proyección tabular suy
 
 | Magnitud | Valor |
 |---|---|
-| Clases | **37** (+ 11 enumerados = 48 declaraciones) |
+| Clases | **43** (+ 11 enumerados = 54 declaraciones) |
 | — del espacio del **problema** | **16 / 16** de `MD-01 v1.4`, con nombre idéntico |
-| — del espacio de la **solución** | **21**, todas marcadas `<<solucion>>` |
-| Atributos | **35** propios de clase (+ 34 literales de enumerado = 69, que es lo que cuenta el validador) |
-| Operaciones | **200** |
-| Relaciones | **73** = 4 generalizaciones + 1 composición + 12 asociaciones (**las 17 de `MD-01`**) + 54 dependencias + 2 enlaces de nota |
+| — del espacio de la **solución** | **27**, todas marcadas `<<solucion>>` |
+| Atributos | **51** propios de clase (+ 34 literales de enumerado = 85, que es lo que cuenta el validador) |
+| Operaciones | **201** |
+| Relaciones | **80** reales = 4 generalizaciones + 1 composición + 12 asociaciones (**las 17 de `MD-01`**) + 63 dependencias. El `.puml` dibuja además **2 conectores entre notas** que **no** son relaciones (`H-13`) |
+| Paquetes | **11** |
 | Enumerados con dominio de valor | **11** |
 | Clases sin procedencia | **0** |
 | Operaciones sin mensaje | **0** |
 
-**Por qué 200 operaciones y `DOP-01` dice 192 — y la respuesta cuadra al número exacto.** Las dos cifras son correctas y cuentan cosas distintas: `DOP-01` cuenta operaciones **distintas por nombre**; `MC-01` cuenta pares **(clase, operación)**, que es lo que un modelo estático contiene. Contados sobre el `.puml`: **192 nombres distintos + 8 repeticiones = 200 pares.** Los 192 nombres distintos **son exactamente los 192 de `DOP-01`**, y esa coincidencia numérica es el mejor indicio de que el volcado del delta no perdió ni añadió nada.
+**Por qué 201 operaciones y `DOP-01` dice 193 — y la respuesta cuadra al número exacto.** Las dos cifras son correctas y cuentan cosas distintas: `DOP-01` cuenta operaciones **distintas por nombre**; `MC-01` cuenta pares **(clase, operación)**, que es lo que un modelo estático contiene. Contados sobre el `.puml`: **193 nombres distintos + 8 repeticiones = 201 pares.** Los 193 nombres distintos **son exactamente los 193 de `DOP-01`**, y esa coincidencia numérica es el mejor indicio de que el volcado del delta no perdió ni añadió nada. *(Eran 192 y 200 hasta SD-39: el retrabajo del `CDR-01` retiró una operación y añadió dos — ver §5.4 y el historial.)*
 
 Los **seis** nombres que viven legítimamente en más de una clase, y por qué ninguno es duplicación:
 
@@ -58,7 +62,7 @@ Los **seis** nombres que viven legítimamente en más de una clase, y por qué n
 | `solicitarReingresoPorCU03()` | P-03, P-04, P-11 | Tres destinos de reingreso distintos: usuario, administración y el panel de error del chat |
 | `informarIndisponibilidadTemporal()` | P-10, P-11 | `DS-13` la presenta en el chat; `DS-06` la delega al panel de error |
 
-**Por qué 21 clases de solución y `DOP-01 §8` dice 3.** Es un hallazgo, no una discrepancia de este modelo — ver `H-B` en §6.
+**Por qué 27 clases de solución y `DOP-01 §8` dice 3.** Es un hallazgo, no una discrepancia de este modelo — ver `H-B` en §6. *(Eran 21 hasta SD-39, cuando `H-04` dio forma a los 6 tipos de transferencia.)*
 
 ## 4. Certificado de auditoría — capas ejecutadas y NO ejecutadas
 
@@ -77,7 +81,7 @@ Ninguna capa queda en silencio. Esa es la exigencia del método y el motivo de e
 | 9 | Anti-patrones 1-16 | ✅ Revisados uno a uno — §8 |
 | 10 | Cobertura del delta `DOP-01` | ✅ Criterio de entrada del CDR satisfecho de forma exacta |
 | — | **Arquitectura / infraestructura** | ⛔ **NO EJECUTADA, por decisión declarada** — §4.1 |
-| — | **Render del `.svg`** | ⛔ **NO EJECUTADO: no se pudo** — §4.2 |
+| — | **Render del `.svg`** | ✅ **EJECUTADO y mirado** en el retrabajo del `CDR-01` (SD-39) — §4.2 |
 
 ### 4.1 `E-1` de `MC-00` · La capa de infraestructura no se ejecuta
 
@@ -87,7 +91,51 @@ Hereda `E-1` de `DS-00` y la frontera que fija `ADR-002 §1`: el diseño físico
 
 **Consecuencia visible en el modelo:** `TitularDeCuenta.establecerSesionConElRolDeterminado()` devuelve `Sesion`, un tipo con nombre y **sin clase que lo declare**. Es deliberado: `DOP-01 §2` ya había declarado que la sesión no es concepto del problema y que su mecanismo va a `ARQ-01`.
 
-### 4.2 `E-2` de `MC-00` · El `.svg` no se generó, y no se afirma que sí
+### 4.2 `E-2` de `MC-00` · CERRADO — el `.svg` está generado **y mirado**
+
+> **`E-2` queda cerrado en el retrabajo del `CDR-01` (SD-39).** Se instaló `plantuml.jar` **1.2026.6**
+> —la misma versión con la que se generó `MD-01_modelo_dominio.svg`, para que el render sea
+> consistente con el resto del corpus— **en el directorio temporal de trabajo, no en el repositorio**;
+> solo entra a git el `.svg`. `MC-01_modelo_clases_diseno.svg`: **264 KB**, `10918 × 2131 px`, firma
+> `<?plantuml 1.2026.6?>`, **cero errores de sintaxis** y las **54 declaraciones dibujadas** (43 clases
+> + 11 enumerados), comprobado sobre el propio `.svg`.
+>
+> **Y se miró, que era el punto.** Se rasterizó y se inspeccionó, primero el diagrama entero y después
+> el tercio derecho por separado. **La primera rasterización salió cortada** —PlantUML aplica un tope
+> de 4096 px por defecto (`PLANTUML_LIMIT_SIZE`) y el diagrama mide 10918—, así que la mitad derecha
+> no se había visto; se repitió con el tope elevado. Es exactamente el modo de fallo que `PDR-01 §7`
+> documenta: *mirar* puede dar por bueno lo que no se vio entero.
+>
+> **Tres cosas que la inspección visual encontró, y que la comprobación estructural no podía ver.
+> Las dos primeras ya están CORREGIDAS, con tu aprobación; la tercera no procede tocarla:**
+> 1. ✅ **El diagrama no llevaba título** — el mismo defecto que `PDR-01 §7` cazó en nueve de catorce.
+>    **Corregido en los tres artefactos que se renderizan con PlantUML**, no solo en este: `MC-01`,
+>    `MD-01` y `DCU-01`. Arreglar uno solo habría cambiado un defecto compartido por una inconsistencia
+>    nueva. Toca `MD-01`, que es de `/uml-domain-modeler`, y por eso se declara. **Antes de editarlo se
+>    comprobó que este PlantUML reproduce los dos `.svg` existentes byte a byte**, para que el único
+>    cambio en el diff fuera el título y nada más.
+> 2. **La proporción es de 5:1** (`10918 × 2131`) con mucho blanco. **Medido, no supuesto:** se renderizó
+>    una copia de ensayo con el paquete ya conectado y el ancho baja a `9347` —**un 14 %**, de 5,1:1 a
+>    4,2:1—. O sea que la isla explica **una séptima parte** del ancho, no el ancho. El resto es
+>    intrínseco: **18 clases de pantalla en fila**. No hay maquetación que arregle eso, y el
+>    anti-patrón 16 prohíbe intentarlo; si el CDR pide legibilidad, la salida es la **vista reducida**
+>    que el anti-patrón 13 ya anticipó, no mover cajas.
+> 3. ✅ **Esos tipos no tenían dependencia, y la regla del propio modelo la exige.** `MC-01_matriz_procedencia §1`
+>    dice que las relaciones de solución van *«solo donde una operación navega»*, y una operación que
+>    **devuelve** `FilaDeDirectorio` navega hacia ella: el modelo **incumplía su propia regla**. Ese es
+>    el argumento, no la legibilidad. **Corregido con tu aprobación: 9 flechas, no 6** —seis son los
+>    tipos y nueve las clases que los devuelven, porque `Persona` la devuelven tres—, de modo que las
+>    relaciones pasan de **71 a 80**. Es **cifra**, así que se registra en `SD-39` y se propaga; no se
+>    movió en silencio. `Sesion` y `ContextoInicialConversacionalV1` **no reciben flecha**: no están
+>    declarados, por la decisión que `E-1` y `ADR-002 §1` sostienen.
+>    **Verificado tras aplicarlo:** validador de clases **0 errores / 9 advertencias** —línea base
+>    exacta—, procedencia **sin discrepancias**, los 14 `DR` y los 14 `DS` sin cambio, y el ancho baja
+>    de `10918` a **`9347` px**.
+>
+> El texto original de `E-2`, que describía por qué **no** se pudo, se conserva abajo como registro de
+> lo que se declaró en su momento.
+
+#### Texto original de `E-2` (v1.0) — se conserva como registro
 
 **PlantUML no está disponible en el entorno de esta pasada.** Se comprobó: no hay ejecutable `plantuml` en el `PATH`, no hay `plantuml.jar` bajo las extensiones de VS Code, y el módulo `plantuml` de Python no está instalado. Hay Java, pero sin el `jar` no sirve. `MD-01_modelo_dominio.svg` lleva la firma `<?plantuml 1.2026.6?>`, así que en su día se generó con una herramienta que aquí no está.
 
@@ -107,17 +155,49 @@ Hereda `E-1` de `DS-00` y la frontera que fija `ADR-002 §1`: el diseño físico
 
 > El «0 errores» del validador no probaba nada sobre este punto. Es el mismo aprendizaje que `PDR-01 §3` registró sobre las etiquetas de relación de `MD-01`.
 
+### 5.4 La regla #2 encontró lo que ningún validador vio (SD-39)
+
+Al ejecutar por fin la **regla #2 del CDR** —*«generate the code headers for your classes, and inspect them closely»*— apareció un defecto que los ocho validadores del pipeline habían dejado pasar: **20 de las 43 clases se emitían con un nombre que no es un identificador válido.**
+
+```
+public class Presentacion / landing (P-01) {   // <<solucion>>
+public class Kill switch - control de disponibilidad (P-16) {
+```
+
+**La causa no está en el modelo, y se comprobó una a una.** En PlantUML, `class "Etiqueta" as Alias` declara **dos** nombres: la etiqueta lleva el significado y se dibuja; el alias es el identificador. `MC-01` usa esa forma **a propósito** en las clases de pantalla y de control. `generate_code_headers.py` toma siempre la etiqueta — acierta en las 23 clases cuyo nombre ya es identificador y falla en las 20 que tienen alias. **Las 20 tienen alias válido.**
+
+**Por qué importa más de lo que parece.** Este archivo es el insumo de la fase de construcción: esos nombres serían los de las clases del código. Y es el argumento retroactivo de por qué `H-20` no era cosmético — si el alias acaba siendo el identificador, tenerlo divergente entre diagramas no era un detalle de estilo.
+
+**Cómo se resolvió, y por qué no parcheando la skill.** Un parche local a una herramienta compartida es invisible para el equipo y se pierde en la siguiente actualización del plugin. El proyecto ya resolvió este mismo dilema con `verificar_procedencia_mc01.py` (§5.3): herramienta **propia, versionada y auditable**, y el defecto se reporta igualmente al mantenedor. Se escribió **`scripts/generar_cabeceras_mc01.py`**, que ejecuta el generador de la skill **sin modificarlo** y sustituye la etiqueta por el alias **solo** en la línea de declaración y **solo** cuando la etiqueta no es un identificador. **La etiqueta no se pierde**: queda como comentario en la misma línea, porque quien inspeccione tiene que poder volver del identificador a la pantalla que nombra.
+
+**Aborta en vez de tapar.** Si una etiqueta inválida no tiene alias, si el alias tampoco es válido, o si la etiqueta aparece fuera de su declaración —lo que dejaría una referencia rota—, el script **falla con código 3** y dice que se corrija el **modelo**, no él. **Las tres guardas están probadas** con cuatro modelos sintéticos: `3 / 3 / 3` en los casos malos y `0` en el bueno. Un instrumento cuyos caminos de fallo nunca se ejecutan no está verificado.
+
+**Resultado tras corregir:** 43 clases con **0 nombres inválidos**, y **exactamente 20 líneas** distintas del original — todas declaraciones de clase. Operaciones (**201**), atributos (**76** campos) y enumerados (**11**) idénticos: la corrección no tocó nada más.
+
+**Se versiona, y con red.** `MC-01_cabeceras.txt` entra al repositorio por decisión del líder: da evidencia revisable de que la regla #2 se ejecutó, sin obligar a nadie a correr nada. El riesgo de un artefacto derivado versionado es conocido —se desincroniza en silencio del modelo— y por eso **no se acepta a pelo**: `verificar_coherencia.py` gana un **bloque 5, «ARTEFACTOS DERIVADOS»**, que falla si un `.svg` o estas cabeceras quedan más antiguos que su `.puml`.
+
+Dos decisiones de ese bloque que conviene no perder, porque parecen detalles y no lo son:
+
+- **Mira la fecha, no el contenido.** Un cambio en el `.puml` puede no alterar el `.svg` ni un byte —renombrar un alias no cambia lo que se dibuja, porque el dibujo lleva la **etiqueta**—, y comparar contenidos daría un falso aviso justo ahí. Pasó en el `H-20` de este mismo retrabajo, con tres diagramas de robustez.
+- **Solo mira lo que tiene cambios sin comitear**, igual que el bloque 3 y por la misma razón declarada: git no conserva las fechas de modificación, así que tras un clon reciente una comprobación de frescura sobre el árbol entero sería ruido puro.
+
+**El bloque se probó haciéndolo fallar**, no solo pasar: se retrasaron a mano los dos derivados de `MC-01`, el verificador los señaló y devolvió código 1; se regeneraron y volvió a verde. Una comprobación que nunca se ha visto disparar no está verificada — que es la lección que este mismo retrabajo repitió tres veces.
+
 ## 6. Hallazgos sobre los artefactos de entrada
 
-Se redactaron primero y se aplicaron **después de la confirmación del líder del proyecto**, como pide la skill. Estado de cada uno:
+Se redactaron primero y se aplicaron **después de la confirmación del líder del proyecto**, como pide la skill. **Son 18, y los 18 llevan estado** — contados sobre este archivo: 17 con fila propia en las cuatro tablas de abajo, más `H-P`, que apareció al medir y se describe en prosa.
 
-| Estado | Hallazgos |
-|---|---|
-| ✅ **Aplicado** | `H-A`, `H-B`, `H-D`, `H-F`, `H-F2`, `H-G`, `H-H`, `H-J`, `H-P` |
-| ⛔ **Evaluado y NO aplicado, con la medición que lo justifica** | `H-C` — ver abajo |
-| 📌 **Declarado como excepción; no tiene arreglo limpio** | `H-N` |
-| 📋 **Reportado como observación; corregirlo exigiría inventar clases** | `H-K`, `H-L` |
-| ↗️ **Fuera de este repositorio** | `H-M`, `H-M2` — van al mantenedor de la skill |
+| Estado | Hallazgos | Nº |
+|---|---|---:|
+| ✅ **Aplicado** | `H-A`, `H-B`, `H-D`, `H-F`, `H-F2`, `H-G`, `H-H`, `H-J`, `H-P` | 9 |
+| ⛔ **Evaluado y NO aplicado, con la medición que lo justifica** | `H-C` — ver abajo | 1 |
+| 📌 **Declarado como excepción; no tiene arreglo limpio** | `H-N` | 1 |
+| 📋 **Reportado como observación; corregirlo exigiría inventar clases** | `H-K`, `H-L` | 2 |
+| 📤 **Reportado y ABIERTO**, enrutado a `/use-case-specifier`; ninguno se rellenó aquí | `H-E`, `H-I`, `H-O` | 3 |
+| ↗️ **Fuera de este repositorio** | `H-M`, `H-M2` — van al mantenedor de la skill | 2 |
+| | **Total** | **18** |
+
+**La fila de los abiertos es nueva, y la ausencia era el defecto.** `H-E`, `H-I` y `H-O` tenían fila en la tabla de especificación pero **ningún estado declarado** en este resumen: quien leyera solo esta tabla contaba 15 de 18 y no sabía que tres seguían abiertos. Los tres son los mismos que `MC-01_matriz_procedencia.md §9` lista como elementos sin procedencia, así que el hueco era de este resumen, no del paquete. Detectado durante el retrabajo del `CDR-01`, al corregir `H-10`.
 
 **Dos correcciones se aplicaron distinto de como se habían propuesto, y el motivo importa.**
 
@@ -206,7 +286,7 @@ El validador cierra con **0 errores y 9 advertencias**. Ninguna se silencia; tod
 | 10 | Patronización prematura | ✅ **Cero patrones introducidos.** Ninguna factoría, ningún repositorio, ningún *singleton*. La capa de infraestructura no se ejecutó, así que no hubo ocasión ni excusa |
 | 11 | *Getters* y *setters* | ✅ Comprobado por script: cero |
 | 12 | Métodos privados de bajo nivel | ⚠️ **Decisión declarada.** Las auto-llamadas van como `-`. Se dibujan porque el criterio de entrada del CDR exige reflejar *toda* operación asignada en la secuencia; omitirlas lo incumpliría. Es un choque real entre dos guías de la misma fuente, y se resuelve a favor del criterio de entrada |
-| 13 | Exceso de detalle | ⚠️ **Asumido y declarado.** Fowler avisa: *«comprehensiveness is the enemy of comprehensibility»*. 37 clases y 200 operaciones son mucho para un vistazo. Se asume porque el CDR exige completitud; se mitiga con **10 paquetes**. Si el CDR pide legibilidad, la salida es una vista reducida, no borrar operaciones |
+| 13 | Exceso de detalle | ⚠️ **Asumido y declarado.** Fowler avisa: *«comprehensiveness is the enemy of comprehensibility»*. **43** clases y **201** operaciones son mucho para un vistazo. Se asume porque el CDR exige completitud; se mitiga con **11 paquetes**. **Y desde SD-39 está medido, no supuesto:** el `.svg` sale en `9347 × 2208 px`, proporción **4,2:1**, y el ancho es intrínseco —18 clases de pantalla en fila—, no de maquetación. Si el CDR pide legibilidad, la salida es una **vista reducida**, no borrar operaciones ni mover cajas |
 | 14 | Modelo que no refleja el delta | ✅ Comprobado de forma **exacta**, no por vocabulario |
 | 15 | Operación en la clase equivocada | ✅ Encontrada **una** y corregida (§5.2). Las de `H-A` y `H-C` son de los insumos, no de aquí |
 | 16 | Layout como sustituto del contenido | ✅ Cero tiempo en maquetación. Los colores se quitaron **porque rompían el parseo**, no por gusto |
@@ -237,7 +317,7 @@ Lo que `iconix-cdr-review` necesita, y contra qué guía suya responde cada piez
 **Tres cosas que el CDR debe saber antes de empezar:**
 
 1. **La capa de infraestructura no se ejecutó** (§4.1). Revisar decisiones de persistencia aquí sería revisar lo que aún no se ha decidido.
-2. **El `.svg` no está generado ni mirado** (§4.2).
+2. **El `.svg` ya está generado y mirado** (§4.2, `E-2` cerrado en SD-39). La inspección visual dejó **tres hallazgos nuevos** que el CDR debe considerar en la reinspección: el diagrama **sin título**, la proporción de 5:1, y —la de fondo— que los **seis tipos de transferencia no tienen ninguna relación** pese a que el propio modelo dice que las de solución van «solo donde una operación navega».
 3. **Las dos excepciones de `RF-24` se cerraron después de emitir este modelo** — `PER-H5` en `ADR-003` (SD-33) y `PER-H2` en `ADR-004` (SD-35), así que **el requisito pasa a cumplirse** según el diseño.
  `Usuario.suprimirEnCascada()` alcanza ahora **todo lo que existe y lo hace de inmediato**: el almacén operativo no se respalda (`ADR-003`) y la supresión es física, sin ventana de gracia ni marca de baja (`ADR-004-D1`). **Con la precisión que el CDR debe conservar:** se cumple **según el diseño**; la inmediatez solo se verifica contra una implementación, y eso es fase 4. El `.puml` lo lleva escrito dentro.
 
@@ -253,24 +333,23 @@ Lo que `iconix-cdr-review` necesita, y contra qué guía suya responde cada piez
 | 4 | **Comprobación cruzada de cifras entre los cuatro archivos.** **Mayor:** la explicación de «200 frente a 192» afirmaba diez nombres repetidos y uno de ellos no lo era; los reales son **seis**. Al medirlo apareció algo mejor: los **192 nombres distintos coinciden exactamente** con los 192 de `DOP-01` |
 | 5 | **Sin hallazgos nuevos.** Los dos validadores en 0 errores y 0 discrepancias; las cifras de los cuatro archivos cuadran contra el `.puml` por script |
 
-**Estado final: `AUDITORÍA SUPERADA`** — 0 críticos, 0 mayores abiertos, **2 menores documentados** (anti-patrones 12 y 13, ambos con decisión declarada en §8), procedencia completa y **dos capas declaradas NO ejecutadas** (§4.1 y §4.2).
+**Estado final: `AUDITORÍA SUPERADA`** — 0 críticos, 0 mayores abiertos, **2 menores documentados** (anti-patrones 12 y 13, ambos con decisión declarada en §8), procedencia completa y —a la fecha de emisión— **dos capas declaradas NO ejecutadas** (§4.1 y §4.2). **Desde SD-39 queda una sola:** `E-2` (el render) está **cerrado**; `E-1` (la infraestructura) sigue abierta por decisión y la cierra `ARQ-01`.
 
 **Una salvedad sobre la condición de cierre, dicha y no maquillada.** La regla pide **dos pasadas consecutivas sin hallazgos nuevos** y el tope duro es cinco. Aquí solo hay **una** pasada limpia, la quinta, porque las cuatro anteriores encontraron algo cada una. No se declara un sexto ciclo que no se ejecutó: se declara que la condición se cumplió **parcialmente** —cero críticos y cero mayores abiertos, que es la parte sustantiva— y que la confirmación de estabilidad queda para el CDR, que es precisamente la revisión independiente que sigue. Sostener lo contrario sería el certificado optimista que la propia regla prohíbe.
 
-**La degradación llega al veredicto, no solo al informe:** este modelo está **listo para el CDR con dos capas no ejecutadas declaradas y una condición de cierre cumplida a medias**. No está listo para `ARQ-01` ni para código, y no lo pretende.
-
-**La degradación llega al veredicto, no solo al informe:** este modelo está **listo para el CDR con dos capas no ejecutadas declaradas**. No está listo para `ARQ-01` ni para código, y no lo pretende.
+**La degradación llega al veredicto, no solo al informe:** este modelo está **listo para el CDR con una capa no ejecutada declarada —`E-1`, la infraestructura— y una condición de cierre cumplida a medias**. No está listo para `ARQ-01` ni para código, y no lo pretende. *(Hasta SD-39 eran **dos** capas: `E-2`, el render del `.svg`, se cerró en el retrabajo del `CDR-01` — §4.2.)*
 
 ## 12. Qué queda abierto
 
 | Asunto | Estado |
 |---|---|
-| Render del `.svg` y su revisión visual | ⛔ **No ejecutado** — falta PlantUML en el entorno (§4.2) |
-| Los 14 hallazgos de §6 | Reportados, **ninguno aplicado**. Pendientes de confirmación |
+| ~~Render del `.svg` y su revisión visual~~ | ✅ **Cerrado en SD-39** — `MC-01_modelo_clases_diseno.svg`, PlantUML 1.2026.6, generado **y mirado** (§4.2). Deja tres hallazgos nuevos: sin título · 5:1 · los seis tipos de transferencia sin relación |
+| Los **18** hallazgos de §6 | **9 aplicados** con confirmación del líder (`H-A`, `H-B`, `H-D`, `H-F`, `H-F2`, `H-G`, `H-H`, `H-J`, `H-P`); `H-C` medido y revertido; `H-N` excepción declarada; `H-K` y `H-L` observaciones; `H-M`/`H-M2` fuera de este repositorio. **Abiertos: 3** — `H-E`, `H-I`, `H-O`, enrutados a `/use-case-specifier` |
 | ~~`PER-H5`~~ | ✅ **Cerrado en `ADR-003`** (SD-33), y **antes de `ARQ-01`**: resultó ser un no-objetivo declarado, no diseño físico. Se cerró **quitando** el respaldo del almacén operativo, no acotándolo |
 | ~~`PER-H2`~~ | ✅ **Cerrado en `ADR-004-D1`** (SD-35): la supresión es física e inmediata. Con sus dos excepciones cerradas, **`RF-24` pasa a cumplirse** según el diseño |
 | `PER-H4` | Abierto. Deja `ContadorDeUsoDiario` sin atributos |
-| Propagación de gobernanza | Pendiente: `INDICE_MAESTRO`, `ESTADO_PIPELINE`, `CHANGELOG`, `REGISTRO_DECISIONES` (`SD-32`), `HECHOS_CANONICOS` |
+| ~~Propagación de gobernanza~~ | ✅ **Cerrada en SD-39.** `REGISTRO_DECISIONES` (`SD-39`), `HECHOS_CANONICOS v1.6` —seis hechos movidos y **`H-29`** creado—, `INDICE_MAESTRO`, `ESTADO_PIPELINE`, `CAPSULA_CONTEXTO` y `CHANGELOG v0.22.0`. Las cifras de `MC-01` **ya no se copian: las cuenta `verificar_coherencia.py`** sobre el modelo |
+| **Verificación independiente del retrabajo** | ⏳ **Abierta, y es la que queda.** Lo de `SD-39` está **aplicado**, no verificado: quien aplicó no puede firmarlo. Se hace en sesión aparte, con encuadre adversarial, y de ahí sale `CDR-01 v1.3` |
 
 ---
 
@@ -278,5 +357,12 @@ Lo que `iconix-cdr-review` necesita, y contra qué guía suya responde cada piez
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.8 | 2026-08-05 | J. Sánchez | **SD-39 — propagación de las cifras que el retrabajo movió.** §3 pasa a **43 clases** (16 + **27** de solución) + 11 enumerados = **54 declaraciones**, **51 atributos** propios (+34 literales = 85), **201 operaciones**, **80 relaciones** reales (4+1+12+**63**, sin los 2 conectores de nota) y gana la fila de **11 paquetes**. La explicación de «200 frente a 192» pasa a **201 frente a 193**; el anti-patrón 13 se actualiza y, además, **deja de suponer**: la proporción del `.svg` está **medida** en `9347 × 2208 px`, 4,2:1, y el ancho es intrínseco —18 pantallas en fila—, no de maquetación. **Las seis cifras se remidieron una a una contra el `.puml` antes de escribirse**, y desde ahora cuatro de ellas las cuenta `verificar_coherencia.py` sobre el modelo en cada ejecución: hasta `SD-39` ninguna se contrastaba, se copiaba de artefacto en artefacto, que es por lo que las relaciones se movieron tres veces. |
+| v1.7 | 2026-08-05 | J. Sánchez | **SD-39 — las cabeceras se versionan, con red.** `MC-01_cabeceras.txt` entra al repositorio por decisión del líder: da evidencia revisable de la regla #2 sin obligar a ejecutar nada. Como todo derivado versionado se desincroniza en silencio, **no se acepta a pelo**: `verificar_coherencia.py` gana el **bloque 5, «ARTEFACTOS DERIVADOS»**, que falla si un `.svg` o estas cabeceras quedan más antiguos que su `.puml`. Compara **fechas y no contenidos** —renombrar un alias no cambia el dibujo ni un byte, y comparar contenidos daría un falso aviso justo ahí, como pasó con tres `DR` en `H-20`— y **solo mira lo que tiene cambios sin comitear**, igual que el bloque 3, porque git no conserva fechas y tras un clon reciente la frescura del árbol entero sería ruido. **Probado haciéndolo fallar:** se retrasaron los dos derivados de `MC-01`, el verificador los señaló y devolvió código 1; regenerados, volvió a verde. §2 y §5.4 actualizadas. |
+| v1.6 | 2026-08-05 | J. Sánchez | **SD-39 — se ejecuta la regla #2 del CDR** (cabeceras de código), que `H-04` había desbloqueado, y aparece un defecto que los **ocho validadores del pipeline dejaron pasar**: **20 de las 43 clases se emitían con nombre que no es un identificador válido**, porque el generador de la skill toma la **etiqueta** y no el **alias**. Las 20 tienen alias válido: **el defecto es del generador, no del modelo**. Se resuelve con herramienta **propia y versionada** —`scripts/generar_cabeceras_mc01.py`, mismo criterio que `verificar_procedencia_mc01.py` en §5.3— en vez de parchear la skill, porque un parche local es invisible para el equipo y se pierde al actualizar el plugin; el defecto se reporta igualmente al mantenedor. El script **aborta con código 3** si una etiqueta inválida no tiene alias, si el alias tampoco vale o si la etiqueta aparece fuera de su declaración, y **sus tres guardas están probadas** con cuatro modelos sintéticos. Resultado: **0 nombres inválidos** y **exactamente 20 líneas** distintas del original, todas declaraciones; 201 operaciones, 76 campos y 11 enumerados **idénticos**. Nueva §5.4. **Ninguna cifra del modelo se mueve.** |
+| v1.5 | 2026-08-05 | J. Sánchez | **SD-39 — se cierran los dos hallazgos que dejó la inspección visual de v1.4, con aprobación expresa.** **(a) Título:** `MC-01`, `MD-01` y `DCU-01` ganan `title`; los tres se renderizaban con PlantUML y ninguno se identificaba, que es el defecto de `PDR-01 §7`. Se corrigen **los tres**, no solo este: arreglar uno habría cambiado un defecto compartido por una inconsistencia. Antes de tocarlos se comprobó que este PlantUML **reproduce sus `.svg` byte a byte**, para que el único cambio del diff fuera el título. Toca `MD-01`, de `/uml-domain-modeler`, y se declara. **(b) Dependencias:** se dibujan las **9** flechas hacia los tipos de transferencia, porque `MC-01_matriz_procedencia §1` fija que las relaciones de solución van «solo donde una operación navega» y una operación que los **devuelve** navega hacia ellos — el modelo incumplía su propia regla. **Relaciones 71 → 80**, cifra que `SD-39` registra y propaga. Efecto colateral medido: el diagrama pasa de `10918` a **`9347` px** de ancho (−14 %). **Verificado tras aplicar:** clases **0 errores / 9 advertencias**, procedencia **sin discrepancias**, 14 `DR` y 14 `DS` en su línea base, 31 pares `.puml`/`.svg` frescos, `verificar_coherencia.py` en 0. |
+| v1.4 | 2026-08-04 | J. Sánchez | **SD-39 — `E-2` cerrado: el `.svg` está generado y mirado.** Se instaló `plantuml.jar` **1.2026.6** —la misma versión que produjo `MD-01_modelo_dominio.svg`— **en el directorio temporal de trabajo, nunca en el repositorio**; a git solo entra el `.svg`. Resultado: **264 KB**, `10918 × 2131 px`, sin errores de sintaxis y con las **54 declaraciones dibujadas**. La inspección visual se hizo en dos pasadas porque **la primera salió cortada**: PlantUML topa en 4096 px por defecto y el diagrama mide 10918, así que la mitad derecha no se había visto — el mismo modo de fallo que `PDR-01 §7` documenta. §4, §4.2, §10, §11 y §12 se actualizan; **el texto original de `E-2` se conserva** bajo su propio encabezado, porque describe correctamente lo que se declaró entonces. **Tres hallazgos nuevos, ninguno corregido aquí:** el diagrama **sin título** (`MD-01` y `DCU-01` tampoco lo llevan, así que arreglarlo solo aquí crearía una inconsistencia y tocaría artefacto ajeno); la proporción **5:1**; y la causa de fondo — los **seis tipos de transferencia de `H-04` no tienen ni una relación**, pese a que `MC-01_matriz_procedencia §1` fija que las de solución van «solo donde una operación navega» y una operación que los **devuelve** navega hacia ellos. Serían **9 flechas** (seis tipos, nueve clases que los devuelven — `Persona` la devuelven tres), o sea relaciones **71 → 80**: es decisión y va a la reinspección. Ensayado en copia: el validador aguanta en **0 errores / 9 advertencias** y el ancho baja un 14 %. **Ninguna cifra se mueve en esta versión.** |
+| v1.3 | 2026-08-04 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`.** `H-10`: §12 decía «los **14** hallazgos de §6, **ninguno aplicado**» y §6 marcaba **9** como aplicados; el conteo real, verificado sobre este archivo, es **18**, y ahora los 18 llevan estado. Al reconciliarlo apareció un defecto que el acta no registraba: `H-E`, `H-I` y `H-O` tenían fila propia pero **ningún estado** en la tabla resumen de §6 —se contaban 15 de 18— y son precisamente los tres que siguen **abiertos**; se les añade fila y se declaran como tales. `H-12`: se elimina el párrafo duplicado del cierre de §11, que repetía el veredicto **omitiendo** «una condición de cierre cumplida a medias» y por tanto deshacía la salvedad que el propio §11 acababa de declarar. **Ninguna cifra del modelo se mueve en esta versión**: las que `H-04` desplazó (clases, operaciones, atributos, relaciones) se propagan con `SD-39` en el cierre del retrabajo, no aquí. |
+| v1.2 | 2026-08-04 | J. Sánchez | **SD-35.** `ADR-004-D1` cierra `PER-H2` **después** de emitirse este modelo: la supresión de cuenta es **física e inmediata**, sin ventana de gracia ni marca de baja — resultó ser una ambigüedad sintáctica del plan §4.14, no un hueco de diseño. §10 y §12 se actualizan: con sus **dos** excepciones cerradas, **`RF-24` pasa a cumplirse** según el diseño, con la precisión de que la inmediatez solo se verifica contra una implementación (fase 4). La nota del `.puml` se reescribe en el mismo sentido. **Ninguna cifra del modelo cambia.** *(Fila añadida en v1.3: la versión constaba en la ficha desde SD-35 pero nunca se escribió aquí — hueco de propagación, cerrado.)* |
 | v1.1 | 2026-08-04 | J. Sánchez | **SD-33.** `ADR-003` cierra `PER-H5` **después** de emitirse este modelo. §10 y §12 se actualizan: lo que el CDR debe saber ya no es «`PER-H5` rompe `RF-24` de extremo a extremo» sino que **`PER-H2`** lo impide de forma *inmediata*. La nota del `.puml` se reescribe en el mismo sentido. **Ninguna cifra del modelo cambia**: 37 clases, 200 operaciones, 35 atributos, 73 relaciones. |
 | v1.0 | 2026-08-04 | J. Sánchez | Creación. 37 clases (16 del problema + 21 de solución), 200 operaciones, 69 atributos, 11 enumerados; los dos validadores en 0 errores y 0 discrepancias. Dos capas declaradas **no ejecutadas**: infraestructura (por decisión) y render del SVG (por falta de herramienta). 14 hallazgos sobre los insumos, enrutados y no aplicados. |

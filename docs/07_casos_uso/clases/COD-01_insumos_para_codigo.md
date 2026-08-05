@@ -1,11 +1,11 @@
 # COD-01 — Insumos estructurados para código
 
-**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.2 (SD-35: borrado físico sin marca de baja). v1.1 (SD-33: `PER-H5` cerrado — la cascada de `suprimirEnCascada()` es completa; queda `PER-H2`). v1.0 · **Estado:** Propuesto.
+**ID:** COD-01 · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.4 (SD-39: entra §6.1, la capa de tipos de transferencia — **43** clases). v1.3 (SD-39: retrabajo del `CDR-01` — `H-20`). v1.2 (SD-35: borrado físico sin marca de baja). v1.1 (SD-33: `PER-H5` cerrado — la cascada de `suprimirEnCascada()` es completa; queda `PER-H2`). v1.0 · **Estado:** Propuesto.
 **Propósito:** clase · atributos · operaciones con firma · capa, en forma tabular, para que la fase de construcción y el CDR trabajen sobre una lista y no sobre un diagrama.
 **Insumos:** **`MC-01_modelo_clases_diseno.puml` y nada más.**
 **Consumidores:** el **CDR** (guía #2, *«generate the code headers for your classes»*), la fase de construcción, `ARQ-01`.
 **Naturaleza:** **proyección tabular de `MC-01`, no una segunda fuente.** Ver §1.
-**DoD:** las 37 clases con su capa; toda operación con firma completa; los huecos de tipo declarados con su hallazgo; **esta skill no genera código**.
+**DoD:** las **43** clases con su capa; toda operación con firma completa; los huecos de tipo declarados con su hallazgo; **esta skill no genera código**.
 
 ---
 
@@ -244,7 +244,7 @@ Aura:       +describirRolYEstilo() : Persona   +ofrecerseComoCalma() : Persona
 | `B_PaginaPresentacion` | P-01 Presentación / landing | 5 |
 | `B_FormularioRegistro` | P-02 Registro | 6 |
 | `B_PaginaInicioSesion` | P-03 Inicio de sesión de usuario | 6 |
-| `B_LoginAdmin` | P-04 Inicio de sesión de administración | 2 |
+| `B_PaginaInicioSesionAdmin` | P-04 Inicio de sesión de administración | 2 |
 | `B_PantallaDisclosure` | P-05 Onboarding · disclosure de IA | 2 |
 | `B_PantallaEdad` | P-06 Onboarding · declaración de edad | 2 |
 | `B_PantallaConsentimiento` | P-07 Onboarding · consentimiento capa base | 4 |
@@ -278,6 +278,49 @@ Las firmas completas están en `MC-01_modelo_clases_diseno.puml`. No se repiten 
 > **`PER-T2` se realiza como una ausencia:** la firma recibe autor y fecha **y nada más**. Ningún alias, ningún username. La telemetría no puede reconstruir qué hizo una persona concreta.
 > `accion` es el **único campo `[I2]`** de todo `PER-01`: no está declarado en ningún artefacto, se derivó de «registra la acción».
 
+## 6.1 Capa de tipos de transferencia — 6 clases
+
+Entran en **SD-39** por el hallazgo `H-04` del `CDR-01`: eran tipos de retorno **con nombre y sin forma**, y una firma que devuelve un tipo que nadie declara deja la cabecera de código emitiendo `???`. Los atributos **no se inventaron**: se leyeron de la `ECU` que origina cada uno.
+
+### `FilaDeDirectorio` — devuelto por `Usuario` y `B_DirectorioDeUsuarios`
+```
+-alias : String {readOnly}            -idTruncado : String {readOnly}
+-fechaDeRegistro : Date {readOnly}    -estado : EstadoDirectorio {derived}
+-completoElOnboarding : Boolean {readOnly}
+```
+> Las **cinco columnas mínimas** de `ECU-08` y ni una más (`RN-03.2`, `PRIV-R10`). Que sean cinco *es* la garantía de minimización: añadir una sexta rompe `RF-15`.
+
+### `AgregadoDeCuentas` — devuelto por `Usuario`
+```
+-totalDeCuentas : Integer {readOnly}    -onboardingsCompletados : Integer {readOnly}
+```
+> Las dos cardinalidades de `Usuario` que `ECU-09` pide, **sin desglose por persona** (`RN-03.3`).
+
+### `AgregadoDeUso` — devuelto por `B_MetricasDeUso`
+```
+-llamadasAlChatEnSieteDias : Integer {readOnly}    -tasaTecnicaDeExitoYError : Decimal {readOnly}
+```
+> Las dos cifras dependientes de la ventana, derivadas de **`EventoOperativo`** y no de `Conversacion`, que no se persiste (`H-1b` de `DS-00`).
+
+### `AlcanceDeBorrado` — devuelto por `CapsulaDePerfil`
+```
+-registrosQueDesapareceran : List<String> {readOnly}    -esIrreversible : Boolean {readOnly}
+-dejaraSinAccesoAlChat : Boolean {readOnly}
+```
+> Lo que el paso 1 enumera **antes** de confirmar (`ECU-04 RE-05`, `ECU-11 RE-01`). Es el objeto de la advertencia previa, no del borrado.
+
+### `Persona` — devuelto por `Personaje`, `Alan` y `Aura`
+```
+-rol : String {readOnly}    -tono : String {readOnly}
+```
+> Rol y estilo con que un `Personaje` se presenta (contrato conversacional P-1…P-8).
+
+### `ReferenciaDeDerivacion` — devuelto por `RecursoDeAyuda`
+```
+-nombreDelRecurso : String {readOnly}    -formaDeContacto : String {readOnly}
+```
+> `SD-12`: se aprovisiona **por entorno** y nunca se embebe en el artefacto. Es lo que realiza `RNF-05`, y la razón de que `RecursoDeAyuda` no tenga atributos propios.
+
 ## 7. Tipos
 
 **Neutrales respecto del lenguaje, y aporte de este modelo.** Ningún artefacto previo declara tipos (`PER-01 §1.1`), así que no se copian: se fijan aquí, que es lo que `ESTADO_PIPELINE §Pendientes #2` esperaba.
@@ -287,10 +330,13 @@ Las firmas completas están en `MC-01_modelo_clases_diseno.puml`. No se repiten 
 | `String`, `Boolean`, `Integer`, `Decimal`, `Date`, `DateTime`, `void` | Primitivos |
 | `List<T>` | Colecciones |
 | 11 enumerados | Dominios de valor — `MC-01_matriz_procedencia.md §6` |
-| `ContextoInicialConversacionalV1` | La cápsula materializada al LLM (`RN-01.3`) |
-| `Persona`, `FilaDeDirectorio`, `AgregadoDeCuentas`, `AgregadoDeUso`, `AlcanceDeBorrado`, `ReferenciaDeDerivacion`, `Sesion` | Tipos de retorno con nombre |
+| `ContextoInicialConversacionalV1` | La cápsula materializada al LLM (`RN-01.3`) — **sin clase** |
+| `Sesion` | Devuelto por `TitularDeCuenta.establecerSesionConElRolDeterminado()` — **sin clase** |
+| `Persona`, `FilaDeDirectorio`, `AgregadoDeCuentas`, `AgregadoDeUso`, `AlcanceDeBorrado`, `ReferenciaDeDerivacion` | Tipos de retorno con nombre **que desde SD-39 sí tienen clase** — §6.1 |
 
-**Los siete tipos con nombre no tienen clase que los declare, y es deliberado.** Ningún diagrama de secuencia les da línea de vida; declararlos sería inventar clases sin mensaje que las origine. `ContextoInicialConversacionalV1` y `Autorreporte` van al **delta al modelo de dominio** (`MC-00 §9`). `Sesion` es infraestructura y su mecanismo es `ARQ-01` (`E-1`).
+**De los ocho tipos con nombre, seis ya tienen clase y dos no, cada uno por su motivo** (`H-04` del `CDR-01`; hasta SD-39 no la tenía ninguno). Los dos que siguen sin ella **no son un olvido**: `ContextoInicialConversacionalV1` no tiene línea de vida en ningún `DS` —declararlo sería inventar una clase sin mensaje que la origine— y va al **delta al modelo de dominio** (`MC-00 §9`) junto con `Autorreporte`; `Sesion` es el **mecanismo de sesión**, que `E-1` y `ADR-002 §1` difieren a `ARQ-01`, así que declararla aquí revertiría una exclusión que el propio CDR validó.
+
+> **Consecuencia para quien genere código:** las cabeceras **no compilan tal cual**, y eso es la foto honesta de un diseño con `E-1` abierta, no un descuido. Son los únicos dos tipos sin resolver.
 
 ## 8. Lo que NO se puede implementar todavía
 
@@ -314,5 +360,8 @@ Honestidad antes que completitud: esto **no** está listo para escribir código 
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.4 | 2026-08-05 | J. Sánchez | **SD-39 — entra §6.1, la capa de tipos de transferencia.** `H-04` del `CDR-01` dio forma a **seis** tipos que hasta entonces eran retorno **con nombre y sin clase**, y este archivo —que es la proyección de `MC-01` y el insumo de la construcción— seguía describiéndolos en §7 como *«los siete tipos con nombre no tienen clase que los declare»*, afirmación **ya falsa para seis de ellos**. Se añade una sección con los seis y sus atributos, **leídos de la `ECU` que origina cada uno**, no inventados; §7 se reescribe para decir cuáles tienen clase y cuáles no; el conteo del DoD pasa de **37 a 43**. Los dos que siguen sin clase se declaran con su motivo: `ContextoInicialConversacionalV1` no tiene línea de vida en ningún `DS` y `Sesion` es el mecanismo de sesión, diferido a `ARQ-01` por `E-1`. **Consecuencia dicha, no disimulada:** con esos dos sin resolver, las cabeceras de la regla #2 no compilan tal cual. |
+| v1.3 | 2026-08-04 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`, hallazgo `H-20`.** La fila de P-04 nombraba la clase con el alias **minoritario**, heredado de `MC-01`, que a su vez lo heredaba de `DR-10`. Pasa al mayoritario, el que usan `DR-03`, `DS-03` y `DS-10`. **Es el único de los tres alias divergentes que llegaba hasta aquí, y por eso importaba más que los otros dos:** este archivo es el insumo con el que la **regla #2 del CDR** genera las cabeceras de código, así que la clase habría nacido en el código con el nombre que solo usaba un diagrama. La etiqueta «P-04 Inicio de sesión de administración» no cambia. **Ninguna clase, atributo, operación ni firma cambia**, y ninguna cifra se mueve. |
+| v1.2 | 2026-08-04 | J. Sánchez | **SD-35.** `ADR-004-D1` cierra `PER-H2`: la supresión de cuenta es **física e inmediata**, sin ventana de gracia ni marca de baja. §8 retira la fila de `PER-H2` y `RF-24` pasa a cumplirse según el diseño, con sus dos excepciones cerradas. **Ninguna clase, atributo, operación ni firma cambia.** *(Fila añadida en v1.3: la versión constaba en la ficha desde SD-35 pero nunca se escribió aquí — mismo hueco de propagación que tenía `MC-00`, cerrado en la misma pasada.)* |
 | v1.1 | 2026-08-04 | J. Sánchez | **SD-33.** `ADR-003` cierra `PER-H5`: la nota de `suprimirEnCascada()` deja de decir «no alcanza el respaldo en S3» y pasa a decir que **alcanza todo lo que existe**. §8 sustituye la fila de `PER-H5` por la de `PER-H2`, que es la que ahora impide cumplir `RF-24` de forma inmediata. **Ninguna clase, atributo, operación ni firma cambia.** |
 | v1.0 | 2026-08-04 | J. Sánchez | Creación. Cierra el pendiente #2 de `ESTADO_PIPELINE`. 37 clases en 5 capas de diseño, 35 atributos y 200 operaciones con firma completa, proyectados de `MC-01` como fuente única. Ocho huecos declarados que impiden implementar de extremo a extremo. |

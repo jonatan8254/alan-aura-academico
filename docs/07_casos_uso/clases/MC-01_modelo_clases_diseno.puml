@@ -1,9 +1,28 @@
 @startuml
+title MC-01 — Modelo de clases de diseno (ICONIX paso 7, modelo estatico)
+
 ' =====================================================================
 ' MC-01 - Modelo de clases de diseno (ICONIX paso 7, modelo estatico)
+' v1.1 - retrabajo del CDR-01 (SD-39). Cinco hallazgos aplicados:
+'   H-04: se definen SEIS de los siete tipos sin forma, en el paquete nuevo
+'         «Tipos de transferencia». El septimo, `Sesion`, queda SIN declarar por
+'         decision: sus campos son el mecanismo, y eso es ARQ-01 (E-1, ADR-002 §1).
+'         Marcado en su sitio para que la regla #2 sepa que la ausencia es deliberada.
+'   H-07: las 4 asociaciones que no llevaban multiplicidad ya la llevan.
+'   H-11: `revocarCapaBase` gana `fecha`, por simetria con la de personalizacion.
+'   H-13: el conteo de relaciones excluye los 2 conectores entre notas -> 71 reales.
+'   H-20: el alias de la clase de P-04 se unifica al mayoritario (DR-03/10, DS-03/10).
+'         Este modelo llevaba el MINORITARIO, y de aqui habia pasado a COD-01, que es
+'         el insumo de la regla #2: la cabecera de codigo habria salido con ese nombre.
+'         La etiqueta no cambia, asi que la procedencia —que empareja por etiqueta— no
+'         se ve afectada, y ningun conteo se mueve.
+'   Procedencia (efecto del Bloque 2): 3 operaciones renombradas o retiradas y
+'   2 anadidas, para seguir el cambio de DS-04, DS-10 y DS-11.
+' CIFRAS v1.1: 43 clases (16 problema + 27 solucion) · 11 enumerados
+'              201 operaciones · 51 atributos propios · 71 relaciones reales
 ' v1.0 - fase de diseno detallado
 '
-' Insumos: DS-01..DS-14 v1.1 (282 mensajes), DOP-01 v1.1 (delta de operaciones),
+' Insumos: DS-01..DS-14 v1.1 (283 mensajes), DOP-01 v1.1 (delta de operaciones),
 '          MD-01 v1.4/v1.6 (16 clases, 17 relaciones), ECU-01..ECU-14 v2.1,
 '          DR-01..DR-14 v2.1, RPD-01 (Aceptado con verificacion de retrabajo),
 '          PER-01 v1.3 (atributos), MV-01 §13.1 (dominios de valor) y §13.3
@@ -90,6 +109,8 @@ package "Acceso y cuenta" {
     +reservarUsername(username : String) : void
     +contrastarConLaCuentaRegistrada(username : String, contrasena : String) : Boolean
     +establecerSesionConElRolDeterminado(rol : Rol) : Sesion
+    .. `Sesion` NO se declara como clase, y es deliberado (E-1, ADR-002 §1) ..
+    .. sus campos SON el mecanismo -cookie firmada, expiracion, almacen- y eso es ARQ-01 ..
     +invalidarSesionEnElServidor() : void
     -dejarDeReconocerAlTitular() : void
   }
@@ -106,7 +127,7 @@ package "Acceso y cuenta" {
     +enumerarRegistrosQueDesapareceran() : List<String>
     +suprimirEnCascada() : void
     -noHayDependientesQueSuprimir() : Boolean
-    -deshacerLoSuprimido() : void
+    -conservarLoYaSuprimido() : void
     +reunirAliasIdTruncadoFechaYOnboarding() : List<FilaDeDirectorio>
     -marcarLaFilaConEseEstadoSinExcluirla(estado : EstadoDirectorio) : void
     +contarTotalDeCuentasYOnboardingsCompletados() : AgregadoDeCuentas
@@ -132,7 +153,7 @@ package "Consentimiento y perfil" {
     +anadirCapaDePersonalizacion() : void
     +conservarSoloLaCapaBase() : void
     +conservarLaCapaBaseOtorgada() : void
-    +revocarCapaBase() : void
+    +revocarCapaBase(fecha : DateTime) : void
     +revocarCapaDePersonalizacion(fecha : DateTime) : void
     +existeLaCapaBaseOtorgada() : Boolean
     +estaVigenteLaCapaBase() : Boolean
@@ -162,7 +183,6 @@ package "Consentimiento y perfil" {
     +enumerarQueElBorradoAlcanzaTambienCharacter() : AlcanceDeBorrado
     +borrarCompleta() : void
     -dejarDeExistir() : void
-    -deshacerElBorradoIncompleto() : void
     +suprimir() : void
   }
 }
@@ -335,7 +355,7 @@ package "Solucion · frontera de presentacion" <<Rectangle>> {
     -denegarAccesoAdministrativoSinConcederPrivilegios() : void
   }
 
-  class "Inicio de sesion de administracion (P-04)" as B_LoginAdmin <<solucion>> {
+  class "Inicio de sesion de administracion (P-04)" as B_PaginaInicioSesionAdmin <<solucion>> {
     +solicitarReingresoPorCU03() : void
     +denegarPorRolConRedireccionSegura() : void
   }
@@ -411,7 +431,8 @@ package "Solucion · frontera de presentacion" <<Rectangle>> {
     -cancelarDejandoLaCuentaIntacta() : void
     -denegarPorPermisoSinSuprimirNada() : void
     -informarPeticionInvalidaYVolverAlPaso1() : void
-    -informarQueLaAccionNoSeCompleto() : void
+    -informarQueQuedoAMediasYOfrecerReintento() : void
+    -informarElFalloSinHaberSuprimidoNada() : void
     -denegarPorPermisoSinBorrarNada() : void
     -declararQueElChatQuedaInhabilitado() : void
     -advertirDelAlcanceIrreversible() : void
@@ -454,6 +475,58 @@ package "Solucion · frontera de presentacion" <<Rectangle>> {
   class "Dialogo de confirmacion del cambio" as B_DialogoConfirmacion <<solucion>> {
     .. estado «modal de confirmacion» de P-16, no una pantalla propia de DIS-00 ..
     +solicitarConfirmacionDeLaAccion() : Boolean
+    -nombrarElEfectoSobreLasConversacionesAntesDeConfirmar() : void
+  }
+}
+
+' =====================================================================
+' TIPOS DE TRANSFERENCIA Y DE VISTA - CDR-01 H-04.
+' Seis tipos que las operaciones ya devolvian por nombre sin que ninguna clase
+' los declarara. NO se inventan: sus campos salen del texto de las ECU que los
+' produce, y por eso se pueden fijar aqui sin adelantar ARQ-01.
+' El septimo, `Sesion`, queda deliberadamente sin declarar (E-1) - ver Acceso y cuenta.
+' =====================================================================
+
+package "Tipos de transferencia" <<Rectangle>> {
+
+  class FilaDeDirectorio <<solucion>> {
+    .. las cinco columnas minimas de ECU-08; ninguna mas (RN-03.2, PRIV-R10) ..
+    -alias : String {readOnly}
+    -idTruncado : String {readOnly}
+    -fechaDeRegistro : Date {readOnly}
+    -estado : EstadoDirectorio {derived}
+    -completoElOnboarding : Boolean {readOnly}
+  }
+
+  class AgregadoDeCuentas <<solucion>> {
+    .. las dos cardinalidades de `Usuario` (ECU-09): sin desglose por persona ..
+    -totalDeCuentas : Integer {readOnly}
+    -onboardingsCompletados : Integer {readOnly}
+  }
+
+  class AgregadoDeUso <<solucion>> {
+    .. las dos cifras dependientes de la ventana, derivadas de `EventoOperativo` ..
+    -llamadasAlChatEnSieteDias : Integer {readOnly}
+    -tasaTecnicaDeExitoYError : Decimal {readOnly}
+  }
+
+  class AlcanceDeBorrado <<solucion>> {
+    .. lo que el paso 1 enumera ANTES de confirmar (ECU-04 RE-05, ECU-11 RE-01) ..
+    -registrosQueDesapareceran : List<String> {readOnly}
+    -esIrreversible : Boolean {readOnly}
+    -dejaraSinAccesoAlChat : Boolean {readOnly}
+  }
+
+  class Persona <<solucion>> {
+    .. rol y estilo con que un Personaje se presenta (CONTRATO P-1..P-8) ..
+    -rol : String {readOnly}
+    -tono : String {readOnly}
+  }
+
+  class ReferenciaDeDerivacion <<solucion>> {
+    .. SD-12: se aprovisiona por entorno y NUNCA se embebe en el artefacto ..
+    -nombreDelRecurso : String {readOnly}
+    -formaDeContacto : String {readOnly}
   }
 }
 
@@ -543,15 +616,15 @@ TitularDeCuenta <|-- Administrador
 Personaje <|-- Alan
 Personaje <|-- Aura
 
-Visitante -- TitularDeCuenta : precede a
+Visitante "1" -- "0..1" TitularDeCuenta : precede a
 Usuario "1" -- "1..2" Consentimiento : otorga
 Usuario "1" -- "1" CapsulaDePerfil : posee
 Usuario "1" -- "0..*" Conversacion : mantiene
-Usuario -- ContadorDeUsoDiario : tiene
-CapsulaDePerfil -- Conversacion : orienta
+Usuario "1" -- "0..*" ContadorDeUsoDiario : tiene
+CapsulaDePerfil "1" -- "0..*" Conversacion : orienta
 Conversacion "0..*" -- "1" Personaje : acompanada por
 Conversacion "1" *-- "1..*" Mensaje : contiene
-Conversacion -- EventoOperativo : se documenta con
+Conversacion "1" -- "0..*" EventoOperativo : se documenta con
 Mensaje "1" -- "0..1" EventoDeSeguridad : se documenta con
 EventoDeSeguridad "1" -- "1..*" RecursoDeAyuda : remite a
 Administrador "1" -- "1" DisponibilidadDelChatbot : tiene a cargo
@@ -659,6 +732,28 @@ note as N_Ausencias
   · <b>Alan</b> y <b>Aura</b> — especializan los <b>valores</b> de <code>persona</code> y
     <code>tono</code>, no la estructura. Anadirles campos duplicaria el supertipo.
 end note
+
+' ---------------------------------------------------------------------
+' Dependencias hacia los tipos de transferencia  (SD-39, retrabajo del CDR-01)
+'
+' POR QUE EXISTEN. `MC-01_matriz_procedencia §1` fija que las relaciones del
+' espacio de la solucion se dibujan «solo donde una operacion navega». Una
+' operacion que DEVUELVE uno de estos tipos navega hacia el, asi que sin estas
+' flechas el modelo incumplia su propia regla y el paquete quedaba como una isla
+' en el grafo. Son NUEVE, no seis: seis son los tipos, nueve las clases que los
+' devuelven — `Persona` la devuelven tres.
+' Efecto: relaciones 71 -> 80. Validador: 0 errores / 9 advertencias, sin cambio.
+' `Sesion` y `ContextoInicialConversacionalV1` NO reciben flecha: no estan
+' declarados como clase, por la decision que E-1 y ADR-002 §1 sostienen.
+Usuario ..> FilaDeDirectorio
+Usuario ..> AgregadoDeCuentas
+CapsulaDePerfil ..> AlcanceDeBorrado
+Personaje ..> Persona
+Alan ..> Persona
+Aura ..> Persona
+RecursoDeAyuda ..> ReferenciaDeDerivacion
+B_DirectorioDeUsuarios ..> FilaDeDirectorio
+B_MetricasDeUso ..> AgregadoDeUso
 
 N_Infraestructura .. N_PER_H5
 N_PER_H5 .. N_Ausencias

@@ -1,6 +1,6 @@
 # MC-01 — Matriz de procedencia
 
-**ID:** MC-01-PROC · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** MC-01-PROC · **Familia:** MC (clases de diseño, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/clases/` · **Fecha:** 2026-08-04 · **Versión:** v1.2 (SD-39: propagación de cifras — 27 de solución, 44+19=63 dependencias, 80 relaciones). v1.1 (SD-39: retrabajo del `CDR-01` — `H-08`). v1.0 · **Estado:** Propuesto.
 **Propósito:** decir, elemento por elemento, **de qué artefacto viene y dónde está escrito**. Es lo que hace verificable la regla que gobierna la skill `uml-design-class-model`; sin esta matriz el modelo sería una afirmación, no una derivación.
 **Insumos:** `DS-01…DS-14 v1.1`, `DOP-01 v1.1`, `MD-01 v1.4/v1.6`, `ECU-01…ECU-14 v2.1`, `PER-01 v1.3`, `MV-01 §13`, `ECU-12 §4.1`, `DIS-00`, `SEG-01 v1.2`, `PRIV-01 v1.5`.
 **Consumidores:** el **CDR** (hito 3), `COD-01`, `ARQ-01`.
@@ -20,7 +20,7 @@ La fuente reparte explícitamente de dónde sale cada cosa (Rosenberg & Stephens
 | **Atributos** | La especificación y sus *supplementary specs* | `PER-01 §3`, `MV-01 §13.1`, `ECU-12 §7` — tabla §3 |
 | **Clases nuevas** | El espacio de la **solución**, descubierto al diseñar | Las 21, marcadas `<<solucion>>` — tabla §4 |
 
-**Lo que no traza no se rellena.** Los seis casos sin procedencia están en §6 y en `MC-00 §Hallazgos`, con el artefacto al que hay que volver.
+**Lo que no traza no se rellena.** Los **siete** casos sin procedencia están en **§9** de este archivo y en `MC-00 §6`, con el artefacto al que hay que volver.
 
 ## 2. Clases del espacio del problema — 16/16
 
@@ -95,7 +95,7 @@ Todas proceden de `MD-01 v1.4` con **nombre idéntico** (comprobado por script, 
 
 **`Usuario.fechaDeRegistro` es la única excepción:** `MD-01 §6` no la lista, y viene solo de `PER-01 §3.1` («el directorio la muestra ⇒ se persiste»).
 
-## 4. Clases del espacio de la solución — 21
+## 4. Clases del espacio de la solución — 27
 
 Ninguna procede de un artefacto anterior, **por definición**: nacen aquí o en las secuencias. Por eso se declaran, y la declaración *es* su procedencia. Todas llevan `<<solucion>>` (comprobado, §4 del verificador).
 
@@ -106,6 +106,7 @@ Ninguna procede de un artefacto anterior, **por definición**: nacen aquí o en 
 | `AccionAdministrativa` | `participant` | Fuera de `MD-01` por decisión declarada (`DR-00 §6`, `RPD-01` H-02): auditoría de operación, no concepto del problema | 1 |
 | `Frontera con el Proveedor LLM` | `boundary` | Frontera con el único sistema externo aprobado (`DR-06`) | 5 |
 | 17 clases de pantalla | `boundary` | Una por pantalla de `DIS-00` (P-01…P-16), más el diálogo de confirmación | 88 |
+| **6 tipos de transferencia** | — | **Entran en SD-39** (`H-04` del `CDR-01`): eran tipos de retorno **con nombre y sin forma**, y una firma que devuelve lo que nadie declara deja la cabecera de código emitiendo `???`. Sus atributos se leyeron de la `ECU` que origina cada uno. Detalle en §5 y en `COD-01 §6.1` | 0 |
 
 **`Dialogo de confirmacion del cambio` no es una pantalla de `DIS-00`.** Es el estado *«modal de confirmación»* que `DIS-00` inventaría dentro de **P-16**. Se modela como clase propia porque `DS-10` le da línea de vida propia y le dirige un mensaje. **Marcado `[I2]`.**
 
@@ -117,9 +118,16 @@ Ninguna procede de un artefacto anterior, **por definición**: nacen aquí o en 
 
 Por tanto los tipos de `MC-01` **no se copian de ninguna fuente, porque no existe ninguna de la que copiarlos**: son aporte de este artefacto, que es exactamente lo que `ESTADO_PIPELINE §Pendientes #2` esperaba de él —«la columna de firma exige tipos, y los tipos los fija el diagrama de clases»—. Se marcan `[P5]` en bloque.
 
-Conjunto usado, deliberadamente neutral respecto del lenguaje: `String`, `Boolean`, `Integer`, `Decimal`, `Date`, `DateTime`, `void`, `List<T>`, más los 11 enumerados y cuatro tipos de retorno con nombre (`ContextoInicialConversacionalV1`, `Persona`, `FilaDeDirectorio`, `AgregadoDeCuentas`/`AgregadoDeUso`/`AlcanceDeBorrado`/`ReferenciaDeDerivacion`/`Sesion`).
+Conjunto usado, deliberadamente neutral respecto del lenguaje: `String`, `Boolean`, `Integer`, `Decimal`, `Date`, `DateTime`, `void`, `List<T>`, más los **11 enumerados** y **ocho tipos de retorno con nombre** — `ContextoInicialConversacionalV1`, `Persona`, `FilaDeDirectorio`, `AgregadoDeCuentas`, `AgregadoDeUso`, `AlcanceDeBorrado`, `ReferenciaDeDerivacion` y `Sesion`.
 
-**Los tipos con nombre no se declaran como clases a propósito.** `ContextoInicialConversacionalV1` es la materialización de la cápsula que `RN-01.3` nombra, no una clase que ningún diagrama de secuencia haya descubierto; declararla sería inventar una clase para la que no hay mensaje. Va al **delta al modelo de dominio** (`MC-00 §Delta`), que es donde la fuente dice que va lo que el diseño descubre.
+> **La cifra decía «cuatro» y la lista traía ocho** (`H-08` del `CDR-01`). Contados sobre el `.puml`, son **ocho**.
+
+**Seis de los ocho ya tienen forma; dos siguen sin ella, y por motivos distintos** (`H-04`). El acta observó que un tipo de retorno sin clase que lo declare deja la **regla #2 del CDR** —generar las cabeceras de código e inspeccionarlas— emitiendo `???` en la firma, así que los que podían definirse se definieron **leyendo sus campos de la `ECU` que los origina**, no inventándolos: `FilaDeDirectorio`, `AgregadoDeCuentas`, `AgregadoDeUso`, `AlcanceDeBorrado`, `Persona` y `ReferenciaDeDerivacion` son hoy clases `<<solucion>>` del paquete «Tipos de transferencia» de `MC-01`. Los dos restantes **no se declaran a propósito**:
+
+| Tipo | Por qué sigue sin clase |
+|---|---|
+| `ContextoInicialConversacionalV1` | Es la materialización de la cápsula que `RN-01.3` nombra, y **ningún `DS` le da línea de vida**. Declararla sería inventar una clase para la que no hay mensaje — justo lo que la regla de esta skill prohíbe. Va al **delta al modelo de dominio** (`MC-00 §9`), que es donde la fuente dice que va lo que el diseño descubre |
+| `Sesion` | Sus campos **son** el mecanismo de sesión, y ese mecanismo está diferido a `ARQ-01` por `E-1` de `MC-00` y la frontera que fija `ADR-002 §1`. Definirla aquí habría revertido una exclusión que el propio `CDR-01` validó. Queda **marcada en su sitio** dentro de `MC-01`, junto a `TitularDeCuenta.establecerSesionConElRolDeterminado()`, para que la ausencia se lea como decisión y no como olvido |
 
 ## 6. Enumerados — 11
 
@@ -162,7 +170,11 @@ Los tres últimos **no viven en la sección que el proyecto reserva para dominio
 
 **Composición y agregación.** El método difiere esta distinción hasta esta etapa (*«it's too early to worry about this distinction»*, guía #9 de la revisión de requisitos). Aplicada la prueba de dependencia existencial, **solo `Conversacion *-- Mensaje` la supera**: `PER-01 §4` dice que los mensajes «no se comparten y mueren con la conversación», que es la regla de no compartición de Fowler. **Ninguna agregación (`o--`) entra al modelo**, y así se evita el choque con Fowler, que la considera *«strictly meaningless»* y recomienda ignorarla. La discrepancia entre fuentes queda declarada en `references/notation-rules.md` de la skill.
 
-**Relaciones del espacio de la solución: 37 dependencias**, todas de presentación o control **hacia** el dominio, nunca al revés. Cada una existe porque una operación concreta la navega. Fowler: mostrarlas todas sería *«an exercise in futility»*, así que no se dibujan las transitivas.
+**Relaciones del espacio de la solución: 44 dependencias**, todas de presentación o control **hacia** el dominio o hacia un tipo de transferencia, nunca al revés. Cada una existe porque una operación concreta la navega. Fowler: mostrarlas todas sería *«an exercise in futility»*, así que no se dibujan las transitivas. Las **19** restantes de las **63** que el `.puml` dibuja salen de una clase del problema hacia un enumerado (`Usuario ..> EstadoDirectorio`, `TitularDeCuenta ..> Rol`…) o hacia un tipo que esa clase devuelve: son uso de dominio de valor y de retorno, no acoplamiento de la solución.
+
+> **Estas cifras se movieron en SD-39, y por eso ahora las cuenta un script.** Eran **42 + 12 = 54** hasta que se dibujaron las **9 dependencias** hacia los tipos de transferencia — 7 desde clases del problema y 2 desde pantallas—, porque el modelo las debía por su propia regla: una operación que **devuelve** un tipo navega hacia él. El total de relaciones pasa de **71** a **80** y entra como hecho canónico **`H-29`**, que no existía: es justo por eso que esa cifra se movió tres veces sin que nada la vigilara.
+
+> **Aquí ponía 37, y era el número de clases, no el de dependencias.** Defecto encontrado al retrabajar `H-08`; contado sobre el `.puml`, son **42 desde la solución + 12 desde el problema = 54**, que es exactamente el desglose que `MC-00 §3` ya declaraba. **No lo movió `H-04`:** medido contra `HEAD`, el reparto 42/12/54 es idéntico antes y después de añadir los seis tipos de transferencia —esos seis se alcanzan por firma de operación, no por flecha—, así que el 37 estuvo mal desde `v1.0`.
 
 ## 8. Reconciliaciones aplicadas — decisiones sobre defectos de los insumos
 
@@ -226,4 +238,6 @@ RESULTADO: SIN DISCREPANCIAS
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.2 | 2026-08-05 | J. Sánchez | **SD-39 — propagación de las cifras que el retrabajo movió**, todas remedidas contra el `.puml` antes de escribirse. §4 pasa de **21 a 27** clases de solución y gana la fila de los **6 tipos de transferencia**, que `H-04` dotó de forma. §7 pasa de «42 + 12 = 54» a **44 + 19 = 63** dependencias, por las **9** flechas que el modelo debía por su propia regla —7 desde clases del problema, 2 desde pantallas—, con lo que las relaciones van de **71 a 80**. Esa cifra entra además como hecho canónico **`H-29`**, que **no existía**: es exactamente por eso que se movió tres veces (73 → 71 → 80) sin que nada la vigilara, y desde ahora la cuenta `verificar_coherencia.py` sobre el modelo. |
+| v1.1 | 2026-08-04 | J. Sánchez | **SD-39 — retrabajo del `CDR-01`.** `H-08`: §5 anunciaba «**cuatro** tipos de retorno con nombre» y enumeraba **ocho**; se corrige la cifra y se reescribe la justificación, porque `H-04` la dejó obsoleta: **seis** de los ocho ya son clases `<<solucion>>` del paquete «Tipos de transferencia» de `MC-01`, con atributos leídos de la `ECU` que los origina, y solo `ContextoInicialConversacionalV1` y `Sesion` siguen sin declararse, cada uno con su motivo en tabla. **Dos defectos más, encontrados al retrabajar y no registrados en el acta:** §1 remitía «los **seis** casos sin procedencia» a «§6» —son **siete** y están en **§9**; §6 son los enumerados—; y §7 daba «**37** dependencias del espacio de la solución», que era el número de **clases**: contadas sobre el `.puml` son **42 desde la solución + 12 desde el problema = 54**, el mismo desglose que `MC-00 §3` ya declaraba, e idéntico antes y después de `H-04` (medido contra `HEAD`). **Ninguna cifra canónica se mueve aquí:** las que `H-04` desplazó —incluidas las **21** clases de solución de §4, hoy **27**— se propagan con `SD-39` en el cierre del retrabajo. |
 | v1.0 | 2026-08-04 | J. Sánchez | Creación. Procedencia de las 37 clases, los 69 atributos, las 200 operaciones, los 11 enumerados y las 73 relaciones, con localizador. Siete elementos sin procedencia declarados y enrutados en vez de rellenados. |

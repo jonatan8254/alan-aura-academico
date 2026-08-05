@@ -1,0 +1,477 @@
+/* CABECERAS GENERADAS PARA INSPECCION - CDR-01
+ * Instrumento de revision, NO codigo de produccion.
+ * Generado desde: docs/07_casos_uso/clases/MC-01_modelo_clases_diseno.puml
+ * No editar: si algo esta mal, esta mal en el modelo.
+ * Los huecos van marcados con ??? y son hallazgos, no
+ * descuidos del generador. */
+
+public class Visitante {
+    private TitularDeCuenta precedeaTitularDeCuenta;
+
+    public void identificarComoSinCuentaNiSesion() { }
+    public void identificarComoAunSinCuenta() { }
+    public TitularDeCuenta promoverATitularDeCuenta(String username, String alias, String contrasenaHash) { }
+    public void quedarEnLaCondicionDeVisitante() { }
+    public void dejarLaPresentacionSinCrearSesionNiRastro() { }
+}
+
+public abstract class TitularDeCuenta {
+    private String username;
+    private String alias;
+    private String contrasenaHash;
+    private Rol rol;
+    private Visitante precedeaVisitante;
+
+    public void solicitarUsernameYContrasena() { }
+    public Boolean estaTomadoElUsername(String username) { }
+    public void reservarUsername(String username) { }
+    public Boolean contrastarConLaCuentaRegistrada(String username, String contrasena) { }
+    public Sesion establecerSesionConElRolDeterminado(Rol rol) { }
+    public void invalidarSesionEnElServidor() { }
+    private void dejarDeReconocerAlTitular() { }
+}
+
+public class Usuario extends TitularDeCuenta {
+    private Boolean esAdulto;
+    private String versionDisclosure;
+    private Date fechaDeRegistro;
+    private EstadoDirectorio estado;
+    private CapsulaDePerfil poseeCapsulaDePerfil;
+    private Consentimiento otorgaConsentimiento;
+    private ContadorDeUsoDiario tieneContadorDeUsoDiario;
+    private Conversacion mantieneConversacion;
+
+    public Usuario crearCuenta(Rol rol) { }
+    public Rol determinarRolEnElServidor() { }
+    public void registrarDeclaracionDeEdad(Boolean esAdulto, String versionDisclosure) { }
+    public Boolean comprobarTitularidadEnServidor() { }
+    public List<String> enumerarRegistrosQueDesapareceran() { }
+    public void suprimirEnCascada() { }
+    private Boolean noHayDependientesQueSuprimir() { }
+    private void conservarLoYaSuprimido() { }
+    public List<FilaDeDirectorio> reunirAliasIdTruncadoFechaYOnboarding() { }
+    private void marcarLaFilaConEseEstadoSinExcluirla(EstadoDirectorio estado) { }
+    public AgregadoDeCuentas contarTotalDeCuentasYOnboardingsCompletados() { }
+    public Usuario identificarTitularDelConsentimiento() { }
+    public void permanecerIntacta() { }
+}
+
+public class Administrador extends TitularDeCuenta {
+    private DisponibilidadDelChatbot tieneacargoDisponibilidadDelChatbot;
+
+    public Rol determinarRolEnElServidor() { }
+    public Administrador identificarAlAutorDelCambio() { }
+}
+
+public class Consentimiento {
+    private CapaConsentimiento capa;
+    private EstadoConsentimiento estado;
+    private DateTime fecha;
+    private String version;
+    private Usuario otorgaUsuario;
+
+    public Consentimiento crearConCapaBaseOtorgada() { }
+    public void anadirCapaDePersonalizacion() { }
+    public void conservarSoloLaCapaBase() { }
+    public void conservarLaCapaBaseOtorgada() { }
+    public void revocarCapaBase(DateTime fecha) { }
+    public void revocarCapaDePersonalizacion(DateTime fecha) { }
+    public Boolean existeLaCapaBaseOtorgada() { }
+    public Boolean estaVigenteLaCapaBase() { }
+    public Boolean estaOtorgadaLaPersonalizacion() { }
+    public EstadoDirectorio derivarEstadoDeConsentimientoVigente() { }
+    public void permanecerConSusDosCapas() { }
+    public void suprimirConSusDosCapas() { }
+}
+
+public class CapsulaDePerfil {
+    private MoodSelfReport moodSelfReport;
+    private EnergySelfReport energySelfReport;
+    private ConversationGoal conversationGoal;
+    private ResponseStyle responseStyle;
+    private Character character;
+    private String schemaVersion;
+    private String consentVersion;
+    private Conversacion orientaConversacion;
+    private Usuario poseeUsuario;
+
+    public CapsulaDePerfil armarConLoRespondido(String schemaVersion, String consentVersion) { }
+    private void dejarSinDefaultsLosOmitidos() { }
+    public void escribirCharacter(Character character) { }
+    public Character consultarCharacterSinReescribirlo() { }
+    public void conservarCharacter() { }
+    public void marcarLosCuatroAutorreportesParaDescarte() { }
+    public Boolean existeConCharacter() { }
+    public ContextoInicialConversacionalV1 materializarContextoV1() { }
+    public void dejaraDeOrientarLaConversacion() { }
+    public AlcanceDeBorrado enumerarQueElBorradoAlcanzaTambienCharacter() { }
+    public void borrarCompleta() { }
+    private void dejarDeExistir() { }
+    public void suprimir() { }
+}
+
+public class Conversacion {
+    private EstadoConversacion estado;
+    private CapsulaDePerfil orientaCapsulaDePerfil;
+    private DisponibilidadDelChatbot condicionaDisponibilidadDelChatbot;
+    private EventoOperativo sedocumentaconEventoOperativo;
+    private Mensaje contieneMensaje;
+    private Personaje acompanadaporPersonaje;
+    private Usuario mantieneUsuario;
+
+    public Conversacion abrir() { }
+    public void cerrar() { }
+    public void fijarPersonajeDeLaSesion(Personaje personaje) { }
+    public void cambiarPersonajeSinCerrarse(Personaje personaje) { }
+    public Boolean alcanzoElLimiteDeSesion() { }
+    public void suspenderChatOrdinario() { }
+    public Conversacion abrirNuevaSesionDeAcompanamiento() { }
+    public void cerrarYDescartarSuContenido() { }
+    public void aplicarNuevoEstadoDeInmediato(EstadoDisponibilidad estado) { }
+    public void desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor() { }
+}
+
+public class Mensaje {
+    private String texto;
+    private DateTime momento;
+    private EventoDeSeguridad sedocumentaconEventoDeSeguridad;
+
+    public Boolean validarLongitudYEstructura(Integer maxCaracteres) { }
+    public String obtenerTextoDelTurno() { }
+    public List<Mensaje> ultimosIntercambiosDeLaSesion(Integer maxIntercambios) { }
+    public void descartarContenido() { }
+    public void descartarContenidoDelTurno() { }
+    public void suspenderRespuestaOrdinariaDelTurno() { }
+}
+
+public abstract class Personaje {
+    private String persona;
+    private String tono;
+    private Conversacion acompanadaporConversacion;
+
+    public Persona obtenerPersona() { }
+    public Personaje identificarInterlocutorElegido() { }
+    public void sustituirInterlocutorDeLaSesion(Personaje personaje) { }
+}
+
+public class Alan extends Personaje {
+    public Persona describirRolYEstilo() { }
+    public Persona ofrecerseComoActivacion() { }
+}
+
+public class Aura extends Personaje {
+    public Persona describirRolYEstilo() { }
+    public Persona ofrecerseComoCalma() { }
+}
+
+public class EventoDeSeguridad {
+    private DateTime momento;
+    private String modo;
+    private Mensaje sedocumentaconMensaje;
+    private RecursoDeAyuda remiteaRecursoDeAyuda;
+
+    public void documentarSinContenidoIndividual() { }
+    public void documentarSinConservarElTexto() { }
+    public void marcarTurnoComoSafetyFallback() { }
+    public void noContabilizarClasificacionDeRiesgo() { }
+}
+
+public class RecursoDeAyuda {
+    private EventoDeSeguridad remiteaEventoDeSeguridad;
+
+    public List<ReferenciaDeDerivacion> obtenerAprovisionadosPorEntorno() { }
+}
+
+public class DisponibilidadDelChatbot {
+    private EstadoDisponibilidad estado;
+    private Administrador tieneacargoAdministrador;
+    private Conversacion condicionaConversacion;
+
+    public Boolean estaHabilitado() { }
+    public EstadoDisponibilidad leerEstadoGlobal() { }
+    public EstadoDisponibilidad consultarEstadoGlobal() { }
+    public EstadoDisponibilidad consultarEstadoGlobalSinObedecerlo() { }
+    public Boolean contrastarConElEstadoGlobal(EstadoDisponibilidad estadoElegido) { }
+    public void cambiarEstadoGlobal(EstadoDisponibilidad estadoNuevo) { }
+}
+
+public class ContadorDeUsoDiario {
+    private Usuario tieneUsuario;
+
+    public Boolean dentroDeLimites(Integer porMinuto, Integer porDia) { }
+    public void registrarSolicitud() { }
+    public void suprimirLosContadoresDelUsuario() { }
+}
+
+public class EventoOperativo {
+    private DateTime momento;
+    private String resultado;
+    private Integer latencia;
+    private String modelo;
+    private String versionPrompt;
+    private Conversacion sedocumentaconConversacion;
+
+    public void registrarSinContenido(DateTime momento, String resultado, Integer latencia, String modelo, String versionPrompt) { }
+    public void conservarSinIdentidad() { }
+    public Integer contarLlamadasAlChatDeLosUltimos7Dias() { }
+    public Decimal calcularTasaTecnicaDeExitoYError() { }
+}
+
+public class C_GateDeSeguridad {  // Gate de seguridad  <<solucion>>
+    public Boolean evaluarPeligroExplicito(Mensaje mensaje) { }
+    public String aplicarGuardasDeSalida(String texto) { }
+    private String sustituirPorRespuestaSegura() { }
+}
+
+public class C_FallbackDeSeguridad {  // Fallback de seguridad  <<solucion>>
+    public void activar(Boolean veredictoDePeligroExplicito) { }
+    private void mantenerModoSeguro() { }
+    private void continuarSinDegradacion() { }
+}
+
+public class AccionAdministrativa {  // <<solucion>>
+    private String autor;
+    private DateTime fecha;
+    private String accion;
+
+    public void registrarAccion(Administrador autor, DateTime fecha) { }
+}
+
+public class B_FronteraProveedorLLM {  // Frontera con el Proveedor LLM  <<solucion>>
+    public String generar(ContextoInicialConversacionalV1 contextoMinimo) { }
+    private void vigilarPlazoDeEspera(Integer segundos) { }
+    private String reintentarUnaVez() { }
+    private String extraerSoloContenidoFinal() { }
+    private String limitarA350Tokens() { }
+}
+
+public class B_PaginaPresentacion {  // Presentacion / landing (P-01)  <<solucion>>
+    private void mostrarEstadoDeIndisponibilidad() { }
+    private void mostrarPropositoNoClinicoLimitesYAccesos() { }
+    private void mantenerVisiblesLosAccesos() { }
+    public void exigirCuentaYMantenerVisibleElAccesoAlRegistro() { }
+    public void cerrarSesionYConfirmarQueNoQuedaDatoRecuperable() { }
+}
+
+public class B_FormularioRegistro {  // Registro (P-02)  <<solucion>>
+    public void dirigirAlAccesoDeRegistro() { }
+    private void pedirUnicamenteUsernameAliasYContrasena() { }
+    private Boolean validarFormatoDeLosCampos() { }
+    private void mostrarErrorDeValidacionSinCrearLaCuenta() { }
+    private void indicarQueEstaEnUsoYSolicitarOtro() { }
+    private void confirmarElAlta() { }
+}
+
+public class B_PaginaInicioSesion {  // Inicio de sesion de usuario (P-03)  <<solucion>>
+    public void dirigirAlAccesoDeInicioDeSesion() { }
+    public void invitarAIniciarSesion() { }
+    public void solicitarReingresoPorCU03() { }
+    public void solicitarAutenticacionSinCerrarNada() { }
+    private void mostrarMensajeGenericoSinRevelarQueCampoFallo() { }
+    private void denegarAccesoAdministrativoSinConcederPrivilegios() { }
+}
+
+public class B_PaginaInicioSesionAdmin {  // Inicio de sesion de administracion (P-04)  <<solucion>>
+    public void solicitarReingresoPorCU03() { }
+    public void denegarPorRolConRedireccionSegura() { }
+}
+
+public class B_PantallaDisclosure {  // Onboarding - disclosure de IA (P-05)  <<solucion>>
+    public void dirigirAlOnboardingPendiente() { }
+    private void mostrarQueSeConversaConUnaIA() { }
+}
+
+public class B_PantallaEdad {  // Onboarding - declaracion de edad (P-06)  <<solucion>>
+    public void solicitarDeclaracionDeMayoriaDeEdad() { }
+    private void cerrarSesionPorMinoriaDeEdad() { }
+}
+
+public class B_PantallaConsentimiento {  // Onboarding - consentimiento capa base (P-07)  <<solucion>>
+    public void mostrarAlcanceDeLaCapaBase() { }
+    public void redirigirParaOtorgarCapaBase() { }
+    private void impedirAvanceYVolverAlPaso4() { }
+    private void finalizarSinConversacionNiCapsula() { }
+}
+
+public class B_PantallaCaracterizacion {  // Onboarding - caracterizacion y capa de personalizacion (P-08)  <<solucion>>
+    public void ofrecerPersonalizacionYLosCuatroAutorreportes() { }
+    public void ofrecerRehacerDesdeElPaso6DeCU05() { }
+    private void mostrarRevisaTusRespuestas() { }
+    private void invocarEleccionDeAcompanante() { }
+}
+
+public class B_PantallaEleccionPersonaje {  // Onboarding - elegir Alan o Aura (P-09)  <<solucion>>
+    private void presentarEleccionDeInterlocutor() { }
+    private void sustituirSeleccionSinEscribirNada() { }
+    private void devolverControlACU05() { }
+}
+
+public class B_InterfazDeChat {  // Chat con el acompanante (P-10)  <<solucion>>
+    public void dirigirALaConversacion() { }
+    public void desviarADerivacionDeCU07() { }
+    public void impedirSeguirConversandoEnLaSesion() { }
+    public void reabrirElAcompanamiento() { }
+    private Boolean verificarSesionYRol() { }
+    private void abrirDialogoConElPersonaje() { }
+    private void mostrarRespuestaDelPersonaje() { }
+    private void informarLimiteDeSesionSinErrorCrudo() { }
+    private void mostrarSelectorDePersonaje() { }
+    private void continuarSinCambioObservable() { }
+    private void informarIndisponibilidadTemporal() { }
+    private void confirmarCambioSinCerrarLaConversacion() { }
+}
+
+public class B_EstadosDeError {  // Chat - error y degradacion (P-11)  <<solucion>>
+    public void denegarAcceso() { }
+    public void informarIndisponibilidadTemporal() { }
+    public void solicitarReingresoPorCU03() { }
+    public void informarEntradaInvalida() { }
+    public void informarLimiteYTiempoDeEspera() { }
+    public void informarFalloDelProveedor() { }
+}
+
+public class B_PantallaContencion {  // Contencion y derivacion (P-12)  <<solucion>>
+    public void presentarContencionYDerivacion() { }
+    public void mantenerContencionYDerivacionVisibles() { }
+    private String resolverTextoFijoDeContencion() { }
+    private void mostrarContencionQueDeclaraSerUnaIA() { }
+    private void presentarOrientacionMinimaInvariable() { }
+    private void mostrarRecursosDeDerivacion() { }
+    private void orientarAEmergenciasSinNumerosEmbebidos() { }
+}
+
+public class B_PaginaGestionCuenta {  // Gestion de cuenta (P-13)  <<solucion>>
+    private Boolean verificarSesionYRol() { }
+    private void advertirQueLaAccionEsIrreversible() { }
+    private void cancelarDejandoLaCuentaIntacta() { }
+    private void denegarPorPermisoSinSuprimirNada() { }
+    private void informarPeticionInvalidaYVolverAlPaso1() { }
+    private void informarQueQuedoAMediasYOfrecerReintento() { }
+    private void informarElFalloSinHaberSuprimidoNada() { }
+    private void denegarPorPermisoSinBorrarNada() { }
+    private void declararQueElChatQuedaInhabilitado() { }
+    private void advertirDelAlcanceIrreversible() { }
+    private void cancelarDejandoLaCapsulaCompleta() { }
+    private void informarQueNoHayCaracterizacionQueReiniciar() { }
+    private void denegarPorPermisoSinCambios() { }
+    private void informarQueYaEstabaRevocadaSinRepetirElCambio() { }
+    private void declararQueElChatSeguiraDisponible() { }
+    private void cancelarSinModificarElConsentimiento() { }
+    private void mostrarPeticionMalFormadaYPermitirReintentar() { }
+    private void confirmarQuePuedeSeguirConversando() { }
+}
+
+public class B_DirectorioDeUsuarios {  // Directorio de usuarios (P-14)  <<solucion>>
+    public void dirigirAlPanelAdministrativoSinPasarPorOnboarding() { }
+    private Boolean verificarSesionYRolDeAdministrador() { }
+    private List<FilaDeDirectorio> restringirAlConjuntoMinimoDeRN0302() { }
+    private void denegarPorSesionAusenteSinMostrarElDirectorio() { }
+    private void denegarPorRolSinMostrarElDirectorio() { }
+    private void informarDirectorioVacioSinError() { }
+}
+
+public class B_MetricasDeUso {  // Metricas de uso (P-15)  <<solucion>>
+    private Boolean verificarSesionYRolDeAdministrador() { }
+    private void mostrarLosAgregadosEnCeroComoCifraValida() { }
+    private AgregadoDeUso restringirACifrasAgregadasDeRN0303() { }
+    private void senalarElEstadoJuntoALosAgregados() { }
+    private void denegarPorSesionAusenteSinMostrarCifras() { }
+    private void denegarPorRolSinMostrarCifras() { }
+}
+
+public class B_ControlDisponibilidad {  // Kill switch - control de disponibilidad (P-16)  <<solucion>>
+    public void cancelarSinCambiarElEstado() { }
+    public void rechazarConfirmacionInvalidaYVolverAlPaso1() { }
+    private Boolean verificarSesionYRolDeAdministrador() { }
+    private EstadoDisponibilidad mostrarEstadoActual() { }
+    private void informarEstadoYaVigenteSinRegistrarAccion() { }
+}
+
+public class B_DialogoConfirmacion {  // Dialogo de confirmacion del cambio  <<solucion>>
+    public Boolean solicitarConfirmacionDeLaAccion() { }
+    private void nombrarElEfectoSobreLasConversacionesAntesDeConfirmar() { }
+}
+
+public class FilaDeDirectorio {  // <<solucion>>
+    private String alias;
+    private String idTruncado;
+    private Date fechaDeRegistro;
+    private EstadoDirectorio estado;
+    private Boolean completoElOnboarding;
+
+}
+
+public class AgregadoDeCuentas {  // <<solucion>>
+    private Integer totalDeCuentas;
+    private Integer onboardingsCompletados;
+
+}
+
+public class AgregadoDeUso {  // <<solucion>>
+    private Integer llamadasAlChatEnSieteDias;
+    private Decimal tasaTecnicaDeExitoYError;
+
+}
+
+public class AlcanceDeBorrado {  // <<solucion>>
+    private List<String> registrosQueDesapareceran;
+    private Boolean esIrreversible;
+    private Boolean dejaraSinAccesoAlChat;
+
+}
+
+public class Persona {  // <<solucion>>
+    private String rol;
+    private String tono;
+
+}
+
+public class ReferenciaDeDerivacion {  // <<solucion>>
+    private String nombreDelRecurso;
+    private String formaDeContacto;
+
+}
+
+public enum Character {
+    alan, aura;
+}
+
+public enum MoodSelfReport {
+    muy_mal, mal, neutral, bien, muy_bien, prefiero_no_responder;
+}
+
+public enum EnergySelfReport {
+    baja, media, alta, prefiero_no_responder;
+}
+
+public enum ConversationGoal {
+    sentirme_escuchado, calmarme, ordenar_ideas, dar_un_paso_pequeno, recibir_una_sugerencia_breve, prefiero_no_responder;
+}
+
+public enum ResponseStyle {
+    breve_y_directo, equilibrado, pausado_y_reflexivo, sin_preferencia;
+}
+
+public enum EstadoConsentimiento {
+    otorgado, revocado;
+}
+
+public enum EstadoConversacion {
+    activa, cerrada;
+}
+
+public enum EstadoDisponibilidad {
+    habilitado, deshabilitado;
+}
+
+public enum CapaConsentimiento {
+    base, personalizacion;
+}
+
+public enum Rol {
+    usuario, administrador;
+}
+
+public enum EstadoDirectorio {
+    activo, sin_consentimiento_vigente;
+}
