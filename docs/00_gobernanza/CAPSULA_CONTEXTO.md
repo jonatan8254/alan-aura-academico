@@ -1,5 +1,5 @@
 # Cápsula de contexto — Subproyecto «Alan & Aura Académico»
-**Objetivo:** entender el subproyecto en 5 minutos. **Naturaleza:** síntesis operativa (no normativa). **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-04 (`SD-32`: modelo de clases de diseño `MC-01`; el siguiente hito es el CDR).
+**Objetivo:** entender el subproyecto en 5 minutos. **Naturaleza:** síntesis operativa (no normativa). **Fecha de creación:** 2026-07-12 · **Última actualización:** 2026-08-05 (`SD-39`: **el retrabajo del CDR está aplicado** — 20 hallazgos resueltos y 8 nuevos declarados; lo siguiente es la **verificación independiente**, que no la hace quien aplicó las correcciones).
 
 ---
 
@@ -32,20 +32,29 @@ Detalle, alternativas y condiciones de reversa en **`ADR-002`**, que supera a `A
 No sobre-claim clínico · minimización (cápsula, no historial) · consentimiento granular y revocable (dos capas) · uso no punitivo · divulgación mínima · seguridad emocional > engagement · no persistencia del chat · solo adultos con *disclosure*.
 
 ## Dónde estamos (detalle en `ESTADO_PIPELINE.md`)
-Fase 2 ICONIX **completa salvo la compuerta**: producidos el modelo de dominio (`MD-01`, 16 clases), el diagrama de casos de uso (`DCU-01`, 14 casos de uso), las 14 especificaciones (`ECU-00…14`), los 14 diagramas de robustez (`DR-00…14`), la compuerta `RPD-01`, los 14 **diagramas de secuencia** (`DS-00…14`, 282 mensajes, 192 operaciones, 181 casos de prueba) y el **modelo de clases de diseño** (`MC-00`/`MC-01`/`COD-01`, SD-32): **37 clases** —16 del problema y **21 del espacio de la solución**—, **200 operaciones**, 35 atributos y 11 enumerados, con los seis validadores del pipeline en 0 errores. **Siguiente hito: el CDR** (hito 3). Dos capas declaradas **no ejecutadas** en `MC-01`: la de infraestructura (es `ARQ-01`, tras el CDR) y el render del `.svg`, que no se pudo generar por no haber PlantUML en el entorno — declarado, no dado por hecho.
+Fase 2 ICONIX **con las dos compuertas cruzadas y retrabajo abierto**: producidos el modelo de dominio (`MD-01`, 16 clases), el diagrama de casos de uso (`DCU-01`, 14 casos de uso), las 14 especificaciones (`ECU-00…14`), los 14 diagramas de robustez (`DR-00…14`), la compuerta `RPD-01`, los 14 **diagramas de secuencia** (`DS-00…14`, 283 mensajes, 193 operaciones, 181 casos de prueba), el **modelo de clases de diseño** (`MC-00`/`MC-01`/`COD-01`, SD-32) —**43 clases**, **201 operaciones**, 51 atributos, 11 enumerados, 80 relaciones— y el **CDR** (`CDR-01`, SD-37), la compuerta entre el diseño detallado y el código.
+
+**El CDR dio `Reinspección requerida`**, y hay que leerlo bien: **no es un rechazo**. Encontró **13 hallazgos con dos Mayores** en su primera pasada y **20 con tres** al ampliar a cobertura total, sobre un paquete que pasó once verificaciones limpias, a una tasa que subió de 0,37 a **0,57 por página** frente a la base medida de 0,4 — **el veredicto empeoró por revisar más, no porque el diseño empeorara** — o sea, la revisión rindió lo esperado sobre un diseño maduro. Los dos mayores afectaban al **comportamiento**: **diecisiete** fragmentos `break` que abandonan la interacción donde el texto pide reintentar (`H-01` — eran doce en la primera pasada), y una promesa de borrado atómico realizada con una auto-llamada que ningún mecanismo puede implementar sobre DynamoDB sin respaldos (`H-02`, cerrado **cambiando la promesa**, no el mecanismo). **Los 20 quedan resueltos en `SD-39`** —17 aplicados, uno diferido con riesgo aceptado, dos heredados por `ARQ-01`—, **y lo que sigue es verificarlo, no repetir la revisión**: quien aplicó no puede firmar su propio retrabajo.
+
+**Queda UNA sola capa declarada no ejecutada:** la de infraestructura, que es `ARQ-01` y va tras esta compuerta. Las otras dos se cerraron en `SD-39`: el **render del `.svg` de `MC-01`** —aplazado a propósito hasta que el `.puml` estuviera firme, y la cautela resultó buena: seis hallazgos lo tocaron— está **generado y mirado**; y la **regla #2**, las cabeceras de código, se ejerció y fue la más rentable de las diez: destapó que **20 de las 43 clases** salían con un nombre que no es identificador válido, por un defecto del generador y no del modelo.
 
 ## Qué queda abierto
 
-**Once pendientes, todos declarados, en `ESTADO_PIPELINE.md §Pendientes declarados`** — la tabla
-dice quién cierra cada uno y qué bloquea. Dos merecen saberse de memoria:
+**Nueve pendientes abiertos, todos declarados, en `ESTADO_PIPELINE.md §Pendientes declarados`** — la
+tabla dice quién cierra cada uno y qué bloquea, más tres filas *declaradas sin acción inmediata* que
+no cuentan como trabajo abierto. **Solo uno bloquea algo concreto: la verificación independiente del
+retrabajo del CDR** (fila 15), que es lo único que separa al proyecto de empezar a escribir código.
+Los otros ocho son diseño físico (`ARQ-01`), construcción, propagación documental o validación del
+usuario, y ninguno tiene plazo material. Dos más merecen saberse de memoria:
 
 - ~~**`PER-H2`**~~ ✅ **cerrado en SD-35** (`ADR-004`): la supresión es física e inmediata. **Ya ningún pendiente roza un requisito vigente: `RF-24` se cumple.** Texto original: la ventana de «+30 días» del plan
   §4.14 impide que **`RF-24` se cumpla de forma inmediata**. Se cierra junto con `V6-b`, la frontera
   legal, que es quien decide si esa ventana es siquiera admisible.
   *(Hasta SD-33 este puesto lo ocupaba `PER-H5` —el respaldo escapaba al borrado en cascada—, y era
   peor: rompía el requisito de extremo a extremo. `ADR-003` lo cerró quitando el respaldo.)*
-- **`COD-01`** no rompe nada. Es una espera con motivo: su columna de firma exige tipos, y los tipos
-  los fija el diagrama de clases.
+- ~~**`COD-01`**~~ ✅ **cerrado en SD-32** y ampliado en `SD-39` con la capa de tipos de transferencia:
+  **43 clases en 6 capas**, con firma completa. Era una espera con motivo —su columna de firma exigía
+  tipos, y los tipos los fija el diagrama de clases—, y ya no espera nada.
 
 ## De dónde salió el alcance
 De un **plan generado con Codex** (auditado en `../../00_AUDITORIA_PLAN_CODEX.md`) y, **como cita histórica de procedencia** de la fase documental previa a la extracción (SD-18), del corpus del macroproyecto Smart-AID (Release 0.1/0.2, doc 8 plan metodológico, arquitectura LLM D22, personajes/onboarding). Esos artefactos **no están en este repositorio** y no se consultan de forma viva: el subproyecto ya es autosuficiente.
