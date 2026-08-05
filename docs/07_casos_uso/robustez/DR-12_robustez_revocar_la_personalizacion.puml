@@ -1,5 +1,8 @@
 @startuml
 ' DR-12 — Analisis de robustez de CU-12 «Revocar la personalizacion»
+' (CDR-01, H-20) El alias de P-13 se unifica al mayoritario: era el minoritario frente al que
+'      usan DR-04, DR-11, DS-04, DS-11 y DS-12. La etiqueta «Gestion de cuenta (P-13)» NO cambia
+'      —es la etiqueta la que lleva el significado—, asi que ningun conteo canonico se mueve.
 ' Insumos: ECU-12 v1.0, MD-01 v1.4, DCU-01 v2.1, DIS-00 (P-13; destino P-03), PRIV-01, PER-01
 ' Nuevo en el PDR-01 fase D.4. Los elementos proceden del flujo alternativo «Revocar
 ' personalizacion» de DR-04 v1.0, que salio de alli cuando paso a ser caso de uso propio.
@@ -9,7 +12,7 @@ skinparam shadowing false
 
 actor "Usuario adulto" as ACT_Usuario
 
-boundary "Gestion de cuenta (P-13)" as B_GestionCuenta
+boundary "Gestion de cuenta (P-13)" as B_PaginaGestionCuenta
 boundary "Inicio de sesion de usuario (P-03)" as B_PaginaInicioSesion #LightCoral
 
 control "Presentar el alcance de la revocacion" as C_PresentarAlcance
@@ -27,32 +30,32 @@ entity "Consentimiento" as E_Consentimiento
 entity "CapsulaDePerfil" as E_CapsulaDePerfil
 entity "Conversacion" as E_Conversacion
 
-ACT_Usuario -- B_GestionCuenta : 1 elige revocar la personalizacion
-B_GestionCuenta -- C_PresentarAlcance : 1 presenta el alcance del cambio
+ACT_Usuario -- B_PaginaGestionCuenta : 1 elige revocar la personalizacion
+B_PaginaGestionCuenta -- C_PresentarAlcance : 1 presenta el alcance del cambio
 C_PresentarAlcance -- E_CapsulaDePerfil : 1 la capsula dejara de orientar la conversacion
-C_PresentarAlcance -- B_GestionCuenta : 1 declara que el chat seguira disponible
-B_GestionCuenta -- C_RevocarCapaPersonalizacion : 2 confirma la revocacion
+C_PresentarAlcance -- B_PaginaGestionCuenta : 1 declara que el chat seguira disponible
+B_PaginaGestionCuenta -- C_RevocarCapaPersonalizacion : 2 confirma la revocacion
 C_RevocarCapaPersonalizacion -- E_Usuario : 3 identifica al titular del consentimiento
 C_RevocarCapaPersonalizacion -- E_Consentimiento : 3 marca la capa de personalizacion como revocada con su fecha; la capa base permanece
 C_RevocarCapaPersonalizacion -- C_MarcarAutorreportesParaDescarte : 3 cesa el uso de la capsula
 C_MarcarAutorreportesParaDescarte -- E_CapsulaDePerfil : 3 marca los cuatro autorreportes para descarte; character permanece
 C_MarcarAutorreportesParaDescarte -- C_ConfirmarChatDisponible : 4 revocacion aplicada
 C_ConfirmarChatDisponible -- E_Conversacion : 4 desde el turno siguiente los autorreportes no viajan al Proveedor LLM
-C_ConfirmarChatDisponible -- B_GestionCuenta : 4 confirma que puede seguir conversando
+C_ConfirmarChatDisponible -- B_PaginaGestionCuenta : 4 confirma que puede seguir conversando
 
-B_GestionCuenta -- C_InformarYaRevocada : FA-01 la capa ya estaba revocada
-C_InformarYaRevocada -- B_GestionCuenta : FA-01 finaliza sin cambios; operacion idempotente
+B_PaginaGestionCuenta -- C_InformarYaRevocada : FA-01 la capa ya estaba revocada
+C_InformarYaRevocada -- B_PaginaGestionCuenta : FA-01 finaliza sin cambios; operacion idempotente
 
 C_PresentarAlcance -- C_ConfirmarChatDisponible : FA-02 la capsula solo tiene character; efecto observable nulo
-B_GestionCuenta -- C_CancelarRevocacion : FA-03 cancela en la confirmacion
-C_CancelarRevocacion -- B_GestionCuenta : FA-03 cancela y vuelve al paso 1 sin modificar el consentimiento
+B_PaginaGestionCuenta -- C_CancelarRevocacion : FA-03 cancela en la confirmacion
+C_CancelarRevocacion -- B_PaginaGestionCuenta : FA-03 cancela y vuelve al paso 1 sin modificar el consentimiento
 
-B_GestionCuenta -- C_SolicitarReingreso : FE-01 la sesion expira
+B_PaginaGestionCuenta -- C_SolicitarReingreso : FE-01 la sesion expira
 C_SolicitarReingreso -- B_PaginaInicioSesion : FE-01 termina; 401 sin modificar el consentimiento
-B_GestionCuenta -- C_DenegarPorPermiso : FE-02 el rol no esta autorizado
-C_DenegarPorPermiso -- B_GestionCuenta : FE-02 termina; 403 sin cambios
+B_PaginaGestionCuenta -- C_DenegarPorPermiso : FE-02 el rol no esta autorizado
+C_DenegarPorPermiso -- B_PaginaGestionCuenta : FE-02 termina; 403 sin cambios
 C_RevocarCapaPersonalizacion -- C_MsgPeticionInvalida : FE-03 peticion mal formada
-C_MsgPeticionInvalida -- B_GestionCuenta : FE-03 reintentar; 400 y no ejecuta la accion
+C_MsgPeticionInvalida -- B_PaginaGestionCuenta : FE-03 reintentar; 400 y no ejecuta la accion
 
 legend right
   <b>Convencion de color</b>

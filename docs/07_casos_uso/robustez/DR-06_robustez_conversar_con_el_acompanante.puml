@@ -1,5 +1,9 @@
 @startuml
 ' DR-06 — Analisis de robustez de CU-06 «Conversar con el acompanante»
+' v2.2 (CDR-01): H-20 — el alias de P-07 se unifica al mayoritario, el que usan DR-05, DS-05 y
+'      DS-06. La etiqueta «Onboarding - consentimiento capa base (P-07)» NO cambia, asi que
+'      ningun conteo canonico se mueve. Se propaga a DOP-01 §2, que nombraba la receptora de
+'      redirigirParaOtorgarCapaBase() con el alias de ESTE diagrama y no con el de DS-06:46.
 ' v2.1 (SD-30): el EventoOperativo pasa del paso 8 (cerrar) al paso 6 (cada turno) — hallazgo
 '      H-1a de DS-00; se anade el arco de FE-06/FE-07 para que las llamadas fallidas entren en
 '      el denominador de MET-07. Y se corrige la nota que decia que ContadorDeUsoDiario y
@@ -17,7 +21,7 @@ actor "Proveedor LLM (Groq)" as ACT_ProveedorLLM
 boundary "Chat con el acompanante (P-10)" as B_InterfazDeChat
 boundary "Chat - error y degradacion (P-11)" as B_EstadosDeError #LightCoral
 boundary "Frontera con el Proveedor LLM" as B_FronteraProveedorLLM
-boundary "Onboarding - consentimiento capa base (P-07)" as B_OnboardingCapaBase #LightCoral
+boundary "Onboarding - consentimiento capa base (P-07)" as B_PantallaConsentimiento #LightCoral
 
 control "Verificar la sesion y el rol del usuario" as C_VerificarSesionYRol
 control "Verificar el consentimiento vigente" as C_VerificarConsentimiento
@@ -62,7 +66,7 @@ C_VerificarSesionYRol -- C_VerificarConsentimiento : 1 sesion activa con rol de 
 C_VerificarConsentimiento -- E_Consentimiento : 1 comprueba la capa base; la de personalizacion no condiciona el acceso
 C_VerificarConsentimiento -- C_VerificarDisponibilidad : 1 capa base vigente
 C_VerificarConsentimiento -- C_DenegarPorCapaBaseRevocada : FE-09 la capa base esta revocada
-C_DenegarPorCapaBaseRevocada -- B_OnboardingCapaBase : FE-09 termina; 403 y redirige a CU-05 sin abrir la conversacion
+C_DenegarPorCapaBaseRevocada -- B_PantallaConsentimiento : FE-09 termina; 403 y redirige a CU-05 sin abrir la conversacion
 C_VerificarDisponibilidad -- E_DisponibilidadDelChatbot : 1 lee el estado global del chatbot
 C_VerificarDisponibilidad -- C_IniciarConversacion : 1 chatbot habilitado
 C_IniciarConversacion -- E_Conversacion : 1 abre la conversacion

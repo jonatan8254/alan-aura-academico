@@ -1,5 +1,10 @@
 @startuml
 ' DR-10 — Analisis de robustez de CU-10 «Habilitar o deshabilitar el chatbot»
+' v2.1 (CDR-01): H-20 — el alias de P-04 se unifica al mayoritario, el que usan DR-03, DS-03 y
+'      DS-10. La etiqueta «Inicio de sesion de administracion (P-04)» NO cambia, asi que ningun
+'      conteo canonico se mueve. Esta divergencia era la mas cara de las tres: el alias
+'      minoritario habia llegado hasta MC-01 y COD-01, o sea hasta el insumo con el que la
+'      regla #2 del CDR genera las cabeceras de codigo. Se propaga a los dos.
 ' v2.0 (PDR-01 fase D.4)
 ' Insumos: ECU-10, MD-01, DCU-01, DIS-00 (P-16; destino P-04), PER-01 (AdministrativeAction), REQ-01
 left to right direction
@@ -10,7 +15,7 @@ actor "Administrador de plataforma" as ACT_Administrador
 
 boundary "Kill switch - control de disponibilidad (P-16)" as B_ControlDisponibilidad
 boundary "Dialogo de confirmacion del cambio" as B_DialogoConfirmacion
-boundary "Inicio de sesion de administracion (P-04)" as B_LoginAdmin #LightCoral
+boundary "Inicio de sesion de administracion (P-04)" as B_PaginaInicioSesionAdmin #LightCoral
 
 control "Verificar la sesion y el rol de administrador" as C_VerificarSesionYRol
 control "Mostrar el estado actual de disponibilidad" as C_MostrarEstadoActual
@@ -54,9 +59,9 @@ C_InformarEstadoYaVigente -- B_ControlDisponibilidad : FA-03 finaliza sin cambia
 C_CambiarEstadoGlobal -- C_RechazarConfirmacionInvalida : FE-03 la confirmacion llega mal formada
 C_RechazarConfirmacionInvalida -- B_ControlDisponibilidad : FE-03 vuelve al paso 1; 400 y el estado no cambia
 C_VerificarSesionYRol -- C_SolicitarReingreso : FE-01 sesion ausente
-C_SolicitarReingreso -- B_LoginAdmin : FE-01 termina; reingresar por CU-03, estado sin cambios
+C_SolicitarReingreso -- B_PaginaInicioSesionAdmin : FE-01 termina; reingresar por CU-03, estado sin cambios
 C_VerificarSesionYRol -- C_DenegarPorRol : FE-02 rol no administrador aunque manipule el cliente
-C_DenegarPorRol -- B_LoginAdmin : FE-02 termina; sin acceso, redireccion segura
+C_DenegarPorRol -- B_PaginaInicioSesionAdmin : FE-02 termina; sin acceso, redireccion segura
 
 legend right
   <b>Convencion de color</b>
