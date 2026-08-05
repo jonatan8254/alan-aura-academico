@@ -16,6 +16,10 @@ Cuatro comprobaciones:
      fila de historial.
   4. VERSIONES DECLARADAS — que el inventario de INDICE_MAESTRO diga, de cada
      artefacto, la version que ese artefacto dice tener en su propia ficha.
+  5. ARTEFACTOS DERIVADOS — que ningun `.svg` ni las cabeceras de codigo queden
+     mas antiguos que el `.puml` del que se generan. Anadido en SD-39: en el
+     retrabajo del CDR-01 hubo diez desfasados a la vez y solo se cazaron con un
+     barrido a mano.
 
 La distincion que hace util a (1) y (2): un valor viejo dentro de un bloque de
 historial, changelog o registro de decisiones es CORRECTO —describe lo que se
@@ -139,6 +143,21 @@ CONTEOS = [
      r"^\s*\w+ +(?:<\|--|\*--|--) ", 17),
     ("H-13", "casos de uso", "docs/07_casos_uso/DCU-01_casos_uso.puml", r"^\s*usecase ", 14),
     ("H-14", "actores", "docs/07_casos_uso/DCU-01_casos_uso.puml", r"^\s*actor ", 5),
+    # Anadidos en SD-39. Las cuatro cifras de MC-01 se movieron durante el
+    # retrabajo del CDR-01 —las relaciones, tres veces: 73 -> 71 -> 80— y hasta
+    # ahora ninguna se contrastaba contra el modelo: se copiaban de artefacto en
+    # artefacto. Contarlas aqui es lo que convierte «se propago» en algo
+    # comprobable.
+    ("H-25", "clases de diseno", "docs/07_casos_uso/clases/MC-01_modelo_clases_diseno.puml",
+     r"^\s*(?:abstract )?class ", 43),
+    ("H-26", "operaciones de diseno", "docs/07_casos_uso/clases/MC-01_modelo_clases_diseno.puml",
+     r"^\s+[+-]\w+\s*\(", 201),
+    ("H-27", "atributos de diseno", "docs/07_casos_uso/clases/MC-01_modelo_clases_diseno.puml",
+     r"^\s+[+-][\w/]+\s*:\s*\w", 51),
+    # El `(?!N_)` excluye los dos conectores entre notas, que PlantUML dibuja
+    # con la misma sintaxis y NO son relaciones del modelo (hallazgo H-13).
+    ("H-29", "relaciones de diseno", "docs/07_casos_uso/clases/MC-01_modelo_clases_diseno.puml",
+     r"^(?!N_)\w+ .*(?:<\|--|\*--|\.\.>| -- )", 80),
 ]
 
 # ---------------------------------------------------------------------------
@@ -378,6 +397,80 @@ def comprobar_fichas() -> list[str]:
     return errores
 
 
+# --------------------------------------------------------------------------
+# 5. ARTEFACTOS DERIVADOS
+# --------------------------------------------------------------------------
+#
+# Por que existe este bloque. Los `.svg` y las cabeceras de codigo NO son
+# fuentes: se generan de un `.puml`. Cuando alguien edita el `.puml` y olvida
+# regenerar, el repositorio queda diciendo dos cosas distintas a la vez, y la
+# derivada es la que se mira. En el retrabajo del CDR-01 hubo diez de estos a
+# la vez y solo se cazaron con un barrido a mano; este bloque lo mecaniza.
+
+# Un `.puml` produce su `.svg` al lado o en la carpeta hermana `svg/`.
+# `MC-01` produce ademas las cabeceras de la regla #2 del CDR.
+DERIVADOS_EXTRA = {
+    "docs/07_casos_uso/clases/MC-01_modelo_clases_diseno.puml":
+        ["docs/07_casos_uso/clases/MC-01_cabeceras.txt"],
+}
+
+
+def derivados_de(rel: str) -> list[Path]:
+    """Los artefactos que ese `.puml` genera y que existen hoy."""
+    fuente = RAIZ / rel
+    base = fuente.stem
+    candidatos = [fuente.with_suffix(".svg"),
+                  fuente.parent.parent / "svg" / f"{base}.svg"]
+    candidatos += [RAIZ / x for x in DERIVADOS_EXTRA.get(rel, ())]
+    return [c for c in candidatos if c.exists()]
+
+
+def comprobar_derivados() -> list[str]:
+    """Ningun artefacto derivado puede ser mas antiguo que su `.puml`.
+
+    PUNTO CIEGO, declarado, y es el mismo que el bloque 3: se apoya en
+    `git diff HEAD`, asi que solo mira los `.puml` con cambios SIN COMITEAR.
+    Tiene que ser asi. Git no conserva las fechas de modificacion, de modo que
+    tras un clon reciente todos los archivos tienen la misma marca y una
+    comprobacion de frescura sobre el arbol entero seria ruido puro. Restringido
+    a lo que acabas de tocar, la fecha si es informacion fiable: si editaste el
+    `.puml` despues de generar, se ve.
+
+    Segunda razon para usar la fecha y no el contenido: un cambio en el `.puml`
+    puede no alterar el `.svg` ni un byte —renombrar un alias no cambia lo que
+    se dibuja, porque el dibujo lleva la etiqueta—, pero el generador reescribe
+    el archivo igual y la fecha sube. Comparar contenidos daria falsos avisos
+    justo en ese caso, que en el CDR-01 fue el de tres diagramas de robustez.
+    """
+    errores: list[str] = []
+    try:
+        tocados = subprocess.run(
+            ["git", "diff", "--name-only", "HEAD"],
+            cwd=RAIZ, capture_output=True, text=True, check=True,
+            encoding="utf-8", errors="replace",
+        ).stdout.split()
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        return [f"[DERIVADO] no se pudo consultar git ({exc}); usa --sin-git para omitir"]
+
+    for rel in tocados:
+        if not rel.endswith(".puml") or any(x in rel for x in EXCLUIDAS):
+            continue
+        fuente = RAIZ / rel
+        if not fuente.exists():
+            continue
+        derivados = derivados_de(rel)
+        if not derivados:
+            # No es un error: hay `.puml` sin vista derivada, y forzarla seria
+            # inventar una obligacion que el proyecto no tiene.
+            continue
+        for d in derivados:
+            if d.stat().st_mtime < fuente.stat().st_mtime:
+                errores.append(
+                    f"[DERIVADO] {d.relative_to(RAIZ).as_posix()} es mas antiguo "
+                    f"que {rel} — regeneralo antes de comitear")
+    return errores
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Verifica la coherencia del paquete documental.")
     ap.add_argument("--sin-git", action="store_true",
@@ -392,6 +485,8 @@ def main() -> int:
     if not args.sin_git:
         bloques.insert(2, ("3. DISCIPLINA DE FICHA (solo cambios sin comitear)",
                            comprobar_fichas()))
+        bloques.append(("5. ARTEFACTOS DERIVADOS (solo cambios sin comitear)",
+                        comprobar_derivados()))
 
     total = 0
     print("Verificacion de coherencia — «Alan & Aura Academico»")
