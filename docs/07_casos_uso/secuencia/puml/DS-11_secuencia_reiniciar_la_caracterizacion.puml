@@ -1,5 +1,12 @@
 @startuml
 ' DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»
+' v1.3 (SVI-01 del CDR-01 v1.5, SD-43): FA-03 y FE-03 a `alt` dentro de un `loop`, y FE-04 a `alt` (ECU-11: los tres «Vuelve»).
+'       Tercer intento sobre la misma rama, y el primero que lee el DESENLACE de la
+'       ECU en vez de la categoria del flujo. `break` abandonaba; `opt` caia al exito;
+'       `break` otra vez (SD-41) se restauro alegando que la ECU decia «Termina», lo
+'       cual es FALSO. Ahora `loop` + `alt`: el alt excluye, el loop realiza el retorno.
+'       Los break legitimos quedan FUERA del loop a proposito: dentro saldrian del
+'       bucle y seguirian ejecutando, en vez de terminar.
 ' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FA-03, FE-03 y FE-04 vuelven de opt a BREAK.
 '       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
 '       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
@@ -52,16 +59,17 @@ break FA-01 no existe capsula porque ya se reinicio antes
   B_PaginaGestionCuenta --> ACT_Usuario : informarQueNoHayCaracterizacionQueReiniciar()
 end
 
-E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acceso al chat
-B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
-ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita
+loop hasta que llegue una confirmacion explicita y valida
+  E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acceso al chat
+  B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
+  ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita
 
-break FA-03 el Usuario cancela la advertencia
-  B_PaginaGestionCuenta --> ACT_Usuario : cancelarDejandoLaCapsulaCompleta()
-end
-
-break FE-03 llega sin confirmacion explicita o mal formada
-  B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso1()
+  alt FA-03 el Usuario cancela la advertencia
+    B_PaginaGestionCuenta --> ACT_Usuario : cancelarDejandoLaCapsulaCompleta()
+  else FE-03 llega sin confirmacion explicita o mal formada
+    B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso1()
+  else la confirmacion es explicita y valida
+  end
 end
 
 == Paso 3 - Borrado completo de la capsula ==
@@ -73,9 +81,10 @@ end
 B_PaginaGestionCuenta -> E_CapsulaDePerfil : borrarCompleta()
 E_CapsulaDePerfil -> E_CapsulaDePerfil : dejarDeExistir()
 
-break FE-04 el sistema no logra ejecutar el borrado
+alt FE-04 el sistema no logra ejecutar el borrado
   E_CapsulaDePerfil --> B_PaginaGestionCuenta : sigue intacta, con character
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarElFalloSinHaberSuprimidoNada()
+else el borrado se ejecuta
 end
 
 note right of E_CapsulaDePerfil
@@ -87,6 +96,16 @@ note right of E_CapsulaDePerfil
   <b>Contraste con `H-02` (`DS-04`), que parece igual y no lo es:</b> alli la atomicidad
   era <b>imposible</b> —cuatro entidades sin transaccion—; aqui era <b>innecesaria</b>.
   Dos defectos distintos con la misma cara.
+
+  <b>Y por que `alt` y no `break`</b> (`SVI-01`, `SD-43`). `ECU-11 FE-04` dice «<b>Vuelve</b>
+  al paso 1», no «Termina». Con `break`, el fallo abandonaba el fragmento y los pasos 4 y 5
+  <b>no se ejecutaban</b>; pero tampoco se volvia a ningun sitio. Con `alt`, el fallo y el
+  borrado efectivo quedan <b>mutuamente excluyentes</b>, que es lo que el texto exige.
+  <b>El retorno al paso 1 NO se modela con un `loop` aqui, y se declara:</b> envolver desde
+  el paso 1 meteria dentro del bucle a `FE-01`, `FE-02` y `FA-01`, cuyo `ECU` si dice
+  «Termina» — y un `break` dentro de un `loop` sale del bucle y sigue, no termina. El
+  reintento tras `FE-04` se lee como <b>una nueva invocacion del caso de uso</b>, no como
+  una iteracion interna.
 end note
 
 == Pasos 4 y 5 - Alcance declarado y oferta de rehacer ==

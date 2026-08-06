@@ -1,5 +1,12 @@
 @startuml
 ' DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»
+' v1.3 (SVI-01 del CDR-01 v1.5, SD-43): FA-02 y FE-03 a `alt` dentro de un `loop` (ECU-10: «Cancela y vuelve» y «Vuelve al paso 2»).
+'       Tercer intento sobre la misma rama, y el primero que lee el DESENLACE de la
+'       ECU en vez de la categoria del flujo. `break` abandonaba; `opt` caia al exito;
+'       `break` otra vez (SD-41) se restauro alegando que la ECU decia «Termina», lo
+'       cual es FALSO. Ahora `loop` + `alt`: el alt excluye, el loop realiza el retorno.
+'       Los break legitimos quedan FUERA del loop a proposito: dentro saldrian del
+'       bucle y seguirian ejecutando, en vez de terminar.
 ' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FA-02 y FE-03 vuelven de opt a BREAK.
 '       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
 '       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
@@ -66,9 +73,10 @@ break FA-03 el estado elegido ya es el vigente
   B_ControlDisponibilidad --> ACT_Administrador : informarEstadoYaVigenteSinRegistrarAccion()
 end
 
-B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
-B_DialogoConfirmacion -> B_DialogoConfirmacion : nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()
-ACT_Administrador -> B_DialogoConfirmacion : confirmar o no confirmar el cambio
+loop hasta que llegue una confirmacion valida
+  B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
+  B_DialogoConfirmacion -> B_DialogoConfirmacion : nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()
+  ACT_Administrador -> B_DialogoConfirmacion : confirmar o no confirmar el cambio
 
 note right of B_DialogoConfirmacion
   <b>El dialogo dice QUE va a pasar, no solo pide un si</b> (`H-18` del `CDR-01`).
@@ -79,13 +87,23 @@ note right of B_DialogoConfirmacion
   `advertirDelAlcanceIrreversible()`.
 end note
 
-break FA-02 el Administrador no confirma
-  B_DialogoConfirmacion -> B_ControlDisponibilidad : cancelarSinCambiarElEstado()
+  alt FA-02 el Administrador no confirma
+    B_DialogoConfirmacion -> B_ControlDisponibilidad : cancelarSinCambiarElEstado()
+  else FE-03 la confirmacion llega mal formada
+    B_DialogoConfirmacion -> B_ControlDisponibilidad : rechazarConfirmacionInvalidaYVolverAlPaso1()
+  else la confirmacion es valida
+  end
 end
 
-break FE-03 la confirmacion llega mal formada
-  B_DialogoConfirmacion -> B_ControlDisponibilidad : rechazarConfirmacionInvalidaYVolverAlPaso1()
-end
+note over ACT_Administrador, B_DialogoConfirmacion
+  <b>Por que `loop` + `alt`</b> (`SVI-01` del `CDR-01 v1.5`, `SD-43`). `ECU-10` dice
+  «<b>Cancela</b> y <b>vuelve</b> al paso 1» (`FA-02`) y «<b>Vuelve</b> al paso 2»
+  (`FE-03`): ninguno de los dos termina. Ni `break` —que abandonaria— ni `opt` —que
+  caeria al cambio de estado, aplicandolo pese a la cancelacion— lo dicen.
+  El `alt` hace excluyentes error y exito; el `loop` realiza el retorno.
+  <b>`FE-01` y `FE-02` quedan FUERA del bucle a proposito:</b> su `ECU` si dice «Termina»,
+  y un `break` dentro de un `loop` saldria del bucle y seguiria ejecutando.
+end note
 
 == Pasos 3 y 4 - Cambio, registro y aplicacion ==
 

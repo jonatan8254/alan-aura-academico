@@ -1,5 +1,12 @@
 @startuml
 ' DS-05 - Secuencia de CU-05 «Otorgar consentimiento y crear la capsula de perfil»
+' v1.4 (SVI-01 del CDR-01 v1.5, SD-43): FE-02 y FE-03 a `alt`, cada uno con su `loop` (ECU-05: «Vuelve al paso 4» y «al paso 8»).
+'       Tercer intento sobre la misma rama, y el primero que lee el DESENLACE de la
+'       ECU en vez de la categoria del flujo. `break` abandonaba; `opt` caia al exito;
+'       `break` otra vez (SD-41) se restauro alegando que la ECU decia «Termina», lo
+'       cual es FALSO. Ahora `loop` + `alt`: el alt excluye, el loop realiza el retorno.
+'       Los break legitimos quedan FUERA del loop a proposito: dentro saldrian del
+'       bucle y seguirian ejecutando, en vez de terminar.
 ' v1.3 (VI-02 del CDR-01 v1.4, SD-41): FE-04 se mueve DESPUES de crearConCapaBaseOtorgada().
 '       Estaba antes, con la etiqueta «en cualquier paso», y asi el diagrama seguia siendo
 '       compatible con la promesa que ECU-05 retiro en H-16 —«nada de lo no confirmado quedo
@@ -71,11 +78,14 @@ end note
 
 == Pasos 4 y 5 - Capa base del consentimiento ==
 
-B_PantallaEdad -> B_PantallaConsentimiento : mostrarAlcanceDeLaCapaBase()
-ACT_Usuario -> B_PantallaConsentimiento : otorgar la capa base
+loop hasta que otorgue la capa base
+  B_PantallaEdad -> B_PantallaConsentimiento : mostrarAlcanceDeLaCapaBase()
+  ACT_Usuario -> B_PantallaConsentimiento : otorgar la capa base
 
-break FE-02 no otorga la capa base
-  B_PantallaConsentimiento -> B_PantallaConsentimiento : impedirAvanceYVolverAlPaso4()
+  alt FE-02 no otorga la capa base
+    B_PantallaConsentimiento -> B_PantallaConsentimiento : impedirAvanceYVolverAlPaso4()
+  else otorga la capa base
+  end
 end
 
 B_PantallaConsentimiento -> E_Consentimiento : crearConCapaBaseOtorgada()
@@ -119,11 +129,23 @@ end
 
 == Paso 8 - Capsula de perfil e invocacion de CU-14 ==
 
-ACT_Usuario -> B_PantallaCaracterizacion : responder u omitir cada autorreporte
+loop hasta que los autorreportes esten bien formados
+  ACT_Usuario -> B_PantallaCaracterizacion : responder u omitir cada autorreporte
 
-break FE-03 autorreportes mal formados
-  B_PantallaCaracterizacion -> B_PantallaCaracterizacion : mostrarRevisaTusRespuestas()
+  alt FE-03 autorreportes mal formados
+    B_PantallaCaracterizacion -> B_PantallaCaracterizacion : mostrarRevisaTusRespuestas()
+  else los autorreportes son admisibles
+  end
 end
+
+note over ACT_Usuario, B_PantallaCaracterizacion
+  <b>Dos bucles, y por que</b> (`SVI-01` del `CDR-01 v1.5`, `SD-43`). `ECU-05` marca dos
+  puntos de retorno distintos: `FE-02` «<b>Vuelve</b> al paso 4 para otorgarla» y `FE-03`
+  «<b>Vuelve</b> al paso 8». Son ciclos separados —uno de consentimiento y otro de
+  caracterizacion— y por eso llevan bucles propios en vez de uno solo que los englobe.
+  <b>`FE-01` y `FE-04` quedan fuera de ambos:</b> su `ECU` dice «Termina», y un `break`
+  dentro de un `loop` saldria del bucle y seguiria ejecutando el onboarding.
+end note
 
 B_PantallaCaracterizacion -> E_CapsulaDePerfil : armarConLoRespondido(schema_version, consent_version)
 

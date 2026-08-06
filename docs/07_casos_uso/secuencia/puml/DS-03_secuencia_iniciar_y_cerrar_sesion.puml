@@ -1,5 +1,12 @@
 @startuml
 ' DS-03 - Secuencia de CU-03 «Iniciar y cerrar sesion»
+' v1.3 (SVI-01 del CDR-01 v1.5, SD-43): FE-01 pasa a `alt` dentro de un `loop` (ECU-03: «Vuelve al paso 2»).
+'       Tercer intento sobre la misma rama, y el primero que lee el DESENLACE de la
+'       ECU en vez de la categoria del flujo. `break` abandonaba; `opt` caia al exito;
+'       `break` otra vez (SD-41) se restauro alegando que la ECU decia «Termina», lo
+'       cual es FALSO. Ahora `loop` + `alt`: el alt excluye, el loop realiza el retorno.
+'       Los break legitimos quedan FUERA del loop a proposito: dentro saldrian del
+'       bucle y seguirian ejecutando, en vez de terminar.
 ' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FE-01 vuelven de opt a BREAK.
 '       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
 '       entera— y su fila de ECU declara que el remanente NO se ejecuta. En UML 2.5
@@ -39,17 +46,28 @@ opt FA-02 entra por el acceso separado de administracion
 end
 
 B_PaginaInicioSesion -> E_TitularDeCuenta : solicitarUsernameYContrasena()
-ACT_Titular -> B_PaginaInicioSesion : escribir sus credenciales y enviarlas
-B_PaginaInicioSesion -> E_TitularDeCuenta : contrastarConLaCuentaRegistrada()
+loop hasta que las credenciales coincidan
+  ACT_Titular -> B_PaginaInicioSesion : escribir sus credenciales y enviarlas
+  B_PaginaInicioSesion -> E_TitularDeCuenta : contrastarConLaCuentaRegistrada()
 
 note right of E_TitularDeCuenta
   <b>El formulario no ofrece seleccion de rol, y esa ausencia es la afirmacion</b>
   (RNF-08): ningun mensaje transporta un rol propuesto por el cliente.
 end note
 
-break FE-01 las credenciales no coinciden
-  B_PaginaInicioSesion -> B_PaginaInicioSesion : mostrarMensajeGenericoSinRevelarQueCampoFallo()
+  alt FE-01 las credenciales no coinciden
+    B_PaginaInicioSesion -> B_PaginaInicioSesion : mostrarMensajeGenericoSinRevelarQueCampoFallo()
+  else las credenciales coinciden
+  end
 end
+
+note over ACT_Titular, E_TitularDeCuenta
+  <b>Por que `loop` + `alt`</b> (`SVI-01` del `CDR-01 v1.5`, `SD-43`). `ECU-03 FE-01` dice
+  «<b>Vuelve</b> al paso 2», no «Termina»: quien se equivoca de contraseña <b>reintenta</b>.
+  Ni `break` —que abandonaria el caso de uso— ni `opt` —que caeria al establecimiento de
+  sesion, dando acceso con credenciales invalidas— lo realizan.
+  <b>`FE-02` y `FE-03` quedan FUERA del bucle a proposito:</b> su `ECU` si dice «Termina».
+end note
 
 == Pasos 3 y 4 - Rol, sesion y encaminamiento ==
 

@@ -72,12 +72,9 @@ ARCHIVOS_HISTORICOS = {
     "HECHOS_CANONICOS.md",             # documenta los valores obsoletos a proposito
     "PDR-01_primera_pasada_correcciones.md",
     "RPD-01_revision_preliminar_diseno.md",
-    # El acta del CDR es la TERCERA de la serie y faltaba: esta lista se escribio
-    # en SD-29 y `CDR-01` nacio en SD-37. Un acta de revision es por naturaleza un
-    # registro fechado —describe el paquete TAL COMO SE RECIBIO—, igual que las
-    # dos anteriores, y su propio §1 lo declara: «el diseño detallado al cierre de
-    # SD-32». Sus recuentos vigentes viven en §8-quinquies. Añadida en SD-42.
-    "CDR-01_revision_critica_diseno.md",
+    # `CDR-01` estuvo aqui entre SD-42 y SD-43, y se RETIRA: eximir el acta entera
+    # silenciaba de mas (`SVI-02`). Sus secciones historicas se eximen ahora una a
+    # una en SECCIONES_HISTORICAS, no el archivo completo.
     "RET-01_retroalimentacion_docente.md",
     "ADR-001_decisiones_tecnicas.md",  # superada en parte; su texto se conserva
     "ADR-002_reversion_stack_serverless.md",  # explica de que se viene
@@ -88,16 +85,41 @@ ARCHIVOS_HISTORICOS = {
 LINEA_HISTORICA = re.compile(
     r"^\s*(?:\*\*Cambio v|>?\s*\|\s*v\d+\.\d+)"
     r"|Historial de cambios"
-    r"|^\*\*ID:\*\*.*\*\*Versi[oó]n:\*\*"     # la ficha cita el motivo del cambio
-    # La linea de `**Insumos:**` es PROCEDENCIA por construccion: dice contra que
-    # version se construyo el artefacto y cuanto contenia ESA version —«`DOP-01
-    # v1.1` (192 operaciones)»—. La cifra esta atada a la version citada, asi que
-    # no afirma el estado actual. Sin esta regla, cada cifra que se mueva produce
-    # un falso positivo en todos los artefactos que consumieron la version vieja,
-    # y un bloque ruidoso deja de leerse. Añadida en SD-42.
-    r"|^\*\*Insumos:\*\*",
+    r"|^\*\*ID:\*\*.*\*\*Versi[oó]n:\*\*",    # la ficha cita el motivo del cambio
     re.IGNORECASE,
 )
+
+# --- Exenciones ACOTADAS (SD-43, hallazgo `SVI-02`) --------------------------
+#
+# SD-42 eximio la linea `**Insumos:**` ENTERA y el archivo `CDR-01` ENTERO. La
+# segunda verificacion independiente lo probo con sabotaje sobre copias: con el
+# codigo anterior el sabotaje disparaba; con el de SD-42 pasaba en verde. No
+# habia ningun defecto vivo silenciado —eso tambien lo comprobo— pero el regex
+# PODIA silenciarlo. Se acota:
+#
+#   - En una linea de `**Insumos:**`, solo se exime la cifra que va DENTRO de un
+#     parentesis inmediatamente precedido por una version: «`DOP-01 v1.1` (192
+#     operaciones)». Eso es procedencia. Una cifra suelta en esa misma linea, sin
+#     version que la ate, vuelve a vigilarse.
+#   - En `CDR-01`, solo se eximen las secciones que describen el paquete tal como
+#     se recibio o registran hallazgos pasados. El veredicto y las secciones
+#     vivas vuelven a vigilarse.
+
+# «`DOP-01 v1.1` (192 operaciones)» — version, luego parentesis con la cifra.
+CITA_VERSIONADA = re.compile(r"v\d+\.\d+`?\s*\([^)]*\)")
+
+SECCIONES_HISTORICAS = {
+    "CDR-01_revision_critica_diseno.md": re.compile(
+        r"^##+\s*(1\.|2\.|3\.|7\.|8[-.]|11\.|12\.|14\.|Historial)", re.IGNORECASE),
+}
+
+
+def exenta_por_procedencia(linea: str, ini: int, fin: int) -> bool:
+    """La cifra esta dentro de una cita `ARTEFACTO vX.Y (N unidad)`."""
+    if not linea.lstrip().startswith("**Insumos:**"):
+        return False
+    return any(m.start() <= ini and fin <= m.end()
+               for m in CITA_VERSIONADA.finditer(linea))
 
 # Nombrar lo viejo APUNTANDO a lo que lo reemplazo no es un residuo: es
 # documentar bien. Pero el marcador tiene que ser ESTRECHO: una version laxa
@@ -348,12 +370,26 @@ def comprobar_hechos() -> list[str]:
     # 1a. Ningun valor obsoleto como afirmacion viva.
     for archivo in archivos_markdown():
         rel = archivo.relative_to(RAIZ).as_posix()
+        seccion_hist = SECCIONES_HISTORICAS.get(archivo.name)
+        en_seccion_historica = False
         for n, linea in enumerate(leer(archivo), 1):
+            # Seguimiento de seccion: solo para los archivos que lo declaran, y
+            # solo con encabezados de nivel 2 o 3, que son los numerados. Un
+            # `####` es SUBseccion y no debe reiniciar la bandera: si lo hiciera,
+            # `#### Tablero` dentro de `### 8-sexies` sacaria al lector de la
+            # seccion historica sin haberla abandonado.
+            if seccion_hist is not None and re.match(r"^#{2,3}\s", linea):
+                en_seccion_historica = bool(seccion_hist.match(linea))
+            if en_seccion_historica:
+                continue
             if es_historica(archivo, linea) or exceptuada(rel, linea):
                 continue
             for hid, desc, patron, patron_vigente, vigente in VALORES_OBSOLETOS:
-                if re.search(patron, linea, re.IGNORECASE):
+                m = re.search(patron, linea, re.IGNORECASE)
+                if m:
                     if re.search(patron_vigente, linea, re.IGNORECASE):
+                        continue
+                    if exenta_por_procedencia(linea, m.start(), m.end()):
                         continue
                     errores.append(
                         f"[{hid}] {rel}:{n} — valor obsoleto de «{desc}» en una "
@@ -391,7 +427,16 @@ def comprobar_residuos() -> list[str]:
         if archivo.name in ARCHIVOS_HISTORICOS:
             continue
         rel = archivo.relative_to(RAIZ).as_posix()
+        # Mismo seguimiento de seccion que el bloque 1 (SD-43): al retirar
+        # `CDR-01` de ARCHIVOS_HISTORICOS, sus secciones que describen sabotajes
+        # y hallazgos pasados citan nombres del stack superado, y son legitimas.
+        seccion_hist = SECCIONES_HISTORICAS.get(archivo.name)
+        en_seccion_historica = False
         for n, linea in enumerate(leer(archivo), 1):
+            if seccion_hist is not None and re.match(r"^#{2,3}\s", linea):
+                en_seccion_historica = bool(seccion_hist.match(linea))
+            if en_seccion_historica:
+                continue
             if es_historica(archivo, linea) or exceptuada(rel, linea):
                 continue
             if MARCADOR_SUPERACION.search(linea):
@@ -499,8 +544,12 @@ def comprobar_historial() -> list[str]:
                 f"[HISTORIAL] {rel} — la ficha declara {version} y el historial "
                 f"no tiene su fila (defecto H-25)")
 
-        # El orden es DESCENDENTE, y la convencion se establecio MIDIENDO: 23
-        # artefactos descendentes contra 3 ascendentes y 5 sin orden alguno.
+        # El orden es DESCENDENTE, y la convencion se establecio MIDIENDO: 21
+        # artefactos descendentes contra 3 ascendentes y 7 sin orden alguno.
+        # (SD-42 publico «23 / 3 / 5»: era FALSO, y el error fue de metodo —se
+        # midio DESPUES de haber reparado ya PER-01 y CP-00, y se presento como
+        # el estado previo—. Lo cazo la segunda verificacion independiente,
+        # `SVI-03`, y se corrige aqui en SD-43 contra el commit 239c019.)
         # El CHANGELOG ya habia declarado el ascendente un defecto en su v0.21.1.
         # Ocho historiales estaban desordenados y nadie lo vigilaba —uno de ellos,
         # `ECU-04`, mezclaba las dos direcciones en la misma tabla—. Añadido en
