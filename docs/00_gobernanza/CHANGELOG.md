@@ -10,6 +10,19 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v1.2.0 · `SD-49`: la infraestructura se escribirá en TypeScript, y con dos frenos puestos
+
+> **`ARQ-01` no puede escribir nada sin saber en qué herramienta escribe**, y `ADR-002 §1` la había
+> diferido. La condición que la bloqueaba —que `MC-01` aún pudiera moverse— **se agotó al cerrarse el
+> `CDR`**, que lo congela en 43 clases y 201 operaciones.
+
+- **`ADR-005` (nuevo).** Infraestructura como código: **AWS CDK en TypeScript**. Dos motivos, en orden de peso: extiende a la infraestructura el **lenguaje único** que `ADR-002-D1`/`D4` declaran como beneficio —una plantilla YAML deja rutas y nombres de tabla fuera de la comprobación de tipos— y da **IAM de mínimo privilegio** derivado por los constructos L2, en el primer artefacto que toca decisiones de seguridad reales.
+- **`D2` es la parte que no se podía omitir, y sale de cruzar dos documentos que nadie había cruzado.** La skill oficial `aws-cdk` advierte que cambiar el identificador lógico de un constructo hace que CloudFormation **reemplace el recurso, con pérdida de datos**. En un proyecto normal se repara restaurando; **aquí no hay respaldo** (`ADR-003`, con su precio escrito: *perder ese almacén es irrecuperable*). Riesgo genérico y no-objetivo del canon **se multiplican**, así que `cdk diff` antes de desplegar y `RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE` —no `RETAIN` a secas, verificado contra la documentación oficial: solo la primera cubre también el reemplazo, no solo el borrado— pasan de buena práctica a **obligación**.
+- **`D3`:** `hotswap` y `cdk watch` quedan acotados a desarrollo — *«bypass CloudFormation safety and introduce drift»*, y `RC-09` exige despliegue reproducible.
+- **SAM se descarta con reparo**, no por inferior: es la opción de menor curva para cuatro personas con un mes sin experiencia previa en AWS, y queda como **condición de reversa**.
+- **Nada medido:** ninguna de las tres herramientas está instalada y no se desplegó nada. `ADR-005 §5` enumera **cinco verificaciones pendientes** en vez de darlas por hechas.
+- **Dos defectos de `ESTADO_PIPELINE`, corregidos y declarados por exceder el alcance:** `§Qué sigue` decía en el punto 1 que ninguna fila bloquea el paso al código y en el punto 2 que «solo la 30» lo bloquea —la **30 está cerrada** desde `SD-45`/`SD-46`—; y la misma frase declaraba «9 abiertas» para acto seguido decir «de las **diez** abiertas».
+
 ## 2026-08-05 — v1.1.0 · `SD-48`: el expediente cuenta ya la historia que ocurrió
 
 > **El acta se contradecía a sí misma sobre su propio veredicto, y ningún validador podía
