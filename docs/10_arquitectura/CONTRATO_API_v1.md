@@ -8,6 +8,13 @@ frontend al construir las 17 pantallas.
 exactos. Si este documento y `packages/contrato-api` divergen, **`contrato-api` gana** — este
 documento es su proyección legible, no una fuente independiente.
 
+**Actualización 2026-08-06 (novena) — backend real desplegado, mock desactualizado.** Las 13 rutas
+están implementadas y verificadas end-to-end contra AWS real. Una auditoría con verificación
+adversarial encontró que `backend/mock/server.ts` había divergido gravemente del comportamiento
+real (no valida sesión/rol/confirmación en casi ninguna ruta protegida, le faltan la mayoría de
+los códigos de error) — el frontend pasó a consumir el backend real directamente
+(`frontend/vite.config.ts`), no el mock. Ver el aviso en la cabecera de `server.ts`.
+
 **Actualización 2026-08-06 — verificación exhaustiva del pendiente declarado en `ARQ-01 §N+1` punto
 3.** Una pasada independiente cruzó los códigos de esta tabla contra los flujos `FA`/`FE` de las 14
 `ECU`, uno a uno. Encontró 5 rutas con códigos citados literalmente en su `ECU` que la tabla no
