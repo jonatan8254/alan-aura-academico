@@ -189,9 +189,17 @@ export interface DirectorioResponse {
 }
 export type DirectorioStatus = 200 | 401 | 403;
 
-/** GET /api/v1/admin/metricas (CU-09, admin) */
+/**
+ * GET /api/v1/admin/metricas (CU-09, admin).
+ * agregadoDeCuentas añadido: ECU-09 §5 exige CUATRO cifras —total de
+ * cuentas y onboardings completados (cardinalidades de Usuario) además de
+ * llamadas en 7 días y tasa técnica (de EventoOperativo)— y el contrato
+ * solo tenía las dos últimas. AgregadoDeCuentas ya existía (lo usa
+ * DirectorioResponse) — se reusa, no se duplica.
+ */
 export type MetricasRequest = Record<string, never>;
 export interface MetricasResponse {
+  agregadoDeCuentas: AgregadoDeCuentas;
   agregado: AgregadoDeUso;
   estadoDelChatbot: EstadoDisponibilidad;
 }
@@ -200,9 +208,14 @@ export type MetricasStatus = 200 | 401 | 403;
 /**
  * POST /api/v1/admin/chat-access (CU-10, admin — kill switch).
  * 400 añadido tras la verificación exhaustiva (ECU-10 FE-03).
+ *
+ * confirmacion añadido: RN-03.4 exige confirmación explícita y FE-03 liga
+ * el 400 a "sin la confirmación exigida" — mismo patrón que
+ * ReiniciarPerfilRequest/EliminarCuentaRequest.
  */
 export interface ChatAccessRequest {
   estadoNuevo: EstadoDisponibilidad;
+  confirmacion: true;
 }
 export interface ChatAccessResponse {
   estado: EstadoDisponibilidad;

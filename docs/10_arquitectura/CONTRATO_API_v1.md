@@ -56,6 +56,16 @@ explícita**". El endpoint solo cubre los pasos 2–3 de `ECU-04` (confirmar + e
 (mostrar el alcance antes de confirmar) es un texto fijo del lado del cliente, sin llamada al
 servidor; `alcance` en la respuesta confirma lo ya ejecutado, no una vista previa.
 
+**Actualización 2026-08-06 (séptima) — `MetricasResponse` gana `agregadoDeCuentas`.**
+`ECU-09 §5` exige **cuatro** cifras: total de cuentas y onboardings completados (cardinalidades de
+`Usuario`) además de llamadas al chat en 7 días y tasa técnica (de `EventoOperativo`) — el contrato
+solo tenía las dos últimas. `AgregadoDeCuentas` ya existía (lo usa `DirectorioResponse`); se reusa,
+no se duplica el tipo.
+
+**Actualización 2026-08-06 (octava) — `ChatAccessRequest` gana `confirmacion`.**
+`ECU-10 RN-03.4` exige confirmación explícita del *kill switch*, y `FE-03` liga el `400` a "sin la
+confirmación exigida" — mismo patrón que `ReiniciarPerfilRequest`/`EliminarCuentaRequest`.
+
 ---
 
 | Método | Ruta | Origen | Auth | Request | Response | Códigos |
