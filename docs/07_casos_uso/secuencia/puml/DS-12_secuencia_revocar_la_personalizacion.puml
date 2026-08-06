@@ -1,5 +1,8 @@
 @startuml
 ' DS-12 - Secuencia de CU-12 «Revocar la personalizacion»
+' v1.6 (revision interna final, SD-45): RI-2: idem; RI-3: la nota de SD-44 dejaba de ser cierta.
+'       Hallado por la revision de dos subagentes ANTES del veredicto — el mismo
+'       tipo de defecto que CVI-03, sobreviviendo dentro de la correccion de CVI-03.
 ' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-12 FE-03`— y `FA-03` sale a un `alt`. Se declara la advertencia 11 como falso positivo del modelo de caminos.
 '       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
 '       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
@@ -75,8 +78,8 @@ end
 
 B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatSeguiraDisponible()
 
-loop ECU-12 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
-  ACT_Usuario -> B_PaginaGestionCuenta : confirmar la revocacion
+loop ECU-12 FE-03 reintenta el paso 2 hasta que llegue una respuesta bien formada — confirmar, o cancelar (FA-03)
+  ACT_Usuario -> B_PaginaGestionCuenta : confirmar la revocacion, o cancelarla
 
   opt FE-03 peticion mal formada
     B_PaginaGestionCuenta -> B_PaginaGestionCuenta : mostrarPeticionMalFormadaYPermitirReintentar()
@@ -99,8 +102,9 @@ else la confirmacion es valida
       «<b>Vuelve</b> al paso 2». Lo cazo la segunda verificacion independiente.
     <b>Hacen falta las dos piezas:</b> el `alt` hace mutuamente excluyentes el desenlace de
     error y el sufijo de exito; el `loop` modela el <b>ciclo de reintento</b>.
-    <b>El punto exacto de reentrada no lo dibuja este diagrama</b> (`SD-44`): es
-    normativo en `ECU-12 FA-03/FE-03` y verificable en `CP-1305`/`CP-1306`.
+    <b>Desde `SD-45` el bucle SI dibuja la reentrada de `FE-03`</b>: abre en el paso 2,
+    adonde manda la `ECU`. Lo que no es del bucle es `FA-03`: cancelar no itera, y su
+    punto de retorno lo fija `CP-1305`/`CP-1306`.
 
     <b>Aproximacion declarada.</b> `FA-03` vuelve al <b>paso 1</b> y `FE-03` al <b>paso 2</b>:
     dos puntos de retorno distintos. El `loop` reentra por el paso 2, que es el ciclo de

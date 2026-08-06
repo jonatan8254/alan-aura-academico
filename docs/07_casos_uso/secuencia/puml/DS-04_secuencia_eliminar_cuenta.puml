@@ -1,5 +1,8 @@
 @startuml
 ' DS-04 - Secuencia de CU-04 «Eliminar cuenta»
+' v1.6 (revision interna final, SD-45): RI-2: la guarda vuelve a nombrar la cancelacion (R4) y el mensaje del actor cubre ambas respuestas — la rama FA-03 era inalcanzable.
+'       Hallado por la revision de dos subagentes ANTES del veredicto — el mismo
+'       tipo de defecto que CVI-03, sobreviviendo dentro de la correccion de CVI-03.
 ' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-04 FE-03`— y `FA-03` sale a un `alt`, porque cancelar no es una iteracion. SD-45-H1: `informarPeticionInvalidaYVolverAlPaso1()` decia el paso equivocado.
 '       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
 '       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
@@ -66,8 +69,8 @@ B_PaginaGestionCuenta -> E_Usuario : enumerarRegistrosQueDesapareceran()
 E_Usuario --> B_PaginaGestionCuenta : alcance de la supresion
 B_PaginaGestionCuenta -> B_PaginaGestionCuenta : advertirQueLaAccionEsIrreversible()
 
-loop ECU-04 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
-  ACT_Usuario -> B_PaginaGestionCuenta : confirmar explicitamente la eliminacion
+loop ECU-04 FE-03 reintenta el paso 2 hasta que llegue una respuesta bien formada — confirmar, o cancelar (FA-03)
+  ACT_Usuario -> B_PaginaGestionCuenta : confirmar explicitamente la eliminacion, o cancelarla
 
   opt FE-03 solicitud mal formada o sin confirmacion explicita
     B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarPeticionInvalidaYVolverAlPaso2()

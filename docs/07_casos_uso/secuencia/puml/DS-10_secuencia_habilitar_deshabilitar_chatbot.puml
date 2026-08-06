@@ -1,5 +1,8 @@
 @startuml
 ' DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»
+' v1.6 (revision interna final, SD-45): RI-1: solicitar la confirmacion y nombrar el efecto ENTRAN al bucle — ECU-10 FE-03 vuelve al paso 2 y el lado del Sistema del paso 2 es pedirla anticipando el efecto. RI-3: la nota de SD-44 dejaba de ser cierta.
+'       Hallado por la revision de dos subagentes ANTES del veredicto — el mismo
+'       tipo de defecto que CVI-03, sobreviviendo dentro de la correccion de CVI-03.
 ' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-10 FE-03`— y `FA-02` sale a un `alt`.
 '       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
 '       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
@@ -88,8 +91,9 @@ break FA-03 el estado elegido ya es el vigente
   B_ControlDisponibilidad --> ACT_Administrador : informarEstadoYaVigenteSinRegistrarAccion()
 end
 
-B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
-B_DialogoConfirmacion -> B_DialogoConfirmacion : nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()
+loop ECU-10 FE-03 reintenta desde el paso 2 hasta que la confirmacion llegue bien formada
+  B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
+  B_DialogoConfirmacion -> B_DialogoConfirmacion : nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()
 
 note right of B_DialogoConfirmacion
   <b>El dialogo dice QUE va a pasar, no solo pide un si</b> (`H-18` del `CDR-01`).
@@ -98,9 +102,12 @@ note right of B_DialogoConfirmacion
   todos los usuarios: quien confirma debe leerlo primero.
   <b>El patron correcto ya estaba en el paquete:</b> `DS-11` hace lo mismo con
   `advertirDelAlcanceIrreversible()`.
+  <b>Y el bucle abre AQUI a proposito</b> (`RI-1`, `SD-45`): `ECU-10 FE-03` vuelve
+  al <b>paso 2</b>, cuyo lado del Sistema es exactamente <b>pedir la confirmacion
+  anticipando el efecto</b>. El reintento vuelve a mostrar el dialogo, no solo a
+  esperar otra respuesta.
 end note
 
-loop ECU-10 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
   ACT_Administrador -> B_DialogoConfirmacion : confirmar o no confirmar el cambio
 
   opt FE-03 la confirmacion llega mal formada
@@ -118,8 +125,9 @@ else la confirmacion es valida
     (`FE-03`): ninguno de los dos termina. Ni `break` —que abandonaria— ni `opt` —que
     caeria al cambio de estado, aplicandolo pese a la cancelacion— lo dicen.
     El `alt` hace excluyentes error y exito; el `loop` modela el ciclo de reintento.
-    <b>El punto exacto de reentrada no lo dibuja este diagrama</b> (`SD-44`): es
-    normativo en `ECU-10 FA-02/FE-03` y verificable en `CP-1108`/`CP-1109`.
+    <b>Desde `SD-45` el bucle SI dibuja la reentrada de `FE-03`</b>: abre en el paso 2,
+    adonde manda la `ECU`. Lo que no es del bucle es `FA-02`: cancelar no itera — su
+    «vuelve al paso 1» es una nueva invocacion, y lo fija `CP-1108`.
     <b>`FE-01` y `FE-02` quedan FUERA del bucle a proposito:</b> su `ECU` si dice «Termina»,
     y un `break` dentro de un `loop` saldria del bucle y seguiria ejecutando.
   end note

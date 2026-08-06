@@ -1,129 +1,129 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2134 2260" width="2134" height="2260" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2156 2273" width="2156" height="2273" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-12 - Secuencia de CU-12 «Revocar la personalizacion»</title>
 <desc id="d">Diagrama de secuencia UML. 7 participantes, 17 mensajes.</desc>
-<rect x="0" y="0" width="2134" height="2260" fill="#FFFFFF"/>
+<rect x="0" y="0" width="2156" height="2273" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-12 - Secuencia de CU-12 «Revocar la personalizacion»</text>
-<line x1="77.3" y1="103.0" x2="77.3" y2="2232.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="444.1" y1="67.0" x2="444.1" y2="2232.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="881.0" y1="80.0" x2="881.0" y2="2232.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1107.0" y1="67.0" x2="1107.0" y2="2232.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1424.2" y1="67.0" x2="1424.2" y2="2232.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1785.9" y1="67.0" x2="1785.9" y2="2232.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2061.9" y1="67.0" x2="2061.9" y2="2232.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="406.1" y="301.0" width="513.0" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="406.05000000000007,301 468.05000000000007,301 468.05000000000007,313 460.05000000000007,321 406.05000000000007,321" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="415.05000000000007" y="315" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="478.05000000000007" y="315" font-size="10" fill="#993C1D">[FE-01 la sesion expira]</text>
-<rect x="406.1" y="385.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="406.05000000000007,385 468.05000000000007,385 468.05000000000007,397 460.05000000000007,405 406.05000000000007,405" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="415.05000000000007" y="399" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="478.05000000000007" y="399" font-size="10" fill="#993C1D">[FE-02 el]</text>
-<rect x="406.1" y="535.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="406.05000000000007,535 468.05000000000007,535 468.05000000000007,547 460.05000000000007,555 406.05000000000007,555" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="415.05000000000007" y="549" font-size="10" font-weight="600" fill="#993C1D">break</text>
-<text x="478.05000000000007" y="549" font-size="10" fill="#993C1D">[FA-01 la]</text>
-<rect x="39.3" y="711.0" width="442.7" height="176.0" fill="none" stroke="#5F5E5A" stroke-width="1" rx="3"/>
+<line x1="77.3" y1="103.0" x2="77.3" y2="2245.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="466.1" y1="67.0" x2="466.1" y2="2245.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="903.0" y1="80.0" x2="903.0" y2="2245.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1129.0" y1="67.0" x2="1129.0" y2="2245.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1446.2" y1="67.0" x2="1446.2" y2="2245.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1807.9" y1="67.0" x2="1807.9" y2="2245.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2083.9" y1="67.0" x2="2083.9" y2="2245.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="428.1" y="301.0" width="513.0" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="428.05000000000007,301 490.05000000000007,301 490.05000000000007,313 482.05000000000007,321 428.05000000000007,321" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="437.05000000000007" y="315" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="500.05000000000007" y="315" font-size="10" fill="#993C1D">[FE-01 la sesion expira]</text>
+<rect x="428.1" y="385.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="428.05000000000007,385 490.05000000000007,385 490.05000000000007,397 482.05000000000007,405 428.05000000000007,405" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="437.05000000000007" y="399" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="500.05000000000007" y="399" font-size="10" fill="#993C1D">[FE-02 el]</text>
+<rect x="428.1" y="535.0" width="76.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="428.05000000000007,535 490.05000000000007,535 490.05000000000007,547 482.05000000000007,555 428.05000000000007,555" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="437.05000000000007" y="549" font-size="10" font-weight="600" fill="#993C1D">break</text>
+<text x="500.05000000000007" y="549" font-size="10" fill="#993C1D">[FA-01 la]</text>
+<rect x="39.3" y="711.0" width="464.7" height="176.0" fill="none" stroke="#5F5E5A" stroke-width="1" rx="3"/>
 <polygon points="39.349999999999994,711 101.35,711 101.35,723 93.35,731 39.349999999999994,731" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
 <text x="48.349999999999994" y="725" font-size="10" font-weight="600" fill="#5F5E5A">loop</text>
-<text x="111.35" y="725" font-size="10" fill="#5F5E5A">[ECU-12 FE-03 reintenta el paso 2 hasta que la confirmacion llegue]</text>
-<rect x="396.1" y="787.0" width="96.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="396.05000000000007,787 458.05000000000007,787 458.05000000000007,799 450.05000000000007,807 396.05000000000007,807" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="405.05000000000007" y="801" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="468.05000000000007" y="801" font-size="10" fill="#993C1D">[FE-03]</text>
-<rect x="406.1" y="905.0" width="1693.9" height="1001.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="406.05000000000007,905 468.05000000000007,905 468.05000000000007,917 460.05000000000007,925 406.05000000000007,925" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="415.05000000000007" y="919" font-size="10" font-weight="600" fill="#993C1D">alt</text>
-<text x="478.05000000000007" y="919" font-size="10" fill="#993C1D">[FA-03 cancela en la confirmacion]</text>
-<line x1="406.1" y1="999.0" x2="2099.9" y2="999.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
-<text x="416.1" y="1012.0" font-size="10" fill="#993C1D">[la confirmacion es valida]</text>
-<rect x="396.1" y="1599.0" width="1437.9" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
-<polygon points="396.05000000000007,1599 458.05000000000007,1599 458.05000000000007,1611 450.05000000000007,1619 396.05000000000007,1619" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
-<text x="405.05000000000007" y="1613" font-size="10" font-weight="600" fill="#993C1D">opt</text>
-<text x="468.05000000000007" y="1613" font-size="10" fill="#993C1D">[FA-02 la capsula solo tiene character]</text>
-<line x1="57.3" y1="237.0" x2="2081.9" y2="237.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="949.7" y="226.0" width="239.8" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1069.6" y="241.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 1 y 2 - Alcance y confirmacion</text>
-<line x1="57.3" y1="1323.0" x2="2081.9" y2="1323.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="904.4" y="1312.0" width="330.6" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1069.6" y="1327.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 3 - Revocacion y descarte de los autorreportes</text>
-<line x1="57.3" y1="1691.0" x2="2081.9" y2="1691.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="898.3" y="1680.0" width="342.7" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1069.6" y="1695.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 4 - Confirmacion de que el chat sigue disponible</text>
-<line x1="77.3" y1="281.0" x2="444.1" y2="281.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="442.05000000000007,281 435.05000000000007,277.6 435.05000000000007,284.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="166.0" y="256.0" width="189.5" height="15.0" fill="#FFFFFF"/>
-<text x="170.0" y="268.0" font-size="10" fill="#2C2C2A">elegir revocar la personalizacion</text>
-<line x1="444.1" y1="357.0" x2="881.0" y2="357.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="879.0000000000001,357 872.0000000000001,353.6 872.0000000000001,360.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="584.3" y="332.0" width="156.5" height="15.0" fill="#FFFFFF"/>
-<text x="588.3" y="344.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
-<polyline points="444.1,441.0 486.1,441.0 486.1,467.0 453.1,467.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="446.05000000000007,467 453.05000000000007,463.6 453.05000000000007,470.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="492.1" y="416.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="496.1" y="428.0" font-size="10" fill="#2C2C2A">denegarPorPermisoSinCambios()</text>
-<line x1="444.1" y1="515.0" x2="1785.9" y2="515.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1783.9499999999998,515 1776.9499999999998,511.6 1776.9499999999998,518.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1023.0" y="490.0" width="184.0" height="15.0" fill="#FFFFFF"/>
-<text x="1027.0" y="502.0" font-size="10" fill="#2C2C2A">dejaraDeOrientarLaConversacion()</text>
-<polyline points="444.1,591.0 486.1,591.0 486.1,617.0 453.1,617.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="446.05000000000007,617 453.05000000000007,613.6 453.05000000000007,620.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="492.1" y="566.0" width="266.5" height="15.0" fill="#FFFFFF"/>
-<text x="496.1" y="578.0" font-size="10" fill="#2C2C2A">informarQueYaEstabaRevocadaSinRepetirElCambio()</text>
-<polyline points="444.1,665.0 486.1,665.0 486.1,691.0 453.1,691.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="446.05000000000007,691 453.05000000000007,687.6 453.05000000000007,694.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="492.1" y="640.0" width="206.0" height="15.0" fill="#FFFFFF"/>
-<text x="496.1" y="652.0" font-size="10" fill="#2C2C2A">declararQueElChatSeguiraDisponible()</text>
-<line x1="77.3" y1="767.0" x2="444.1" y2="767.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="442.05000000000007,767 435.05000000000007,763.6 435.05000000000007,770.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="193.5" y="742.0" width="134.5" height="15.0" fill="#FFFFFF"/>
-<text x="197.5" y="754.0" font-size="10" fill="#2C2C2A">confirmar la revocacion</text>
-<polyline points="444.1,843.0 486.1,843.0 486.1,869.0 453.1,869.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="446.05000000000007,869 453.05000000000007,865.6 453.05000000000007,872.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="492.1" y="818.0" width="261.0" height="15.0" fill="#FFFFFF"/>
-<text x="496.1" y="830.0" font-size="10" fill="#2C2C2A">mostrarPeticionMalFormadaYPermitirReintentar()</text>
-<polyline points="444.1,961.0 486.1,961.0 486.1,987.0 453.1,987.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="446.05000000000007,987 453.05000000000007,983.6 453.05000000000007,990.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="492.1" y="936.0" width="217.0" height="15.0" fill="#FFFFFF"/>
-<text x="496.1" y="948.0" font-size="10" fill="#2C2C2A">cancelarSinModificarElConsentimiento()</text>
-<line x1="444.1" y1="1367.0" x2="1107.0" y2="1367.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1105.0,1367 1098.0,1363.6 1098.0,1370.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="669.8" y="1342.0" width="211.5" height="15.0" fill="#FFFFFF"/>
-<text x="673.8" y="1354.0" font-size="10" fill="#2C2C2A">identificarTitularDelConsentimiento()</text>
-<line x1="1107.0" y1="1407.0" x2="1424.2" y2="1407.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1422.1999999999998,1407 1415.1999999999998,1403.6 1415.1999999999998,1410.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1165.3" y="1382.0" width="200.5" height="15.0" fill="#FFFFFF"/>
-<text x="1169.3" y="1394.0" font-size="10" fill="#2C2C2A">revocarCapaDePersonalizacion(fecha)</text>
-<polyline points="1424.2,1447.0 1466.2,1447.0 1466.2,1473.0 1433.2,1473.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1426.1999999999998,1473 1433.1999999999998,1469.6 1433.1999999999998,1476.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1472.2" y="1422.0" width="167.5" height="15.0" fill="#FFFFFF"/>
-<text x="1476.2" y="1434.0" font-size="10" fill="#2C2C2A">conservarLaCapaBaseOtorgada()</text>
-<line x1="1424.2" y1="1513.0" x2="1785.9" y2="1513.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1783.9499999999998,1513 1776.9499999999998,1509.6 1776.9499999999998,1516.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1485.6" y="1488.0" width="239.0" height="15.0" fill="#FFFFFF"/>
-<text x="1489.6" y="1500.0" font-size="10" fill="#2C2C2A">marcarLosCuatroAutorreportesParaDescarte()</text>
-<polyline points="1785.9,1553.0 1827.9,1553.0 1827.9,1579.0 1794.9,1579.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="1787.9499999999998,1579 1794.9499999999998,1575.6 1794.9499999999998,1582.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1833.9" y="1528.0" width="118.0" height="15.0" fill="#FFFFFF"/>
-<text x="1837.9" y="1540.0" font-size="10" fill="#2C2C2A">conservarCharacter()</text>
-<line x1="1785.9" y1="1655.0" x2="444.1" y2="1655.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
-<polygon points="446.05000000000007,1655 453.05000000000007,1651.6 453.05000000000007,1658.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
-<rect x="951.5" y="1630.0" width="327.0" height="15.0" fill="#FFFFFF"/>
-<text x="955.5" y="1642.0" font-size="10" fill="#2C2C2A">efecto observable nulo, no habia nada que dejara de usarse</text>
-<line x1="444.1" y1="1735.0" x2="2061.9" y2="1735.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2059.95,1735 2052.95,1731.6 2052.95,1738.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1089.5" y="1710.0" width="327.0" height="15.0" fill="#FFFFFF"/>
-<text x="1093.5" y="1722.0" font-size="10" fill="#2C2C2A">desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor()</text>
-<polyline points="444.1,1775.0 486.1,1775.0 486.1,1801.0 453.1,1801.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="446.05000000000007,1801 453.05000000000007,1797.6 453.05000000000007,1804.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="492.1" y="1750.0" width="206.0" height="15.0" fill="#FFFFFF"/>
-<text x="496.1" y="1762.0" font-size="10" fill="#2C2C2A">confirmarQuePuedeSeguirConversando()</text>
-<rect x="310.1" y="126.0" width="1817.9" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="318.1" y="144.0" font-size="9.5" fill="#2C2C2A">Invariante, y es lo esencial de este caso de uso: el Usuario SIGUE PUDIENDO</text>
-<text x="318.1" y="157.0" font-size="9.5" fill="#2C2C2A">CONVERSAR. Revocar la personalizacion no es punitivo (RN-08). La capa base</text>
-<text x="318.1" y="170.0" font-size="9.5" fill="#2C2C2A">permanece otorgada; lo unico que cesa es que los cuatro autorreportes orienten la</text>
-<text x="318.1" y="183.0" font-size="9.5" fill="#2C2C2A">conversacion. `character` permanece, porque pertenece a la capa BASE (RN-01.6).</text>
-<text x="318.1" y="196.0" font-size="9.5" fill="#2C2C2A">Contraste con CU-11 (DS-11), que borra la capsula entera: PER-T7.</text>
-<rect x="6.0" y="1017.0" width="566.7" height="276.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="111.35" y="725" font-size="10" fill="#5F5E5A">[ECU-12 FE-03 reintenta el paso 2 hasta que llegue una respuesta bien]</text>
+<rect x="418.1" y="787.0" width="96.0" height="92.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="418.05000000000007,787 480.05000000000007,787 480.05000000000007,799 472.05000000000007,807 418.05000000000007,807" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="427.05000000000007" y="801" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="490.05000000000007" y="801" font-size="10" fill="#993C1D">[FE-03]</text>
+<rect x="428.1" y="905.0" width="1693.9" height="1014.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="428.05000000000007,905 490.05000000000007,905 490.05000000000007,917 482.05000000000007,925 428.05000000000007,925" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="437.05000000000007" y="919" font-size="10" font-weight="600" fill="#993C1D">alt</text>
+<text x="500.05000000000007" y="919" font-size="10" fill="#993C1D">[FA-03 cancela en la confirmacion]</text>
+<line x1="428.1" y1="999.0" x2="2121.9" y2="999.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="438.1" y="1012.0" font-size="10" fill="#993C1D">[la confirmacion es valida]</text>
+<rect x="418.1" y="1612.0" width="1437.9" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<polygon points="418.05000000000007,1612 480.05000000000007,1612 480.05000000000007,1624 472.05000000000007,1632 418.05000000000007,1632" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
+<text x="427.05000000000007" y="1626" font-size="10" font-weight="600" fill="#993C1D">opt</text>
+<text x="490.05000000000007" y="1626" font-size="10" fill="#993C1D">[FA-02 la capsula solo tiene character]</text>
+<line x1="57.3" y1="237.0" x2="2103.9" y2="237.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="960.7" y="226.0" width="239.8" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1080.6" y="241.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 1 y 2 - Alcance y confirmacion</text>
+<line x1="57.3" y1="1336.0" x2="2103.9" y2="1336.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="915.4" y="1325.0" width="330.6" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1080.6" y="1340.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 3 - Revocacion y descarte de los autorreportes</text>
+<line x1="57.3" y1="1704.0" x2="2103.9" y2="1704.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="909.3" y="1693.0" width="342.7" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1080.6" y="1708.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 4 - Confirmacion de que el chat sigue disponible</text>
+<line x1="77.3" y1="281.0" x2="466.1" y2="281.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="464.05000000000007,281 457.05000000000007,277.6 457.05000000000007,284.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="177.0" y="256.0" width="189.5" height="15.0" fill="#FFFFFF"/>
+<text x="181.0" y="268.0" font-size="10" fill="#2C2C2A">elegir revocar la personalizacion</text>
+<line x1="466.1" y1="357.0" x2="903.0" y2="357.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="901.0000000000001,357 894.0000000000001,353.6 894.0000000000001,360.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="606.3" y="332.0" width="156.5" height="15.0" fill="#FFFFFF"/>
+<text x="610.3" y="344.0" font-size="10" fill="#2C2C2A">solicitarReingresoPorCU03()</text>
+<polyline points="466.1,441.0 508.1,441.0 508.1,467.0 475.1,467.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="468.05000000000007,467 475.05000000000007,463.6 475.05000000000007,470.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="514.1" y="416.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="518.1" y="428.0" font-size="10" fill="#2C2C2A">denegarPorPermisoSinCambios()</text>
+<line x1="466.1" y1="515.0" x2="1807.9" y2="515.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1805.9499999999998,515 1798.9499999999998,511.6 1798.9499999999998,518.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1045.0" y="490.0" width="184.0" height="15.0" fill="#FFFFFF"/>
+<text x="1049.0" y="502.0" font-size="10" fill="#2C2C2A">dejaraDeOrientarLaConversacion()</text>
+<polyline points="466.1,591.0 508.1,591.0 508.1,617.0 475.1,617.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="468.05000000000007,617 475.05000000000007,613.6 475.05000000000007,620.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="514.1" y="566.0" width="266.5" height="15.0" fill="#FFFFFF"/>
+<text x="518.1" y="578.0" font-size="10" fill="#2C2C2A">informarQueYaEstabaRevocadaSinRepetirElCambio()</text>
+<polyline points="466.1,665.0 508.1,665.0 508.1,691.0 475.1,691.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="468.05000000000007,691 475.05000000000007,687.6 475.05000000000007,694.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="514.1" y="640.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="518.1" y="652.0" font-size="10" fill="#2C2C2A">declararQueElChatSeguiraDisponible()</text>
+<line x1="77.3" y1="767.0" x2="466.1" y2="767.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="464.05000000000007,767 457.05000000000007,763.6 457.05000000000007,770.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="166.0" y="742.0" width="211.5" height="15.0" fill="#FFFFFF"/>
+<text x="170.0" y="754.0" font-size="10" fill="#2C2C2A">confirmar la revocacion, o cancelarla</text>
+<polyline points="466.1,843.0 508.1,843.0 508.1,869.0 475.1,869.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="468.05000000000007,869 475.05000000000007,865.6 475.05000000000007,872.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="514.1" y="818.0" width="261.0" height="15.0" fill="#FFFFFF"/>
+<text x="518.1" y="830.0" font-size="10" fill="#2C2C2A">mostrarPeticionMalFormadaYPermitirReintentar()</text>
+<polyline points="466.1,961.0 508.1,961.0 508.1,987.0 475.1,987.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="468.05000000000007,987 475.05000000000007,983.6 475.05000000000007,990.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="514.1" y="936.0" width="217.0" height="15.0" fill="#FFFFFF"/>
+<text x="518.1" y="948.0" font-size="10" fill="#2C2C2A">cancelarSinModificarElConsentimiento()</text>
+<line x1="466.1" y1="1380.0" x2="1129.0" y2="1380.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1127.0,1380 1120.0,1376.6 1120.0,1383.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="691.8" y="1355.0" width="211.5" height="15.0" fill="#FFFFFF"/>
+<text x="695.8" y="1367.0" font-size="10" fill="#2C2C2A">identificarTitularDelConsentimiento()</text>
+<line x1="1129.0" y1="1420.0" x2="1446.2" y2="1420.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1444.1999999999998,1420 1437.1999999999998,1416.6 1437.1999999999998,1423.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1187.3" y="1395.0" width="200.5" height="15.0" fill="#FFFFFF"/>
+<text x="1191.3" y="1407.0" font-size="10" fill="#2C2C2A">revocarCapaDePersonalizacion(fecha)</text>
+<polyline points="1446.2,1460.0 1488.2,1460.0 1488.2,1486.0 1455.2,1486.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1448.1999999999998,1486 1455.1999999999998,1482.6 1455.1999999999998,1489.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1494.2" y="1435.0" width="167.5" height="15.0" fill="#FFFFFF"/>
+<text x="1498.2" y="1447.0" font-size="10" fill="#2C2C2A">conservarLaCapaBaseOtorgada()</text>
+<line x1="1446.2" y1="1526.0" x2="1807.9" y2="1526.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1805.9499999999998,1526 1798.9499999999998,1522.6 1798.9499999999998,1529.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1507.6" y="1501.0" width="239.0" height="15.0" fill="#FFFFFF"/>
+<text x="1511.6" y="1513.0" font-size="10" fill="#2C2C2A">marcarLosCuatroAutorreportesParaDescarte()</text>
+<polyline points="1807.9,1566.0 1849.9,1566.0 1849.9,1592.0 1816.9,1592.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="1809.9499999999998,1592 1816.9499999999998,1588.6 1816.9499999999998,1595.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1855.9" y="1541.0" width="118.0" height="15.0" fill="#FFFFFF"/>
+<text x="1859.9" y="1553.0" font-size="10" fill="#2C2C2A">conservarCharacter()</text>
+<line x1="1807.9" y1="1668.0" x2="466.1" y2="1668.0" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="6 4"/>
+<polygon points="468.05000000000007,1668 475.05000000000007,1664.6 475.05000000000007,1671.4" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+<rect x="973.5" y="1643.0" width="327.0" height="15.0" fill="#FFFFFF"/>
+<text x="977.5" y="1655.0" font-size="10" fill="#2C2C2A">efecto observable nulo, no habia nada que dejara de usarse</text>
+<line x1="466.1" y1="1748.0" x2="2083.9" y2="1748.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2081.95,1748 2074.95,1744.6 2074.95,1751.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1111.5" y="1723.0" width="327.0" height="15.0" fill="#FFFFFF"/>
+<text x="1115.5" y="1735.0" font-size="10" fill="#2C2C2A">desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor()</text>
+<polyline points="466.1,1788.0 508.1,1788.0 508.1,1814.0 475.1,1814.0" fill="none" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="468.05000000000007,1814 475.05000000000007,1810.6 475.05000000000007,1817.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="514.1" y="1763.0" width="206.0" height="15.0" fill="#FFFFFF"/>
+<text x="518.1" y="1775.0" font-size="10" fill="#2C2C2A">confirmarQuePuedeSeguirConversando()</text>
+<rect x="332.1" y="126.0" width="1817.9" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="340.1" y="144.0" font-size="9.5" fill="#2C2C2A">Invariante, y es lo esencial de este caso de uso: el Usuario SIGUE PUDIENDO</text>
+<text x="340.1" y="157.0" font-size="9.5" fill="#2C2C2A">CONVERSAR. Revocar la personalizacion no es punitivo (RN-08). La capa base</text>
+<text x="340.1" y="170.0" font-size="9.5" fill="#2C2C2A">permanece otorgada; lo unico que cesa es que los cuatro autorreportes orienten la</text>
+<text x="340.1" y="183.0" font-size="9.5" fill="#2C2C2A">conversacion. `character` permanece, porque pertenece a la capa BASE (RN-01.6).</text>
+<text x="340.1" y="196.0" font-size="9.5" fill="#2C2C2A">Contraste con CU-11 (DS-11), que borra la capsula entera: PER-T7.</text>
+<rect x="6.0" y="1017.0" width="588.7" height="289.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
 <text x="14.0" y="1035.0" font-size="9.5" fill="#2C2C2A">Por que `loop` + `alt`, y no `break` ni `opt` (`SVI-01` del `CDR-01 v1.5`, `SD-43`).</text>
 <text x="14.0" y="1048.0" font-size="9.5" fill="#2C2C2A">Esta rama se resolvio mal tres veces, y cada intento fallo por una razon distinta:</text>
 <text x="14.0" y="1061.0" font-size="9.5" fill="#2C2C2A">· `break` (original): abandona el fragmento envolvente, asi que construia un</text>
@@ -135,62 +135,63 @@
 <text x="14.0" y="1139.0" font-size="9.5" fill="#2C2C2A">«Vuelve al paso 2». Lo cazo la segunda verificacion independiente.</text>
 <text x="14.0" y="1152.0" font-size="9.5" fill="#2C2C2A">Hacen falta las dos piezas: el `alt` hace mutuamente excluyentes el desenlace de</text>
 <text x="14.0" y="1165.0" font-size="9.5" fill="#2C2C2A">error y el sufijo de exito; el `loop` modela el ciclo de reintento.</text>
-<text x="14.0" y="1178.0" font-size="9.5" fill="#2C2C2A">El punto exacto de reentrada no lo dibuja este diagrama (`SD-44`): es</text>
-<text x="14.0" y="1191.0" font-size="9.5" fill="#2C2C2A">normativo en `ECU-12 FA-03/FE-03` y verificable en `CP-1305`/`CP-1306`.</text>
-<text x="14.0" y="1204.0" font-size="9.5" fill="#2C2C2A">Aproximacion declarada. `FA-03` vuelve al paso 1 y `FE-03` al paso 2:</text>
-<text x="14.0" y="1217.0" font-size="9.5" fill="#2C2C2A">dos puntos de retorno distintos. El `loop` reentra por el paso 2, que es el ciclo de</text>
-<text x="14.0" y="1230.0" font-size="9.5" fill="#2C2C2A">confirmacion. Se prefirio a un anidamiento de dos bucles por legibilidad, y se declara</text>
-<text x="14.0" y="1243.0" font-size="9.5" fill="#2C2C2A">aqui para que sea discutible en vez de invisible.</text>
-<text x="14.0" y="1256.0" font-size="9.5" fill="#2C2C2A">Y por que el `loop` NO envuelve a `FE-01`, `FE-02` ni `FA-01`: esos tres si dicen</text>
-<text x="14.0" y="1269.0" font-size="9.5" fill="#2C2C2A">«Termina»/«Finaliza», y un `break` dentro de un `loop` saldria del bucle y seguiria</text>
-<text x="14.0" y="1282.0" font-size="9.5" fill="#2C2C2A">ejecutando lo que viene despues. Quedan fuera a proposito, para conservar su semantica.</text>
-<rect x="1334.2" y="1813.0" width="561.8" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="1342.2" y="1831.0" font-size="9.5" fill="#2C2C2A">PRIV-R3: los autorreportes quedan marcados para descarte, no borrados en</text>
-<text x="1342.2" y="1844.0" font-size="9.5" fill="#2C2C2A">el acto. El diagrama lo dice con ese verbo y no con «suprimir», porque el momento del</text>
-<text x="1342.2" y="1857.0" font-size="9.5" fill="#2C2C2A">descarte fisico es diseno de retencion y su sitio es `ARQ-01`.</text>
-<text x="1342.2" y="1870.0" font-size="9.5" fill="#2C2C2A">Lo que NO existe aqui es la afirmacion: ningun mensaje toca la capa base, y</text>
-<text x="1342.2" y="1883.0" font-size="9.5" fill="#2C2C2A">ninguno borra `character`. Por eso el chat sigue disponible.</text>
-<rect x="6.0" y="1916.0" width="566.7" height="146.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="14.0" y="1934.0" font-size="9.5" fill="#2C2C2A">El bucle reentra EXACTAMENTE donde manda la `ECU`, y por eso `R3` ya no hace</text>
-<text x="14.0" y="1947.0" font-size="9.5" fill="#2C2C2A">falta aqui (`CVI-03`, Mayor, `CDR-01 v1.7`; `SD-45`). La cuarta verificacion</text>
-<text x="14.0" y="1960.0" font-size="9.5" fill="#2C2C2A">refuto `R3` con un argumento que no admite replica: dibujar una reentrada y</text>
-<text x="14.0" y="1973.0" font-size="9.5" fill="#2C2C2A">declarar en una nota que no se pretende dibujarla no elimina la semantica del</text>
-<text x="14.0" y="1986.0" font-size="9.5" fill="#2C2C2A">fragmento. Un `loop` tiene un inicio concreto y UML repite desde ahi.</text>
-<text x="14.0" y="1999.0" font-size="9.5" fill="#2C2C2A">Antes, un solo bucle abria en el paso 1 y pretendia servir a dos ramas con</text>
-<text x="14.0" y="2012.0" font-size="9.5" fill="#2C2C2A">destinos distintos. Ahora el bucle envuelve solo el paso 2, que es adonde</text>
-<text x="14.0" y="2025.0" font-size="9.5" fill="#2C2C2A">`ECU-12 FE-03` manda volver, y la cancelacion sale del bucle: cancelar</text>
-<text x="14.0" y="2038.0" font-size="9.5" fill="#2C2C2A">nunca fue una iteracion. Su «vuelve al paso 1» es una nueva invocacion del</text>
-<text x="14.0" y="2051.0" font-size="9.5" fill="#2C2C2A">caso de uso, y el `alt` la hace excluyente con el exito (regla 1 de `SD-44`).</text>
-<rect x="24.0" y="2076.0" width="460.0" height="146.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="32.0" y="2094.0" font-size="9.5" fill="#2C2C2A">La advertencia 11 del validador es un falso positivo de su modelo de caminos,</text>
-<text x="32.0" y="2107.0" font-size="9.5" fill="#2C2C2A">y se declara en vez de callarla contorsionando el diagrama (`SD-45`).</text>
-<text x="32.0" y="2120.0" font-size="9.5" fill="#2C2C2A">Avisa de «3 auto-llamadas consecutivas en un mismo camino de ejecucion», contando</text>
-<text x="32.0" y="2133.0" font-size="9.5" fill="#2C2C2A">`informarQueYaEstabaRevocadaSinRepetirElCambio()`,</text>
-<text x="32.0" y="2146.0" font-size="9.5" fill="#2C2C2A">`declararQueElChatSeguiraDisponible()`</text>
-<text x="32.0" y="2159.0" font-size="9.5" fill="#2C2C2A">y `mostrarPeticionMalFormadaYPermitirReintentar()`. Pero la primera vive dentro de</text>
-<text x="32.0" y="2172.0" font-size="9.5" fill="#2C2C2A">un `break` a nivel raiz, y un `break` ahi ejecuta su operando en lugar del</text>
-<text x="32.0" y="2185.0" font-size="9.5" fill="#2C2C2A">resto de la interaccion: si `FA-01` dispara, las otras dos nunca se ejecutan.</text>
-<text x="32.0" y="2198.0" font-size="9.5" fill="#2C2C2A">Las tres no comparten camino. La skill lo dice: la advertencia es orientativa</text>
-<text x="32.0" y="2211.0" font-size="9.5" fill="#2C2C2A">y el diagrama no se retuerce para silenciarla.</text>
+<text x="14.0" y="1178.0" font-size="9.5" fill="#2C2C2A">Desde `SD-45` el bucle SI dibuja la reentrada de `FE-03`: abre en el paso 2,</text>
+<text x="14.0" y="1191.0" font-size="9.5" fill="#2C2C2A">adonde manda la `ECU`. Lo que no es del bucle es `FA-03`: cancelar no itera, y su</text>
+<text x="14.0" y="1204.0" font-size="9.5" fill="#2C2C2A">punto de retorno lo fija `CP-1305`/`CP-1306`.</text>
+<text x="14.0" y="1217.0" font-size="9.5" fill="#2C2C2A">Aproximacion declarada. `FA-03` vuelve al paso 1 y `FE-03` al paso 2:</text>
+<text x="14.0" y="1230.0" font-size="9.5" fill="#2C2C2A">dos puntos de retorno distintos. El `loop` reentra por el paso 2, que es el ciclo de</text>
+<text x="14.0" y="1243.0" font-size="9.5" fill="#2C2C2A">confirmacion. Se prefirio a un anidamiento de dos bucles por legibilidad, y se declara</text>
+<text x="14.0" y="1256.0" font-size="9.5" fill="#2C2C2A">aqui para que sea discutible en vez de invisible.</text>
+<text x="14.0" y="1269.0" font-size="9.5" fill="#2C2C2A">Y por que el `loop` NO envuelve a `FE-01`, `FE-02` ni `FA-01`: esos tres si dicen</text>
+<text x="14.0" y="1282.0" font-size="9.5" fill="#2C2C2A">«Termina»/«Finaliza», y un `break` dentro de un `loop` saldria del bucle y seguiria</text>
+<text x="14.0" y="1295.0" font-size="9.5" fill="#2C2C2A">ejecutando lo que viene despues. Quedan fuera a proposito, para conservar su semantica.</text>
+<rect x="1356.2" y="1826.0" width="561.8" height="81.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="1364.2" y="1844.0" font-size="9.5" fill="#2C2C2A">PRIV-R3: los autorreportes quedan marcados para descarte, no borrados en</text>
+<text x="1364.2" y="1857.0" font-size="9.5" fill="#2C2C2A">el acto. El diagrama lo dice con ese verbo y no con «suprimir», porque el momento del</text>
+<text x="1364.2" y="1870.0" font-size="9.5" fill="#2C2C2A">descarte fisico es diseno de retencion y su sitio es `ARQ-01`.</text>
+<text x="1364.2" y="1883.0" font-size="9.5" fill="#2C2C2A">Lo que NO existe aqui es la afirmacion: ningun mensaje toca la capa base, y</text>
+<text x="1364.2" y="1896.0" font-size="9.5" fill="#2C2C2A">ninguno borra `character`. Por eso el chat sigue disponible.</text>
+<rect x="6.0" y="1929.0" width="588.7" height="146.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="14.0" y="1947.0" font-size="9.5" fill="#2C2C2A">El bucle reentra EXACTAMENTE donde manda la `ECU`, y por eso `R3` ya no hace</text>
+<text x="14.0" y="1960.0" font-size="9.5" fill="#2C2C2A">falta aqui (`CVI-03`, Mayor, `CDR-01 v1.7`; `SD-45`). La cuarta verificacion</text>
+<text x="14.0" y="1973.0" font-size="9.5" fill="#2C2C2A">refuto `R3` con un argumento que no admite replica: dibujar una reentrada y</text>
+<text x="14.0" y="1986.0" font-size="9.5" fill="#2C2C2A">declarar en una nota que no se pretende dibujarla no elimina la semantica del</text>
+<text x="14.0" y="1999.0" font-size="9.5" fill="#2C2C2A">fragmento. Un `loop` tiene un inicio concreto y UML repite desde ahi.</text>
+<text x="14.0" y="2012.0" font-size="9.5" fill="#2C2C2A">Antes, un solo bucle abria en el paso 1 y pretendia servir a dos ramas con</text>
+<text x="14.0" y="2025.0" font-size="9.5" fill="#2C2C2A">destinos distintos. Ahora el bucle envuelve solo el paso 2, que es adonde</text>
+<text x="14.0" y="2038.0" font-size="9.5" fill="#2C2C2A">`ECU-12 FE-03` manda volver, y la cancelacion sale del bucle: cancelar</text>
+<text x="14.0" y="2051.0" font-size="9.5" fill="#2C2C2A">nunca fue una iteracion. Su «vuelve al paso 1» es una nueva invocacion del</text>
+<text x="14.0" y="2064.0" font-size="9.5" fill="#2C2C2A">caso de uso, y el `alt` la hace excluyente con el exito (regla 1 de `SD-44`).</text>
+<rect x="24.0" y="2089.0" width="460.0" height="146.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="32.0" y="2107.0" font-size="9.5" fill="#2C2C2A">La advertencia 11 del validador es un falso positivo de su modelo de caminos,</text>
+<text x="32.0" y="2120.0" font-size="9.5" fill="#2C2C2A">y se declara en vez de callarla contorsionando el diagrama (`SD-45`).</text>
+<text x="32.0" y="2133.0" font-size="9.5" fill="#2C2C2A">Avisa de «3 auto-llamadas consecutivas en un mismo camino de ejecucion», contando</text>
+<text x="32.0" y="2146.0" font-size="9.5" fill="#2C2C2A">`informarQueYaEstabaRevocadaSinRepetirElCambio()`,</text>
+<text x="32.0" y="2159.0" font-size="9.5" fill="#2C2C2A">`declararQueElChatSeguiraDisponible()`</text>
+<text x="32.0" y="2172.0" font-size="9.5" fill="#2C2C2A">y `mostrarPeticionMalFormadaYPermitirReintentar()`. Pero la primera vive dentro de</text>
+<text x="32.0" y="2185.0" font-size="9.5" fill="#2C2C2A">un `break` a nivel raiz, y un `break` ahi ejecuta su operando en lugar del</text>
+<text x="32.0" y="2198.0" font-size="9.5" fill="#2C2C2A">resto de la interaccion: si `FA-01` dispara, las otras dos nunca se ejecutan.</text>
+<text x="32.0" y="2211.0" font-size="9.5" fill="#2C2C2A">Las tres no comparten camino. La skill lo dice: la advertencia es orientativa</text>
+<text x="32.0" y="2224.0" font-size="9.5" fill="#2C2C2A">y el diagrama no se retuerce para silenciarla.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
-<rect x="360.5" y="34.0" width="167.2" height="33.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="367.45000000000005" y1="44.5" x2="367.45000000000005" y2="56.5"/><line x1="367.45000000000005" y1="50.5" x2="371.45000000000005" y2="50.5"/><circle cx="376.45000000000005" cy="50.5" r="5"/></g>
-<text x="454.1" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Gestion de cuenta (P-13)</text>
-<rect x="812.5" y="34.0" width="136.9" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
-<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="819.5250000000001" y1="51.0" x2="819.5250000000001" y2="63.0"/><line x1="819.5250000000001" y1="57.0" x2="823.5250000000001" y2="57.0"/><circle cx="828.5250000000001" cy="57.0" r="5"/></g>
-<text x="891.0" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>
-<text x="891.0" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">usuario (P-03)</text>
-<rect x="1059.0" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1073.0" cy="49.0" r="5.5"/><line x1="1066.5" y1="56.5" x2="1079.5" y2="56.5"/></g>
-<text x="1117.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Usuario</text>
-<rect x="1370.8" y="34.0" width="106.7" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1384.85" cy="49.0" r="5.5"/><line x1="1378.35" y1="56.5" x2="1391.35" y2="56.5"/></g>
-<text x="1434.2" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Consentimiento</text>
-<rect x="1729.6" y="34.0" width="112.8" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1743.5749999999998" cy="49.0" r="5.5"/><line x1="1737.0749999999998" y1="56.5" x2="1750.0749999999998" y2="56.5"/></g>
-<text x="1795.9" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">CapsulaDePerfil</text>
-<rect x="2013.9" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
-<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="2027.9499999999998" cy="49.0" r="5.5"/><line x1="2021.4499999999998" y1="56.5" x2="2034.4499999999998" y2="56.5"/></g>
-<text x="2071.9" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Conversacion</text>
+<rect x="382.5" y="34.0" width="167.2" height="33.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="389.45000000000005" y1="44.5" x2="389.45000000000005" y2="56.5"/><line x1="389.45000000000005" y1="50.5" x2="393.45000000000005" y2="50.5"/><circle cx="398.45000000000005" cy="50.5" r="5"/></g>
+<text x="476.1" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Gestion de cuenta (P-13)</text>
+<rect x="834.5" y="34.0" width="136.9" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<g fill="none" stroke="#185FA5" stroke-width="1.3"><line x1="841.5250000000001" y1="51.0" x2="841.5250000000001" y2="63.0"/><line x1="841.5250000000001" y1="57.0" x2="845.5250000000001" y2="57.0"/><circle cx="850.5250000000001" cy="57.0" r="5"/></g>
+<text x="913.0" y="54.5" font-size="11" text-anchor="middle" fill="#0C447C">Inicio de sesion de</text>
+<text x="913.0" y="67.5" font-size="11" text-anchor="middle" fill="#0C447C">usuario (P-03)</text>
+<rect x="1081.0" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1095.0" cy="49.0" r="5.5"/><line x1="1088.5" y1="56.5" x2="1101.5" y2="56.5"/></g>
+<text x="1139.0" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Usuario</text>
+<rect x="1392.8" y="34.0" width="106.7" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1406.85" cy="49.0" r="5.5"/><line x1="1400.35" y1="56.5" x2="1413.35" y2="56.5"/></g>
+<text x="1456.2" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Consentimiento</text>
+<rect x="1751.6" y="34.0" width="112.8" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="1765.5749999999998" cy="49.0" r="5.5"/><line x1="1759.0749999999998" y1="56.5" x2="1772.0749999999998" y2="56.5"/></g>
+<text x="1817.9" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">CapsulaDePerfil</text>
+<rect x="2035.9" y="34.0" width="96.0" height="33.0" rx="4" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<g fill="none" stroke="#534AB7" stroke-width="1.3"><circle cx="2049.95" cy="49.0" r="5.5"/><line x1="2043.4499999999998" y1="56.5" x2="2056.45" y2="56.5"/></g>
+<text x="2093.9" y="54.5" font-size="11" text-anchor="middle" fill="#26215C">Conversacion</text>
 </svg>

@@ -1,5 +1,8 @@
 @startuml
 ' DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»
+' v1.6 (revision interna final, SD-45): RI-2: la guarda vuelve a nombrar la cancelacion (R4) y el mensaje del actor cubre ambas respuestas.
+'       Hallado por la revision de dos subagentes ANTES del veredicto — el mismo
+'       tipo de defecto que CVI-03, sobreviviendo dentro de la correccion de CVI-03.
 ' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-11 FE-03`— y `FA-03` sale a un `alt`. SD-45-H1: la operacion decia el paso equivocado.
 '       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
 '       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
@@ -77,8 +80,8 @@ end
 E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acceso al chat
 B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
 
-loop ECU-11 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
-  ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita
+loop ECU-11 FE-03 reintenta el paso 2 hasta que llegue una respuesta bien formada — confirmar, o cancelar (FA-03)
+  ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita, o cancelarlo
 
   opt FE-03 llega sin confirmacion explicita o mal formada
     B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso2()
