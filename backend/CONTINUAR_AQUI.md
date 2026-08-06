@@ -15,40 +15,33 @@ prompts de Alan y Aura son **v2**, desplegados y verificados con 8 sondas contra
 (`CA-2`/`CA-3`/`CA-7`, corrección de `C-4`) — ver `backend/config/README.md` para el procedimiento
 de publicar un prompt nuevo.
 
-## Tres bugs reales, verificados, no bloqueantes
+## Tres bugs — cerrados el 2026-08-06 (commit `1e8fef3`)
 
-1. **`perfil/reiniciar.ts` deja `PERFIL.completoElOnboarding = true`.** Borra el ítem `CAPSULA`
-   (línea 34) pero nunca toca `completoElOnboarding` en `PERFIL`. Consecuencia: tras reiniciar,
-   `/chat` empieza a devolver `403 "consentimiento base no otorgado"` —correcto según el estado
-   real— pero `LoginResponse.onboardingCompleto` y `DirectorioResponse` siguen diciendo `true`
-   hasta el próximo login (`tieneOnboardingCompleto()` mira la presencia de `CAPSULA`, no ese
-   campo). El frontend lo mitiga escribiendo `onboardingCompleto: false` en la pista local tras un
-   reinicio exitoso, pero esa mitigación no sobrevive a un re-login y el campo en DynamoDB sigue
-   mintiendo. **Arreglo:** que `reiniciar.ts` también actualice `PERFIL.completoElOnboarding` a
-   `false` en el mismo `UpdateCommand`/`DeleteCommand`.
-2. **`429` declarado y nunca emitido en login.** `LoginStatus`/`LoginAdminStatus` en
-   `packages/contrato-api/src/rutas.ts` incluyen `429`, y así lo documenta `CONTRATO_API_v1.md`.
-   Verificado: ni `auth/login.ts` ni `auth/login-admin.ts` importan `limites.ts` — no hay ningún
-   freno de fuerza bruta en el login. `limites.ts` (3/min, 30/día) solo se usa en `chat.ts`. Si se
-   implementa, debe decidirse el umbral y si es por IP o por username (ARQ-01 no lo especifica).
-3. **`character` inválido en `/chat` da `502`, no `400`.** `chat.ts:83` pasa `cuerpo.character`
-   sin validar contra el enum `Character` (`"alan" | "aura"`) directamente a la key de S3
-   `config/prompts/${character}.json`. Un valor fuera del enum no encuentra el objeto, lanza, y
-   sale como `502 "el proveedor no está disponible"` — copia engañosa para lo que en realidad es
-   una entrada mal formada. **Arreglo:** validar `character` contra el enum antes del paso 11 del
-   orden de verificación (ver la tabla en la cabecera de `chat.ts`), devolviendo `400`.
+1. ~~`perfil/reiniciar.ts` deja `PERFIL.completoElOnboarding = true`~~ **Corregido.** Ahora borra
+   `CAPSULA` y actualiza `PERFIL.completoElOnboarding` a `false` en un solo `TransactWriteCommand`
+   —mismo patrón que `onboarding.ts`—, para que no exista un estado intermedio donde la cápsula ya
+   no existe pero el perfil sigue diciendo que sí.
+2. ~~`429` declarado y nunca emitido en login~~ **Corregido.** Nueva función
+   `dentroDelLimiteDeIntentosDeLogin` en `limites.ts`: 5 intentos/minuto, clave por **username**
+   (no por IP — decisión documentada en el propio código: la amenaza es adivinar la contraseña de
+   una cuenta, y el username es la identidad que se protege). `login.ts` y `login-admin.ts`
+   comparten el mismo contador, para que no se pueda esquivar el freno cambiando de puerta.
+3. ~~`character` inválido en `/chat` da `502`, no `400`~~ **Corregido.** Se valida contra el enum
+   literal (`"alan" | "aura"`) antes de tocar S3, mismo patrón que `estadoNuevo` en
+   `admin/chat-access.ts`.
 
-## Dos huecos de contrato, documentados, no cerrados
+## Dos huecos de contrato
 
-1. **No hay `GET /admin/chat-access`.** El kill switch solo tiene `POST` (`api-stack.ts`). El
-   backend sí escribe `AccionAdministrativa` (autor + fecha) en cada cambio, pero no hay ruta para
-   leerla de vuelta. `ECU-10 §11` paso 1 exige que P-16 muestre «el último cambio registrado, con
-   autor y fecha» — el frontend tuvo que recortar ese bloque de su pantalla porque no hay de dónde
-   sacarlo. Si se implementa: leer el último ítem de `AccionAdministrativa` por
-   `fechaAccionId` descendente, exponer `{estado, ultimoCambio: {autor, fecha}}`. El `autor` debe
-   ser el **alias** del administrador, no el `username` (`RN-03.5`) — el mockup `p16` lo dibuja
-   como username y está mal.
-2. **`ChatResponseV1` no transporta recursos de ayuda.** El backend carga
+1. ~~No hay `GET /admin/chat-access`~~ **Cerrado el 2026-08-06** (commit `1e8fef3`). Nuevo handler
+   `admin/consultar-chat-access.ts`, mismo recurso REST que el `POST` existente. De paso se corrigió
+   un bug menor descubierto al escribirlo: el `POST` auditaba con `sesion.titularId` (un UUID
+   opaco) como `autor`; ahora resuelve el **alias** con una lectura de `PERFIL` antes de escribir la
+   auditoría, como pide `RN-03.5`. **Pendiente real que queda:** el frontend (`P-16`,
+   `Disponibilidad.tsx`) todavía no consume esta ruta — sigue leyendo el estado del kill switch vía
+   `/admin/metricas` y el bloque de «último cambio» sigue oculto en pantalla. Cuando se retome:
+   añadir `consultarChatAccess` a `frontend/src/api/endpoints.ts` y usarlo en `Disponibilidad.tsx`
+   en vez de `obtenerMetricas`.
+2. **`ChatResponseV1` no transporta recursos de ayuda.** Sigue abierto. El backend carga
    `ConfigSeguridad.contencion.recursos: ReferenciaDeDerivacion[]` de S3
    (`config/ayuda/contencion.json`), pero `chat.ts` solo devuelve `configSeguridad.contencion.mensaje`
    en el `safety_fallback`. El catálogo, además, está vacío hoy (decisión deliberada, diferida a
