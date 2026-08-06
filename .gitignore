@@ -58,3 +58,6 @@ grafo/vault/.obsidian/workspace-mobile.json
 # Wiegers…). Se reconstruye con grafo/scripts/vincular_fuentes.py a partir del
 # corpus original. Ver grafo/README.md §Licencia.
 grafo/vault/02_Fuentes/Conocimiento/
+
+# ── Caché de consultas de graphify (regenerable, no es contenido del grafo) ──
+grafo/cache/
