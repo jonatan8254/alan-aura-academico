@@ -20,10 +20,10 @@ export interface ApiStackProps extends StackProps {
  * /chat vía un "plan de uso" (usage plan + throttling por clave), que es un
  * mecanismo de API Gateway REST — HTTP API v2 no lo tiene en esos términos.
  *
- * Esta pasada monta /api/v1/health, las 4 rutas de auth, /onboarding y
- * /chat — el resto de las rutas de ARQ-01-D3 se añade handler por handler,
- * repitiendo el mismo patrón (NodejsFunction sin Docker, un rol de
- * ejecución por función, ARQ-01-D5).
+ * Esta pasada monta /api/v1/health, las 4 rutas de auth, /onboarding,
+ * /chat y las 2 de /perfil — quedan las 3 de /admin y /cuenta/eliminar,
+ * que se añaden handler por handler repitiendo el mismo patrón
+ * (NodejsFunction sin Docker, un rol de ejecución por función, ARQ-01-D5).
  */
 export class ApiStack extends Stack {
   public readonly api: apigateway.RestApi;
@@ -126,6 +126,26 @@ export class ApiStack extends Stack {
     secretoDeSesion.grantRead(chat);
 
     v1.addResource("chat").addMethod("POST", new apigateway.LambdaIntegration(chat));
+
+    const reiniciar = this.crearHandler("ReiniciarPerfilHandler", "perfil/reiniciar.ts", {
+      TABLA_TITULAR: props.tablaTitular.tableName,
+      ...entornoDeSesion,
+    });
+    const revocar = this.crearHandler("RevocarPersonalizacionHandler", "perfil/revocar.ts", {
+      TABLA_TITULAR: props.tablaTitular.tableName,
+      ...entornoDeSesion,
+    });
+    props.tablaTitular.grantReadWriteData(reiniciar);
+    props.tablaTitular.grantWriteData(revocar);
+    secretoDeSesion.grantRead(reiniciar);
+    secretoDeSesion.grantRead(revocar);
+
+    const perfil = v1.addResource("perfil");
+    perfil.addResource("reiniciar").addMethod("POST", new apigateway.LambdaIntegration(reiniciar));
+    perfil
+      .addResource("personalizacion")
+      .addResource("revocar")
+      .addMethod("POST", new apigateway.LambdaIntegration(revocar));
   }
 
   private crearHandler(
