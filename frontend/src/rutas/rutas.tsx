@@ -94,7 +94,25 @@ export function Rutas() {
       {/* ECU-05 FE-01 — sin sesión, sin layout, sin barra de pasos */}
       <Route path="/onboarding/no-disponible" element={<NoDisponible />} />
 
-      {/* Usuario autenticado — P-10/P-11/P-12 y P-13 */}
+      {/*
+        P-10/P-11/P-12 — el chat monta su PROPIO encabezado y no entra en `LayoutDeSesion`.
+        Dos razones: el mockup p10 no enseña la marca de la app sino el acompañante con su
+        disclosure persistente (`C-1`), y el chat necesita gobernar el alto de la ventana
+        para anclar el compositor abajo, cosa que `Pagina` no hace.
+      */}
+      <Route
+        path="/chat/"
+        element={
+          <RequiereSesion>
+            <RequiereOnboarding>
+              <Chat />
+            </RequiereOnboarding>
+          </RequiereSesion>
+        }
+      />
+
+      {/* P-13 — sí usa el layout de sesión. NO exige onboarding completo: tras un CU-11 la
+          persona se queda sin cápsula y aun así tiene que poder llegar aquí. */}
       <Route
         element={
           <RequiereSesion>
@@ -102,14 +120,6 @@ export function Rutas() {
           </RequiereSesion>
         }
       >
-        <Route
-          path="/chat/"
-          element={
-            <RequiereOnboarding>
-              <Chat />
-            </RequiereOnboarding>
-          }
-        />
         <Route path="/cuenta/" element={<GestionDeCuenta />} />
       </Route>
 
