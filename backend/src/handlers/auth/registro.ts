@@ -52,10 +52,16 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                 alias,
                 contrasenaHash,
                 rol: "usuario",
-                // esAdulto/versionDisclosure: hueco de contrato declarado en
-                // CONTRATO_API_v1.md — CU-05 no tiene hoy dónde enviarlos.
+                // esAdulto/versionDisclosure los escribe onboarding.ts (paso
+                // 3 de ECU-05) — no viajan en el registro.
                 estado: "sin_consentimiento_vigente",
                 fechaDeRegistro,
+                completoElOnboarding: false,
+                // Constante para que el ítem aparezca en GSI-2 (directorio
+                // disperso, CU-08, ARQ-01-D2) — sin esto el índice queda
+                // permanentemente vacío. Bug real encontrado al revisar
+                // /cuenta/eliminar, nunca ejercitado hasta ahora.
+                directorioPk: "DIRECTORIO",
               },
               ConditionExpression: "attribute_not_exists(titularId)",
             },

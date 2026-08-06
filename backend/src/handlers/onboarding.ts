@@ -46,12 +46,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       Update: {
         TableName: TABLA_TITULAR,
         Key: { titularId, sk: "PERFIL" },
-        UpdateExpression: "SET esAdulto = :ea, versionDisclosure = :vd, estado = :estado",
+        UpdateExpression:
+          "SET esAdulto = :ea, versionDisclosure = :vd, estado = :estado, completoElOnboarding = :completo",
         ConditionExpression: "attribute_exists(titularId)",
         ExpressionAttributeValues: {
           ":ea": cuerpo.esAdulto,
           ":vd": cuerpo.versionDisclosure,
           ":estado": "activo",
+          ":completo": true,
         },
       },
     },
