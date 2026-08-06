@@ -1,6 +1,6 @@
 # CP-06 — Casos de prueba de CU-06 «Conversar con el acompañante»
 
-**ID:** CP-06 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 · **Estado:** Propuesto.
+**ID:** CP-06 · **Familia:** CP (pruebas derivadas de secuencia, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 · **Estado:** Propuesto.
 **Propósito:** derivar los casos de prueba de `CU-06` **desde los Controladores** de `DR-06`, no desde el código ni desde el diagrama de secuencia. La unidad de derivación es el Controlador; la comprobación de cobertura son los caminos.
 **Insumos:** `DR-06 v2.1` (25 controladores), `DS-06 v1.1`, `ECU-06 v2.1` (§20, `CA-01…CA-11`), `HECHOS_CANONICOS` (`H-01…H-06`).
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador** contra los `.puml` (canon `CLAUDE.md` §1).
@@ -39,7 +39,7 @@ uso, para que un identificador de prueba sea único. `CU-06` ocupa **`CP-001`…
 | CP-020 | `C_ControlarTiempoDeEspera` | Curso básico | Solicitud enviada a la frontera del proveedor. | El proveedor responde a los 8 s (dentro de los **20 s**). | Se procesa con normalidad; ningún aviso de fallo. | … → CP-020 |
 | CP-021 | `C_ReintentarUnaVez` | FE-06 | Contexto mínimo ya enviado. | El proveedor no responde a la primera solicitud (fallo transitorio). | El sistema emite **una única** segunda solicitud, sin que el usuario reenvíe el mensaje. | … → CP-021 |
 | CP-022 | `C_InformarFalloDelProveedor` | FE-06 | El reintento único de `CP-021` también falla. | El proveedor tampoco responde al reintento. | HTTP 502 en P-11 con reintento manual visible; **sin rastro ni detalle interno del proveedor**; vuelve al **paso 4** (`ECU-06 FE-06`). | … → CP-022; CA-06 |
-| CP-023 | `C_ControlarTiempoDeEspera` | FE-07 | Contexto mínimo ya enviado. | Transcurren **20 segundos** sin respuesta. | HTTP 504 en P-11 sin romper la interfaz, con opción de reintentar; vuelve al **paso 4** (`ECU-06 FE-07`). | … → CP-023; CA-06 |
+| CP-023 | `C_ControlarTiempoDeEspera` | FE-07 | Contexto mínimo ya enviado. | Transcurren **20 segundos** sin respuesta. | HTTP 504 en P-11 sin romper la interfaz, con opción de reintentar; vuelve al **paso 2** — la interfaz queda viva y el Usuario reenvía, **sin reintento automático** (`ECU-06 FE-07 v2.2`). | … → CP-023; CA-06 |
 | CP-024 | `C_AplicarGuardas` | Curso básico · **`opt FA-02` no tomado** | El proveedor devolvió texto sin riesgo ni *claim* clínico. | El sistema aplica las guardas de salida. | El texto se conserva sin alteración (antes del recorte); no aparece la respuesta de *fallback*. | … → CP-024 |
 | CP-025 | `C_SustituirSalidaInsegura` | FA-02 · **tomado** | El proveedor devolvió texto que la postvalidación marca como riesgo o *claim* clínico. | El sistema procesa esa salida antes de mostrarla. | P-10 muestra la respuesta segura; **el texto original no aparece en ningún momento**. | … → CP-025; CA-10 |
 | CP-026 | `C_AplicarGuardas` | Curso básico · **frontera: `H-03` = 350** | El texto admitido equivale a más de **350 tokens**. | El sistema aplica el límite de salida. | El texto mostrado equivale a 350 tokens o menos, termina en cierre de oración y ninguna palabra queda cortada. | … → CP-026; CA-11 |
@@ -135,6 +135,7 @@ devuelve verdadero». Es la regla que hace que estas pruebas sobrevivan a un cam
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.3 | 2026-08-05 | J. Sánchez | **Propagación de `ECU-06 v2.2`** (fila 34, `SD-45`). `CP-023` esperaba «vuelve al paso 4», que es lo que la `ECU` decía **sin declarar mecanismo que lo realizara**. Corregida la especificación, la prueba pasa a **paso 2**: la interfaz queda viva y el Usuario reenvía. `CP-022` (`FE-06`) **no cambia** — allí el retorno al paso 4 sí tiene mecanismo, el reintento único. **181 casos de prueba, sin mover.** |
 | v1.2 | 2026-08-05 | J. Sánchez | `CVI-03` del `CDR-01 v1.7`: `CP-011`, `CP-013`, `CP-022` y `CP-023` fijan el punto de reentrada que declaran `ECU-06 FE-03/FE-05/FE-06/FE-07` —pasos 2, 2, 4 y 4—. Si `SD-44 R3` traslada el retorno al `CP`, tiene que estar **en** el `CP`. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30, hallazgo `H-1a`.** `CP-031` deja de probar «el evento de cierre» y pasa a probar **un turno**. Entran tres casos que la granularidad nueva hace necesarios: **`CP-032`** fija el volumen en la frontera (20 turnos → **20** eventos, no uno), y el par **`CP-033`/`CP-034`** fija qué llamadas cuentan — la fallida **sí** (o `MET-07` mediría solo éxitos), la cortada por límite de tasa **no** (nunca llegó al proveedor). De 31 a **34** casos; siguen 25/25 controladores. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. 31 casos derivados de los 25 controladores de `DR-06`, con cobertura de caminos desagregada por operador y las seis cifras canónicas verificadas. |

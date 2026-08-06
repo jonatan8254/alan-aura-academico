@@ -1,5 +1,5 @@
 # CDR-01 — Acta de Revisión Crítica del Diseño (CDR)
-**ID:** CDR-01 · **Familia:** CDR (compuerta ICONIX entre el diseño detallado y el código) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-08-04 · **Versión:** v1.7 (cuarta verificación independiente y adversarial de `SD-44`; incluye en la misma versión las tres correcciones del acta; ver §8-octies y §13). v1.6 (tercera verificación independiente y adversarial del retrabajo `SD-43`; ver §8-septies y §13). v1.5 (segunda verificación independiente y adversarial del retrabajo `SD-40…SD-42`; ver §8-sexies y §13). v1.4 (verificación independiente y adversarial del retrabajo de `SD-39`; ver §8-quinquies y §13). v1.3 (SD-39: §6 deja de declarar la regla #2 y la revisión visual como no ejecutadas — ambas se cerraron en el retrabajo). v1.2 (SD-39: el retrabajo queda **aplicado y registrado** —§8-ter y §8-quater—, con dos etiquetas y la aritmética de `H-01` corregidas; **el veredicto no se toca**: lo determina la verificación independiente). v1.1 (cobertura completa: 14/14 especificaciones, 168/168 obligaciones emparejadas, los 8 validadores sobre los 31 `.puml`, y tres comprobaciones cruzadas nuevas. **7 hallazgos nuevos, uno de ellos Mayor**; `H-01` crece de 12 a 18 instancias). v1.0 (compuerta inicial, 13 hallazgos) · **Estado:** vigente.
+**ID:** CDR-01 · **Familia:** CDR (compuerta ICONIX entre el diseño detallado y el código) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-08-04 · **Versión:** v1.8 (**el líder determina el veredicto: `Aceptado con verificación de retrabajo`**, tras cerrarse en `SD-45`/`SD-46` los cuatro Mayores y los tres Moderados de la cuarta verificación; ver §13). v1.7 (cuarta verificación independiente y adversarial de `SD-44`; incluye en la misma versión las tres correcciones del acta; ver §8-octies y §13). v1.6 (tercera verificación independiente y adversarial del retrabajo `SD-43`; ver §8-septies y §13). v1.5 (segunda verificación independiente y adversarial del retrabajo `SD-40…SD-42`; ver §8-sexies y §13). v1.4 (verificación independiente y adversarial del retrabajo de `SD-39`; ver §8-quinquies y §13). v1.3 (SD-39: §6 deja de declarar la regla #2 y la revisión visual como no ejecutadas — ambas se cerraron en el retrabajo). v1.2 (SD-39: el retrabajo queda **aplicado y registrado** —§8-ter y §8-quater—, con dos etiquetas y la aritmética de `H-01` corregidas; **el veredicto no se toca**: lo determina la verificación independiente). v1.1 (cobertura completa: 14/14 especificaciones, 168/168 obligaciones emparejadas, los 8 validadores sobre los 31 `.puml`, y tres comprobaciones cruzadas nuevas. **7 hallazgos nuevos, uno de ellos Mayor**; `H-01` crece de 12 a 18 instancias). v1.0 (compuerta inicial, 13 hallazgos) · **Estado:** **CERRADA** (compuerta determinada por el líder el 2026-08-05).
 **Modalidad:** completa — las diez reglas, con ciclo de deliberación. Sesión de dos roles: el orquestador conduce, registra y recomienda; el **líder del proyecto** determina (IEEE 1028 §5.2.1) y ejerce la regla #4 por el equipo.
 **Generado con:** skill `iconix-cdr-review`. **Naturaleza:** revisión **técnica** (IEEE 1028 cláusula 5), no inspección. El cliente no participa: Rosenberg 4545 lo excluye expresamente del CDR.
 **Paquete revisado:** el diseño detallado del subproyecto «Alan & Aura Académico» al cierre de `SD-32` — modelo de clases de diseño, 14 diagramas de secuencia y sus artefactos derivados.
@@ -952,7 +952,43 @@ La salida (d) —*«resolution, decision rationale and assumptions»*— es la q
 
 ## 13. Veredicto
 
-**Propuesto por la revisión: `REINSPECCIÓN REQUERIDA`.**
+**DETERMINADO POR EL LÍDER DEL PROYECTO, 2026-08-05: `ACEPTADO CON VERIFICACIÓN DE RETRABAJO`.**
+
+> **Esta determinación es del líder, no de la revisión** (`IEEE 1028 §5.2.1`). Se registra
+> aquí, separada y encima de la propuesta técnica que la precede, porque el acta **propone**
+> y el líder **determina**. La propuesta vigente cuando se determinó era `Reinspección
+> requerida`, y su condición era que quedaban cuatro Mayores abiertos.
+>
+> **Qué cambió entre la propuesta y la determinación.** `SD-45` cerró `CVI-03` —el `loop` se
+> acota al paso que manda su `ECU` y la cancelación sale del bucle— y `CVI-01`/`CVI-02`. Una
+> revisión interna con dos modelos distintos encontró y corrigió `RI-1`, `RI-2` y `RI-3`,
+> tres defectos que la propia corrección de `CVI-03` había introducido. Y `SD-46` cerró los
+> dos Moderados que quedaban: `CVI-04`, decodificando y regenerando el `plantuml-src`
+> embebido **sin PlantUML**, con verificación de ida y vuelta; y `ECU-06 FE-07`, por su skill
+> dueña, con la propagación a `CP-023` y a la nota de `DS-06`.
+>
+> **Condición que la sostiene: cero Críticos y cero Mayores abiertos.** Los Moderados no se
+> difirieron: se cerraron. Lo que queda en el tablero —nueve filas— **no es del `CDR`**: tres
+> van a `ARQ-01`, una a construcción, dos a las fases D.5 y D.6, una al dueño de `VIS-01`,
+> una al usuario y una a la entrega del informe.
+>
+> **Límite declarado, sin adornarlo.** `SD-45` y `SD-46` los aplicó Claude Opus, el mismo
+> modelo que aplicó todo el retrabajo anterior, y **no pasaron por una verificación
+> independiente formal** — sí por una revisión interna con dos modelos, que encontró tres
+> defectos reales. `IEEE 1028 §6.5.6.5` pide verificador distinto del autor: ese requisito
+> **no está plenamente satisfecho para `SD-45` y `SD-46`**, y el líder determina el veredicto
+> conociéndolo. El **freno de Wiegers**, activado en la tercera pasada, desaconsejaba una
+> quinta revisión del mismo material.
+>
+> **Verificación de retrabajo, que es lo que el estado exige:** la ejercen los seis bloques de
+> `verificar_coherencia.py`, el barrido `R1`/`R2` con sus 17 fixtures, los validadores de
+> secuencia y robustez, `verificar_procedencia_mc01.py` y el trinquete — todos en verde y
+> versionados, así que el retrabajo queda comprobado **de forma continua y reproducible**, no
+> por una firma puntual.
+
+---
+
+**Propuesto por la revisión (v1.7, previo a la determinación): `REINSPECCIÓN REQUERIDA`.**
 
 > **Resultado de la verificación v1.7.** Los commits `c6b3351` (`SD-44`) y
 > `6aa158f` fueron contrastados adversarialmente por **OpenAI Codex, modelo GPT-5,
@@ -1044,6 +1080,7 @@ informes declaran no mecanizable.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.8 | 2026-08-05 | J. Sánchez, líder | **Determinación del veredicto — no es una verificación más, es la decisión de la compuerta** (`IEEE 1028 §5.2.1`: el acta propone, el líder determina). **`ACEPTADO CON VERIFICACIÓN DE RETRABAJO`**, con **cero Críticos y cero Mayores**. Entre la propuesta de `v1.7` y esta determinación se cerraron: `CVI-03` y `CVI-01`/`CVI-02` en `SD-45`; `RI-1`, `RI-2` y `RI-3` —tres defectos que la propia corrección de `CVI-03` introdujo, hallados por una revisión interna con dos modelos distintos—; y los dos Moderados restantes en `SD-46`: `CVI-04`, regenerando el `plantuml-src` embebido **sin PlantUML** y comprobándolo por ida y vuelta, y `ECU-06 FE-07`, por su skill dueña. **Los Moderados no se difirieron: se cerraron.** **Límite declarado:** `SD-45` y `SD-46` los aplicó el mismo modelo que el retrabajo anterior y no pasaron por verificación independiente formal — sí por revisión interna, que encontró tres defectos reales—; `§6.5.6.5` no queda plenamente satisfecho para ellos, y el líder determina conociéndolo, con el **freno de Wiegers** activo desde la tercera pasada. **La compuerta entre el diseño detallado y el código queda cerrada; siguiente hito, `ARQ-01`.** |
 | v1.7 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Segmento 1 — cuarta verificación adversarial de `c6b3351`/`6aa158f`.** Se confirma el cierre concreto de `TVI-01`, `TVI-03`, `TVI-04`, R4, `TVI-05` y `TVI-06`; se refuta R3 como solución de `TVI-02` (`CVI-03`, Mayor): cinco `loop` conservan una reentrada incompatible con una o más de sus ECU —incluido el caso preexistente de `DS-06`— y seis CP adicionales no fijan el retorno exacto. El comprobador se provoca sobre copias con casos a–f y exhibe falsos negativos/positivos (`CVI-01`) más una ruta absoluta contra la independencia (`CVI-02`). `SD-44` se reconoce como replanteo real y material nuevo, no parche disfrazado, pero el paquete no converge y el veredicto propuesto sigue en **Reinspección requerida**.<br>**Segmento 2 — no regresión y correcciones del acta.** Recuentos: 283 mensajes; robustez 262 = 15/38/150/59; `MC-01` 43/201/51/80 y 193 operaciones distintas; 181 CP. Validadores: robustez 0 errores, secuencia 0 errores/10 advertencias, procedencia sin discrepancias, barrido basal 0/0 con alcance refutado. El SVG visible cambia un token, pero su `plantuml-src` queda obsoleto (`CVI-04`). Se actualiza §10, se corrige 7→8 ramas refutadas, `H-24` queda cerrado y ejercitado, y se definen las condiciones de entrada de los tres estados. GPT-5/Codex es distinto de Claude Opus, pero solo el equipo humano satisface plenamente IEEE 1028 §6.5.6.5. |
 | v1.6 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Segmento 1 — tercera verificación adversarial de `a23f9c4` (`SD-43`).** Se contrastan 13/13 ramas: 5 se confirman y 8 se refutan; `DS-04/11 FE-04` todavía caen al éxito, seis retornos no vuelven al inicio exacto del paso de su ECU y `SD-43-H1` se confirma en sustancia con el recuento corregido a tres `break` internos + tres externos. Se registran cuatro Mayores (`TVI-01`, `TVI-02`, `TVI-04`, `TVI-07`) y tres Menores (`TVI-03`, `TVI-05`, `TVI-06`); el veredicto propuesto sigue en **Reinspección requerida** y se activa el freno de Wiegers: el material no converge y debe replantearse el artefacto/alcance antes de otra presentación.<br>**Segmento 2 — instrumental y no regresión ejecutados.** `SVI-02` se confirma mediante sabotaje con tres detecciones y controles sin falsos positivos; `SVI-03` reproduce 21/3/7 y deja dos registros históricos adicionales por rectificar. Recuentos: 283 mensajes, robustez 262 = 15/38/150/59, `MC-01` 43/201/51/80, 193 operaciones distintas y 181 CP. Validadores: robustez 14/14 en 0 errores, secuencia 14/14 en 0 errores y 10 advertencias, procedencia sin discrepancias. GPT-5/Codex es distinto de Claude Opus, pero solo el equipo humano satisface plenamente IEEE 1028 §6.5.6.5. |
 | v1.5 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Segunda verificación independiente y adversarial de los seis commits `SD-40…SD-42`.** Las 17 ramas de `VI-01` se releen contra sus ECU: las 17 dicen «Vuelve» o «Cancela y vuelve»; se confirman los cuatro `alt` de `DS-06` y se refutan los trece `break` restaurados, que terminan la interacción sin realizar el retorno (`SVI-01`, Mayor). Los seis bloques de `verificar_coherencia.py` se hacen fallar en copias; se demuestra que las nuevas exenciones de `**Insumos:**` y del archivo CDR son demasiado amplias (`SVI-02`, Moderado); el recuento anterior a `SD-42` da 21 historiales descendentes, 3 ascendentes y 7 mixtos, no 23/3/5 (`SVI-03`, Menor). Se confirman `VI-02…VI-08` y `SD-40-H1` en su objeto concreto; `H-28` queda validado como 27 clases en MC frente a 21 en secuencia. Recuentos ejecutados: 262 elementos de robustez, 283 mensajes, 43 clases, 201 operaciones, 51 atributos, 80 relaciones y 193 nombres de operación. El veredicto propuesto permanece en **Reinspección requerida** por el Mayor abierto. Se declara que GPT-5/Codex es distinto de Claude Opus, pero que solo el equipo humano satisface plenamente IEEE 1028 §6.5.6.5. |

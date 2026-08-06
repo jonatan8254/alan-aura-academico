@@ -3,6 +3,19 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v1.0.0 · `SD-46`: el `CDR-01` queda **CERRADO**
+
+> **La compuerta entre el diseño detallado y el código está determinada.** Veredicto del líder
+> (`IEEE 1028 §5.2.1`): **`ACEPTADO CON VERIFICACIÓN DE RETRABAJO`**, con **cero Críticos y cero
+> Mayores**. Cierra la Fase 2 ICONIX. **Siguiente hito: `ARQ-01`**, el diseño físico.
+
+- **`CVI-04` cerrado, y sin PlantUML.** El hallazgo pedía «regenerar cuando la herramienta esté disponible», y resultó que **no hacía falta la herramienta**: el bloque `<?plantuml-src ?>` es la fuente comprimida con DEFLATE crudo y codificada con el base64 propio de PlantUML. Se decodificó, se le aplicaron los dos renombres y se recodificó. **Comprobado por ida y vuelta antes de escribir**, y contra el `.puml` vigente: coinciden.
+- **`ECU-06 FE-07` cerrado por su skill dueña.** Declaraba «vuelve al paso 4» sin ningún mecanismo que llevara allí. Pasa a **paso 2**, y lo sostiene `CA-06`: el reintento que ese criterio exige es **del Usuario por la interfaz**, no el automático del Sistema, que solo `FE-06` declara. Un reintento automático tras 20 s **duplicaría la espera que `RN-02.9` acota**.
+- **Barridas las once filas `FA`/`FE` por concepto**, no solo la señalada: `FE-07` era la única con un desenlace sin mecanismo. Las demás o terminan, o vuelven al paso 2, que es una acción del Usuario siempre alcanzable.
+- **Los Moderados no se difirieron: se cerraron.** El estado «con verificación de retrabajo» no descansa en una promesa sino en instrumental versionado y reproducible: seis bloques, barrido `R1`/`R2` con 17 fixtures, dos validadores de la skill, procedencia y trinquete.
+- **Y el límite, dicho entero:** `SD-45` y `SD-46` los aplicó el mismo modelo que el retrabajo anterior y **no pasaron por verificación independiente formal** — sí por una revisión interna con dos modelos, que encontró **tres defectos reales dentro de la propia corrección**. `IEEE 1028 §6.5.6.5` no queda plenamente satisfecho para esos dos commits, y el líder determinó conociéndolo, con el freno de Wiegers activo desde la tercera pasada.
+- **El tablero, contado a máquina: 35 filas — 25 cerradas, 9 abiertas, 1 declarada. Ninguna de las abiertas es del `CDR`**: tres van a `ARQ-01`, una a construcción, dos a las fases D.5 y D.6, una al dueño de `VIS-01`, una al usuario y una a la entrega del informe.
+
 ## 2026-08-05 — v0.29.0 · `SD-45`: `R3` estaba afirmada, no implementada
 
 - **La cuarta verificación independiente confirmó que `SD-44` es un replanteo real**, no un parche disfrazado, y dio por cerrados `TVI-01`, `TVI-03`, `TVI-04`, `R4`, `TVI-05` y `TVI-06`. En `TVI-04` fue más lejos que el autor: contrastó contra la `ECU` que `cerrar()` y `descartarContenido()` **sí** son limpieza legítima.

@@ -1,24 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4457 3793" width="4457" height="3793" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4457 3819" width="4457" height="3819" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-06 - Secuencia de CU-06 «Conversar con el acompanante»</title>
 <desc id="d">Diagrama de secuencia UML. 16 participantes, 49 mensajes.</desc>
-<rect x="0" y="0" width="4457" height="3793" fill="#FFFFFF"/>
+<rect x="0" y="0" width="4457" height="3819" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-06 - Secuencia de CU-06 «Conversar con el acompanante»</text>
-<line x1="77.3" y1="103.0" x2="77.3" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="482.0" y1="80.0" x2="482.0" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="886.4" y1="80.0" x2="886.4" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1183.6" y1="93.0" x2="1183.6" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1438.5" y1="67.0" x2="1438.5" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1774.7" y1="67.0" x2="1774.7" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2071.9" y1="67.0" x2="2071.9" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2297.9" y1="67.0" x2="2297.9" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2523.9" y1="67.0" x2="2523.9" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2749.9" y1="67.0" x2="2749.9" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3016.8" y1="67.0" x2="3016.8" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3259.6" y1="67.0" x2="3259.6" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3514.4" y1="67.0" x2="3514.4" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3757.2" y1="67.0" x2="3757.2" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="3999.9" y1="80.0" x2="3999.9" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="4361.4" y1="103.0" x2="4361.4" y2="3765.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="77.3" y1="103.0" x2="77.3" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="482.0" y1="80.0" x2="482.0" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="886.4" y1="80.0" x2="886.4" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1183.6" y1="93.0" x2="1183.6" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1438.5" y1="67.0" x2="1438.5" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1774.7" y1="67.0" x2="1774.7" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2071.9" y1="67.0" x2="2071.9" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2297.9" y1="67.0" x2="2297.9" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2523.9" y1="67.0" x2="2523.9" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2749.9" y1="67.0" x2="2749.9" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3016.8" y1="67.0" x2="3016.8" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3259.6" y1="67.0" x2="3259.6" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3514.4" y1="67.0" x2="3514.4" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3757.2" y1="67.0" x2="3757.2" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="3999.9" y1="80.0" x2="3999.9" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="4361.4" y1="103.0" x2="4361.4" y2="3791.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <rect x="444.0" y="273.0" width="480.4" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="444.0,273 506.0,273 506.0,285 498.0,293 444.0,293" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="453.0" y="287" font-size="10" font-weight="600" fill="#993C1D">break</text>
@@ -67,19 +67,19 @@
 <polygon points="414.0,2637 476.0,2637 476.0,2649 468.0,2657 414.0,2657" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="423.0" y="2651" font-size="10" font-weight="600" fill="#993C1D">break</text>
 <text x="486.0" y="2651" font-size="10" fill="#993C1D">[FA-01 se alcanzan los 20 mensajes de la sesion]</text>
-<rect x="39.3" y="3479.0" width="480.6" height="66.0" fill="none" stroke="#5F5E5A" stroke-width="1" rx="3"/>
-<polygon points="39.349999999999994,3479 101.35,3479 101.35,3491 93.35,3499 39.349999999999994,3499" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
-<text x="48.349999999999994" y="3493" font-size="10" font-weight="600" fill="#5F5E5A">opt</text>
-<text x="111.35" y="3493" font-size="10" fill="#5F5E5A">[la sesion llega al paso 8 por el curso basico]</text>
+<rect x="39.3" y="3505.0" width="480.6" height="66.0" fill="none" stroke="#5F5E5A" stroke-width="1" rx="3"/>
+<polygon points="39.349999999999994,3505 101.35,3505 101.35,3517 93.35,3525 39.349999999999994,3525" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
+<text x="48.349999999999994" y="3519" font-size="10" font-weight="600" fill="#5F5E5A">opt</text>
+<text x="111.35" y="3519" font-size="10" fill="#5F5E5A">[la sesion llega al paso 8 por el curso basico]</text>
 <line x1="57.3" y1="143.0" x2="4381.4" y2="143.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="2099.5" y="132.0" width="239.8" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
 <text x="2219.4" y="147.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 1 - Apertura de la conversacion</text>
 <line x1="57.3" y1="839.0" x2="4381.4" y2="839.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="2102.5" y="828.0" width="233.8" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
 <text x="2219.4" y="843.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Pasos 2 a 7 - Turno de conversacion</text>
-<line x1="57.3" y1="3321.0" x2="4381.4" y2="3321.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="2108.6" y="3310.0" width="221.7" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="2219.4" y="3325.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 8 - Cierre y no persistencia</text>
+<line x1="57.3" y1="3347.0" x2="4381.4" y2="3347.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="2108.6" y="3336.0" width="221.7" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="2219.4" y="3351.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 8 - Cierre y no persistencia</text>
 <line x1="77.3" y1="187.0" x2="482.0" y2="187.0" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="480.0,187 473.0,183.6 473.0,190.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="162.9" y="162.0" width="233.5" height="15.0" fill="#FFFFFF"/>
@@ -264,18 +264,18 @@
 <polygon points="484.0,2759 491.0,2755.6 491.0,2762.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="530.0" y="2708.0" width="211.5" height="15.0" fill="#FFFFFF"/>
 <text x="534.0" y="2720.0" font-size="10" fill="#2C2C2A">informarLimiteDeSesionSinErrorCrudo()</text>
-<line x1="77.3" y1="3535.0" x2="482.0" y2="3535.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="480.0,3535 473.0,3531.6 473.0,3538.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="215.2" y="3510.0" width="129.0" height="15.0" fill="#FFFFFF"/>
-<text x="219.2" y="3522.0" font-size="10" fill="#2C2C2A">cerrar la conversacion</text>
-<line x1="482.0" y1="3583.0" x2="2297.9" y2="3583.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2295.8500000000004,3583 2288.8500000000004,3579.6 2288.8500000000004,3586.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1363.9" y="3558.0" width="52.0" height="15.0" fill="#FFFFFF"/>
-<text x="1367.9" y="3570.0" font-size="10" fill="#2C2C2A">cerrar()</text>
-<line x1="482.0" y1="3623.0" x2="2749.9" y2="3623.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2747.8500000000004,3623 2740.8500000000004,3619.6 2740.8500000000004,3626.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1556.9" y="3598.0" width="118.0" height="15.0" fill="#FFFFFF"/>
-<text x="1560.9" y="3610.0" font-size="10" fill="#2C2C2A">descartarContenido()</text>
+<line x1="77.3" y1="3561.0" x2="482.0" y2="3561.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="480.0,3561 473.0,3557.6 473.0,3564.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="215.2" y="3536.0" width="129.0" height="15.0" fill="#FFFFFF"/>
+<text x="219.2" y="3548.0" font-size="10" fill="#2C2C2A">cerrar la conversacion</text>
+<line x1="482.0" y1="3609.0" x2="2297.9" y2="3609.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2295.8500000000004,3609 2288.8500000000004,3605.6 2288.8500000000004,3612.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1363.9" y="3584.0" width="52.0" height="15.0" fill="#FFFFFF"/>
+<text x="1367.9" y="3596.0" font-size="10" fill="#2C2C2A">cerrar()</text>
+<line x1="482.0" y1="3649.0" x2="2749.9" y2="3649.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2747.8500000000004,3649 2740.8500000000004,3645.6 2740.8500000000004,3652.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1556.9" y="3624.0" width="118.0" height="15.0" fill="#FFFFFF"/>
+<text x="1560.9" y="3636.0" font-size="10" fill="#2C2C2A">descartarContenido()</text>
 <rect x="392.0" y="2803.0" width="3717.9" height="250.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
 <text x="400.0" y="2821.0" font-size="9.5" fill="#2C2C2A">Por que aqui es `alt` y no `break` (`VI-01` del `CDR-01 v1.4`, `SD-41`).</text>
 <text x="400.0" y="2834.0" font-size="9.5" fill="#2C2C2A">Este diagrama es el unico de los siete corregidos cuyos flujos viven dentro</text>
@@ -295,7 +295,7 @@
 <text x="400.0" y="3016.0" font-size="9.5" fill="#2C2C2A">advertencias nuevas. No se contorsiona el diagrama para callarlas: la propia</text>
 <text x="400.0" y="3029.0" font-size="9.5" fill="#2C2C2A">advertencia dice que lo que sobra es tamano del caso de uso, no estructura del</text>
 <text x="400.0" y="3042.0" font-size="9.5" fill="#2C2C2A">diagrama. Queda como hallazgo enrutado, no aplicado.</text>
-<rect x="3889.4" y="3067.0" width="561.5" height="224.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<rect x="3889.4" y="3067.0" width="561.5" height="250.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
 <text x="3897.4" y="3085.0" font-size="9.5" fill="#2C2C2A">El «vuelve al paso 4» de `FE-06` esta realizado, y el de `FE-07` es una</text>
 <text x="3897.4" y="3098.0" font-size="9.5" fill="#2C2C2A">discrepancia de la `ECU` — no del diagrama (`CVI-03`, `CDR-01 v1.7`; `SD-45`).</text>
 <text x="3897.4" y="3111.0" font-size="9.5" fill="#2C2C2A">La cuarta verificacion senalo que el `loop` de turnos reentra por el paso 2</text>
@@ -306,30 +306,32 @@
 <text x="3897.4" y="3176.0" font-size="9.5" fill="#2C2C2A">generacion. El retorno existe expresado como mensaje y no como</text>
 <text x="3897.4" y="3189.0" font-size="9.5" fill="#2C2C2A">fragmento; agotado el reintento, el turno termina y el bucle toma el</text>
 <text x="3897.4" y="3202.0" font-size="9.5" fill="#2C2C2A">siguiente, que es el paso 2. No hay defecto.</text>
-<text x="3897.4" y="3215.0" font-size="9.5" fill="#2C2C2A">· `FE-07`: la `ECU` manda volver al paso 4 pero no declara ningun</text>
-<text x="3897.4" y="3228.0" font-size="9.5" fill="#2C2C2A">reintento —«informa sin romper la interfaz»—, asi que el destino que pide</text>
-<text x="3897.4" y="3241.0" font-size="9.5" fill="#2C2C2A">no tiene mecanismo que lo realice. El lado dudoso es la especificacion,</text>
-<text x="3897.4" y="3254.0" font-size="9.5" fill="#2C2C2A">no el diagrama: se enruta a `/use-case-specifier` y queda en el tablero.</text>
-<text x="3897.4" y="3267.0" font-size="9.5" fill="#2C2C2A">El `loop 1..20` no se toca: es iteracion genuina de turnos, que es</text>
-<text x="3897.4" y="3280.0" font-size="9.5" fill="#2C2C2A">justo lo que `SD-44 R3` reserva para el operador `loop`.</text>
-<rect x="6.0" y="3337.0" width="2872.5" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="14.0" y="3355.0" font-size="9.5" fill="#2C2C2A">La limpieza comun se separa de la accion normal del actor (`TVI-04`, Mayor,</text>
-<text x="14.0" y="3368.0" font-size="9.5" fill="#2C2C2A">`CDR-01 v1.6`; regla 2 de `SD-44`). Los `break` de `FE-01`, `FE-08` y `FA-01` estan</text>
-<text x="14.0" y="3381.0" font-size="9.5" fill="#2C2C2A">dentro del `loop`, asi que en UML salen del bucle y siguen ejecutando lo</text>
-<text x="14.0" y="3394.0" font-size="9.5" fill="#2C2C2A">que viene despues. Eso es correcto para `cerrar()` y `descartarContenido()`, que son</text>
-<text x="14.0" y="3407.0" font-size="9.5" fill="#2C2C2A">limpieza aplicable a cualquier desenlace; no lo era para «cerrar la conversacion»,</text>
-<text x="14.0" y="3420.0" font-size="9.5" fill="#2C2C2A">que es una accion del Usuario del curso basico y se ejecutaba incluso despues de que la</text>
-<text x="14.0" y="3433.0" font-size="9.5" fill="#2C2C2A">`ECU` hubiera dicho «Termina». El `opt` la acota sin tocar los `break`, que ahi</text>
-<text x="14.0" y="3446.0" font-size="9.5" fill="#2C2C2A">si expresan la terminacion que el texto pide. Lo comprueba `barrido_desenlaces.py`.</text>
-<rect x="2659.9" y="3635.0" width="1207.3" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="2667.9" y="3653.0" font-size="9.5" fill="#2C2C2A">No persistencia (RF-13, RNF-03, PRIV-R2). El contenido se descarta al cerrar.</text>
-<text x="2667.9" y="3666.0" font-size="9.5" fill="#2C2C2A">Lo que NO existe en este diagrama es la afirmacion: ningun mensaje guarda el texto</text>
-<text x="2667.9" y="3679.0" font-size="9.5" fill="#2C2C2A">de la Conversacion ni de sus Mensaje, y no hay ninguna cache de pares</text>
-<text x="2667.9" y="3692.0" font-size="9.5" fill="#2C2C2A">mensaje-respuesta (no-objetivo declarado en ADR-002-D6).</text>
-<text x="2667.9" y="3705.0" font-size="9.5" fill="#2C2C2A">El cierre ya no registra nada (v1.1, hallazgo H-1a de DS-00). El evento</text>
-<text x="2667.9" y="3718.0" font-size="9.5" fill="#2C2C2A">operativo se escribe dentro del loop, un registro por llamada al proveedor,</text>
-<text x="2667.9" y="3731.0" font-size="9.5" fill="#2C2C2A">porque latencia, resultado, modelo y version son valores de UNA peticion y MET-07</text>
-<text x="2667.9" y="3744.0" font-size="9.5" fill="#2C2C2A">mide peticiones sobre el total. Al cerrar no hay una latencia unica que registrar.</text>
+<text x="3897.4" y="3215.0" font-size="9.5" fill="#2C2C2A">· `FE-07`: resuelto en `ECU-06 v2.2`. La `ECU` mandaba volver al paso 4</text>
+<text x="3897.4" y="3228.0" font-size="9.5" fill="#2C2C2A">sin declarar ningun reintento —«informa sin romper la interfaz»—, asi que el destino</text>
+<text x="3897.4" y="3241.0" font-size="9.5" fill="#2C2C2A">que pedia no tenia mecanismo. El lado dudoso era la especificacion, y su skill</text>
+<text x="3897.4" y="3254.0" font-size="9.5" fill="#2C2C2A">duena la corrigio: `FE-07` vuelve al paso 2, que es lo que el bucle de turnos</text>
+<text x="3897.4" y="3267.0" font-size="9.5" fill="#2C2C2A">de este diagrama ya hacia. Un reintento automatico tras 20 s habria duplicado la</text>
+<text x="3897.4" y="3280.0" font-size="9.5" fill="#2C2C2A">espera que `RN-02.9` acota. El diagrama no cambia: ya decia la verdad.</text>
+<text x="3897.4" y="3293.0" font-size="9.5" fill="#2C2C2A">El `loop 1..20` no se toca: es iteracion genuina de turnos, que es</text>
+<text x="3897.4" y="3306.0" font-size="9.5" fill="#2C2C2A">justo lo que `SD-44 R3` reserva para el operador `loop`.</text>
+<rect x="6.0" y="3363.0" width="2872.5" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="14.0" y="3381.0" font-size="9.5" fill="#2C2C2A">La limpieza comun se separa de la accion normal del actor (`TVI-04`, Mayor,</text>
+<text x="14.0" y="3394.0" font-size="9.5" fill="#2C2C2A">`CDR-01 v1.6`; regla 2 de `SD-44`). Los `break` de `FE-01`, `FE-08` y `FA-01` estan</text>
+<text x="14.0" y="3407.0" font-size="9.5" fill="#2C2C2A">dentro del `loop`, asi que en UML salen del bucle y siguen ejecutando lo</text>
+<text x="14.0" y="3420.0" font-size="9.5" fill="#2C2C2A">que viene despues. Eso es correcto para `cerrar()` y `descartarContenido()`, que son</text>
+<text x="14.0" y="3433.0" font-size="9.5" fill="#2C2C2A">limpieza aplicable a cualquier desenlace; no lo era para «cerrar la conversacion»,</text>
+<text x="14.0" y="3446.0" font-size="9.5" fill="#2C2C2A">que es una accion del Usuario del curso basico y se ejecutaba incluso despues de que la</text>
+<text x="14.0" y="3459.0" font-size="9.5" fill="#2C2C2A">`ECU` hubiera dicho «Termina». El `opt` la acota sin tocar los `break`, que ahi</text>
+<text x="14.0" y="3472.0" font-size="9.5" fill="#2C2C2A">si expresan la terminacion que el texto pide. Lo comprueba `barrido_desenlaces.py`.</text>
+<rect x="2659.9" y="3661.0" width="1207.3" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2667.9" y="3679.0" font-size="9.5" fill="#2C2C2A">No persistencia (RF-13, RNF-03, PRIV-R2). El contenido se descarta al cerrar.</text>
+<text x="2667.9" y="3692.0" font-size="9.5" fill="#2C2C2A">Lo que NO existe en este diagrama es la afirmacion: ningun mensaje guarda el texto</text>
+<text x="2667.9" y="3705.0" font-size="9.5" fill="#2C2C2A">de la Conversacion ni de sus Mensaje, y no hay ninguna cache de pares</text>
+<text x="2667.9" y="3718.0" font-size="9.5" fill="#2C2C2A">mensaje-respuesta (no-objetivo declarado en ADR-002-D6).</text>
+<text x="2667.9" y="3731.0" font-size="9.5" fill="#2C2C2A">El cierre ya no registra nada (v1.1, hallazgo H-1a de DS-00). El evento</text>
+<text x="2667.9" y="3744.0" font-size="9.5" fill="#2C2C2A">operativo se escribe dentro del loop, un registro por llamada al proveedor,</text>
+<text x="2667.9" y="3757.0" font-size="9.5" fill="#2C2C2A">porque latencia, resultado, modelo y version son valores de UNA peticion y MET-07</text>
+<text x="2667.9" y="3770.0" font-size="9.5" fill="#2C2C2A">mide peticiones sobre el total. Al cerrar no hay una latencia unica que registrar.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
 <rect x="401.4" y="34.0" width="161.2" height="46.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>

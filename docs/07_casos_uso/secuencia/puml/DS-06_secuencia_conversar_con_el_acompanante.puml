@@ -1,5 +1,8 @@
 @startuml
 ' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
+' v1.5 (fila 34, SD-45): la discrepancia de ECU-06 FE-07 quedo RESUELTA en la
+'       especificacion (ECU-06 v2.2: vuelve al paso 2, no al 4). El diagrama no cambia
+'       —ya decia la verdad—; solo se actualiza la nota que la declaraba abierta.
 ' v1.4 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: se declara por que el «vuelve al paso 4» de FE-06 ya esta realizado y por que el de FE-07 es una discrepancia de la ECU. El loop 1..20 no se toca.
 '       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
 '       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
@@ -174,10 +177,12 @@ note over B_FronteraProveedorLLM, ACT_ProveedorLLM
     generacion. El retorno existe expresado como <b>mensaje</b> y no como
     fragmento; agotado el reintento, el turno termina y el bucle toma el
     siguiente, que es el paso 2. No hay defecto.
-  · <b>`FE-07`</b>: la `ECU` manda volver al paso 4 pero <b>no declara ningun
-    reintento</b> —«informa sin romper la interfaz»—, asi que el destino que pide
-    no tiene mecanismo que lo realice. El lado dudoso es la <b>especificacion</b>,
-    no el diagrama: se enruta a `/use-case-specifier` y queda en el tablero.
+  · <b>`FE-07`</b>: <b>resuelto en `ECU-06 v2.2`</b>. La `ECU` mandaba volver al paso 4
+    sin declarar ningun reintento —«informa sin romper la interfaz»—, asi que el destino
+    que pedia no tenia mecanismo. El lado dudoso era la <b>especificacion</b>, y su skill
+    duena la corrigio: `FE-07` <b>vuelve al paso 2</b>, que es lo que el bucle de turnos
+    de este diagrama ya hacia. Un reintento automatico tras 20 s habria duplicado la
+    espera que `RN-02.9` acota. <b>El diagrama no cambia: ya decia la verdad.</b>
   <b>El `loop 1..20` no se toca:</b> es iteracion genuina de turnos, que es
   justo lo que `SD-44 R3` reserva para el operador `loop`.
 end note
