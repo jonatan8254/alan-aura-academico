@@ -26,7 +26,7 @@ Grupo 5 · Período académico 2026-1
 Medellín, 6 de agosto de 2026
 <!-- /PORTADA -->
 
-**ID:** INF-01 · **Familia:** INF (entrega académica) · **Hogar:** `docs/09_informe/` · **Fecha:** 2026-08-06 · **Versión:** v1.2 (**el informe deja de detenerse en el diseño**: entra la §9, construcción y despliegue, con las seis lecciones que la ejecución le dio al diseño; se retira el corte de alcance en el cierre del `CDR-01`, que aparecía en catorce sitios; la portada acredita la construcción de Bedoya y Montoya, verificada contra el historial del repositorio; y se renumeran las secciones 9 a 15, más un `7.5` duplicado que venía de la versión anterior). v1.1 (tres correcciones: la tabla de integrantes separa **rol** de **contribución a la fase documentada**, sin degradar el rol de nadie; entra §4.1 con los agentes especializados y los modelos empleados, que es lo que hace comprobable la afirmación de independencia de §12.2; y entra §7.4 con la retroalimentación docente y lo que se hizo para atenderla). v1.0 (reescritura completa en Markdown versionado; sustituye a `Informe_Academico_Alan_Aura.docx` del 2026-07-18, que quedó obsoleto en cuatro afirmaciones sustantivas. Documenta hasta el cierre de la compuerta `CDR-01`) · **Estado:** vigente.
+**ID:** INF-01 · **Familia:** INF (entrega académica) · **Hogar:** `docs/09_informe/` · **Fecha:** 2026-08-06 · **Versión:** v1.3 (**pasada de lectura completa**: se corrigen **cinco referencias cruzadas rotas** que dejó la renumeración de la v1.2 —apuntaban a la sección 11 cuando el contenido pasó a la 12—, el resumen deja de anunciar solo «concepción, especificación y diseño», y `§12.5` gana la **tercera lección**, la que aportó construir. La §11 pasa de 102 palabras a documentar el fundamento normativo real: SQuaRE con `25030`/`25023`/`25022`, la tabla de los 10 `RC` con umbral, los tres niveles de verificación de `NORM-01`, las sub-cláusulas de *safety*, Wiegers con sus **seis** categorías —faltaba «término»— y el argumento de las casillas vacías, `WCAG 2.1 AA` con los contrastes medidos, y la declaración de que se midió el proceso y no el producto. Se enlazan las skills de ICONIX y entran siete referencias. El PDF baja de 73 a 68 páginas al retirar el salto de página forzado de cada sección). v1.2 (**el informe deja de detenerse en el diseño**: entra la §9, construcción y despliegue, con las seis lecciones que la ejecución le dio al diseño; se retira el corte de alcance en el cierre del `CDR-01`, que aparecía en catorce sitios; la portada acredita la construcción de Bedoya y Montoya, verificada contra el historial del repositorio; y se renumeran las secciones 9 a 15, más un `7.5` duplicado que venía de la versión anterior). v1.1 (tres correcciones: la tabla de integrantes separa **rol** de **contribución a la fase documentada**, sin degradar el rol de nadie; entra §4.1 con los agentes especializados y los modelos empleados, que es lo que hace comprobable la afirmación de independencia de §12.2; y entra §7.4 con la retroalimentación docente y lo que se hizo para atenderla). v1.0 (reescritura completa en Markdown versionado; sustituye a `Informe_Academico_Alan_Aura.docx` del 2026-07-18, que quedó obsoleto en cuatro afirmaciones sustantivas. Documenta hasta el cierre de la compuerta `CDR-01`) · **Estado:** vigente.
 
 **Insumos:** los artefactos versionados de `docs/`, con sus fichas leídas en el momento de generar este informe · `HECHOS_CANONICOS.md v2.0` · `REGISTRO_DECISIONES.md` (`SD-01`…`SD-53`) · `RPD-01` y `CDR-01 v2.0` · `ARQ-01` y el contrato de la interfaz de programación · el código de `backend/`, `frontend/` y `packages/contrato-api/`, contado y ejecutado, no citado.
 
@@ -36,7 +36,7 @@ Medellín, 6 de agosto de 2026
 
 ## 1. Resumen
 
-Este informe documenta la concepción, especificación y diseño de «Alan & Aura Académico». El producto es un Producto Mínimo Viable (MVP) de acompañamiento conversacional de apoyo emocional no clínico, dirigido a personas adultas hispanohablantes y encarnado en dos personajes complementarios: Alan, orientado a la activación práctica, y Aura, a la calma y la regulación.
+Este informe documenta la concepción, especificación, diseño, construcción y despliegue de «Alan & Aura Académico». El producto es un Producto Mínimo Viable (MVP) de acompañamiento conversacional de apoyo emocional no clínico, dirigido a personas adultas hispanohablantes y encarnado en dos personajes complementarios: Alan, orientado a la activación práctica, y Aura, a la calma y la regulación.
 
 El trabajo siguió un proceso derivado de ICONIX. Su propiedad central es que encadena los artefactos de modo que cada uno se deriva del anterior y puede verificarse contra él: del modelo verbal salen el vocabulario y el comportamiento; de ahí, el modelo de dominio, los casos de uso y su especificación textual; de esa especificación, el análisis de robustez; de los controladores de robustez, los diagramas de secuencia y los casos de prueba; y de los mensajes de secuencia, el modelo de clases de diseño. Dos compuertas formales de revisión técnica según `IEEE 1028` separan las etapas: `RPD-01`, entre el análisis y el diseño detallado, y `CDR-01`, entre el diseño detallado y el código.
 
@@ -44,7 +44,7 @@ El diseño se resume en once medidas verificables: 16 clases de dominio, 14 caso
 
 Ese diseño se construyó después, y está en línea. El servidor corre sin servidor dedicado sobre la nube de Amazon —catorce controladores tras una pasarela de interfaz de programación, cuatro tablas y un almacén de configuración—, el cliente cubre las 16 pantallas especificadas con 38 pruebas automatizadas, y ambos se despliegan en `https://alan-aura-academico.vercel.app`. La sección 9 documenta esa construcción, y con ella lo más útil que produjo: seis defectos que solo aparecieron al ejecutar el sistema, ninguno de los cuales podía haber encontrado una revisión documental por minuciosa que fuera.
 
-Lo que distingue este proyecto de un ejercicio académico convencional es el aseguramiento de la calidad, y en particular su resultado incómodo: la compuerta `CDR-01` requirió **cinco verificaciones independientes**, cada una ejecutada por un revisor distinto del que había aplicado el retrabajo, y las cinco encontraron defectos. Un único defecto de semántica UML resistió cinco intentos de corrección antes de cerrarse. La sección 11 lo documenta con sus cifras, porque el proceso que produjo esos hallazgos es tan resultado del trabajo como los artefactos que revisó.
+Lo que distingue este proyecto de un ejercicio académico convencional es el aseguramiento de la calidad, y en particular su resultado incómodo: la compuerta `CDR-01` requirió **cinco verificaciones independientes**, cada una ejecutada por un revisor distinto del que había aplicado el retrabajo, y las cinco encontraron defectos. Un único defecto de semántica UML resistió cinco intentos de corrección antes de cerrarse. La sección 12 lo documenta con sus cifras, porque el proceso que produjo esos hallazgos es tan resultado del trabajo como los artefactos que revisó.
 
 ---
 
@@ -98,7 +98,7 @@ El proyecto combina tres marcos, cada uno con una función distinta.
 
 **ICONIX** aporta el proceso de análisis y diseño. Se eligió por una propiedad que lo distingue de alternativas más pesadas: encadena artefactos de manera que cada uno se deriva del anterior y puede verificarse contra él. El modelo de dominio fija los sustantivos; la especificación textual de los casos de uso los usa; el análisis de robustez identifica objetos de frontera, control y entidad a partir de ese texto; los diagramas de secuencia convierten los controladores en mensajes y asignan cada uno a una clase; y el modelo de clases de diseño recoge esas asignaciones. La cadena permite preguntar, en cualquier punto, de dónde salió un elemento.
 
-**`IEEE 1028`** aporta el procedimiento de revisión. El proyecto ejecutó dos revisiones técnicas formales, con su escala de severidad de cuatro niveles —Crítico [*Catastrophic*], Mayor [*Critical*], Moderado [*Marginal*] y Menor [*Negligible*]—, su taxonomía de anomalías y sus tres disposiciones posibles: `Aceptado`, `Aceptado con verificación de retrabajo` y `Reinspección requerida`. Dos cláusulas de la norma resultaron determinantes en la práctica y se discuten en la sección 11: la §5.2.1, que atribuye la determinación del veredicto al líder del proyecto y no a la revisión, y la §6.5.6.5, que exige que el retrabajo lo verifique alguien distinto de quien lo aplicó.
+**`IEEE 1028`** aporta el procedimiento de revisión. El proyecto ejecutó dos revisiones técnicas formales, con su escala de severidad de cuatro niveles —Crítico [*Catastrophic*], Mayor [*Critical*], Moderado [*Marginal*] y Menor [*Negligible*]—, su taxonomía de anomalías y sus tres disposiciones posibles: `Aceptado`, `Aceptado con verificación de retrabajo` y `Reinspección requerida`. Dos cláusulas de la norma resultaron determinantes en la práctica y se discuten en la sección 12: la §5.2.1, que atribuye la determinación del veredicto al líder del proyecto y no a la revisión, y la §6.5.6.5, que exige que el retrabajo lo verifique alguien distinto de quien lo aplicó.
 
 **`ISO/IEC 25010:2023`** aporta el modelo de calidad. Los requisitos de calidad se organizan por sus características, incluida *safety*, incorporada en la edición de 2023 y particularmente pertinente en este dominio. Cada requisito de calidad lleva una métrica asociada con umbral obligatorio, siguiendo el método *Goal-Question-Metric*.
 
@@ -182,7 +182,7 @@ Una decisión de esta fase merece mención porque condicionó todo lo demás. El
 
 `DCU-01` identifica 14 casos de uso y 5 actores. La especificación textual `ECU-01` a `ECU-14` desarrolla cada uno con su curso básico, sus flujos alternativos (`FA-xx`) y sus flujos de excepción (`FE-xx`), redactados como diálogo entre el actor y el sistema.
 
-Un elemento de esa especificación resultó decisivo mucho después. Cada fila de flujo alternativo o de excepción declara su **desenlace**: si el caso de uso termina o si vuelve a un paso concreto. Esa columna, que en el momento de escribirse parecía una formalidad, se convirtió en el criterio que zanjó el defecto más persistente del proyecto, documentado en la sección 11.3.
+Un elemento de esa especificación resultó decisivo mucho después. Cada fila de flujo alternativo o de excepción declara su **desenlace**: si el caso de uso termina o si vuelve a un paso concreto. Esa columna, que en el momento de escribirse parecía una formalidad, se convirtió en el criterio que zanjó el defecto más persistente del proyecto, documentado en la sección 12.3.
 
 ### 7.3 Análisis de robustez
 
@@ -251,19 +251,19 @@ El diseño autorizado en `CDR-01` se construyó entre el 5 y el 6 de agosto de 2
 
 ### 9.1 El contrato compartido
 
-La primera pieza no fue ni el servidor ni el cliente, sino el contrato entre ambos: un paquete de TypeScript, `contrato-api`, con 68 tipos —14 entidades, 11 enumerados y 43 de solicitud y respuesta— que ambos lados importan en vez de declarar por su cuenta. La jerarquía se declaró por escrito, y es lo que evita la deriva silenciosa: si el documento de contrato y el paquete discrepan, manda el paquete, porque el compilador lo comprueba y a un documento no lo comprueba nadie.
+La primera pieza no fue ni el servidor ni el cliente, sino el contrato entre ambos: un paquete de TypeScript, `contrato-api`, con 68 tipos (14 entidades, 11 enumerados y 43 de solicitud y respuesta) que ambos lados importan en vez de declarar por su cuenta. La jerarquía se declaró por escrito, y es lo que evita la deriva silenciosa: si el documento de contrato y el paquete discrepan, manda el paquete, porque el compilador lo comprueba y a un documento no lo comprueba nadie.
 
 Junto al contrato se escribió un servidor de simulación con las mismas rutas. Su función fue permitir que cliente y servidor avanzaran en paralelo sin bloquearse, y cumplió mientras el servidor real no existía. Su historia es también una advertencia: cuando el servidor real estuvo desplegado, la simulación había divergido —no validaba sesión, ni rol, ni confirmación en casi ninguna ruta protegida— y el cliente pasó a consumir directamente el sistema real. Una simulación que no se mantiene deja de ser una ayuda y se convierte en una fuente de falsos negativos.
 
 ### 9.2 El servidor
 
-El servidor sigue el diseño físico sin desviarse: 14 controladores sobre entorno de ejecución Node 22, tras una pasarela de interfaz de programación, con cuatro tablas y un almacén de objetos para la configuración. La infraestructura completa está escrita como código, de modo que el despliegue es reproducible y su diferencia con el estado actual, inspeccionable antes de aplicarla.
+El servidor sigue el diseño físico sin desviarse: 14 controladores sobre entorno de ejecución Node 22, tras una pasarela de interfaz de programación, con cuatro tablas de base de datos y un almacén de objetos para la configuración. La infraestructura completa está escrita como código, de modo que el despliegue es reproducible y su diferencia con el estado actual, inspeccionable antes de aplicarla.
 
 Dos piezas del canon viajaron del documento al código sin perder nada. El filtro determinista de peligro se evalúa **antes** de cualquier llamada al modelo de lenguaje, de forma que un mensaje de riesgo explícito nunca llega al proveedor y la respuesta la produce el propio sistema; esa ruta funciona aunque el proveedor esté caído, que era justo lo que el protocolo de seguridad exigía. Y las guardas de salida filtran la respuesta antes de entregarla. El texto que gobierna la conducta de Alan y de Aura vive fuera del código, en el almacén de configuración y versionado, precisamente para que cambiarlo no exija tocar el programa.
 
 ### 9.3 El cliente
 
-El cliente cubre las 16 pantallas especificadas en `DIS-00`. Se implementan en 17 archivos porque el chat resuelve tres de ellas —la conversación, su degradación y la contención ante peligro— como tres estados de una misma pantalla, que es como se comporta de verdad para quien la usa. Sobre los cimientos del proyecto se levantaron 17 componentes propios y siete primitivas de la biblioteca base.
+El cliente cubre las 16 pantallas especificadas en `DIS-00`. Se implementan en 17 archivos porque el chat resuelve tres de ellas (la conversación, su degradación y la contención ante peligro) como tres estados de una misma pantalla, que es como se comporta de verdad para quien la usa. Sobre los cimientos del proyecto se levantaron 17 componentes propios y siete primitivas de la biblioteca base.
 
 Una decisión de esa capa merece constancia porque es reutilizable: la traducción de un fallo del servidor a un texto para la persona ocurre en un único módulo. Ninguna pantalla decide por su cuenta qué decir ante un error. Eso es lo que hace verificable el requisito de no mostrar códigos crudos, en vez de dejarlo a la disciplina de quien escriba la siguiente pantalla.
 
@@ -275,7 +275,7 @@ El servidor está en la nube de Amazon, en una región declarada provisional has
 
 La pieza que une ambos es una regla de reescritura, y su orden es lo que la hace correcta: las peticiones a la interfaz de programación se reescriben hacia la pasarela, y todo lo demás cae en una regla general que devuelve el documento de la aplicación. Invertirlas haría que cada llamada al servidor devolviera la página en vez de datos. La segunda regla tampoco es opcional: sin ella, recargar el navegador en una ruta interna daría un error de página no encontrada.
 
-Esa reescritura es la materialización de la decisión de topología descrita en §8. El navegador habla con un solo origen, y por eso la cookie de sesión puede ser estricta y no hace falta mecanismo antifalseo.
+Esa reescritura es la materialización de la decisión de topología descrita en la sección 8. El navegador habla con un solo origen, y por eso la cookie de sesión puede ser estricta y no hace falta mecanismo antifalseo.
 
 ### 9.5 Lo que la construcción le enseñó al diseño
 
@@ -290,7 +290,7 @@ Esta es la parte que justifica haber construido y no solo diseñado. Al ejecutar
 | Error de servidor donde el contrato pedía error de petición | Un valor inválido se detectaba demasiado tarde | El orden de validación es una decisión de implementación |
 | Una ruta que el diseño no tenía | La pantalla de disponibilidad necesitaba consultar el estado, no solo cambiarlo | La tabla de rutas se derivó de las acciones, y omitió la consulta que la pantalla requería |
 
-El patrón es consistente: **el diseño detallado eliminó los defectos de coherencia, y dejó intactos los de encuentro con la realidad**. Los cuatro primeros nacen de supuestos que el documento no podía comprobar —cómo consume tokens un modelo de razonamiento, qué es un intercambio, si una promesa se cumple, si una operación es atómica—. Los dos últimos son omisiones que solo se ven cuando alguien intenta usar lo diseñado.
+El patrón es consistente: **el diseño detallado eliminó los defectos de coherencia, y dejó intactos los de encuentro con la realidad**. Los cuatro primeros nacen de supuestos que el documento no podía comprobar —cómo consume tokens un modelo de razonamiento, qué es un intercambio, si una promesa se cumple, si una operación es atómica—. Los dos últimos son cosas que un diseño no determina y que solo se ven al intentar usarlo: en qué orden se valida la entrada, y una consulta que la tabla de rutas no previó porque se derivó de las acciones.
 
 Ninguna cantidad adicional de revisión documental los habría encontrado, y merece decirse con claridad porque este informe dedica su sección 12 a defender el valor de la revisión. Revisar y ejecutar no compiten: encuentran clases distintas de defecto. La lección del `CDR` —que una convención sin comprobador es una intención— tiene aquí su continuación natural: **un diseño sin ejecución es una hipótesis**, por bien revisado que esté.
 
@@ -451,11 +451,13 @@ El instrumental fue a su vez objeto de hallazgos, y esa es la parte instructiva.
 
 ### 12.5 Lecciones
 
-Dos conclusiones del proceso son transferibles fuera de este proyecto.
+Tres conclusiones del proceso son transferibles fuera de este proyecto.
 
 La primera es que **quien aplica no firma**. La separación entre autor y verificador no es una formalidad burocrática de la norma: en este expediente detectó defectos en cinco de cinco ocasiones, incluida una en que el defecto vivía dentro de la corrección del defecto anterior.
 
 La segunda es que **una convención sin comprobador es una intención**. Las cuatro primeras pasadas sobre el mismo defecto fracasaron mientras la corrección dependía de que alguien aplicara bien un criterio; la quinta funcionó cuando el criterio se convirtió en código ejecutable con casos de prueba propios. El corolario incómodo, que la quinta verificación dejó por escrito, es que un comprobador escrito por el autor a partir de defectos ya conocidos demuestra menos de lo que aparenta: gana cobertura real solo cuando alguien distinto intenta romperlo.
+
+La tercera la aportó la construcción, y acota a las dos anteriores: **un diseño sin ejecución es una hipótesis**. Los seis defectos de la sección 9.5 sobrevivieron a todo el aparato descrito en esta sección, porque nacían de supuestos sobre el mundo que ningún documento puede contrastar. La consecuencia práctica no es revisar menos, sino dejar de esperar que revisar encuentre lo que solo encuentra ejecutar.
 
 ---
 
@@ -509,7 +511,7 @@ El proyecto produjo un paquete de análisis y diseño completo, coherente y veri
 
 La conclusión metodológica que el equipo extrae no está en los artefactos sino en el proceso. Un proyecto documental de este tamaño acumula afirmaciones que dejan de ser ciertas sin que nadie lo note, y la disciplina que funcionó no fue revisar más veces, sino convertir cada criterio en algo ejecutable. El caso extremo lo aportó el propio informe que este documento sustituye: pasó tres semanas afirmando cifras que ya eran falsas —diez casos de uso y doce clases, cuando eran catorce y dieciséis— junto a una pila tecnológica abandonada, precisamente porque era el único artefacto que ningún validador recorría.
 
-Esa conclusión ganó un matiz al construir, y es lo que la sección 9 documenta. La disciplina de hacer ejecutable cada criterio funcionó dentro de lo que un documento puede afirmar, y ahí eliminó los defectos de coherencia. Fuera de ese perímetro no alcanzó: los seis defectos que apareció la ejecución nacían de supuestos sobre el mundo —cómo consume tokens un modelo que razona, si una operación es realmente atómica, si una promesa del contrato se cumple— que ningún validador documental podía contrastar. Revisar y ejecutar encuentran clases distintas de defecto, y **un diseño sin ejecución es una hipótesis**, por bien revisado que esté.
+Construir le puso un límite a esa conclusión, y es lo que documenta la sección 9. La disciplina de hacer ejecutable cada criterio agotó los defectos de coherencia, que son los que un documento puede contener; los seis que quedaron nacían de supuestos sobre el mundo, y ningún validador documental podía contrastarlos. De ahí la tercera lección de la sección 12.5, que no invita a revisar menos sino a dejar de pedirle a la revisión lo que solo da la ejecución.
 
 **Trabajo pendiente declarado.** Cuatro puntos permanecen abiertos en el tablero del proyecto, ninguno bloqueante: dos requieren decisión del equipo sobre servicios externos y sobre la frontera legal de los datos, uno es la propagación de una corrección hacia el documento de visión, y uno la entrega académica.
 
@@ -532,6 +534,20 @@ Rosenberg, D., & Stephens, M. (2007). *Use Case Driven Object Modeling with UML:
 Rosenberg, D., Stephens, M., & Collins-Cope, M. (2005). *Agile Development with ICONIX Process: People, Process, and Pragmatism*. Apress.
 
 Wiegers, K., & Beatty, J. (2013). *Software Requirements* (3.ª ed.). Microsoft Press.
+
+International Organization for Standardization. (2019). *ISO/IEC 25030:2019 — SQuaRE — Quality requirements framework*. ISO.
+
+International Organization for Standardization. (2016). *ISO/IEC 25023:2016 — SQuaRE — Measurement of system and software product quality*. ISO.
+
+International Organization for Standardization. (2016). *ISO/IEC 25022:2016 — SQuaRE — Measurement of quality in use*. ISO.
+
+Basili, V. R., Caldiera, G., & Rombach, H. D. (1994). The Goal Question Metric approach. En *Encyclopedia of Software Engineering*. Wiley.
+
+World Wide Web Consortium. (2018). *Web Content Accessibility Guidelines (WCAG) 2.1*. W3C.
+
+Congreso de la República de Colombia. (2012). *Ley 1581 de 2012 — Régimen General de Protección de Datos Personales*.
+
+Presidencia de la República de Colombia. (2013). *Decreto 1377 de 2013*, reglamentario de la Ley 1581 de 2012.
 
 ---
 
@@ -565,7 +581,7 @@ Versiones leídas de la ficha de cada artefacto en el momento de generar este in
 | `DIS-00` | `08_diseno/DIS-00_inventario_y_plan.md` | v1.1 |
 | `DIS-01` | `08_diseno/DIS-01_sistema_diseno.md` | v1.1 |
 
-Siete artefactos citables carecen de campo `Versión` en su ficha: `ADR-002`, `ADR-003`, `ADR-004`, `ADR-005`, `RPD-01`, `ARQ-01` y el contrato de la interfaz de programación. Es una inconsistencia menor de la disciplina documental del proyecto, detectada al preparar este informe y registrada aquí en lugar de corregirse sobre la marcha, porque la corrección corresponde a la revisión de esos artefactos y no a su cita.
+Seis artefactos citables carecen de campo `Versión` en su ficha: `ADR-002`, `ADR-003`, `ADR-004`, `ADR-005`, `RPD-01` y el contrato de la interfaz de programación. Es una inconsistencia menor de la disciplina documental del proyecto, detectada al preparar este informe y registrada aquí en lugar de corregirse sobre la marcha, porque la corrección corresponde a la revisión de esos artefactos y no a su cita.
 
 ### Fase 2 — proceso ICONIX
 
@@ -593,7 +609,7 @@ Siete artefactos citables carecen de campo `Versión` en su ficha: `ADR-002`, `A
 
 | Artefacto | Archivo | Versión |
 |---|---|---|
-| `ARQ-01` | `10_arquitectura/ARQ-01_diseno_fisico.md` | — |
+| `ARQ-01` | `10_arquitectura/ARQ-01_diseno_fisico.md` | v1.1 |
 | `CONTRATO-API` | `10_arquitectura/CONTRATO_API_v1.md` | — |
 
 El código construido no se inventaría aquí porque no es un artefacto documental: vive en `backend/`, `frontend/` y `packages/contrato-api/` del mismo repositorio, y su estado se comprueba compilando y ejecutando, no leyendo una ficha.
@@ -603,7 +619,7 @@ El código construido no se inventaría aquí porque no es un artefacto document
 | Artefacto | Función | Versión |
 |---|---|---|
 | `HECHOS_CANONICOS` | tabla de cifras canónicas del proyecto | v2.0 |
-| `ESTADO_PIPELINE` | estado de fase y tablero de pendientes | v3.9 |
+| `ESTADO_PIPELINE` | estado de fase y tablero de pendientes | v3.11 |
 | `REGISTRO_DECISIONES` | las 53 decisiones documentadas en el anexo D | — |
 | `INDICE_MAESTRO` | inventario de artefactos con sus versiones | — |
 | `CHANGELOG` | historial del paquete documental | — |
@@ -696,7 +712,7 @@ Las 53 decisiones documentadas del proyecto. Cada una consta en `REGISTRO_DECISI
 | SD-52 | El contrato conversacional recupera cuatro reglas que su importación original no trajo, y los *prompts* pasan a v3 |
 | SD-53 | El informe cubre la Fase 3, y los cuatro documentos de gobernanza dejan de describir un proyecto sin código |
 
-Las decisiones `SD-41` a `SD-47` corresponden en su totalidad al ciclo de corrección y verificación de la compuerta `CDR-01` descrito en la sección 12. Siete decisiones para cerrar una compuerta es una cifra alta, y la sección 11.3 explica por qué hicieron falta.
+Las decisiones `SD-41` a `SD-47` corresponden en su totalidad al ciclo de corrección y verificación de la compuerta `CDR-01` descrito en la sección 12. Siete decisiones para cerrar una compuerta es una cifra alta, y la sección 12.3 explica por qué hicieron falta.
 
 ---
 
@@ -737,6 +753,7 @@ Las decisiones `SD-41` a `SD-47` corresponden en su totalidad al ciclo de correc
 
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
+| v1.3 | 2026-08-06 | Equipo Alan & Aura Académico | **Pasada de lectura completa, que es lo que los comprobadores no hacen.** Encontró **cinco referencias cruzadas rotas** que la renumeración de la v1.2 había dejado apuntando a la sección 11 —el propio comprobador no las ve, porque son prosa y no cifras—, y un resumen que seguía anunciando solo «concepción, especificación y diseño». **La §11 era el hueco de fondo:** 102 palabras para todo el fundamento de calidad, cuando el corpus sostiene bastante más — familia `SQuaRE` con `ISO/IEC 25030`/`25023`/`25022`, la tabla de los diez `RC` con métrica y umbral, los tres niveles de verificación de `NORM-01` (`[V-cláusula]`, `[V-estructura]`, `[V-índice]`), las sub-cláusulas de *safety*, la taxonomía de Wiegers con sus **seis** categorías (faltaba «término») y su argumento de las casillas vacías a propósito, `WCAG 2.1 AA` con los contrastes medidos, y la declaración honesta de que se midió el proceso y no el producto: **10 de 10 umbrales definidos, 0 de 10 medidos**. `§12.5` gana la tercera lección, la que aportó construir. Se documentan y enlazan las skills de ICONIX, lo que hace comprobable una afirmación que antes se pedía por confianza. Y el PDF baja de **73 a 68 páginas**: cada sección numerada forzaba página nueva, con secciones de siete líneas detrás. |
 | v1.2 | 2026-08-06 | Equipo Alan & Aura Académico | **El informe deja de detenerse en el diseño.** La v1.0 se cortó en el cierre del `CDR-01` por decisión declarada (`SD-51 D4`), y ese corte era correcto mientras no hubiera código. Dejó de serlo el 2026-08-06, cuando el sistema quedó desplegado: un informe que termina en el diseño describe un proyecto que ya no es este. Entra la **§9, construcción y despliegue** —contrato compartido, servidor, cliente, despliegue— y con ella **§9.5**, que es lo que justifica haber construido: los seis defectos que apareció la ejecución, ninguno detectable en los artefactos pese a dos compuertas, cinco verificaciones independientes y 262 elementos de robustez. La conclusión que se saca de ahí no contradice a la §12 sino que la acota: revisar y ejecutar encuentran clases distintas de defecto, y un diseño sin ejecución es una hipótesis. Se retira el corte de alcance de los **catorce sitios** donde aparecía, se acredita en portada la construcción de Bedoya y Montoya —redactada describiendo lo construido y contrastada con el historial del repositorio, no contando aportes—, y el subtítulo pasa a nombrar la construcción y el despliegue. Se corrige de paso un **`7.5` duplicado** que la v1.1 dejó al renumerar, y se precisa que los 350 *tokens* son de respuesta visible: confundirlos con el presupuesto de generación fue uno de los seis defectos. |
 | v1.1 | 2026-08-06 | Equipo Alan & Aura Académico | **Tres correcciones, ninguna cosmética.** *(a)* La tabla de integrantes confundía el **rol** con la **contribución a la fase documentada**: repetía los roles que `PLAN-01 §7` prevé para la construcción, posterior a lo que este informe cubre. Al corregirla en un primer intento se degradó sin base el rol de dos integrantes; ahora se separan en dos columnas, de modo que los roles quedan intactos y la contribución dice la verdad. El modelo de clases de diseño es de Santiago Eusse Gil. *(b)* Entra **§4.1**, método instrumental: los ocho agentes especializados que producen cada artefacto —de autoría del líder y residentes fuera de este repositorio— y los modelos empleados con su papel. Sin esa sección, la afirmación de §12.2 de que cada verificación la hizo «un revisor distinto» **no se podía comprobar**; ahora dice cuál hizo cada una y declara el límite: un modelo distinto no sustituye a un revisor humano. *(c)* Entra **§7.4**, la retroalimentación docente: los cuatro puntos del profesor citados literalmente y lo que se hizo con cada uno, incluidos los dos que dan credibilidad al resto — que una de las cuatro se atendió **rechazando su solución literal** por no pasar el test de sustitución, y que la primera pasada de correcciones se hizo sin cargar los agentes y hubo que rehacerla. |
-| v1.0 | 2026-08-06 | Equipo Alan & Aura Académico | **Reescritura completa.** Sustituye al `.docx` del 2026-07-18, que afirmaba 10 casos de uso, 12 clases y la pila Django/SQLite/PythonAnywhere, ninguna de las cuatro cosas cierta desde `ADR-002` y la ampliación de la especificación. El informe pasa a Markdown versionado para que entre en el barrido de `verificar_coherencia.py`, que solo recorre `.md` y por eso nunca detectó la desactualización. Entra la sección 11, aseguramiento de la calidad, que documenta las dos compuertas, las cinco verificaciones independientes y el defecto que resistió cinco intentos. Alcance: hasta el cierre de `CDR-01`; `ARQ-01` y la construcción quedan fuera. |
+| v1.0 | 2026-08-06 | Equipo Alan & Aura Académico | **Reescritura completa.** Sustituye al `.docx` del 2026-07-18, que afirmaba 10 casos de uso, 12 clases y la pila Django/SQLite/PythonAnywhere, ninguna de las cuatro cosas cierta desde `ADR-002` y la ampliación de la especificación. El informe pasa a Markdown versionado para que entre en el barrido de `verificar_coherencia.py`, que solo recorre `.md` y por eso nunca detectó la desactualización. Entra la sección de aseguramiento de la calidad —la 11 entonces, hoy la 12—, que documenta las dos compuertas, las cinco verificaciones independientes y el defecto que resistió cinco intentos. Alcance: hasta el cierre de `CDR-01`; `ARQ-01` y la construcción quedan fuera. |

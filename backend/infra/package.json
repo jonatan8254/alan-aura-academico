@@ -1,0 +1,23 @@
+{
+  "name": "backend-infra",
+  "private": true,
+  "version": "0.0.0",
+  "description": "App de AWS CDK (ADR-005). Sintetiza las 4 tablas DynamoDB y el bucket S3 de ARQ-01-D2/D4, y la API Gateway de ARQ-01-D3.",
+  "scripts": {
+    "synth": "cdk synth",
+    "diff": "cdk diff",
+    "deploy": "cdk deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.160.0",
+    "constructs": "^10.3.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.160.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.24.0"
+  }
+}

@@ -1,0 +1,113 @@
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import type { Character } from "contrato-api";
+import type { ReferenciaDeDerivacion } from "contrato-api";
+
+const s3 = new S3Client({});
+const BUCKET = process.env.BUCKET_CONFIGURACION ?? "";
+
+export interface ConfigSeguridad {
+  senalesDePeligro: string[];
+  contencion: { mensaje: string; recursos: ReferenciaDeDerivacion[] };
+}
+
+/**
+ * SEG-01 §4: "la configuración se carga al inicializar la función y se
+ * retiene en memoria; la ruta de fallback nunca hace una lectura remota".
+ * Se cachea en una promesa a nivel de módulo — el entorno de ejecución de
+ * Lambda se reusa entre invocaciones, así que en la práctica se carga una
+ * vez por arranque en frío, igual que exige la restricción, y las
+ * invocaciones siguientes no tocan la red.
+ *
+ * SENALES_DE_ULTIMO_RECURSO y CONTENCION_DE_ULTIMO_RECURSO son el "valor de
+ * último recurso empaquetado con el código" que la misma restricción exige
+ * si la carga de S3 falla: la contención, a diferencia de la derivación,
+ * NO se puede degradar a "no responde". Sin números de teléfono embebidos
+ * (SEG-01 §5).
+ *
+ * Decisión del usuario (2026-08-06): este set de PRUEBA se queda como el
+ * contenido final del gate para el alcance del MVP académico — no habrá
+ * una revisión de salud mental real que lo amplíe en este proyecto.
+ * SEG-01 §7 sigue listando esa revisión como "deseable" en el artefacto de
+ * gobernanza (no editado aquí); esto documenta que, para este MVP, no se
+ * ejerce. Cuatro frases literales en español, sin variantes, errores de
+ * tipeo ni otros idiomas — limitación conocida y aceptada, no un
+ * descuido.
+ */
+const SENALES_DE_ULTIMO_RECURSO = [
+  "quiero matarme",
+  "me quiero suicidar",
+  "voy a hacerme daño",
+  "voy a matar a",
+];
+
+const CONTENCION_DE_ULTIMO_RECURSO: ConfigSeguridad["contencion"] = {
+  mensaje:
+    "No puedo atender una emergencia. Si hay peligro inmediato, por favor contacta a un " +
+    "servicio de emergencia o acude a alguien de confianza ahora mismo. Si puedes hacerlo con " +
+    "seguridad, busca ayuda humana: es la vía indicada.",
+  // Catálogo de RecursoDeAyuda (líneas de emergencia/apoyo reales, SEG-01
+  // §5): decisión del usuario (2026-08-06) de dejarlo explícitamente
+  // pendiente para una fase posterior a esta Fase 3, no de este MVP en
+  // construcción — a diferencia de las señales/mensaje, que sí se
+  // decidieron como contenido final.
+  recursos: [],
+};
+
+let cacheSeguridad: Promise<ConfigSeguridad> | null = null;
+const cachePrompts = new Map<Character, Promise<string>>();
+
+async function leerJsonDeS3<T>(key: string): Promise<T | null> {
+  try {
+    const respuesta = await s3.send(new GetObjectCommand({ Bucket: BUCKET, Key: key }));
+    const texto = await respuesta.Body?.transformToString();
+    return texto ? (JSON.parse(texto) as T) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function obtenerConfigSeguridad(): Promise<ConfigSeguridad> {
+  if (!cacheSeguridad) {
+    cacheSeguridad = (async () => {
+      const [senales, contencion] = await Promise.all([
+        leerJsonDeS3<string[]>("config/ayuda/senales_gate.json"),
+        leerJsonDeS3<ConfigSeguridad["contencion"]>("config/ayuda/contencion.json"),
+      ]);
+      return {
+        senalesDePeligro: senales ?? SENALES_DE_ULTIMO_RECURSO,
+        contencion: contencion ?? CONTENCION_DE_ULTIMO_RECURSO,
+      };
+    })();
+  }
+  return cacheSeguridad;
+}
+
+/**
+ * No es la ruta de fallback (esa restricción es solo para SEG), así que
+ * puede fallar si S3 no responde — se propaga y el handler lo traduce a un
+ * 502. Igual se cachea en memoria por la misma razón de latencia/costo.
+ *
+ * Contenido real desde 2026-08-06 (config/prompts/{alan,aura}.json, v1):
+ * las cláusulas [C] de CONTRATO_conversacional.md que dependen del propio
+ * LLM (C-1/C-2/C-4/C-5/C-6/C-7/C-9) y los rasgos [P-1..P-7] de DIS-01 §5.
+ * C-3/C-8/C-10 NO viven en el prompt a propósito: el servidor ya impide
+ * que el LLM sea invocado sin consentimiento vigente o ante peligro
+ * explícito (chat.ts), así que el LLM nunca ve un turno que las viole.
+ */
+export function obtenerSystemPrompt(character: Character): Promise<string> {
+  if (!cachePrompts.has(character)) {
+    cachePrompts.set(
+      character,
+      (async () => {
+        const datos = await leerJsonDeS3<{ texto: string; version: string }>(
+          `config/prompts/${character}.json`,
+        );
+        if (!datos) {
+          throw new Error(`system prompt de ${character} no disponible en S3`);
+        }
+        return datos.texto;
+      })(),
+    );
+  }
+  return cachePrompts.get(character)!;
+}
