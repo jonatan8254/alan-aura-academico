@@ -46,23 +46,45 @@ describe("chat · el turno ordinario", () => {
     expect(String(primero!.clientRequestId).length).toBeGreaterThan(0);
   });
 
-  it("el historial es de 4 ELEMENTOS como máximo, el más reciente al final", async () => {
-    // El handler responde 400 a `history.length > 4`, así que interpretar «4 intercambios»
-    // como 4 pares (= 8 elementos) sería un 400 garantizado en el quinto turno.
+  it("el historial es de 8 MENSAJES como máximo, el más reciente al final", async () => {
+    // OCHO, no cuatro: «4 intercambios» de RN-02.2 son 4 idas y vueltas = 8 mensajes. Con 4
+    // la conversación perdía memoria al doble de velocidad — bug real, corregido el
+    // 2026-08-06 en el frontend y en el handler a la vez.
     const llamadas = espiarFetch([
       { ruta: RUTA_CHAT, estado: 200, cuerpo: { respuesta: "ok", modo: "ordinario" } },
     ]);
     renderConSesion(<Chat />, { rutaInicial: "/chat/", pista: PISTA });
 
-    for (const mensaje of ["uno", "dos", "tres"]) {
+    for (const mensaje of ["uno", "dos", "tres", "cuatro", "cinco", "seis"]) {
       await escribirYEnviar(mensaje);
       await waitFor(() => expect(screen.getAllByText("ok").length).toBeGreaterThan(0));
     }
 
     const ultimo = cuerpos(llamadas).at(-1)!;
     const historial = ultimo.history as { rol: string; texto: string }[];
-    expect(historial.length).toBeLessThanOrEqual(4);
+    expect(historial.length).toBeLessThanOrEqual(8);
+    // Con 6 turnos ya hay 10 mensajes remotos: el tope tiene que estar saturado en 8, que es
+    // justo lo que la versión anterior recortaba a 4.
+    expect(historial.length).toBe(8);
     expect(historial.at(-1)!.texto).toBe("ok");
+  }, 20_000);
+
+  it("una respuesta vacía NO pinta una burbuja en blanco: se trata como fallo con reintento", async () => {
+    // Bug real reproducido contra Groq: gpt-oss-20b agotaba el presupuesto de tokens
+    // razonando y devolvía `content: ""` con HTTP 200 y modo "ordinario". El backend ya lo
+    // convierte en 502 (groq.ts), pero la pantalla no puede depender de que el servidor
+    // filtre la salida de un modelo.
+    espiarFetch([
+      { ruta: RUTA_CHAT, estado: 200, cuerpo: { respuesta: "", modo: "ordinario" } },
+    ]);
+    renderConSesion(<Chat />, { rutaInicial: "/chat/", pista: PISTA });
+
+    await escribirYEnviar("hola");
+
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Reintentar" })).not.toBeNull());
+    // Ni burbuja vacía en la transcripción, ni el turno contado como consumido.
+    const burbujas = screen.getAllByText(/./).map((n) => n.textContent);
+    expect(burbujas.some((t) => t?.trim() === "")).toBe(false);
   });
 
   it("normaliza el Markdown que el modelo a veces devuelve", async () => {

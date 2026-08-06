@@ -25,7 +25,7 @@ import {
 import { copiaDeFallo } from "@/copia/fallos";
 import {
   AVISO_DE_MENSAJES_RESTANTES,
-  MAX_INTERCAMBIOS_DE_HISTORIAL,
+  MAX_MENSAJES_DE_HISTORIAL,
   MAX_MENSAJES_POR_SESION,
 } from "@/dominio/limites";
 import { fichaDe, PERSONAJES } from "@/dominio/personajes";
@@ -110,10 +110,11 @@ function saludoDe(character: Character, alias?: string): Turno {
 }
 
 /**
- * `history` = los últimos 4 turnos REMOTOS, planos, más reciente al final.
+ * `history` = los últimos 8 turnos REMOTOS, planos, más reciente al final.
  *
- * CUATRO ELEMENTOS, no cuatro pares: el handler responde 400 a `history.length > 4`, así que
- * la lectura natural de «hasta 4 intercambios» (= 8 mensajes) sería un 400 garantizado.
+ * OCHO MENSAJES = los «4 intercambios» de RN-02.2, porque un intercambio es una ida y vuelta.
+ * Valía 4 hasta el 2026-08-06, alineado con un backend que capaba igual por el mismo
+ * malentendido: la conversación perdía memoria al doble de velocidad de lo previsto.
  *
  * El saludo local nunca entra: es un turno que el personaje jamás dijo, y reinyectarlo como
  * suyo sería alimentar al modelo con palabras fabricadas. El `texto` del turno actual
@@ -122,7 +123,7 @@ function saludoDe(character: Character, alias?: string): Turno {
 function construirHistorial(mensajes: readonly Turno[]): ChatIntercambio[] {
   return mensajes
     .filter((t) => t.origen === "remoto" && t.clase !== "sistema")
-    .slice(-MAX_INTERCAMBIOS_DE_HISTORIAL)
+    .slice(-MAX_MENSAJES_DE_HISTORIAL)
     .map((t) => ({
       rol: t.clase === "usuario" ? ("usuario" as const) : ("personaje" as const),
       texto: t.texto,
@@ -218,6 +219,20 @@ export function Chat() {
 
     if (resultado.ok) {
       const { respuesta, modo } = resultado.datos;
+      const limpia = textoPlano(respuesta);
+
+      // Una respuesta sin texto NO es un turno: pintarla deja una burbuja en blanco que
+      // además entra en el `history` del turno siguiente y le enseña al modelo a callarse.
+      // El backend ya la trata como fallo del proveedor desde el 2026-08-06 (groq.ts), así
+      // que esto no debería ocurrir — pero la salida de un modelo es entrada no confiable y
+      // la pantalla no puede depender de que el servidor la filtre. Se trata como el 502 que
+      // en realidad es: conserva el pendiente y ofrece reintentar.
+      if (limpia === "") {
+        setFalloDelTurno({ tipo: "proveedor_caido", estado: 502 });
+        setEstadoDelTurno("fallido");
+        return;
+      }
+
       const consumidos = turnosConsumidos + 1;
       setTurnosConsumidos(consumidos);
       setPendiente(null);
@@ -227,7 +242,7 @@ export function Chat() {
         // ECU-06 FE-08 / CU-07. Llega con 200, no con un código de error: el frontend lo
         // distingue por `modo`, nunca por status. Y sí consume cupo — el handler evalúa los
         // límites antes del gate.
-        setTextoDeContencion(textoPlano(respuesta));
+        setTextoDeContencion(limpia);
         setEstadoDeSesion("contenida");
         return;
       }
@@ -238,7 +253,7 @@ export function Chat() {
           id: nuevoId(),
           clase: "personaje",
           origen: "remoto",
-          texto: textoPlano(respuesta),
+          texto: limpia,
           character: turno.character,
         },
       ]);

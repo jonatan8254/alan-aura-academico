@@ -16,12 +16,16 @@ export const MAX_CARACTERES_POR_MENSAJE = 2500;
  * RN-02.2 / C-4 — el único mecanismo de memoria que existe, porque no hay persistencia del
  * chat (RF-13).
  *
- * CUATRO ELEMENTOS, no cuatro pares. Los documentos dicen «hasta 4 intercambios», que se lee
- * naturalmente como 4 idas y venidas (8 mensajes), pero `ChatRequestV1.history` es una lista
- * plana de `{rol, texto}` y el handler responde 400 a `history.length > 4`. Manda la
- * implementación: mandar 8 sería un 400 garantizado.
+ * OCHO MENSAJES = CUATRO INTERCAMBIOS. Un intercambio es una ida y vuelta (turno del usuario
+ * + respuesta del personaje), así que los «hasta 4 intercambios» del canon son 8 mensajes en
+ * la lista plana de `ChatRequestV1.history`.
+ *
+ * Hasta el 2026-08-06 esto valía 4, alineado con un backend que capaba a 4 elementos por el
+ * mismo malentendido —`ChatIntercambio` modela UN mensaje, pese a su nombre—. El efecto era
+ * visible: al cuarto mensaje de una conversación, el primero ya había caído del historial y
+ * el modelo respondía como si no hubiera nada antes. Corregido en los dos lados a la vez.
  */
-export const MAX_INTERCAMBIOS_DE_HISTORIAL = 4;
+export const MAX_MENSAJES_DE_HISTORIAL = 8;
 
 /**
  * RF-25 / ECU-06 FA-01. Lo cuenta EL CLIENTE: el backend no tiene entidad `Conversacion`
