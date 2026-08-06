@@ -40,10 +40,19 @@ export function GestionDeCuenta() {
 
   const cerrar = () => setDialogo(null);
 
+  /**
+   * El diálogo se cierra SIEMPRE al resolverse el comando, también cuando falla.
+   *
+   * No es cosmético: los diálogos son modales, así que dejarlo abierto tras un fallo esconde
+   * el banner de error —y su botón de reintento— detrás de una ventana que no dice nada de lo
+   * que pasó. El caso que lo hace grave es `ECU-04 FE-04`: la eliminación quedó a medias y la
+   * persona tiene que poder leerlo y reintentar.
+   */
+
   async function confirmarReinicio() {
     const r = await cmdReiniciar.ejecutar(undefined);
-    if (!r.ok) return;
     cerrar();
+    if (!r.ok) return;
     // Mitigación de un bug del backend, no un arreglo: `reiniciar.ts` borra la CAPSULA pero
     // deja `PERFIL.completoElOnboarding` en true, así que /chat empezaría a devolver 403
     // «consentimiento base no otorgado» —que en este estado es factualmente falso—. Con la
@@ -56,8 +65,8 @@ export function GestionDeCuenta() {
 
   async function confirmarRevocacion() {
     const r = await cmdRevocar.ejecutar(undefined);
-    if (!r.ok) return;
     cerrar();
+    if (!r.ok) return;
     // La copia describe el ESTADO, no el acto: `ECU-12 FA-01` (ya estaba revocada) también
     // responde 200 y la respuesta no trae nada que permita distinguir los dos casos, así
     // que decir «acabamos de revocarla» sería afirmar algo que no se sabe.
@@ -66,8 +75,8 @@ export function GestionDeCuenta() {
 
   async function confirmarEliminacion() {
     const r = await cmdEliminar.ejecutar(undefined);
-    if (!r.ok) return; // FE-04 (500): NO se navega ni se toca la pista. Ver la nota de abajo.
     cerrar();
+    if (!r.ok) return; // FE-04 (500): NO se navega ni se toca la pista. Ver la nota de abajo.
     // ORDEN OBLIGATORIO: limpiar la pista y solo después navegar. Al revés, `SoloInvitados`
     // ve una sesión viva en `/` y rebota a /chat/, con lo que el aviso de ECU-04 §11 paso 4
     // no se ve nunca.

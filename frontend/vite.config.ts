@@ -46,5 +46,9 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
+    // Cubre los huecos de jsdom que este stack pisa (el autoscroll del chat, la captura de
+    // puntero que usa Base UI en los diálogos, matchMedia) y limpia `sessionStorage` entre
+    // pruebas, donde viven la pista de sesión y el borrador del onboarding.
+    setupFiles: ["./src/pruebas/preparacion.ts"],
   },
 });
