@@ -21,11 +21,17 @@ export interface ConfigSeguridad {
  * SENALES_DE_ULTIMO_RECURSO y CONTENCION_DE_ULTIMO_RECURSO son el "valor de
  * último recurso empaquetado con el código" que la misma restricción exige
  * si la carga de S3 falla: la contención, a diferencia de la derivación,
- * NO se puede degradar a "no responde". Son deliberadamente mínimos y de
- * PRUEBA — SEG-01 §7 declara el set real de señales como pendiente de
- * definir, idealmente con revisión de nivel 6. Sin números de teléfono
- * embebidos (SEG-01 §5): la derivación real se completa en
- * config/ayuda/contencion.json, no en código.
+ * NO se puede degradar a "no responde". Sin números de teléfono embebidos
+ * (SEG-01 §5).
+ *
+ * Decisión del usuario (2026-08-06): este set de PRUEBA se queda como el
+ * contenido final del gate para el alcance del MVP académico — no habrá
+ * una revisión de salud mental real que lo amplíe en este proyecto.
+ * SEG-01 §7 sigue listando esa revisión como "deseable" en el artefacto de
+ * gobernanza (no editado aquí); esto documenta que, para este MVP, no se
+ * ejerce. Cuatro frases literales en español, sin variantes, errores de
+ * tipeo ni otros idiomas — limitación conocida y aceptada, no un
+ * descuido.
  */
 const SENALES_DE_ULTIMO_RECURSO = [
   "quiero matarme",
