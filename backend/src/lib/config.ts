@@ -45,6 +45,11 @@ const CONTENCION_DE_ULTIMO_RECURSO: ConfigSeguridad["contencion"] = {
     "No puedo atender una emergencia. Si hay peligro inmediato, por favor contacta a un " +
     "servicio de emergencia o acude a alguien de confianza ahora mismo. Si puedes hacerlo con " +
     "seguridad, busca ayuda humana: es la vía indicada.",
+  // Catálogo de RecursoDeAyuda (líneas de emergencia/apoyo reales, SEG-01
+  // §5): decisión del usuario (2026-08-06) de dejarlo explícitamente
+  // pendiente para una fase posterior a esta Fase 3, no de este MVP en
+  // construcción — a diferencia de las señales/mensaje, que sí se
+  // decidieron como contenido final.
   recursos: [],
 };
 
@@ -81,6 +86,13 @@ export function obtenerConfigSeguridad(): Promise<ConfigSeguridad> {
  * No es la ruta de fallback (esa restricción es solo para SEG), así que
  * puede fallar si S3 no responde — se propaga y el handler lo traduce a un
  * 502. Igual se cachea en memoria por la misma razón de latencia/costo.
+ *
+ * Contenido real desde 2026-08-06 (config/prompts/{alan,aura}.json, v1):
+ * las cláusulas [C] de CONTRATO_conversacional.md que dependen del propio
+ * LLM (C-1/C-2/C-4/C-5/C-6/C-7/C-9) y los rasgos [P-1..P-7] de DIS-01 §5.
+ * C-3/C-8/C-10 NO viven en el prompt a propósito: el servidor ya impide
+ * que el LLM sea invocado sin consentimiento vigente o ante peligro
+ * explícito (chat.ts), así que el LLM nunca ve un turno que las viole.
  */
 export function obtenerSystemPrompt(character: Character): Promise<string> {
   if (!cachePrompts.has(character)) {
