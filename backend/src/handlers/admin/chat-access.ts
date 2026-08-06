@@ -62,7 +62,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       TableName: TABLA_ACCION_ADMINISTRATIVA,
       Item: {
         pk: "GLOBAL",
-        sk: `${fecha}#${randomUUID()}`,
+        // La clave de ordenación real de esta tabla es "fechaAccionId"
+        // (data-stack.ts), no "sk" — único caso entre las 4 tablas que no
+        // usa "sk" como nombre. Bug real: DynamoDB rechazó el Put con
+        // "Missing the key fechaAccionId in the item".
+        fechaAccionId: `${fecha}#${randomUUID()}`,
         autor: sesion.titularId,
         fecha,
         accion: `kill_switch:${cuerpo.estadoNuevo}`,
