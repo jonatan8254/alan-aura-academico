@@ -1,5 +1,9 @@
 @startuml
 ' DS-11 - Secuencia de CU-11 «Reiniciar la caracterizacion»
+' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-11 FE-03`— y `FA-03` sale a un `alt`. SD-45-H1: la operacion decia el paso equivocado.
+'       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
+'       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
+'       pretende dibujarla NO elimina la semantica del fragmento.
 ' v1.4 (TVI-01/03/04 del CDR-01 v1.6, SD-44): TVI-01: los pasos 4 y 5 pasan DENTRO del operando de exito de FE-04; la guarda nombra FA-03.
 '       CONVENCION SD-44 — R1: el sufijo de exito vive DENTRO de su operando.
 '       R2: un break dentro de un loop solo vale si lo que sigue al bucle es
@@ -70,73 +74,90 @@ break FA-01 no existe capsula porque ya se reinicio antes
   B_PaginaGestionCuenta --> ACT_Usuario : informarQueNoHayCaracterizacionQueReiniciar()
 end
 
-loop hasta que llegue una confirmacion explicita y valida, o el Usuario cancele (FA-03)
-  E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acceso al chat
-  B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
+E_CapsulaDePerfil --> B_PaginaGestionCuenta : es irreversible y dejara sin acceso al chat
+B_PaginaGestionCuenta --> ACT_Usuario : advertirDelAlcanceIrreversible()
+
+loop ECU-11 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
   ACT_Usuario -> B_PaginaGestionCuenta : confirmar el reinicio de forma explicita
 
-  alt FA-03 el Usuario cancela la advertencia
-    B_PaginaGestionCuenta --> ACT_Usuario : cancelarDejandoLaCapsulaCompleta()
-  else FE-03 llega sin confirmacion explicita o mal formada
-    B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso1()
-  else la confirmacion es explicita y valida
+  opt FE-03 llega sin confirmacion explicita o mal formada
+    B_PaginaGestionCuenta --> ACT_Usuario : informarPeticionInvalidaYVolverAlPaso2()
   end
 end
 
-== Paso 3 - Borrado completo de la capsula ==
+alt FA-03 el Usuario cancela la advertencia
+  B_PaginaGestionCuenta --> ACT_Usuario : cancelarDejandoLaCapsulaCompleta()
+else la confirmacion es explicita y valida
 
-opt FA-02 la capsula solo tiene character y sus metadatos
-  E_CapsulaDePerfil --> B_PaginaGestionCuenta : el borrado alcanza igualmente character y los metadatos
+  == Paso 3 - Borrado completo de la capsula ==
+
+  opt FA-02 la capsula solo tiene character y sus metadatos
+    E_CapsulaDePerfil --> B_PaginaGestionCuenta : el borrado alcanza igualmente character y los metadatos
+  end
+
+  B_PaginaGestionCuenta -> E_CapsulaDePerfil : borrarCompleta()
+  E_CapsulaDePerfil -> E_CapsulaDePerfil : dejarDeExistir()
+
+  alt FE-04 el sistema no logra ejecutar el borrado
+    E_CapsulaDePerfil --> B_PaginaGestionCuenta : sigue intacta, con character
+    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarElFalloSinHaberSuprimidoNada()
+  else el borrado se ejecuta
+
+    == Pasos 4 y 5 - Alcance declarado y oferta de rehacer ==
+
+    B_PaginaGestionCuenta -> E_Usuario : permanecerIntacta()
+    B_PaginaGestionCuenta -> E_Consentimiento : permanecerConSusDosCapas()
+    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatQuedaInhabilitado()
+    B_PaginaGestionCuenta -> B_PantallaCaracterizacion : ofrecerRehacerDesdeElPaso6DeCU05()
+  end
+
+  note right of E_CapsulaDePerfil
+    <b>Aqui no hay nada que deshacer, y esa es la correccion</b> (`H-15` del `CDR-01`).
+    La version anterior dibujaba `deshacerElBorradoIncompleto()`, protegiendo contra un
+    borrado a medias de <b>una sola entidad</b>. Ese estado <b>no puede existir</b>: la
+    capsula se suprime entera o no se suprime, y una capsula sin `character` es lo que
+    `RN-01.6` declara imposible.
+    <b>Contraste con `H-02` (`DS-04`), que parece igual y no lo es:</b> alli la atomicidad
+    era <b>imposible</b> —cuatro entidades sin transaccion—; aqui era <b>innecesaria</b>.
+    Dos defectos distintos con la misma cara.
+
+    <b>Y por que `alt` y no `break`</b> (`SVI-01`, `SD-43`). `ECU-11 FE-04` dice «<b>Vuelve</b>
+    al paso 1», no «Termina». Con `break`, el fallo abandonaba el fragmento y los pasos 4 y 5
+    <b>no se ejecutaban</b>; pero tampoco se volvia a ningun sitio. Con `alt`, el fallo y el
+    borrado efectivo quedan <b>mutuamente excluyentes</b>, que es lo que el texto exige.
+    <b>Y los pasos 4 y 5 viven DENTRO del operando de exito</b> (`TVI-01`, Mayor,
+    `CDR-01 v1.6`; regla 1 de `SD-44`). Antes el operando estaba <b>vacio</b> y quedaban
+    fuera del `alt`: tras un borrado que no se ejecuto, el diagrama declaraba el chat
+    inhabilitado y ofrecia rehacer una caracterizacion <b>que seguia intacta</b>.
+
+    <b>El retorno al paso 1 NO se modela con un `loop` aqui, y se declara:</b> envolver desde
+    el paso 1 meteria dentro del bucle a `FE-01`, `FE-02` y `FA-01`, cuyo `ECU` si dice
+    «Termina» — y un `break` dentro de un `loop` sale del bucle y sigue, no termina. El
+    reintento tras `FE-04` se lee como <b>una nueva invocacion del caso de uso</b>, no como
+    una iteracion interna.
+  end note
+
+  note over E_CapsulaDePerfil, E_Consentimiento
+    <b>La consecuencia aceptada y documentada (SD-26):</b> como `character` vive en la
+    capsula y esta deja de existir, el Usuario queda <b>sin poder conversar</b> hasta
+    rehacer CU-05. No es un efecto colateral: es lo que el paso 4 declara por escrito.
+    <b>FE-04 sin estados intermedios (RE-04):</b> o la capsula desaparece entera o
+    queda como estaba, con `character`. Ninguna rama la deja a medias.
+  end note
+
 end
 
-B_PaginaGestionCuenta -> E_CapsulaDePerfil : borrarCompleta()
-E_CapsulaDePerfil -> E_CapsulaDePerfil : dejarDeExistir()
-
-alt FE-04 el sistema no logra ejecutar el borrado
-  E_CapsulaDePerfil --> B_PaginaGestionCuenta : sigue intacta, con character
-  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarElFalloSinHaberSuprimidoNada()
-else el borrado se ejecuta
-
-  == Pasos 4 y 5 - Alcance declarado y oferta de rehacer ==
-
-  B_PaginaGestionCuenta -> E_Usuario : permanecerIntacta()
-  B_PaginaGestionCuenta -> E_Consentimiento : permanecerConSusDosCapas()
-  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatQuedaInhabilitado()
-  B_PaginaGestionCuenta -> B_PantallaCaracterizacion : ofrecerRehacerDesdeElPaso6DeCU05()
-end
-
-note right of E_CapsulaDePerfil
-  <b>Aqui no hay nada que deshacer, y esa es la correccion</b> (`H-15` del `CDR-01`).
-  La version anterior dibujaba `deshacerElBorradoIncompleto()`, protegiendo contra un
-  borrado a medias de <b>una sola entidad</b>. Ese estado <b>no puede existir</b>: la
-  capsula se suprime entera o no se suprime, y una capsula sin `character` es lo que
-  `RN-01.6` declara imposible.
-  <b>Contraste con `H-02` (`DS-04`), que parece igual y no lo es:</b> alli la atomicidad
-  era <b>imposible</b> —cuatro entidades sin transaccion—; aqui era <b>innecesaria</b>.
-  Dos defectos distintos con la misma cara.
-
-  <b>Y por que `alt` y no `break`</b> (`SVI-01`, `SD-43`). `ECU-11 FE-04` dice «<b>Vuelve</b>
-  al paso 1», no «Termina». Con `break`, el fallo abandonaba el fragmento y los pasos 4 y 5
-  <b>no se ejecutaban</b>; pero tampoco se volvia a ningun sitio. Con `alt`, el fallo y el
-  borrado efectivo quedan <b>mutuamente excluyentes</b>, que es lo que el texto exige.
-  <b>Y los pasos 4 y 5 viven DENTRO del operando de exito</b> (`TVI-01`, Mayor,
-  `CDR-01 v1.6`; regla 1 de `SD-44`). Antes el operando estaba <b>vacio</b> y quedaban
-  fuera del `alt`: tras un borrado que no se ejecuto, el diagrama declaraba el chat
-  inhabilitado y ofrecia rehacer una caracterizacion <b>que seguia intacta</b>.
-
-  <b>El retorno al paso 1 NO se modela con un `loop` aqui, y se declara:</b> envolver desde
-  el paso 1 meteria dentro del bucle a `FE-01`, `FE-02` y `FA-01`, cuyo `ECU` si dice
-  «Termina» — y un `break` dentro de un `loop` sale del bucle y sigue, no termina. El
-  reintento tras `FE-04` se lee como <b>una nueva invocacion del caso de uso</b>, no como
-  una iteracion interna.
-end note
-
-note over E_CapsulaDePerfil, E_Consentimiento
-  <b>La consecuencia aceptada y documentada (SD-26):</b> como `character` vive en la
-  capsula y esta deja de existir, el Usuario queda <b>sin poder conversar</b> hasta
-  rehacer CU-05. No es un efecto colateral: es lo que el paso 4 declara por escrito.
-  <b>FE-04 sin estados intermedios (RE-04):</b> o la capsula desaparece entera o
-  queda como estaba, con `character`. Ninguna rama la deja a medias.
+note over ACT_Usuario, B_PaginaGestionCuenta
+  <b>El bucle reentra EXACTAMENTE donde manda la `ECU`, y por eso `R3` ya no hace
+  falta aqui</b> (`CVI-03`, Mayor, `CDR-01 v1.7`; `SD-45`). La cuarta verificacion
+  refuto `R3` con un argumento que no admite replica: <b>dibujar una reentrada y
+  declarar en una nota que no se pretende dibujarla no elimina la semantica del
+  fragmento</b>. Un `loop` tiene un inicio concreto y UML repite desde ahi.
+  Antes, un solo bucle abria en el <b>paso 1</b> y pretendia servir a dos ramas con
+  destinos distintos. Ahora el bucle envuelve <b>solo el paso 2</b>, que es adonde
+  `ECU-11 FE-03` manda volver, y <b>la cancelacion sale del bucle</b>: cancelar
+  nunca fue una iteracion. Su «vuelve al paso 1» es una <b>nueva invocacion</b> del
+  caso de uso, y el `alt` la hace excluyente con el exito (regla 1 de `SD-44`).
 end note
 
 @enduml

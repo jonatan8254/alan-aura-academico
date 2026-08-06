@@ -3,6 +3,21 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v0.29.0 · `SD-45`: `R3` estaba afirmada, no implementada
+
+- **La cuarta verificación independiente confirmó que `SD-44` es un replanteo real**, no un parche disfrazado, y dio por cerrados `TVI-01`, `TVI-03`, `TVI-04`, `R4`, `TVI-05` y `TVI-06`. En `TVI-04` fue más lejos que el autor: contrastó contra la `ECU` que `cerrar()` y `descartarContenido()` **sí** son limpieza legítima.
+- **Pero refutó `R3`, y el argumento no admite réplica:** *«dibujar una reentrada y declarar en una nota que no se pretende dibujarla no elimina la semántica del fragmento»*. Un `loop` tiene un inicio concreto y UML repite desde ahí. `SD-44` acertó el diagnóstico —el `DS` no es un diagrama de flujo— pero **conservó los `loop` que afirmaban un retorno falso**.
+- **La corrección, que es la que el propio revisor propone:** el `loop` se acota **al paso 2**, que es adonde manda `FE-03` en `DS-04`, `DS-10`, `DS-11` y `DS-12`, y **la cancelación sale del bucle** a un `alt` — cancelar **nunca fue una iteración**; su «vuelve al paso 1» es una nueva invocación. La continuación entra en el operando de éxito, así que R1 se mantiene.
+- **No es un quinto parche al mismo defecto.** Los cuatro intentos anteriores discutían *qué operador*; éste corrige *qué envuelve el operador*, que es otra pregunta. Y está medido: `DS-04` queda en **0 errores y 0 advertencias**, los **283 mensajes no se mueven** y `R1`/`R2` siguen en 0.
+- **`CVI-01`, y era lo más grave: el comprobador de `SD-44` decoraba la convención.** Catorce sabotajes lo tumbaron — cualquier fragmento ocultaba una violación de R2, las flechas `->>`, `-\` y `\-` escapaban al regex, una nota cuyo texto contuviera la palabra `end` descuadraba el recorrido porque un `while` movía el índice de un `for`, `rnote` no se reconocía, y `group` producía dos falsos positivos. **Reescrito, con 17 fixtures versionados y `--autoprueba`: 17/17.** Un comprobador que da verde por no mirar es peor que no tenerlo.
+- **`CVI-02`: la ruta absoluta violaba la regla de oro de `AGENTS.md §0`.** Ahora se resuelve desde `__file__`, y se comprobó ejecutándolo desde otro directorio.
+- **`CVI-04` no se cierra, y se dice por qué:** el `.svg` de `MC-01` lleva su fuente PlantUML embebida en `<?plantuml-src ?>` y el parche de `SD-44` la dejó obsoleta. **No hay PlantUML en la máquina**: se declara, se enruta y **no se usa el parche como precedente**.
+- **`SD-45-H1`, hallazgo propio y quinta vez que una lista se queda corta —esta vez la del revisor—:** `informarPeticionInvalidaYVolverAlPaso1()` vivía en `DS-04` y `DS-11`, cuyas `ECU` dicen **paso 2**. Es el mismo defecto de `TVI-03`, y `v1.7` las miró y **las dio por correctas**.
+- **Seis `CP` alineados** —`CP-811`, `CP-1108`, `CP-011`, `CP-013`, `CP-022`, `CP-023`—: si `R3` traslada el retorno al `CP`, tiene que estar **en** el `CP`.
+- **`DS-06` no se toca**, y se declara por qué: su `loop 1..20` es iteración genuina; el «vuelve al paso 4» de `FE-06` **ya está realizado** por `reintentarUnaVez()`; y el de `FE-07` es una **discrepancia de la `ECU`** —pide un destino sin declarar mecanismo— que se enruta a `/use-case-specifier`.
+- **Una advertencia nueva del validador, declarada y no callada:** la 11 de `DS-12` cuenta tres auto-llamadas «en un mismo camino» que **no comparten camino**, porque la primera vive en un `break` a nivel raíz que ejecuta en lugar del resto. Falso positivo de su modelo de caminos.
+- **El tablero, contado a máquina: 34 filas — 22 cerradas, 11 abiertas, 1 declarada. Y ninguna de las abiertas bloquea el paso al código.**
+
 ## 2026-08-05 — v0.28.0 · `SD-44`: la convención, porque el cuarto parche habría sido el cuarto error
 
 - **La tercera verificación independiente refutó `SD-43`: 8 de 13 ramas.** Y activó el **freno de Wiegers** — tres pasadas sobre el mismo material sin converger, con el problema adjudicado **al artefacto y al alcance del modelado**, no a falta de revisión.

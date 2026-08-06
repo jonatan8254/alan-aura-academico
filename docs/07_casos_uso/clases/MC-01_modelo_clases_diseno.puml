@@ -430,7 +430,7 @@ package "Solucion · frontera de presentacion" <<Rectangle>> {
     -advertirQueLaAccionEsIrreversible() : void
     -cancelarDejandoLaCuentaIntacta() : void
     -denegarPorPermisoSinSuprimirNada() : void
-    -informarPeticionInvalidaYVolverAlPaso1() : void
+    -informarPeticionInvalidaYVolverAlPaso2() : void
     -informarQueQuedoAMediasYOfrecerReintento() : void
     -informarElFalloSinHaberSuprimidoNada() : void
     -denegarPorPermisoSinBorrarNada() : void

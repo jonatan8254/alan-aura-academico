@@ -1,5 +1,9 @@
 @startuml
 ' DS-04 - Secuencia de CU-04 «Eliminar cuenta»
+' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-04 FE-03`— y `FA-03` sale a un `alt`, porque cancelar no es una iteracion. SD-45-H1: `informarPeticionInvalidaYVolverAlPaso1()` decia el paso equivocado.
+'       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
+'       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
+'       pretende dibujarla NO elimina la semantica del fragmento.
 ' v1.4 (TVI-01/03/04 del CDR-01 v1.6, SD-44): TVI-01: el paso 4 pasa DENTRO del operando de exito de FE-04; la guarda nombra FA-03.
 '       CONVENCION SD-44 — R1: el sufijo de exito vive DENTRO de su operando.
 '       R2: un break dentro de un loop solo vale si lo que sigue al bucle es
@@ -58,115 +62,132 @@ break FE-01 la sesion expira
   B_PaginaGestionCuenta -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
 end
 
-loop hasta que llegue una confirmacion explicita y valida, o el Usuario cancele (FA-03)
-  B_PaginaGestionCuenta -> E_Usuario : enumerarRegistrosQueDesapareceran()
-  E_Usuario --> B_PaginaGestionCuenta : alcance de la supresion
-  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : advertirQueLaAccionEsIrreversible()
+B_PaginaGestionCuenta -> E_Usuario : enumerarRegistrosQueDesapareceran()
+E_Usuario --> B_PaginaGestionCuenta : alcance de la supresion
+B_PaginaGestionCuenta -> B_PaginaGestionCuenta : advertirQueLaAccionEsIrreversible()
+
+loop ECU-04 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
   ACT_Usuario -> B_PaginaGestionCuenta : confirmar explicitamente la eliminacion
 
-  alt FA-03 el Usuario no confirma y cancela
-    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarDejandoLaCuentaIntacta()
-  else FE-03 solicitud mal formada o sin confirmacion explicita
-    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarPeticionInvalidaYVolverAlPaso1()
-  else la confirmacion es explicita y valida
+  opt FE-03 solicitud mal formada o sin confirmacion explicita
+    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarPeticionInvalidaYVolverAlPaso2()
   end
 end
 
-B_PaginaGestionCuenta -> E_Usuario : comprobarTitularidadEnServidor()
+alt FA-03 el Usuario no confirma y cancela
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarDejandoLaCuentaIntacta()
+else la confirmacion es explicita y valida
 
-break FE-02 rol no autorizado o cuenta ajena
-  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : denegarPorPermisoSinSuprimirNada()
+  B_PaginaGestionCuenta -> E_Usuario : comprobarTitularidadEnServidor()
+
+  break FE-02 rol no autorizado o cuenta ajena
+    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : denegarPorPermisoSinSuprimirNada()
+  end
+
+  note over ACT_Usuario, E_Usuario
+    <b>Por que `loop` + `alt`, y por que `FE-02` se queda fuera</b> (`SVI-01` del
+    `CDR-01 v1.5`, `SD-43`). `ECU-04` dice «<b>Cancela</b> y <b>vuelve</b> al paso 1»
+    (`FA-03`) y «<b>Vuelve</b> al paso 2» (`FE-03`): ninguno termina.
+    <b>Lo que estaba en juego aqui era grave:</b> con `opt`, cancelar la eliminacion
+    <b>seguia hasta la cascada de borrado</b>, contra `ECU-04 FA-03`, que dice «El Sistema
+    no suprime nada». Con `break`, no volvia a ningun sitio.
+    <b>`FE-01` y `FE-02` quedan FUERA del bucle a proposito:</b> su `ECU` dice «Termina»,
+    y un `break` dentro de un `loop` saldria del bucle y seguiria hasta la cascada.
+  end note
+
+  == Paso 3 - Borrado en cascada ==
+
+  opt FA-02 hay una conversacion en curso al confirmar
+    B_PaginaGestionCuenta -> E_Conversacion : cerrarYDescartarSuContenido()
+  end
+
+  B_PaginaGestionCuenta -> E_Usuario : suprimirEnCascada()
+
+  alt FA-01 la cuenta nunca completo el onboarding
+    E_Usuario -> E_Usuario : noHayDependientesQueSuprimir()
+  else existen capsula, consentimiento y contadores
+    E_Usuario -> E_Consentimiento : suprimirConSusDosCapas()
+    E_Usuario -> E_CapsulaDePerfil : suprimir()
+    E_Usuario -> E_ContadorDeUsoDiario : suprimirLosContadoresDelUsuario()
+  end
+
+  note right of E_Consentimiento
+    <b>El orden es la garantia, y por eso el `Consentimiento` va primero</b>
+    (`ECU-04` `RE-04` v2.4, hallazgo `H-02` del `CDR-01`). Desde que se suprime,
+    el Sistema <b>ya no tiene base para procesar a esa persona</b>, aunque el resto
+    de la cascada no haya terminado. El `Usuario` se suprime <b>al final</b>, en el
+    paso 4: mientras exista, el reintento sabe a quien le falta borrar.
+  end note
+
+  E_Usuario -> E_EventoOperativo : conservarSinIdentidad()
+
+  note right of E_Usuario
+    <b>La cascada la ejecuta el `Usuario`, no la pantalla</b> (PER-T1): quien conoce sus
+    dependientes es el titular del dato. Repartirla desde el borde habria acoplado la
+    interfaz al esquema.
+    <b>FA-01</b> no es un caso degenerado sino una rama real: sin onboarding no existen
+    los tres dependientes, y el diagrama lo dice en vez de darlo por supuesto.
+
+    <b>`conservarSinIdentidad` afirma que la cascada NO alcanza la telemetria</b>
+    (SD-30, hallazgo H-9). `ECU-04 §7` declara que el `EventoOperativo` <b>permanece</b>
+    —la cascada no lo alcanza— <b>y por eso debe ser irreidentificable</b> (`RE-06`,
+    `PER-T2`): sin alias ni username, sin permitir reconstruir que la cuenta existio.
+    La operacion existe para que esa propiedad sea <b>verificable</b> (`CA-11`), no tacita.
+  end note
+
+  alt FE-04 el almacenamiento falla a mitad de la cascada
+    E_Usuario -> E_Usuario : conservarLoYaSuprimido()
+    E_Usuario --> B_PaginaGestionCuenta : la supresion quedo a medias
+    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueQuedoAMediasYOfrecerReintento()
+  else la cascada se completa
+
+    == Paso 4 - Cierre de sesion y condicion de Visitante ==
+
+    E_Usuario -> E_Visitante : quedarEnLaCondicionDeVisitante()
+    B_PaginaGestionCuenta -> B_PaginaPresentacion : cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()
+  end
+
+  note over E_Usuario, B_PaginaGestionCuenta
+    <b>El paso 4 vive DENTRO del operando de exito</b> (`TVI-01`, Mayor, `CDR-01 v1.6`;
+    regla 1 de `SD-44`). Antes el operando estaba <b>vacio</b> y el cierre de sesion
+    quedaba fuera del `alt`: se confirmaba que <b>no queda dato recuperable</b> despues de
+    una cascada que habia quedado a medias. Un `alt` con el exito vacio y la continuacion
+    fuera <b>es el defecto de `opt` con otro nombre</b>. Lo comprueba `barrido_desenlaces.py`.
+
+    <b>Aqui no se deshace nada, y esa es la correccion</b> (`H-02`, Mayor). La version
+    anterior dibujaba `deshacerLoSuprimido()`, una compensacion que <b>ningun mecanismo
+    puede implementar</b>: la cascada toca cuatro entidades, `ADR-002-D5` fija DynamoDB
+    —que no revierte escrituras confirmadas fuera de `TransactWriteItems`— y `ADR-003`
+    deja el almacen <b>sin respaldo</b>. Lo borrado no vuelve.
+    <b>Lo que sostiene la garantia es el orden, no la reversion:</b> si el fallo ocurre,
+    el `Consentimiento` ya no esta, asi que la persona <b>deja de ser procesada igual</b>,
+    y el reintento retoma desde donde quedo porque cada supresion es idempotente.
+  end note
+
+  note over E_ContadorDeUsoDiario, E_Visitante
+    <b>Esta cascada es TODA la que existe — PER-H5 cerrado en ADR-003 (SD-33).</b>
+    El almacen operativo <b>no se respalda</b>: sin exportaciones ni recuperacion a un punto
+    en el tiempo, no hay copia que escape a lo que estos mensajes suprimen. El hueco que
+    `ADR-002-D6` habia abierto se cerro <b>quitando el segundo almacen</b>, no acotandolo.
+    <b>Y desde SD-35 esta supresion es ademas INMEDIATA</b> (`ADR-004-D1`): fisica, sin
+    ventana de gracia y sin marca de baja — `PER-H2` cerrado. Resulto ser una ambiguedad
+    sintactica del plan §4.14, no un hueco de diseno: el MVP no tiene «cierre de cuenta».
+    Con sus dos excepciones cerradas, <b>`RF-24` pasa a cumplirse</b> segun el diseno.
+  end note
+
 end
 
-note over ACT_Usuario, E_Usuario
-  <b>Por que `loop` + `alt`, y por que `FE-02` se queda fuera</b> (`SVI-01` del
-  `CDR-01 v1.5`, `SD-43`). `ECU-04` dice «<b>Cancela</b> y <b>vuelve</b> al paso 1»
-  (`FA-03`) y «<b>Vuelve</b> al paso 2» (`FE-03`): ninguno termina.
-  <b>Lo que estaba en juego aqui era grave:</b> con `opt`, cancelar la eliminacion
-  <b>seguia hasta la cascada de borrado</b>, contra `ECU-04 FA-03`, que dice «El Sistema
-  no suprime nada». Con `break`, no volvia a ningun sitio.
-  <b>`FE-01` y `FE-02` quedan FUERA del bucle a proposito:</b> su `ECU` dice «Termina»,
-  y un `break` dentro de un `loop` saldria del bucle y seguiria hasta la cascada.
-end note
-
-== Paso 3 - Borrado en cascada ==
-
-opt FA-02 hay una conversacion en curso al confirmar
-  B_PaginaGestionCuenta -> E_Conversacion : cerrarYDescartarSuContenido()
-end
-
-B_PaginaGestionCuenta -> E_Usuario : suprimirEnCascada()
-
-alt FA-01 la cuenta nunca completo el onboarding
-  E_Usuario -> E_Usuario : noHayDependientesQueSuprimir()
-else existen capsula, consentimiento y contadores
-  E_Usuario -> E_Consentimiento : suprimirConSusDosCapas()
-  E_Usuario -> E_CapsulaDePerfil : suprimir()
-  E_Usuario -> E_ContadorDeUsoDiario : suprimirLosContadoresDelUsuario()
-end
-
-note right of E_Consentimiento
-  <b>El orden es la garantia, y por eso el `Consentimiento` va primero</b>
-  (`ECU-04` `RE-04` v2.4, hallazgo `H-02` del `CDR-01`). Desde que se suprime,
-  el Sistema <b>ya no tiene base para procesar a esa persona</b>, aunque el resto
-  de la cascada no haya terminado. El `Usuario` se suprime <b>al final</b>, en el
-  paso 4: mientras exista, el reintento sabe a quien le falta borrar.
-end note
-
-E_Usuario -> E_EventoOperativo : conservarSinIdentidad()
-
-note right of E_Usuario
-  <b>La cascada la ejecuta el `Usuario`, no la pantalla</b> (PER-T1): quien conoce sus
-  dependientes es el titular del dato. Repartirla desde el borde habria acoplado la
-  interfaz al esquema.
-  <b>FA-01</b> no es un caso degenerado sino una rama real: sin onboarding no existen
-  los tres dependientes, y el diagrama lo dice en vez de darlo por supuesto.
-
-  <b>`conservarSinIdentidad` afirma que la cascada NO alcanza la telemetria</b>
-  (SD-30, hallazgo H-9). `ECU-04 §7` declara que el `EventoOperativo` <b>permanece</b>
-  —la cascada no lo alcanza— <b>y por eso debe ser irreidentificable</b> (`RE-06`,
-  `PER-T2`): sin alias ni username, sin permitir reconstruir que la cuenta existio.
-  La operacion existe para que esa propiedad sea <b>verificable</b> (`CA-11`), no tacita.
-end note
-
-alt FE-04 el almacenamiento falla a mitad de la cascada
-  E_Usuario -> E_Usuario : conservarLoYaSuprimido()
-  E_Usuario --> B_PaginaGestionCuenta : la supresion quedo a medias
-  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueQuedoAMediasYOfrecerReintento()
-else la cascada se completa
-
-  == Paso 4 - Cierre de sesion y condicion de Visitante ==
-
-  E_Usuario -> E_Visitante : quedarEnLaCondicionDeVisitante()
-  B_PaginaGestionCuenta -> B_PaginaPresentacion : cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()
-end
-
-note over E_Usuario, B_PaginaGestionCuenta
-  <b>El paso 4 vive DENTRO del operando de exito</b> (`TVI-01`, Mayor, `CDR-01 v1.6`;
-  regla 1 de `SD-44`). Antes el operando estaba <b>vacio</b> y el cierre de sesion
-  quedaba fuera del `alt`: se confirmaba que <b>no queda dato recuperable</b> despues de
-  una cascada que habia quedado a medias. Un `alt` con el exito vacio y la continuacion
-  fuera <b>es el defecto de `opt` con otro nombre</b>. Lo comprueba `barrido_desenlaces.py`.
-
-  <b>Aqui no se deshace nada, y esa es la correccion</b> (`H-02`, Mayor). La version
-  anterior dibujaba `deshacerLoSuprimido()`, una compensacion que <b>ningun mecanismo
-  puede implementar</b>: la cascada toca cuatro entidades, `ADR-002-D5` fija DynamoDB
-  —que no revierte escrituras confirmadas fuera de `TransactWriteItems`— y `ADR-003`
-  deja el almacen <b>sin respaldo</b>. Lo borrado no vuelve.
-  <b>Lo que sostiene la garantia es el orden, no la reversion:</b> si el fallo ocurre,
-  el `Consentimiento` ya no esta, asi que la persona <b>deja de ser procesada igual</b>,
-  y el reintento retoma desde donde quedo porque cada supresion es idempotente.
-end note
-
-note over E_ContadorDeUsoDiario, E_Visitante
-  <b>Esta cascada es TODA la que existe — PER-H5 cerrado en ADR-003 (SD-33).</b>
-  El almacen operativo <b>no se respalda</b>: sin exportaciones ni recuperacion a un punto
-  en el tiempo, no hay copia que escape a lo que estos mensajes suprimen. El hueco que
-  `ADR-002-D6` habia abierto se cerro <b>quitando el segundo almacen</b>, no acotandolo.
-  <b>Y desde SD-35 esta supresion es ademas INMEDIATA</b> (`ADR-004-D1`): fisica, sin
-  ventana de gracia y sin marca de baja — `PER-H2` cerrado. Resulto ser una ambiguedad
-  sintactica del plan §4.14, no un hueco de diseno: el MVP no tiene «cierre de cuenta».
-  Con sus dos excepciones cerradas, <b>`RF-24` pasa a cumplirse</b> segun el diseno.
+note over ACT_Usuario, B_PaginaGestionCuenta
+  <b>El bucle reentra EXACTAMENTE donde manda la `ECU`, y por eso `R3` ya no hace
+  falta aqui</b> (`CVI-03`, Mayor, `CDR-01 v1.7`; `SD-45`). La cuarta verificacion
+  refuto `R3` con un argumento que no admite replica: <b>dibujar una reentrada y
+  declarar en una nota que no se pretende dibujarla no elimina la semantica del
+  fragmento</b>. Un `loop` tiene un inicio concreto y UML repite desde ahi.
+  Antes, un solo bucle abria en el <b>paso 1</b> y pretendia servir a dos ramas con
+  destinos distintos. Ahora el bucle envuelve <b>solo el paso 2</b>, que es adonde
+  `ECU-04 FE-03` manda volver, y <b>la cancelacion sale del bucle</b>: cancelar
+  nunca fue una iteracion. Su «vuelve al paso 1» es una <b>nueva invocacion</b> del
+  caso de uso, y el `alt` la hace excluyente con el exito (regla 1 de `SD-44`).
 end note
 
 @enduml

@@ -1,5 +1,9 @@
 @startuml
 ' DS-12 - Secuencia de CU-12 «Revocar la personalizacion»
+' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-12 FE-03`— y `FA-03` sale a un `alt`. Se declara la advertencia 11 como falso positivo del modelo de caminos.
+'       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
+'       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
+'       pretende dibujarla NO elimina la semantica del fragmento.
 ' v1.4 (TVI-01/03/04 del CDR-01 v1.6, SD-44): R3: la nota deja de decir que el loop realiza el retorno; la guarda nombra FA-03.
 '       CONVENCION SD-44 — R1: el sufijo de exito vive DENTRO de su operando.
 '       R2: un break dentro de un loop solo vale si lo que sigue al bucle es
@@ -69,66 +73,95 @@ break FA-01 la capa ya estaba revocada
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueYaEstabaRevocadaSinRepetirElCambio()
 end
 
-loop hasta que llegue una confirmacion valida, o el Usuario cancele (FA-03)
-  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatSeguiraDisponible()
+B_PaginaGestionCuenta -> B_PaginaGestionCuenta : declararQueElChatSeguiraDisponible()
+
+loop ECU-12 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
   ACT_Usuario -> B_PaginaGestionCuenta : confirmar la revocacion
 
-  alt FA-03 cancela en la confirmacion
-    B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarSinModificarElConsentimiento()
-  else FE-03 peticion mal formada
+  opt FE-03 peticion mal formada
     B_PaginaGestionCuenta -> B_PaginaGestionCuenta : mostrarPeticionMalFormadaYPermitirReintentar()
-  else la confirmacion es valida
   end
 end
 
-note over ACT_Usuario, B_PaginaGestionCuenta
-  <b>Por que `loop` + `alt`, y no `break` ni `opt`</b> (`SVI-01` del `CDR-01 v1.5`, `SD-43`).
-  Esta rama se resolvio mal <b>tres veces</b>, y cada intento fallo por una razon distinta:
-  · <b>`break`</b> (original): abandona el fragmento envolvente, asi que construia un
-    callejon sin salida donde `ECU-12` pide volver.
-  · <b>`opt`</b> (`SD-39`): solo ejecuta-o-salta su cuerpo; al cerrarse <b>caia al flujo de
-    exito</b>, de modo que cancelar la revocacion <b>seguia revocando</b>.
-  · <b>`break` otra vez</b> (`SD-41`): se restauro afirmando que `ECU-12` decia «Termina».
-    <b>Es falso</b>: `FA-03` dice «<b>Cancela</b> y <b>vuelve</b> al paso 1» y `FE-03` dice
-    «<b>Vuelve</b> al paso 2». Lo cazo la segunda verificacion independiente.
-  <b>Hacen falta las dos piezas:</b> el `alt` hace mutuamente excluyentes el desenlace de
-  error y el sufijo de exito; el `loop` modela el <b>ciclo de reintento</b>.
-  <b>El punto exacto de reentrada no lo dibuja este diagrama</b> (`SD-44`): es
-  normativo en `ECU-12 FA-03/FE-03` y verificable en `CP-1305`/`CP-1306`.
+alt FA-03 cancela en la confirmacion
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : cancelarSinModificarElConsentimiento()
+else la confirmacion es valida
 
-  <b>Aproximacion declarada.</b> `FA-03` vuelve al <b>paso 1</b> y `FE-03` al <b>paso 2</b>:
-  dos puntos de retorno distintos. El `loop` reentra por el paso 2, que es el ciclo de
-  confirmacion. Se prefirio a un anidamiento de dos bucles por legibilidad, y se declara
-  aqui para que sea discutible en vez de invisible.
+  note over ACT_Usuario, B_PaginaGestionCuenta
+    <b>Por que `loop` + `alt`, y no `break` ni `opt`</b> (`SVI-01` del `CDR-01 v1.5`, `SD-43`).
+    Esta rama se resolvio mal <b>tres veces</b>, y cada intento fallo por una razon distinta:
+    · <b>`break`</b> (original): abandona el fragmento envolvente, asi que construia un
+      callejon sin salida donde `ECU-12` pide volver.
+    · <b>`opt`</b> (`SD-39`): solo ejecuta-o-salta su cuerpo; al cerrarse <b>caia al flujo de
+      exito</b>, de modo que cancelar la revocacion <b>seguia revocando</b>.
+    · <b>`break` otra vez</b> (`SD-41`): se restauro afirmando que `ECU-12` decia «Termina».
+      <b>Es falso</b>: `FA-03` dice «<b>Cancela</b> y <b>vuelve</b> al paso 1» y `FE-03` dice
+      «<b>Vuelve</b> al paso 2». Lo cazo la segunda verificacion independiente.
+    <b>Hacen falta las dos piezas:</b> el `alt` hace mutuamente excluyentes el desenlace de
+    error y el sufijo de exito; el `loop` modela el <b>ciclo de reintento</b>.
+    <b>El punto exacto de reentrada no lo dibuja este diagrama</b> (`SD-44`): es
+    normativo en `ECU-12 FA-03/FE-03` y verificable en `CP-1305`/`CP-1306`.
 
-  <b>Y por que el `loop` NO envuelve a `FE-01`, `FE-02` ni `FA-01`:</b> esos tres si dicen
-  «Termina»/«Finaliza», y un `break` <b>dentro</b> de un `loop` saldria del bucle y seguiria
-  ejecutando lo que viene despues. Quedan fuera a proposito, para conservar su semantica.
-end note
+    <b>Aproximacion declarada.</b> `FA-03` vuelve al <b>paso 1</b> y `FE-03` al <b>paso 2</b>:
+    dos puntos de retorno distintos. El `loop` reentra por el paso 2, que es el ciclo de
+    confirmacion. Se prefirio a un anidamiento de dos bucles por legibilidad, y se declara
+    aqui para que sea discutible en vez de invisible.
 
-== Paso 3 - Revocacion y descarte de los autorreportes ==
+    <b>Y por que el `loop` NO envuelve a `FE-01`, `FE-02` ni `FA-01`:</b> esos tres si dicen
+    «Termina»/«Finaliza», y un `break` <b>dentro</b> de un `loop` saldria del bucle y seguiria
+    ejecutando lo que viene despues. Quedan fuera a proposito, para conservar su semantica.
+  end note
 
-B_PaginaGestionCuenta -> E_Usuario : identificarTitularDelConsentimiento()
-E_Usuario -> E_Consentimiento : revocarCapaDePersonalizacion(fecha)
-E_Consentimiento -> E_Consentimiento : conservarLaCapaBaseOtorgada()
-E_Consentimiento -> E_CapsulaDePerfil : marcarLosCuatroAutorreportesParaDescarte()
-E_CapsulaDePerfil -> E_CapsulaDePerfil : conservarCharacter()
+  == Paso 3 - Revocacion y descarte de los autorreportes ==
 
-opt FA-02 la capsula solo tiene character
-  E_CapsulaDePerfil --> B_PaginaGestionCuenta : efecto observable nulo, no habia nada que dejara de usarse
+  B_PaginaGestionCuenta -> E_Usuario : identificarTitularDelConsentimiento()
+  E_Usuario -> E_Consentimiento : revocarCapaDePersonalizacion(fecha)
+  E_Consentimiento -> E_Consentimiento : conservarLaCapaBaseOtorgada()
+  E_Consentimiento -> E_CapsulaDePerfil : marcarLosCuatroAutorreportesParaDescarte()
+  E_CapsulaDePerfil -> E_CapsulaDePerfil : conservarCharacter()
+
+  opt FA-02 la capsula solo tiene character
+    E_CapsulaDePerfil --> B_PaginaGestionCuenta : efecto observable nulo, no habia nada que dejara de usarse
+  end
+
+  == Paso 4 - Confirmacion de que el chat sigue disponible ==
+
+  B_PaginaGestionCuenta -> E_Conversacion : desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor()
+  B_PaginaGestionCuenta -> B_PaginaGestionCuenta : confirmarQuePuedeSeguirConversando()
+
+  note over E_Consentimiento, E_CapsulaDePerfil
+    <b>PRIV-R3:</b> los autorreportes quedan <b>marcados para descarte</b>, no borrados en
+    el acto. El diagrama lo dice con ese verbo y no con «suprimir», porque el momento del
+    descarte fisico es diseno de retencion y su sitio es `ARQ-01`.
+    <b>Lo que NO existe aqui es la afirmacion:</b> ningun mensaje toca la capa base, y
+    ninguno borra `character`. Por eso el chat sigue disponible.
+  end note
+
 end
 
-== Paso 4 - Confirmacion de que el chat sigue disponible ==
+note over ACT_Usuario, B_PaginaGestionCuenta
+  <b>El bucle reentra EXACTAMENTE donde manda la `ECU`, y por eso `R3` ya no hace
+  falta aqui</b> (`CVI-03`, Mayor, `CDR-01 v1.7`; `SD-45`). La cuarta verificacion
+  refuto `R3` con un argumento que no admite replica: <b>dibujar una reentrada y
+  declarar en una nota que no se pretende dibujarla no elimina la semantica del
+  fragmento</b>. Un `loop` tiene un inicio concreto y UML repite desde ahi.
+  Antes, un solo bucle abria en el <b>paso 1</b> y pretendia servir a dos ramas con
+  destinos distintos. Ahora el bucle envuelve <b>solo el paso 2</b>, que es adonde
+  `ECU-12 FE-03` manda volver, y <b>la cancelacion sale del bucle</b>: cancelar
+  nunca fue una iteracion. Su «vuelve al paso 1» es una <b>nueva invocacion</b> del
+  caso de uso, y el `alt` la hace excluyente con el exito (regla 1 de `SD-44`).
+end note
 
-B_PaginaGestionCuenta -> E_Conversacion : desdeElTurnoSiguienteLosAutorreportesNoViajanAlProveedor()
-B_PaginaGestionCuenta -> B_PaginaGestionCuenta : confirmarQuePuedeSeguirConversando()
-
-note over E_Consentimiento, E_CapsulaDePerfil
-  <b>PRIV-R3:</b> los autorreportes quedan <b>marcados para descarte</b>, no borrados en
-  el acto. El diagrama lo dice con ese verbo y no con «suprimir», porque el momento del
-  descarte fisico es diseno de retencion y su sitio es `ARQ-01`.
-  <b>Lo que NO existe aqui es la afirmacion:</b> ningun mensaje toca la capa base, y
-  ninguno borra `character`. Por eso el chat sigue disponible.
+note over B_PaginaGestionCuenta
+  <b>La advertencia 11 del validador es un falso positivo de su modelo de caminos,
+  y se declara en vez de callarla contorsionando el diagrama</b> (`SD-45`).
+  Avisa de «3 auto-llamadas consecutivas en un mismo camino de ejecucion», contando
+  `informarQueYaEstabaRevocadaSinRepetirElCambio()`, `declararQueElChatSeguiraDisponible()`
+  y `mostrarPeticionMalFormadaYPermitirReintentar()`. Pero la primera vive dentro de
+  un <b>`break` a nivel raiz</b>, y un `break` ahi ejecuta su operando <b>en lugar del
+  resto de la interaccion</b>: si `FA-01` dispara, las otras dos <b>nunca se ejecutan</b>.
+  Las tres <b>no comparten camino</b>. La skill lo dice: la advertencia es orientativa
+  y el diagrama no se retuerce para silenciarla.
 end note
 
 @enduml

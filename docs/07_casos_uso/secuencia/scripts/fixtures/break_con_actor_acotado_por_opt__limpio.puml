@@ -1,0 +1,19 @@
+@startuml
+' Fixture de regresion de barrido_desenlaces.py (`CVI-01`, `SD-45`).
+' NO es un artefacto del proyecto: es un caso de prueba del comprobador.
+skinparam style strictuml
+actor "Usuario" as ACT_Usuario
+boundary "Pantalla" as B_Pantalla
+entity "Cosa" as E_Cosa
+
+loop 1..20 turnos
+  ACT_Usuario -> B_Pantalla : escribir
+  break FE-01 se acaba
+    B_Pantalla -> B_Pantalla : terminar()
+  end
+end
+opt llega por el curso basico
+  ACT_Usuario -> B_Pantalla : cerrar la conversacion
+end
+B_Pantalla -> E_Cosa : descartar()
+@enduml

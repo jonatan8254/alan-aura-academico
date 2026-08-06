@@ -1,5 +1,9 @@
 @startuml
 ' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
+' v1.4 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: se declara por que el «vuelve al paso 4» de FE-06 ya esta realizado y por que el de FE-07 es una discrepancia de la ECU. El loop 1..20 no se toca.
+'       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
+'       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
+'       pretende dibujarla NO elimina la semantica del fragmento.
 ' v1.3 (TVI-01/03/04 del CDR-01 v1.6, SD-44): TVI-04: la accion del actor del paso 8 se acota con opt; cerrar() y descartarContenido() quedan como limpieza comun.
 '       CONVENCION SD-44 — R1: el sufijo de exito vive DENTRO de su operando.
 '       R2: un break dentro de un loop solo vale si lo que sigue al bucle es
@@ -157,6 +161,25 @@ note over B_InterfazDeChat, B_FronteraProveedorLLM
   advertencias nuevas. No se contorsiona el diagrama para callarlas: la propia
   advertencia dice que lo que sobra es <b>tamano del caso de uso</b>, no estructura del
   diagrama. Queda como hallazgo enrutado, no aplicado.
+end note
+
+note over B_FronteraProveedorLLM, ACT_ProveedorLLM
+  <b>El «vuelve al paso 4» de `FE-06` esta realizado, y el de `FE-07` es una
+  discrepancia de la `ECU` — no del diagrama</b> (`CVI-03`, `CDR-01 v1.7`; `SD-45`).
+  La cuarta verificacion senalo que el `loop` de turnos reentra por el <b>paso 2</b>
+  tambien para `FE-06` y `FE-07`, cuyas `ECU` mandan volver al <b>paso 4</b>.
+  · <b>`FE-06`</b>: el retorno al paso 4 <b>ya esta dibujado</b>, como
+    `reintentarUnaVez()` — `ECU-06 FE-06` pide exactamente «un reintento ante
+    fallos transitorios», y eso es reconstruir el contexto y volver a pedir la
+    generacion. El retorno existe expresado como <b>mensaje</b> y no como
+    fragmento; agotado el reintento, el turno termina y el bucle toma el
+    siguiente, que es el paso 2. No hay defecto.
+  · <b>`FE-07`</b>: la `ECU` manda volver al paso 4 pero <b>no declara ningun
+    reintento</b> —«informa sin romper la interfaz»—, asi que el destino que pide
+    no tiene mecanismo que lo realice. El lado dudoso es la <b>especificacion</b>,
+    no el diagrama: se enruta a `/use-case-specifier` y queda en el tablero.
+  <b>El `loop 1..20` no se toca:</b> es iteracion genuina de turnos, que es
+  justo lo que `SD-44 R3` reserva para el operador `loop`.
 end note
 
 == Paso 8 - Cierre y no persistencia ==

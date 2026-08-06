@@ -345,7 +345,7 @@ public class B_PaginaGestionCuenta {  // Gestion de cuenta (P-13)  <<solucion>>
     private void advertirQueLaAccionEsIrreversible() { }
     private void cancelarDejandoLaCuentaIntacta() { }
     private void denegarPorPermisoSinSuprimirNada() { }
-    private void informarPeticionInvalidaYVolverAlPaso1() { }
+    private void informarPeticionInvalidaYVolverAlPaso2() { }
     private void informarQueQuedoAMediasYOfrecerReintento() { }
     private void informarElFalloSinHaberSuprimidoNada() { }
     private void denegarPorPermisoSinBorrarNada() { }

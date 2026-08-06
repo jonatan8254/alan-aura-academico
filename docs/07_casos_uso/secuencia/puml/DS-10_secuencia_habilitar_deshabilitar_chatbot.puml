@@ -1,5 +1,9 @@
 @startuml
 ' DS-10 - Secuencia de CU-10 «Habilitar o deshabilitar el chatbot»
+' v1.5 (CVI-03 del CDR-01 v1.7, SD-45): CVI-03: el `loop` se acota al paso 2 —adonde manda `ECU-10 FE-03`— y `FA-02` sale a un `alt`.
+'       R3 ya no hace falta aqui: el bucle reentra donde manda la ECU. La cuarta
+'       verificacion la refuto — dibujar una reentrada y declarar en nota que no se
+'       pretende dibujarla NO elimina la semantica del fragmento.
 ' v1.4 (TVI-01/03/04 del CDR-01 v1.6, SD-44): TVI-03: la operacion deja de decir Paso1 cuando vuelve al 2; la guarda nombra FA-02.
 '       CONVENCION SD-44 — R1: el sufijo de exito vive DENTRO de su operando.
 '       R2: un break dentro de un loop solo vale si lo que sigue al bucle es
@@ -84,10 +88,8 @@ break FA-03 el estado elegido ya es el vigente
   B_ControlDisponibilidad --> ACT_Administrador : informarEstadoYaVigenteSinRegistrarAccion()
 end
 
-loop hasta que llegue una confirmacion valida, o el Administrador no confirme (FA-02)
-  B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
-  B_DialogoConfirmacion -> B_DialogoConfirmacion : nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()
-  ACT_Administrador -> B_DialogoConfirmacion : confirmar o no confirmar el cambio
+B_ControlDisponibilidad -> B_DialogoConfirmacion : solicitarConfirmacionDeLaAccion()
+B_DialogoConfirmacion -> B_DialogoConfirmacion : nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()
 
 note right of B_DialogoConfirmacion
   <b>El dialogo dice QUE va a pasar, no solo pide un si</b> (`H-18` del `CDR-01`).
@@ -98,43 +100,62 @@ note right of B_DialogoConfirmacion
   `advertirDelAlcanceIrreversible()`.
 end note
 
-  alt FA-02 el Administrador no confirma
-    B_DialogoConfirmacion -> B_ControlDisponibilidad : cancelarSinCambiarElEstado()
-  else FE-03 la confirmacion llega mal formada
+loop ECU-10 FE-03 reintenta el paso 2 hasta que la confirmacion llegue bien formada
+  ACT_Administrador -> B_DialogoConfirmacion : confirmar o no confirmar el cambio
+
+  opt FE-03 la confirmacion llega mal formada
     B_DialogoConfirmacion -> B_ControlDisponibilidad : rechazarConfirmacionInvalidaYVolverAlPaso2()
-  else la confirmacion es valida
   end
 end
 
-note over ACT_Administrador, B_DialogoConfirmacion
-  <b>Por que `loop` + `alt`</b> (`SVI-01` del `CDR-01 v1.5`, `SD-43`). `ECU-10` dice
-  «<b>Cancela</b> y <b>vuelve</b> al paso 1» (`FA-02`) y «<b>Vuelve</b> al paso 2»
-  (`FE-03`): ninguno de los dos termina. Ni `break` —que abandonaria— ni `opt` —que
-  caeria al cambio de estado, aplicandolo pese a la cancelacion— lo dicen.
-  El `alt` hace excluyentes error y exito; el `loop` modela el ciclo de reintento.
-  <b>El punto exacto de reentrada no lo dibuja este diagrama</b> (`SD-44`): es
-  normativo en `ECU-10 FA-02/FE-03` y verificable en `CP-1108`/`CP-1109`.
-  <b>`FE-01` y `FE-02` quedan FUERA del bucle a proposito:</b> su `ECU` si dice «Termina»,
-  y un `break` dentro de un `loop` saldria del bucle y seguiria ejecutando.
-end note
+alt FA-02 el Administrador no confirma
+  B_DialogoConfirmacion -> B_ControlDisponibilidad : cancelarSinCambiarElEstado()
+else la confirmacion es valida
 
-== Pasos 3 y 4 - Cambio, registro y aplicacion ==
+  note over ACT_Administrador, B_DialogoConfirmacion
+    <b>Por que `loop` + `alt`</b> (`SVI-01` del `CDR-01 v1.5`, `SD-43`). `ECU-10` dice
+    «<b>Cancela</b> y <b>vuelve</b> al paso 1» (`FA-02`) y «<b>Vuelve</b> al paso 2»
+    (`FE-03`): ninguno de los dos termina. Ni `break` —que abandonaria— ni `opt` —que
+    caeria al cambio de estado, aplicandolo pese a la cancelacion— lo dicen.
+    El `alt` hace excluyentes error y exito; el `loop` modela el ciclo de reintento.
+    <b>El punto exacto de reentrada no lo dibuja este diagrama</b> (`SD-44`): es
+    normativo en `ECU-10 FA-02/FE-03` y verificable en `CP-1108`/`CP-1109`.
+    <b>`FE-01` y `FE-02` quedan FUERA del bucle a proposito:</b> su `ECU` si dice «Termina»,
+    y un `break` dentro de un `loop` saldria del bucle y seguiria ejecutando.
+  end note
 
-B_DialogoConfirmacion -> E_DisponibilidadDelChatbot : cambiarEstadoGlobal()
-E_DisponibilidadDelChatbot -> E_Administrador : identificarAlAutorDelCambio()
-E_Administrador -> INF_AccionAdministrativa : registrarAccion(autor, fecha)
-E_DisponibilidadDelChatbot -> E_Conversacion : aplicarNuevoEstadoDeInmediato()
-E_DisponibilidadDelChatbot --> B_ControlDisponibilidad : estado vigente reflejado en el panel
+  == Pasos 3 y 4 - Cambio, registro y aplicacion ==
 
-note over INF_AccionAdministrativa, E_Conversacion
-  <b>RN-03.4:</b> el cambio exige confirmacion <b>y</b> queda registrado. Las dos cosas,
-  no una: por eso hay un dialogo propio y un registro propio.
-  <b>PER-T2 se realiza como una ausencia:</b> `registrarAccion` recibe <b>autor y fecha</b>
-  y nada mas. Ningun mensaje le pasa alias, username ni dato de usuario alguno, asi que la
-  telemetria no permite reconstruir que hizo una persona concreta.
-  <b>Efecto en CU-06:</b> deshabilitado, ningun usuario inicia conversacion (409);
-  habilitado, CU-06 vuelve a estar disponible. Una derivacion de seguridad ya en curso
-  <b>no se interrumpe</b> — eso lo decide CU-07 (`FE-03` de `DS-07`), no este caso de uso.
+  B_DialogoConfirmacion -> E_DisponibilidadDelChatbot : cambiarEstadoGlobal()
+  E_DisponibilidadDelChatbot -> E_Administrador : identificarAlAutorDelCambio()
+  E_Administrador -> INF_AccionAdministrativa : registrarAccion(autor, fecha)
+  E_DisponibilidadDelChatbot -> E_Conversacion : aplicarNuevoEstadoDeInmediato()
+  E_DisponibilidadDelChatbot --> B_ControlDisponibilidad : estado vigente reflejado en el panel
+
+  note over INF_AccionAdministrativa, E_Conversacion
+    <b>RN-03.4:</b> el cambio exige confirmacion <b>y</b> queda registrado. Las dos cosas,
+    no una: por eso hay un dialogo propio y un registro propio.
+    <b>PER-T2 se realiza como una ausencia:</b> `registrarAccion` recibe <b>autor y fecha</b>
+    y nada mas. Ningun mensaje le pasa alias, username ni dato de usuario alguno, asi que la
+    telemetria no permite reconstruir que hizo una persona concreta.
+    <b>Efecto en CU-06:</b> deshabilitado, ningun usuario inicia conversacion (409);
+    habilitado, CU-06 vuelve a estar disponible. Una derivacion de seguridad ya en curso
+    <b>no se interrumpe</b> — eso lo decide CU-07 (`FE-03` de `DS-07`), no este caso de uso.
+  end note
+
+end
+
+note over ACT_Administrador, B_ControlDisponibilidad
+  <b>El bucle reentra EXACTAMENTE donde manda la `ECU`, y por eso `R3` ya no hace
+  falta aqui</b> (`CVI-03`, Mayor, `CDR-01 v1.7`; `SD-45`). La cuarta verificacion
+  refuto `R3` con un argumento que no admite replica: <b>dibujar una reentrada y
+  declarar en una nota que no se pretende dibujarla no elimina la semantica del
+  fragmento</b>. Un `loop` tiene un inicio concreto y UML repite desde ahi.
+  Antes, un solo bucle abria en el <b>paso 1</b> y pretendia servir a dos ramas con
+  destinos distintos. Ahora el bucle envuelve <b>solo el paso 2</b>, que es adonde
+  `ECU-10 FE-03` manda volver, y <b>la cancelacion sale del bucle</b>: cancelar
+  nunca fue una iteracion. Su «vuelve al paso 1» es una <b>nueva invocacion</b> del
+  caso de uso, y el `alt` la hace excluyente con el exito (regla 1 de `SD-44`).
 end note
 
 @enduml
