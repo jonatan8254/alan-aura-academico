@@ -3,6 +3,7 @@ import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
 import { Construct } from "constructs";
 import * as path from "node:path";
 
@@ -36,11 +37,17 @@ export class ApiStack extends Stack {
     const health = this.crearHandler("HealthHandler", "health.ts");
     v1.addResource("health").addMethod("GET", new apigateway.LambdaIntegration(health));
 
-    // SESSION_SECRET: TODO antes de desplegar — sacar de Secrets Manager/SSM,
-    // no de una env var. Ver backend/src/lib/sesion.ts.
-    const entornoDeSesion = {
-      SESSION_SECRET: process.env.SESSION_SECRET ?? "dev-secret-cambiar-antes-de-desplegar",
-    };
+    // Clave de firma de la cookie de sesión. Generada por CDK, nunca en
+    // código ni en una env var en claro — los handlers la leen en runtime
+    // por su ARN (backend/src/lib/sesion.ts). No lleva RemovalPolicy.RETAIN
+    // (a diferencia de las tablas, ADR-005-D2): perderla solo invalida las
+    // sesiones activas, no es la pérdida de dato irreversible que ADR-003
+    // declaró sin respaldo.
+    const secretoDeSesion = new secretsmanager.Secret(this, "SessionSecret", {
+      description: "Clave HMAC para firmar la cookie de sesión (alan-aura, ARQ-01-D1).",
+      generateSecretString: { passwordLength: 64, excludePunctuation: true },
+    });
+    const entornoDeSesion = { SESSION_SECRET_ARN: secretoDeSesion.secretArn };
 
     const registro = this.crearHandler("RegistroHandler", "auth/registro.ts", {
       TABLA_TITULAR: props.tablaTitular.tableName,
@@ -60,6 +67,10 @@ export class ApiStack extends Stack {
     props.tablaTitular.grantReadWriteData(registro);
     props.tablaTitular.grantReadData(login);
     props.tablaTitular.grantReadData(loginAdmin);
+
+    secretoDeSesion.grantRead(login);
+    secretoDeSesion.grantRead(loginAdmin);
+    secretoDeSesion.grantRead(logout);
 
     const auth = v1.addResource("auth");
     auth.addResource("registro").addMethod("POST", new apigateway.LambdaIntegration(registro));

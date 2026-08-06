@@ -1,33 +1,53 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 import type { Rol } from "contrato-api";
 
 export const NOMBRE_COOKIE = "alan_aura_sesion";
 const DURACION_MS = 1000 * 60 * 60 * 12; // 12h
 
+const smClient = new SecretsManagerClient({});
+let secretoCache: Promise<string> | null = null;
+
 /**
- * TODO antes de desplegar: sacar de AWS Secrets Manager/SSM Parameter Store,
- * no de una variable de entorno en claro. El valor de abajo es solo para que
- * `cdk synth`/desarrollo local no rompan sin secreto configurado.
+ * El secreto vive en Secrets Manager (backend/infra/lib/api-stack.ts,
+ * "SessionSecret"), nunca en el código ni en una env var en claro — solo su
+ * ARN llega por env var (SESSION_SECRET_ARN), que no es sensible. Se cachea
+ * en memoria del proceso: los entornos de ejecución de Lambda se reusan
+ * entre invocaciones, así que solo el primer arranque en frío paga la
+ * llamada a Secrets Manager.
  */
-const SECRETO = process.env.SESSION_SECRET ?? "dev-secret-cambiar-antes-de-desplegar";
+function obtenerSecreto(): Promise<string> {
+  if (!secretoCache) {
+    secretoCache = smClient
+      .send(new GetSecretValueCommand({ SecretId: process.env.SESSION_SECRET_ARN }))
+      .then((respuesta) => {
+        if (!respuesta.SecretString) {
+          throw new Error("SessionSecret sin SecretString");
+        }
+        return respuesta.SecretString;
+      });
+  }
+  return secretoCache;
+}
 
 export interface Sesion {
   titularId: string;
   rol: Rol;
 }
 
-function firmar(payload: string): string {
-  return createHmac("sha256", SECRETO).update(payload).digest("base64url");
+async function firmar(payload: string): Promise<string> {
+  const secreto = await obtenerSecreto();
+  return createHmac("sha256", secreto).update(payload).digest("base64url");
 }
 
-export function firmarSesion(sesion: Sesion): string {
+export async function firmarSesion(sesion: Sesion): Promise<string> {
   const payload = Buffer.from(
     JSON.stringify({ ...sesion, exp: Date.now() + DURACION_MS }),
   ).toString("base64url");
-  return `${payload}.${firmar(payload)}`;
+  return `${payload}.${await firmar(payload)}`;
 }
 
-export function verificarSesion(cookieHeader: string | undefined | null): Sesion | null {
+export async function verificarSesion(cookieHeader: string | undefined | null): Promise<Sesion | null> {
   if (!cookieHeader) return null;
   const cookie = cookieHeader
     .split(";")
@@ -39,7 +59,7 @@ export function verificarSesion(cookieHeader: string | undefined | null): Sesion
   const [payload, firma] = token.split(".");
   if (!payload || !firma) return null;
 
-  const esperada = firmar(payload);
+  const esperada = await firmar(payload);
   const a = Buffer.from(firma);
   const b = Buffer.from(esperada);
   if (a.length !== b.length || !timingSafeEqual(a, b)) return null;

@@ -24,7 +24,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return json(401, { error: "credenciales inválidas" });
   }
 
-  const token = firmarSesion({ titularId: perfil.titularId, rol: perfil.rol });
+  const token = await firmarSesion({ titularId: perfil.titularId, rol: perfil.rol });
 
   return jsonConCookie(
     200,

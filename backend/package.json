@@ -11,7 +11,8 @@
   "dependencies": {
     "contrato-api": "*",
     "@aws-sdk/client-dynamodb": "^3.658.0",
-    "@aws-sdk/lib-dynamodb": "^3.658.0"
+    "@aws-sdk/lib-dynamodb": "^3.658.0",
+    "@aws-sdk/client-secrets-manager": "^3.658.0"
   },
   "devDependencies": {
     "tsx": "^4.19.0",
