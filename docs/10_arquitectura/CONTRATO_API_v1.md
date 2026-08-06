@@ -36,6 +36,13 @@ solo edad, capa base del consentimiento y `character`"*. Corregido en `moodSelfR
 `energySelfReport`, `conversationGoal` y `responseStyle` (ahora `?:`); el mock ajustó su validación
 en consecuencia.
 
+**Actualización 2026-08-06 (cuarta) — `ChatRequestV1` gana `history` y `clientRequestId`.**
+`ECU-06 §17` lista el *endpoint* con los campos *"character, message, history (≤4),
+client_request_id"* y solo `character`/`texto` estaban en el contrato. Sin `history` el LLM no
+tiene memoria del turno anterior (rompe `RN-02.2`: cápsula + persona + hasta 4 intercambios +
+turno). No hay persistencia server-side (`RF-13`): el cliente reenvía el historial en cada turno.
+Nuevo tipo `ChatIntercambio { rol, texto }`.
+
 ---
 
 | Método | Ruta | Origen | Auth | Request | Response | Códigos |
