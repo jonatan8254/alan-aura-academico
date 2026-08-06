@@ -1,5 +1,8 @@
 @startuml
 ' DS-12 - Secuencia de CU-12 «Revocar la personalizacion»
+' v1.7 (VRI-01 del CDR-01 v1.9, SD-47): VRI-01: la nota declaraba una «aproximacion» que SD-45 ya habia eliminado al separar FA-03 del bucle. Afirmaba lo contrario que la nota de al lado.
+'       La quinta verificacion lo dijo asi: «la conducta vigente es correcta, pero
+'       las notas no convergieron».
 ' v1.6 (revision interna final, SD-45): RI-2: idem; RI-3: la nota de SD-44 dejaba de ser cierta.
 '       Hallado por la revision de dos subagentes ANTES del veredicto — el mismo
 '       tipo de defecto que CVI-03, sobreviviendo dentro de la correccion de CVI-03.
@@ -106,10 +109,12 @@ else la confirmacion es valida
     adonde manda la `ECU`. Lo que no es del bucle es `FA-03`: cancelar no itera, y su
     punto de retorno lo fija `CP-1305`/`CP-1306`.
 
-    <b>Aproximacion declarada.</b> `FA-03` vuelve al <b>paso 1</b> y `FE-03` al <b>paso 2</b>:
-    dos puntos de retorno distintos. El `loop` reentra por el paso 2, que es el ciclo de
-    confirmacion. Se prefirio a un anidamiento de dos bucles por legibilidad, y se declara
-    aqui para que sea discutible en vez de invisible.
+    <b>Ya no hay aproximacion que declarar</b> (`VRI-01`, `SD-47`). Cuando un solo `loop`
+    servia a las dos ramas, servia mal: `FA-03` vuelve al <b>paso 1</b> y `FE-03` al
+    <b>paso 2</b>, y el bucle solo podia realizar uno. <b>`SD-45` lo resolvio separandolas</b>:
+    el `loop` envuelve solo el paso 2 —el retorno de `FE-03`, exacto— y `FA-03` sale fuera,
+    porque cancelar no es una iteracion: su «vuelve al paso 1» es una nueva invocacion del
+    caso de uso. Ningun retorno queda aproximado.
 
     <b>Y por que el `loop` NO envuelve a `FE-01`, `FE-02` ni `FA-01`:</b> esos tres si dicen
     «Termina»/«Finaliza», y un `break` <b>dentro</b> de un `loop` saldria del bucle y seguiria

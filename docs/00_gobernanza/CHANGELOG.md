@@ -3,6 +3,21 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v1.0.1 · `SD-47`: la quinta verificación sostiene el veredicto
+
+> **El límite declarado deja de existir.** Los tres commits que no habían pasado por un tercero
+> —`SD-45`, la corrección interna y `SD-46`— ya tienen verificación de un modelo distinto del que
+> los aplicó: **cero Críticos y cero Mayores**. `IEEE 1028 §6.5.6.5` queda cubierto para todo el
+> retrabajo del `CDR`.
+
+- **Se pidió acotada a las dos piezas de riesgo** —el rediseño de los cuatro `loop` y el comprobador—, no al paquete entero: el freno de Wiegers prohíbe repetir la misma revisión, no verificar material nuevo. Tardó **7 minutos**.
+- **Confirmó que `RI-1` y `RI-2` quedaron corregidos**, con recuento propio: 283 mensajes, balance de fragmentos 5/5, validador 14/14. Sin mensajes perdidos ni ramas de error que caigan al éxito.
+- **`VRI-01`, Menor — el defecto más silencioso de la serie:** la conducta era correcta y **el texto se quedó atrás**. `DS-06` seguía declarando **abierta** una discrepancia que `SD-46` cerró; `DS-12` declaraba una «aproximación» que `SD-45` ya había **eliminado**, contradiciendo a la nota de al lado. No rompía nada; engañaba a quien leyera.
+- **`VRI-02`, Moderado — segundo falso negativo del mismo instrumento en dos pasadas.** Reconocía solo emisores con prefijo `ACT_`, y PlantUML admite `actor "Usuario adulto"` **sin alias**. El sabotaje que lo demuestra pasa el validador de secuencia en **0/0**. Corregido derivando los emisores de las declaraciones `actor` del diagrama, y **versionado como fixture 18**.
+- **La lección, escrita en la cabecera del script:** los 17 fixtures los había escrito el autor desde la lista del revisor, así que demostraban **regresión sobre los defectos conocidos, no suficiencia general**. Un comprobador solo gana cobertura cuando alguien distinto intenta romperlo.
+- **Verificado:** seis bloques sin errores · barrido 0/0 y **autoprueba 18/18** · 283 mensajes · secuencia 0 errores y 11 advertencias · trinquete y procedencia limpios · 14 SVG sin colisiones.
+- **Tablero, a máquina: 37 filas — 27 cerradas, 9 abiertas, 1 declarada. Ninguna abierta es del `CDR`.**
+
 ## 2026-08-05 — v1.0.0 · `SD-46`: el `CDR-01` queda **CERRADO**
 
 > **La compuerta entre el diseño detallado y el código está determinada.** Veredicto del líder

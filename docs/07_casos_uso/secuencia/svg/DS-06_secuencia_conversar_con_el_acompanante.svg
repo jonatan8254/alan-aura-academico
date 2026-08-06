@@ -285,8 +285,8 @@
 <text x="400.0" y="2886.0" font-size="9.5" fill="#2C2C2A">hasta «texto generado». Eso es lo que `VI-01` encontro.</text>
 <text x="400.0" y="2899.0" font-size="9.5" fill="#2C2C2A">· `break` tampoco sirve aqui: abandonaria el fragmento envolvente, que es</text>
 <text x="400.0" y="2912.0" font-size="9.5" fill="#2C2C2A">el `loop`, y terminaria la conversacion entera. Pero `ECU-06` dice «Vuelve al</text>
-<text x="400.0" y="2925.0" font-size="9.5" fill="#2C2C2A">paso 2» (`FE-03`, `FE-05`) y «Vuelve al paso 4» (`FE-06`, `FE-07`): la persona</text>
-<text x="400.0" y="2938.0" font-size="9.5" fill="#2C2C2A">sigue conversando en la misma sesion.</text>
+<text x="400.0" y="2925.0" font-size="9.5" fill="#2C2C2A">paso 2» (`FE-03`, `FE-05` y, desde `ECU-06 v2.2`, tambien `FE-07`) y «Vuelve</text>
+<text x="400.0" y="2938.0" font-size="9.5" fill="#2C2C2A">al paso 4» (`FE-06`): la persona sigue conversando en la misma sesion.</text>
 <text x="400.0" y="2951.0" font-size="9.5" fill="#2C2C2A">· `alt` es el que dice la verdad: el fallo y la continuacion son mutuamente</text>
 <text x="400.0" y="2964.0" font-size="9.5" fill="#2C2C2A">excluyentes dentro del turno, y el `loop` ya modela la vuelta.</text>
 <text x="400.0" y="2977.0" font-size="9.5" fill="#2C2C2A">Los `break` que quedan —`FE-01`, `FE-08`, `FA-01`— si terminan la conversacion,</text>
@@ -296,10 +296,10 @@
 <text x="400.0" y="3029.0" font-size="9.5" fill="#2C2C2A">advertencia dice que lo que sobra es tamano del caso de uso, no estructura del</text>
 <text x="400.0" y="3042.0" font-size="9.5" fill="#2C2C2A">diagrama. Queda como hallazgo enrutado, no aplicado.</text>
 <rect x="3889.4" y="3067.0" width="561.5" height="250.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="3897.4" y="3085.0" font-size="9.5" fill="#2C2C2A">El «vuelve al paso 4» de `FE-06` esta realizado, y el de `FE-07` es una</text>
-<text x="3897.4" y="3098.0" font-size="9.5" fill="#2C2C2A">discrepancia de la `ECU` — no del diagrama (`CVI-03`, `CDR-01 v1.7`; `SD-45`).</text>
+<text x="3897.4" y="3085.0" font-size="9.5" fill="#2C2C2A">El «vuelve al paso 4» de `FE-06` esta realizado, y el de `FE-07` DEJO DE EXISTIR</text>
+<text x="3897.4" y="3098.0" font-size="9.5" fill="#2C2C2A">(`CVI-03`, `CDR-01 v1.7`; cerrado en `SD-46`, nota actualizada en `SD-47` por `VRI-01`).</text>
 <text x="3897.4" y="3111.0" font-size="9.5" fill="#2C2C2A">La cuarta verificacion senalo que el `loop` de turnos reentra por el paso 2</text>
-<text x="3897.4" y="3124.0" font-size="9.5" fill="#2C2C2A">tambien para `FE-06` y `FE-07`, cuyas `ECU` mandan volver al paso 4.</text>
+<text x="3897.4" y="3124.0" font-size="9.5" fill="#2C2C2A">tambien para `FE-06` y `FE-07`, cuyas `ECU` mandaban entonces volver al paso 4.</text>
 <text x="3897.4" y="3137.0" font-size="9.5" fill="#2C2C2A">· `FE-06`: el retorno al paso 4 ya esta dibujado, como</text>
 <text x="3897.4" y="3150.0" font-size="9.5" fill="#2C2C2A">`reintentarUnaVez()` — `ECU-06 FE-06` pide exactamente «un reintento ante</text>
 <text x="3897.4" y="3163.0" font-size="9.5" fill="#2C2C2A">fallos transitorios», y eso es reconstruir el contexto y volver a pedir la</text>

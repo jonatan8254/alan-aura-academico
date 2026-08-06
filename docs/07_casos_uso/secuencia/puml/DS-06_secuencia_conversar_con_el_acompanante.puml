@@ -1,5 +1,8 @@
 @startuml
 ' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
+' v1.6 (VRI-01 del CDR-01 v1.9, SD-47): VRI-01: dos notas seguian declarando abierta la discrepancia de FE-07, cerrada en SD-46 (ECU-06 v2.2: vuelve al paso 2). La conducta ya era correcta; el texto se quedo atras.
+'       La quinta verificacion lo dijo asi: «la conducta vigente es correcta, pero
+'       las notas no convergieron».
 ' v1.5 (fila 34, SD-45): la discrepancia de ECU-06 FE-07 quedo RESUELTA en la
 '       especificacion (ECU-06 v2.2: vuelve al paso 2, no al 4). El diagrama no cambia
 '       —ya decia la verdad—; solo se actualiza la nota que la declaraba abierta.
@@ -154,8 +157,8 @@ note over B_InterfazDeChat, B_FronteraProveedorLLM
     hasta «texto generado». Eso es lo que `VI-01` encontro.
   · <b>`break` tampoco sirve aqui</b>: abandonaria el <b>fragmento envolvente</b>, que es
     el `loop`, y terminaria la conversacion entera. Pero `ECU-06` dice «<b>Vuelve</b> al
-    paso 2» (`FE-03`, `FE-05`) y «<b>Vuelve</b> al paso 4» (`FE-06`, `FE-07`): la persona
-    sigue conversando en la misma sesion.
+    paso 2» (`FE-03`, `FE-05` y, <b>desde `ECU-06 v2.2`, tambien `FE-07`</b>) y «<b>Vuelve</b>
+    al paso 4» (`FE-06`): la persona sigue conversando en la misma sesion.
   · <b>`alt` es el que dice la verdad</b>: el fallo y la continuacion son mutuamente
     excluyentes <b>dentro del turno</b>, y el `loop` ya modela la vuelta.
   Los `break` que quedan —`FE-01`, `FE-08`, `FA-01`— <b>si</b> terminan la conversacion,
@@ -167,10 +170,10 @@ note over B_InterfazDeChat, B_FronteraProveedorLLM
 end note
 
 note over B_FronteraProveedorLLM, ACT_ProveedorLLM
-  <b>El «vuelve al paso 4» de `FE-06` esta realizado, y el de `FE-07` es una
-  discrepancia de la `ECU` — no del diagrama</b> (`CVI-03`, `CDR-01 v1.7`; `SD-45`).
+  <b>El «vuelve al paso 4» de `FE-06` esta realizado, y el de `FE-07` DEJO DE EXISTIR</b>
+  (`CVI-03`, `CDR-01 v1.7`; cerrado en `SD-46`, nota actualizada en `SD-47` por `VRI-01`).
   La cuarta verificacion senalo que el `loop` de turnos reentra por el <b>paso 2</b>
-  tambien para `FE-06` y `FE-07`, cuyas `ECU` mandan volver al <b>paso 4</b>.
+  tambien para `FE-06` y `FE-07`, cuyas `ECU` mandaban entonces volver al <b>paso 4</b>.
   · <b>`FE-06`</b>: el retorno al paso 4 <b>ya esta dibujado</b>, como
     `reintentarUnaVez()` — `ECU-06 FE-06` pide exactamente «un reintento ante
     fallos transitorios», y eso es reconstruir el contexto y volver a pedir la

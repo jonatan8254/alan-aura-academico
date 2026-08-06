@@ -18,6 +18,14 @@ de `SD-44` DECORABA la convencion mas de lo que la sostenia:
   - `rnote`/`hnote` no se reconocian como nota;
   - los mensajes de un fragmento anidado no se atribuian al operando que lo
     contiene, lo que producia falsos positivos con `group`.
+`SD-47` (`VRI-02` del `CDR-01 v1.9`) cierra un falso negativo mas que la QUINTA
+verificacion encontro y que los 17 fixtures no cubrian: `ACTOR` solo reconocia
+emisores `ACT_` + palabra, pero PlantUML admite `actor "Usuario adulto"` sin alias, y
+ese emisor aparece citado con comillas y espacios. Ahora los emisores de actor se
+DERIVAN de las declaraciones `actor` del propio diagrama. Su frase merece quedar
+escrita: el 17/17 demostraba regresion sobre los defectos CONOCIDOS, no
+suficiencia general.
+
 Los sabotajes viven ahora como regresion versionada en `fixtures/` y los
 ejercita `--autoprueba`, para que el verde de este script signifique algo.
 """
@@ -42,8 +50,20 @@ NOTA_INI = re.compile(r"^\s*(?:[rh]?note\b|legend\b)", re.I)
 # Toda flecha de mensaje de PlantUML, no solo `->` y `-->`. `CVI-01`.
 FLECHA = (r"(?:<-{1,3}|-{1,3}>{1,2}|-{1,3}\\{1,2}|\\{1,2}-{1,3}"
           r"|-{1,3}/|/-{1,3}|<<-{1,3}|-{1,3}>>|-{1,3}x|x-{1,3})")
-MENSAJE = re.compile(r"^\s*(?:\[|\])?\s*[\w\"'.]+\s*" + FLECHA + r"[ox]?\s*(?:\[|\])?\s*[\w\"'.]*\s*:")
-ACTOR = re.compile(r"^\s*ACT_\w+\s*" + FLECHA)
+# Un participante puede citarse con comillas y llevar espacios dentro. `VRI-02`.
+PARTICIPANTE = r"(?:\"[^\"]+\"|[\w'.]+)"
+MENSAJE = re.compile(r"^\s*(?:\[|\])?\s*" + PARTICIPANTE + r"\s*" + FLECHA +
+                     r"[ox]?\s*(?:\[|\])?\s*(?:" + PARTICIPANTE + r")?\s*:")
+
+# Declaracion de actor, para no depender del prefijo `ACT_`. `VRI-02`:
+#   actor Usuario                     -> emisor «Usuario»
+#   actor "Usuario adulto"            -> emisor «"Usuario adulto"»  (sin alias)
+#   actor "Usuario adulto" as ACT_Usu -> emisor «ACT_Usu»
+DECL_ACTOR = re.compile(
+    r"^\s*actor\s+(?:(\"[^\"]+\"|[\w'.]+))\s*(?:as\s+(\"[^\"]+\"|[\w'.]+))?\s*$", re.I)
+# Se conserva el prefijo canonico del proyecto como red de seguridad: si un
+# diagrama usara `ACT_` sin declararlo, se sigue reconociendo.
+ACTOR_POR_PREFIJO = re.compile(r"^\s*ACT_\w+\s*" + FLECHA)
 
 
 def despiezar(lineas):
@@ -120,7 +140,33 @@ def mensajes_tras(util, idx_fin):
     return fuera
 
 
-def acciones_de_actor_sin_acotar(util, idx_fin):
+def emisores_actor(util):
+    """Nombres con los que un ACTOR puede emitir mensajes en este diagrama.
+
+    No basta el prefijo `ACT_`: PlantUML admite `actor "Usuario adulto"` sin
+    alias, y ese emisor aparece luego citado con comillas y espacios. `VRI-02`.
+    """
+    nombres = set()
+    for _, l in util:
+        if l is None:
+            continue
+        m = DECL_ACTOR.match(l)
+        if m:
+            nombres.add(m.group(2) or m.group(1))
+    return nombres
+
+
+def es_accion_de_actor(linea, actores):
+    if ACTOR_POR_PREFIJO.match(linea):
+        return True
+    m = MENSAJE.match(linea)
+    if not m:
+        return False
+    emisor = re.match(r"^\s*(?:\[|\])?\s*(" + PARTICIPANTE + r")", linea)
+    return bool(emisor) and emisor.group(1) in actores
+
+
+def acciones_de_actor_sin_acotar(util, idx_fin, actores):
     """Acciones del ACTOR tras el bucle que NO estan acotadas por un `opt`.
 
     Se DESCIENDE a `alt`, `critical`, `group`, `par` y `loop`: ninguno acota la
@@ -140,7 +186,7 @@ def acciones_de_actor_sin_acotar(util, idx_fin):
                 break
             pila.pop()
             continue
-        if ACTOR.match(l) and "opt" not in pila:
+        if es_accion_de_actor(l, actores) and "opt" not in pila:
             sueltos.append(num)
     return sueltos
 
@@ -148,6 +194,7 @@ def acciones_de_actor_sin_acotar(util, idx_fin):
 def analizar(ruta):
     lineas = io.open(ruta, encoding="utf-8").read().splitlines()
     util = despiezar(lineas)
+    actores = emisores_actor(util)          # `VRI-02`
 
     pila = []
     v1, v2 = [], []
@@ -203,7 +250,7 @@ def analizar(ruta):
         idx_fin = cierre_de(util, ln_loop)
         if idx_fin is None:
             continue
-        sueltos = acciones_de_actor_sin_acotar(util, idx_fin)
+        sueltos = acciones_de_actor_sin_acotar(util, idx_fin, actores)
         if sueltos:
             v2.append((num, etiq, sueltos))
 

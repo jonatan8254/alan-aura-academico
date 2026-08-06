@@ -1,0 +1,19 @@
+@startuml
+' Fixture de regresion de barrido_desenlaces.py (`VRI-02`, `SD-47`).
+' Sabotaje hallado por la QUINTA verificacion independiente: un actor declarado
+' con comillas y espacios y SIN alias. El validador de secuencia lo acepta en
+' 0/0, y la version de SD-45 daba R2=0 porque solo reconocia emisores `ACT_`.
+skinparam style strictuml
+actor "Usuario adulto"
+boundary "Pantalla" as B_Pantalla
+entity "Cosa" as E_Cosa
+
+loop 1..20 turnos
+  "Usuario adulto" -> B_Pantalla : escribir
+  break FE-01 se acaba
+    B_Pantalla -> B_Pantalla : terminar()
+  end
+end
+"Usuario adulto" -> B_Pantalla : cerrar la operacion
+B_Pantalla -> E_Cosa : descartar()
+@enduml
