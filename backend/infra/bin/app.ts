@@ -9,6 +9,7 @@ new ApiStack(app, "AlanAuraApiStack", {
   tablaTitular: dataStack.tablaTitular,
   tablaConfiguracion: dataStack.tablaConfiguracion,
   tablaEventoOperativo: dataStack.tablaEventoOperativo,
+  tablaAccionAdministrativa: dataStack.tablaAccionAdministrativa,
   bucketConfiguracion: dataStack.bucketConfiguracion,
 });
 

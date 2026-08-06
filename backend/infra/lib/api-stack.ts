@@ -12,6 +12,7 @@ export interface ApiStackProps extends StackProps {
   tablaTitular: dynamodb.Table;
   tablaConfiguracion: dynamodb.Table;
   tablaEventoOperativo: dynamodb.Table;
+  tablaAccionAdministrativa: dynamodb.Table;
   bucketConfiguracion: s3.Bucket;
 }
 
@@ -20,10 +21,10 @@ export interface ApiStackProps extends StackProps {
  * /chat vía un "plan de uso" (usage plan + throttling por clave), que es un
  * mecanismo de API Gateway REST — HTTP API v2 no lo tiene en esos términos.
  *
- * Esta pasada monta /api/v1/health, las 4 rutas de auth, /onboarding,
- * /chat, las 2 de /perfil y /cuenta/eliminar — quedan las 3 de /admin,
- * que se añaden handler por handler repitiendo el mismo patrón
- * (NodejsFunction sin Docker, un rol de ejecución por función, ARQ-01-D5).
+ * Monta las 13 rutas de ARQ-01-D3: health, las 4 de auth, onboarding,
+ * chat, las 2 de perfil, cuenta/eliminar y las 3 de admin — todas con el
+ * mismo patrón (NodejsFunction sin Docker, un rol de ejecución por
+ * función, ARQ-01-D5).
  */
 export class ApiStack extends Stack {
   public readonly api: apigateway.RestApi;
@@ -157,6 +158,42 @@ export class ApiStack extends Stack {
     v1.addResource("cuenta")
       .addResource("eliminar")
       .addMethod("POST", new apigateway.LambdaIntegration(eliminarCuenta));
+
+    const directorio = this.crearHandler("DirectorioHandler", "admin/directorio.ts", {
+      TABLA_TITULAR: props.tablaTitular.tableName,
+      ...entornoDeSesion,
+    });
+    const metricas = this.crearHandler("MetricasHandler", "admin/metricas.ts", {
+      TABLA_TITULAR: props.tablaTitular.tableName,
+      TABLA_CONFIGURACION: props.tablaConfiguracion.tableName,
+      TABLA_EVENTO_OPERATIVO: props.tablaEventoOperativo.tableName,
+      ...entornoDeSesion,
+    });
+    const chatAccess = this.crearHandler("ChatAccessHandler", "admin/chat-access.ts", {
+      TABLA_CONFIGURACION: props.tablaConfiguracion.tableName,
+      TABLA_ACCION_ADMINISTRATIVA: props.tablaAccionAdministrativa.tableName,
+      ...entornoDeSesion,
+    });
+
+    props.tablaTitular.grantReadData(directorio);
+    props.tablaTitular.grantReadData(metricas);
+    props.tablaEventoOperativo.grantReadData(metricas);
+    props.tablaConfiguracion.grantReadData(metricas);
+    props.tablaConfiguracion.grantReadWriteData(chatAccess);
+    props.tablaAccionAdministrativa.grantWriteData(chatAccess);
+
+    secretoDeSesion.grantRead(directorio);
+    secretoDeSesion.grantRead(metricas);
+    secretoDeSesion.grantRead(chatAccess);
+
+    const admin = v1.addResource("admin");
+    admin
+      .addResource("directorio")
+      .addMethod("GET", new apigateway.LambdaIntegration(directorio));
+    admin.addResource("metricas").addMethod("GET", new apigateway.LambdaIntegration(metricas));
+    admin
+      .addResource("chat-access")
+      .addMethod("POST", new apigateway.LambdaIntegration(chatAccess));
   }
 
   private crearHandler(
