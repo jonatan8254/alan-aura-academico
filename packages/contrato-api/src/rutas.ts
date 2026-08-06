@@ -113,6 +113,13 @@ export type OnboardingStatus = 200 | 400 | 401;
  * RN-02.2). No hay persistencia server-side (RF-13): el cliente reenvía el
  * historial en cada turno, el servidor no lo guarda entre peticiones.
  */
+/**
+ * UN MENSAJE, no un intercambio completo — el nombre es engañoso y ya causó un bug: hasta el
+ * 2026-08-06 el backend capaba `history` a 4 ELEMENTOS creyendo que eso eran «4 intercambios»
+ * de RN-02.2, cuando un intercambio es una ida y vuelta (2 mensajes). El modelo recibía la
+ * mitad de la memoria que el canon concede. El tipo se conserva por compatibilidad; el límite
+ * correcto está en `ChatRequestV1.history`.
+ */
 export interface ChatIntercambio {
   rol: "usuario" | "personaje";
   texto: string;
@@ -120,7 +127,11 @@ export interface ChatIntercambio {
 export interface ChatRequestV1 {
   texto: string;
   character: Character;
-  /** Los últimos intercambios de la sesión actual, más reciente al final. Máximo 4 (RN-02.2). */
+  /**
+   * Los últimos mensajes de la sesión actual, planos, más reciente al final.
+   * **Máximo 8 mensajes = 4 intercambios** (RN-02.2, C-4, RNF-04). El backend responde 400
+   * por encima de 8. No incluye el `texto` de este turno: el servidor lo añade al final.
+   */
   history: ChatIntercambio[];
   /** Idempotencia del turno ante reintento (ECU-06 FE-06/FE-07). */
   clientRequestId: string;

@@ -5,7 +5,27 @@ const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 // exacto del modelo en la API de Groq no está verificado contra su
 // documentación en vivo — confirmar antes del primer cdk deploy real.
 export const MODELO_GROQ = "openai/gpt-oss-20b";
-const MAX_TOKENS_SALIDA = 350; // RN-02.8
+
+/**
+ * Presupuesto de GENERACIÓN, que no es lo mismo que el límite de salida visible.
+ *
+ * BUG REAL, corregido el 2026-08-06. Aquí decía `350` —el límite de RN-02.8— y se enviaba
+ * como `max_tokens`. Pero `gpt-oss-20b` es un modelo de RAZONAMIENTO: el presupuesto cuenta
+ * los tokens de razonamiento ADEMÁS de los de respuesta. Cuando el modelo razonaba mucho
+ * —típico con mensajes ambiguos («1», «4») o con preguntas que piden comparar varias
+ * opciones— agotaba los 350 razonando y devolvía `content: ""` con `finish_reason: "length"`.
+ * El usuario veía una burbuja vacía.
+ *
+ * Reproducido contra Groq real: 2 de 3 mensajes que inducen razonamiento largo volvieron
+ * vacíos; uno corto («?») respondió con normalidad.
+ *
+ * RN-02.8 sigue vigente y se sigue cumpliendo: limita la RESPUESTA VISIBLE a ~350 tokens, y
+ * quien lo hace cumplir es `limitarTokensDeSalida()` en guardasDeSalida.ts, del lado de la
+ * salida ya generada. Este número solo le da al modelo espacio para pensar antes de escribir.
+ *
+ * A ~500 tokens/s del modelo, 2000 tokens son ~4s — holgado dentro de los 20s de RN-02.9.
+ */
+const MAX_TOKENS_GENERACION = 2000;
 const PRESUPUESTO_TOTAL_MS = 20_000; // RN-02.9 — total, no por intento (ver generar())
 
 const smClient = new SecretsManagerClient({});
@@ -50,7 +70,7 @@ async function llamarUnaVez(
       body: JSON.stringify({
         model: MODELO_GROQ,
         messages: mensajes,
-        max_tokens: MAX_TOKENS_SALIDA,
+        max_tokens: MAX_TOKENS_GENERACION,
       }),
       signal: controller.signal,
     });
@@ -60,11 +80,22 @@ async function llamarUnaVez(
     }
 
     const datos = (await respuesta.json()) as {
-      choices?: Array<{ message?: { content?: string } }>;
+      choices?: Array<{ message?: { content?: string }; finish_reason?: string }>;
     };
-    const texto = datos.choices?.[0]?.message?.content;
+    const eleccion = datos.choices?.[0];
+    const texto = eleccion?.message?.content;
     if (typeof texto !== "string") {
       throw new ProveedorNoDisponibleError("respuesta de Groq sin contenido");
+    }
+
+    // Una cadena VACÍA pasaba el `typeof` de arriba —`"" ` sí es string— y llegaba entera
+    // hasta la pantalla como una burbuja en blanco, con HTTP 200 y modo "ordinario". Un turno
+    // sin texto no es una respuesta: se trata como fallo del proveedor, que es lo que de
+    // verdad ocurrió, y así entra en la ruta de reintento de FE-06 en vez de fingir éxito.
+    if (texto.trim() === "") {
+      throw new ProveedorNoDisponibleError(
+        `Groq devolvió contenido vacío (finish_reason: ${eleccion?.finish_reason ?? "desconocido"})`,
+      );
     }
 
     return { texto, latenciaMs: Date.now() - inicio };

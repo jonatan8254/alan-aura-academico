@@ -12,7 +12,19 @@ import { aplicarGuardasDeSalida, limitarTokensDeSalida } from "../lib/guardasDeS
 import { registrarEventoOperativo } from "../lib/eventoOperativo.js";
 
 const MAX_CARACTERES = 2500; // RN-02.8
-const MAX_INTERCAMBIOS_HISTORIAL = 4; // RN-02.2
+
+/**
+ * RN-02.2 habla de «hasta 4 INTERCAMBIOS de la sesión actual», y un intercambio es una ida y
+ * vuelta: turno del usuario + respuesta del personaje. Son 8 mensajes, no 4.
+ *
+ * BUG REAL, corregido el 2026-08-06. Esto valía `4` y se comparaba contra `history.length`,
+ * que es una lista PLANA de mensajes (`ChatIntercambio` modela UN mensaje, no un par — el
+ * nombre del tipo es lo que indujo el error). El efecto: el modelo recibía solo 2 idas y
+ * vueltas, la mitad de la memoria que el canon concede, y «olvidaba» el principio de la
+ * conversación mucho antes de lo previsto. Verificado contra el backend real: al cuarto
+ * mensaje, el primero ya había caído del historial.
+ */
+const MAX_MENSAJES_HISTORIAL = 8; // = 4 intercambios (RN-02.2, C-4, RNF-04)
 const MAX_TOKENS_SALIDA_APROX = 350; // RN-02.8, red de seguridad ver guardasDeSalida.ts
 
 /**
@@ -57,8 +69,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       error: `el mensaje debe tener entre 1 y ${MAX_CARACTERES} caracteres`,
     }); // FE-03
   }
-  if (!Array.isArray(cuerpo.history) || cuerpo.history.length > MAX_INTERCAMBIOS_HISTORIAL) {
-    return json(400, { error: `history admite hasta ${MAX_INTERCAMBIOS_HISTORIAL} intercambios` });
+  if (!Array.isArray(cuerpo.history) || cuerpo.history.length > MAX_MENSAJES_HISTORIAL) {
+    return json(400, {
+      error: `history admite hasta ${MAX_MENSAJES_HISTORIAL} mensajes (4 intercambios)`,
+    });
   }
   // Bug real, corregido: sin esto, un `character` fuera del enum llegaba
   // intacto hasta `obtenerSystemPrompt` (abajo), donde fallaba al buscar un
@@ -109,7 +123,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     });
   }
 
-  for (const intercambio of cuerpo.history.slice(-MAX_INTERCAMBIOS_HISTORIAL)) {
+  for (const intercambio of cuerpo.history.slice(-MAX_MENSAJES_HISTORIAL)) {
     mensajes.push({
       role: intercambio.rol === "usuario" ? "user" : "assistant",
       content: intercambio.texto,
