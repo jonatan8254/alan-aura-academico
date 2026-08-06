@@ -10,6 +10,20 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 
 ---
 
+## 2026-08-05 — v2.0.0 · `SD-50`: el diseño físico queda escrito, y con él se cierra la Fase 2 entera
+
+> **`ARQ-01` completa lo que `ADR-002 §1` había diferido**, con la condición que lo bloqueaba ya
+> cumplida: el CDR cerró (`SD-46`) y `MC-01` quedó congelado. Salto **MAYOR**, por convención propia
+> de `SD-48`: `ARQ-01` era uno de los dos hitos que la nota de versionado ya reservaba para el
+> próximo cierre de fase.
+
+- **`ARQ-01` (nuevo, `docs/10_arquitectura/`, carpeta nueva).** `D1`: Vercel como intermediario del origen cruzado (decisión del usuario) — sin origen cruzado real desde el navegador, `SameSite=Strict` funciona sin mecanismo adicional. Consecuencia declarada: Vercel pasa a encargado del tratamiento en `PRIV-01 §4.1`.
+- **`D2`: 4 tablas DynamoDB.** Una de diseño de tabla única (`Titular`) para las cuatro entidades ligadas a la cuenta, particionada por identificador opaco —no `username`—, con `GSI-2` de proyección dispersa para el directorio sin `Scan`; tres tablas separadas para lo global y la telemetría, porque `PER-T2` exige que no sea reidentificable y una tabla compartida crea adyacencia física innecesaria. **Cierra `PER-H4`.**
+- **`D3`: espacio de nombres `/api/v1/`**, separado de las rutas de la SPA. Cierra los tres `RA-01` heredados —dos sin ruta nueva, porque `character` es `{readOnly}` en `MC-01` y se escribe una sola vez en el `onboarding`—, con primera consolidación de los códigos HTTP de `H-09`.
+- **`D4`–`D6`:** un bucket S3 con prefijos; IAM de mínimo privilegio sin VPC; *runbook* con región explícitamente **provisional** hasta `V6-b`.
+- **Lo que no decide, a propósito:** código CDK real (Fase 3) ni la región definitiva.
+- **Propagación:** `PRIV-01` v1.8, `PER-01` v1.7 (los cuatro hallazgos del documento quedan cerrados), `ESTADO_PIPELINE` v3.9 (Fase 2 pasa de «retrabajo abierto» —texto obsoleto desde `SD-46`— a cerrada; pendientes bajan de 9 a 5 abiertas), `INDICE_MAESTRO`.
+
 ## 2026-08-05 — v1.2.0 · `SD-49`: la infraestructura se escribirá en TypeScript, y con dos frenos puestos
 
 > **`ARQ-01` no puede escribir nada sin saber en qué herramienta escribe**, y `ADR-002 §1` la había
