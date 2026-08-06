@@ -34,6 +34,25 @@ import type { LoginRequest, LoginResponse } from "contrato-api";
 El contrato completo, ruta por ruta, está documentado en
 `docs/10_arquitectura/CONTRATO_API_v1.md`.
 
+## Dónde vive la configuración de despliegue
+
+**Manda el `vercel.json` de la RAÍZ del repo, no el de esta carpeta.** El build del frontend
+necesita el monorepo entero: su `prebuild` compila `contrato-api` con `--prefix ..`, y este
+`package.json` declara `"contrato-api": "*"`, que solo resuelve vía *npm workspaces* desde la raíz
+— desplegar solo `frontend/` falla en el `npm install`, antes siquiera de compilar. El
+`buildCommand` de la raíz apunta a un solo *workspace* a propósito: el script `build` de la raíz es
+`--workspaces --if-present` y arrastraría también a `backend`, que es código de Lambda y se
+despliega por CDK.
+
+Dos consecuencias que conviene saber:
+
+- **El `frontend/vercel.json` de abajo NO se lee** en este montaje; solo tendría efecto con
+  *Root Directory* = `frontend`. Sus dos reglas están duplicadas en la raíz. Resolver esa
+  duplicidad queda pendiente de decisión del equipo.
+- **Vercel rechaza propiedades desconocidas en `vercel.json`**, así que la clave `$comentario` que
+  usa el de abajo haría fallar el despliegue con `Schema verification failed`. Por eso la
+  explicación vive aquí y no dentro del JSON.
+
 ## `vercel.json`
 
 El `rewrite` de `/api/*` ya apunta al API Gateway real (mismo mecanismo que el `server.proxy` de
@@ -66,9 +85,11 @@ lo lea debe saber que el estado real es este README, no ese archivo.
 
 ### Pendientes conocidos
 
-- **Sin desplegar a Vercel todavía.** Todo lo verificado fue `npm run dev` local contra el API
-  Gateway real; el deploy en sí (con las variables de entorno / `vercel.json` en producción) no ha
-  ocurrido.
+- ~~Sin desplegar a Vercel todavía.~~ **Desplegado el 2026-08-06:
+  https://alan-aura-academico.vercel.app** — producción, sin variables de entorno (no hace falta
+  ninguna: la URL del API Gateway está fija en `vite.config.ts` y en la configuración de
+  despliegue). Verificado que el *rewrite* llega al backend real (`/api/v1/health` devuelve
+  `{"estado":"ok"}` con cabeceras de AWS) y que las rutas profundas resuelven por el catch-all.
 - Un hueco de contrato que el frontend tuvo que recortar en pantalla (`recursos` de
   `ChatResponseV1`, P-12) — detalle completo en `backend/CONTINUAR_AQUI.md`. Los tres bugs de
   backend y el `GET /admin/chat-access` que faltaban ya están cerrados (2026-08-06): P-16

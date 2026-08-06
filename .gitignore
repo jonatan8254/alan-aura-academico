@@ -61,3 +61,5 @@ grafo/vault/02_Fuentes/Conocimiento/
 
 # ── Caché de consultas de graphify (regenerable, no es contenido del grafo) ──
 grafo/cache/
+.vercel
+.env*

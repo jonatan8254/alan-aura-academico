@@ -1,0 +1,16 @@
+# Que no se sube al build, y por que.
+#
+# El despliegue solo necesita construir el frontend. Vercel respeta .gitignore
+# ademas de este archivo.
+
+# 152 MB de grafo de conocimiento y vault de Obsidian: capa de navegacion
+# derivada (SD-27), no interviene en ningun build.
+grafo/
+
+# Documentacion del proyecto: 6,7 MB de artefactos, diagramas y maquetas.
+docs/
+
+# Infraestructura AWS: se despliega con CDK, no por aqui. backend/src y
+# backend/package.json SI se quedan --backend es un workspace declarado en la
+# raiz y npm install falla si el directorio no existe.
+backend/infra/
