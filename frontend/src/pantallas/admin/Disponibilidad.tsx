@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { IconHistory } from "@tabler/icons-react";
-import type { EstadoDisponibilidad } from "contrato-api";
+import type { EstadoDisponibilidad, UltimoCambioDeAcceso } from "contrato-api";
 
-import { cambiarAccesoAlChat, obtenerMetricas } from "@/api/endpoints";
+import { cambiarAccesoAlChat, consultarChatAccess } from "@/api/endpoints";
 import { useComando, useConsulta } from "@/api/hooks";
 import { BannerInformativo } from "@/componentes/BannerInformativo";
 import { DialogoDeConfirmacion } from "@/componentes/DialogoDeConfirmacion";
@@ -17,10 +17,11 @@ import { EstadoDeConsultaAdmin } from "./EstadoDeConsultaAdmin";
 /**
  * P-16 Disponibilidad del chatbot — `/plataforma-admin/disponibilidad/` (CU-10, RF-17/18).
  *
- * EL ESTADO SE LEE DE `/admin/metricas`. No hay endpoint de lectura del kill switch:
- * `api-stack.ts` cablea solo `POST` en `/admin/chat-access`, y `estadoDelChatbot` de métricas
- * es la única fuente. Efecto colateral que hay que conocer: si métricas falla, esta pantalla
- * no puede mostrar el estado y cae a su propio estado de fallo.
+ * El estado y el último cambio auditado se leen de `GET /admin/chat-access`
+ * (`consultarChatAccess`, backend commit `1e8fef3`) — antes de esa ruta, esta pantalla leía
+ * `estadoDelChatbot` de `/admin/metricas` porque era la única fuente, y el bloque de
+ * auditoría de `ECU-10 §11` paso 1 no se podía mostrar (no había de dónde leerlo). Las dos
+ * cosas quedan cerradas con la misma llamada.
  *
  * UN SOLO CONTROL. El mockup dibuja el toggle Y un botón «Deshabilitar el chatbot» debajo;
  * dos disparadores para una acción global duplican la superficie de accidente sin añadir
@@ -32,14 +33,18 @@ import { EstadoDeConsultaAdmin } from "./EstadoDeConsultaAdmin";
  * reserva el destructivo a eliminar cuenta, y esto es reversible con un clic.
  */
 export function Disponibilidad() {
-  const consulta = useConsulta(obtenerMetricas, []);
+  const consulta = useConsulta(consultarChatAccess, []);
   const { enviando, fallo, ejecutar } = useComando(cambiarAccesoAlChat);
   const [estado, setEstado] = useState<EstadoDisponibilidad | null>(null);
+  const [ultimoCambio, setUltimoCambio] = useState<UltimoCambioDeAcceso | null>(null);
   const [destino, setDestino] = useState<EstadoDisponibilidad | null>(null);
   const [aviso, setAviso] = useState<string | null>(null);
 
   useEffect(() => {
-    if (consulta.datos) setEstado(consulta.datos.estadoDelChatbot);
+    if (consulta.datos) {
+      setEstado(consulta.datos.estado);
+      setUltimoCambio(consulta.datos.ultimoCambio);
+    }
   }, [consulta.datos]);
 
   async function confirmar() {
@@ -51,6 +56,9 @@ export function Disponibilidad() {
 
     // Se toma la respuesta como verdad nueva, no el destino que pedimos.
     setEstado(resultado.datos.estado);
+    // Recarga también `ultimoCambio`: `POST /admin/chat-access` no devuelve quién ni cuándo
+    // hizo el cambio, solo el estado resultante — `consultarChatAccess` es la única fuente
+    // para refrescar el bloque de auditoría tras confirmar.
     void consulta.recargar();
     // ECU-10 FA-03: con dos administradores a la vez, el estado pedido puede ya regir. El
     // backend responde 200 idéntico haya escrito o no, así que la única forma de detectarlo
@@ -115,20 +123,24 @@ export function Disponibilidad() {
             </div>
 
             {/*
-              El bloque de auditoría se RECORTA, no se falsea. `ECU-10 §11` paso 1 sí exige
-              presentar «el último cambio registrado, con autor y fecha», pero no hay endpoint
-              que lo devuelva: el backend escribe `AccionAdministrativa` y no la expone. Poner
-              un valor de relleno, un «—» o algo derivado del cliente sería un registro de
-              auditoría FABRICADO, que es la mentira más cara posible en esta pantalla. Se
-              conserva la garantía y se declara el hueco; lo cierra un
-              `GET /api/v1/admin/chat-access`, fuera de esta fase.
+              ECU-10 §11 paso 1: «presenta el estado global vigente y el último cambio
+              registrado, con autor y fecha». `autor` es el ALIAS del administrador
+              (RN-03.5) — lo resuelve el backend antes de auditar (chat-access.ts), esta
+              pantalla no recibe ni necesita el username.
             */}
             <div className="flex items-start gap-2 text-caption text-suave">
               <Icono icono={IconHistory} size={16} className="mt-0.5 shrink-0" />
-              <p>
-                Cada cambio queda registrado con autor y fecha, sin ningún dato de usuario.
-                Esta vista todavía no muestra ese registro.
-              </p>
+              {ultimoCambio ? (
+                <p>
+                  Último cambio: {ultimoCambio.autor} · {formatoDeFecha(ultimoCambio.fecha)}. Sin
+                  datos de usuario.
+                </p>
+              ) : (
+                // El kill switch nunca se tocó desde que existe la tabla de auditoría —
+                // distinto de un fallo de lectura, que EstadoDeConsultaAdmin ya intercepta
+                // arriba y nunca deja llegar hasta aquí.
+                <p>Todavía no se ha registrado ningún cambio. Sin datos de usuario.</p>
+              )}
             </div>
           </div>
         ) : null}
@@ -149,5 +161,14 @@ export function Disponibilidad() {
           : "Los usuarios podrán volver a iniciar conversaciones. La acción queda registrada con tu usuario y la fecha."}
       </DialogoDeConfirmacion>
     </div>
+  );
+}
+
+/** Si la fecha no parsea se devuelve cruda: preferible a un «Invalid Date» en pantalla de auditoría. */
+function formatoDeFecha(crudo: string): string {
+  const valor = new Date(crudo);
+  if (Number.isNaN(valor.getTime())) return crudo;
+  return new Intl.DateTimeFormat("es-CO", { dateStyle: "medium", timeStyle: "short" }).format(
+    valor,
   );
 }

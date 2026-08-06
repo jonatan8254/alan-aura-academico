@@ -57,12 +57,20 @@ vuelve texto — no repetir esa lógica en una pantalla nueva.
 como stubs de Fase 0b. Es el documento del equipo de frontend, no se toca desde aquí — pero quien
 lo lea debe saber que el estado real es este README, no ese archivo.
 
+### Decisiones cerradas (no reabrir sin que el usuario lo pida)
+
+- **Sin modo oscuro.** No es deuda pendiente: es una decisión tomada el 2026-08-06. `DIS-00 §5`/
+  `DIS-01 §2` lo piden, pero `tema.css` no tiene los tokens oscuros de `DIS-01 §2.3` y el equipo
+  decidió no implementarlo. No proponer un conmutador ni tokens oscuros salvo que se reabra
+  explícitamente.
+
 ### Pendientes conocidos
 
-- **Sin modo oscuro** — deuda declarada contra `DIS-00 §5`/`DIS-01 §2`. `tema.css` no tiene los
-  tokens oscuros de `DIS-01 §2.3`.
 - **Sin desplegar a Vercel todavía.** Todo lo verificado fue `npm run dev` local contra el API
   Gateway real; el deploy en sí (con las variables de entorno / `vercel.json` en producción) no ha
   ocurrido.
-- Tres bugs de backend y dos huecos de contrato que el frontend tuvo que mitigar o recortar en
-  pantalla — detalle completo, con archivo y línea, en `backend/CONTINUAR_AQUI.md`.
+- Un hueco de contrato que el frontend tuvo que recortar en pantalla (`recursos` de
+  `ChatResponseV1`, P-12) — detalle completo en `backend/CONTINUAR_AQUI.md`. Los tres bugs de
+  backend y el `GET /admin/chat-access` que faltaban ya están cerrados (2026-08-06): P-16
+  (`Disponibilidad.tsx`) ya consume `consultarChatAccess` en vez de `/admin/metricas`, y muestra
+  el bloque de auditoría real («último cambio: alias · fecha»).

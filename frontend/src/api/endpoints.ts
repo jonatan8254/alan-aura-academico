@@ -29,6 +29,7 @@ import type {
   MetricasResponse,
   ChatAccessRequest,
   ChatAccessResponse,
+  ConsultarChatAccessResponse,
 } from "contrato-api";
 
 import { pedir } from "./cliente";
@@ -85,3 +86,9 @@ export const obtenerMetricas = () => pedir<MetricasResponse>("GET", "/admin/metr
 
 export const cambiarAccesoAlChat = (req: ChatAccessRequest) =>
   pedir<ChatAccessResponse>("POST", "/admin/chat-access", req);
+
+// Lectura complementaria del kill switch (ECU-10 §11 paso 1): mismo recurso REST que
+// `cambiarAccesoAlChat`, verbo distinto. Antes de que existiera esta ruta, P-16 leía
+// `estadoDelChatbot` de `/admin/metricas` porque era la única fuente — ya no hace falta.
+export const consultarChatAccess = () =>
+  pedir<ConsultarChatAccessResponse>("GET", "/admin/chat-access");
