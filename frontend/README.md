@@ -39,4 +39,30 @@ El contrato completo, ruta por ruta, está documentado en
 El `rewrite` de `/api/*` ya apunta al API Gateway real (mismo mecanismo que el `server.proxy` de
 Vite en desarrollo, `ARQ-01-D1`), así que la app nunca necesita saber si habla con el mock o con el
 backend real: siempre pide a `/api/v1/...` en el mismo origen. No hay cambios de código en el
-frontend si el contrato de `contrato-api` no cambió.
+frontend si el contrato de `contrato-api` no cambió. Tiene además un catch-all a `/index.html`
+**como segunda regla, después del de `/api`** — con `BrowserRouter`, sin él un refresh en `/chat/`
+daría 404 en producción; invertir el orden haría que toda llamada al backend devolviera el HTML de
+la app en vez de JSON.
+
+## Estado (2026-08-06): las 16 pantallas están implementadas
+
+Registro, login, los 5 pasos del onboarding, el chat (conectado a Groq real), gestión de cuenta y
+las 3 pantallas de administración — con sus estados no-felices (401/403/409/429/502/504,
+`safety_fallback`) y 37 pruebas (`npm run test -w frontend`). Verificado en navegador contra el
+backend real de punta a punta: registro → login → onboarding → conversación → eliminación de
+cuenta confirmada en DynamoDB. `frontend/src/copia/fallos.ts` es el único sitio donde un `Fallo` se
+vuelve texto — no repetir esa lógica en una pantalla nueva.
+
+**`CONTINUAR_AQUI.md` quedó desactualizado por esta corrida**: sigue describiendo las 16 pantallas
+como stubs de Fase 0b. Es el documento del equipo de frontend, no se toca desde aquí — pero quien
+lo lea debe saber que el estado real es este README, no ese archivo.
+
+### Pendientes conocidos
+
+- **Sin modo oscuro** — deuda declarada contra `DIS-00 §5`/`DIS-01 §2`. `tema.css` no tiene los
+  tokens oscuros de `DIS-01 §2.3`.
+- **Sin desplegar a Vercel todavía.** Todo lo verificado fue `npm run dev` local contra el API
+  Gateway real; el deploy en sí (con las variables de entorno / `vercel.json` en producción) no ha
+  ocurrido.
+- Tres bugs de backend y dos huecos de contrato que el frontend tuvo que mitigar o recortar en
+  pantalla — detalle completo, con archivo y línea, en `backend/CONTINUAR_AQUI.md`.
