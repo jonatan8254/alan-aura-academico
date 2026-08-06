@@ -36,11 +36,11 @@ de publicar un prompt nuevo.
    `admin/consultar-chat-access.ts`, mismo recurso REST que el `POST` existente. De paso se corrigió
    un bug menor descubierto al escribirlo: el `POST` auditaba con `sesion.titularId` (un UUID
    opaco) como `autor`; ahora resuelve el **alias** con una lectura de `PERFIL` antes de escribir la
-   auditoría, como pide `RN-03.5`. **Pendiente real que queda:** el frontend (`P-16`,
-   `Disponibilidad.tsx`) todavía no consume esta ruta — sigue leyendo el estado del kill switch vía
-   `/admin/metricas` y el bloque de «último cambio» sigue oculto en pantalla. Cuando se retome:
-   añadir `consultarChatAccess` a `frontend/src/api/endpoints.ts` y usarlo en `Disponibilidad.tsx`
-   en vez de `obtenerMetricas`.
+   auditoría, como pide `RN-03.5`. **El frontend ya lo consume** (`fase-3-frontend`, commit
+   `6a74f23`): `Disponibilidad.tsx` (P-16) usa `consultarChatAccess` en vez de `obtenerMetricas` y
+   muestra el bloque de auditoría real. Verificado contra AWS: se deshabilitó y volvió a habilitar
+   el chat desde la pantalla, el registro mostró el alias correcto (no un UUID), y el chat quedó
+   reactivado al terminar.
 2. **`ChatResponseV1` no transporta recursos de ayuda.** Sigue abierto. El backend carga
    `ConfigSeguridad.contencion.recursos: ReferenciaDeDerivacion[]` de S3
    (`config/ayuda/contencion.json`), pero `chat.ts` solo devuelve `configSeguridad.contencion.mensaje`
