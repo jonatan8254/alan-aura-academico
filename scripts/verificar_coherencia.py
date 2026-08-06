@@ -253,8 +253,27 @@ def leer(p: Path) -> list[str]:
     return p.read_text(encoding="utf-8", errors="replace").splitlines()
 
 
+# `SD-51`: una linea que cita una decision SUPERADA y la marca como tal es una
+# cita historica, aunque no viva en una tabla de historial. Aparecio al entrar
+# el informe academico en el barrido: su §8 narra la pila de `ADR-001` —Django,
+# SQLite, PythonAnywhere— como antecedente de la reversion de `ADR-002`, y un
+# documento que cuenta la historia del proyecto TIENE que poder nombrarla.
+#
+# La exencion es ACOTADA a proposito, con la leccion de `SVI-02` delante: exige
+# las DOS cosas a la vez —el identificador de la decision superada Y una marca
+# explicita de supersesion—, de modo que nombrar el valor viejo sin decir que
+# esta superado sigue disparando.
+CITA_DE_DECISION_SUPERADA = re.compile(
+    r"\b(?:ADR-\d{3}|SD-\d{2})\b(?=.*\b(?:superad[ao]|sustituid[ao]|obsolet[ao]|"
+    r"antecedente|revertid[ao]|abandonad[ao]|dej[oó] de|ya no rige)\b)",
+    re.IGNORECASE,
+)
+
+
 def es_historica(archivo: Path, linea: str) -> bool:
-    return archivo.name in ARCHIVOS_HISTORICOS or bool(LINEA_HISTORICA.search(linea))
+    return (archivo.name in ARCHIVOS_HISTORICOS
+            or bool(LINEA_HISTORICA.search(linea))
+            or bool(CITA_DE_DECISION_SUPERADA.search(linea)))
 
 
 def exceptuada(rel: str, linea: str) -> bool:
