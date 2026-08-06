@@ -1,7 +1,7 @@
 # Alan & Aura Académico
 
 > **MVP conversacional de apoyo emocional realizable en ~1 mes**, derivado y **simplificado** de Smart-AID (Releases 0.1 + 0.2). Repositorio **independiente**, extraído del macroproyecto profesional Smart-AID/TalentTrack.
-> Materia: *Diseño y Construcción de Productos de Software* — UNAL Medellín, Facultad de Minas, Grupo 5.
+> Materia: *Diseño y Construcción de Productos de Software* — UNAL Medellín, Facultad de Minas, Grupo 3.
 > **Líder / arquitecto:** Jonatan Estiven Sánchez Vargas. · **Integrantes:** Santiago Bedoya García · Luis Fernando Montoya Rodríguez · Santiago Eusse Gil.
 
 ---
@@ -85,7 +85,7 @@ La fase 2 pasó por una **primera pasada completa de correcciones** ([`PDR-01`](
 
 **© 2026 Jonatan Estiven Sánchez Vargas, Santiago Bedoya García, Luis Fernando Montoya Rodríguez y Santiago Eusse Gil. [Todos los derechos reservados](LICENSE).**
 
-Obra colectiva del **Grupo 5**. **Ideación, liderazgo, arquitectura y redacción:** Jonatan Estiven Sánchez Vargas. **Construcción:** el servidor, su infraestructura como código y la implementación de las 16 pantallas, Santiago Bedoya García; la planeación del cliente y sus cimientos —andamiaje, componentes base, tokens de diseño, capa de API, sesión y ruteo—, Luis Fernando Montoya Rodríguez. **Modelo de clases de diseño:** Santiago Eusse Gil. Los créditos describen lo construido y se contrastaron con el historial del repositorio.
+Obra colectiva del **Grupo 3**. **Ideación, liderazgo, arquitectura y redacción:** Jonatan Estiven Sánchez Vargas. **Construcción:** el servidor, su infraestructura como código y la implementación de las 16 pantallas, Santiago Bedoya García; la planeación del cliente y sus cimientos —andamiaje, componentes base, tokens de diseño, capa de API, sesión y ruteo—, Luis Fernando Montoya Rodríguez. **Modelo de clases de diseño:** Santiago Eusse Gil. Los créditos describen lo construido y se contrastaron con el historial del repositorio.
 
 Este repositorio se publica para ser **leído y evaluado**, no reutilizado — y la ausencia de licencia abierta es deliberada, no un olvido. Puedes leerlo, evaluarlo, enlazarlo y citar fragmentos breves con atribución. Copiar, modificar, redistribuir, usarlo con fines comerciales o tomarlo como base de otro producto o entregable académico requiere autorización previa. No se concede licencia de patente ni de marca. Las normas y la literatura se **citan, nunca se redistribuyen**: el corpus con derechos queda excluido del control de versiones. Detalle completo en [`LICENSE`](LICENSE).
 

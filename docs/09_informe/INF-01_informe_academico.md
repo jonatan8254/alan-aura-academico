@@ -22,17 +22,17 @@ La tercera columna recoge la contribución a **lo que este informe documenta**, 
 
 Profesor: Albeiro Espinosa Bedoya, Ph.D., M.Sc.
 
-Grupo 5 · Período académico 2026-1
+Grupo 3 · Período académico 2026-1
 Medellín, 6 de agosto de 2026
 <!-- /PORTADA -->
 
 | Campo | |
 |---|---|
 | **ID:** | `INF-01` · familia INF (entrega académica) · hogar `docs/09_informe/` |
-| **Fecha:** | 2026-08-06 · **Versión:** v1.6 · **Estado:** vigente |
+| **Fecha:** | 2026-08-06 · **Versión:** v1.7 · **Estado:** vigente |
 | **Insumos:** | Los artefactos versionados de `docs/`, con sus fichas leídas al generar este informe · `HECHOS_CANONICOS.md v2.0` · `REGISTRO_DECISIONES.md` (`SD-01`…`SD-53`) · `RPD-01` y `CDR-01 v2.0` · `ARQ-01` y el contrato de la interfaz de programación · el código de `backend/`, `frontend/` y `packages/contrato-api/`, contado y ejecutado, no citado |
 | **Consumidores:** | La evaluación de la asignatura; el equipo, como estado consolidado del proyecto con el sistema ya desplegado |
-| **Historial:** | Siete versiones, de la v1.0 a la v1.6. El motivo de cada una está en **Historial de cambios**, al final del documento |
+| **Historial:** | Ocho versiones, de la v1.0 a la v1.7. El motivo de cada una está en **Historial de cambios**, al final del documento |
 
 ---
 
@@ -787,6 +787,7 @@ Las decisiones `SD-41` a `SD-47` corresponden en su totalidad al ciclo de correc
 
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
+| v1.7 | 2026-08-06 | Equipo Alan & Aura Académico | **Corrección de dato administrativo:** el equipo pertenece al Grupo 3, no al Grupo 5, como decía la portada. |
 | v1.6 | 2026-08-06 | Equipo Alan & Aura Académico | **La ficha de cabecera era un muro y repetía el historial.** Había acumulado el motivo de las seis versiones en un solo párrafo de 2.795 caracteres, que es lo primero que encontraba quien abriera el documento —antes del resumen— y que además **duplicaba** la tabla de Historial de cambios del final, donde ese detalle ya vivía. Pasa a tabla de seis filas con los campos que identifican el artefacto, y el motivo de cada versión queda en un solo sitio. |
 | v1.5 | 2026-08-06 | Equipo Alan & Aura Académico | **La portada acreditaba la ejecución y no la concepción.** Listaba los artefactos producidos por el líder sin nombrar lo que los origina: la idea del proyecto, el concepto de producto y su propuesta de valor, la creación de Alan y Aura como personajes —con su identidad, su doble voz y el contrato de comportamiento que la gobierna—, el canon ético que ninguna decisión posterior puede relajar, y la planificación del trabajo. Sin esa capa, las 43 clases y los 283 mensajes no tendrían de dónde derivarse. **Y un defecto del instrumental, encontrado al preparar esta entrega:** `generar_informe.py` comprobaba que el PDF **existiera**, no que se hubiera **escrito**, de modo que informaba `OK` sobre el archivo de una corrida anterior cuando un visor abierto lo bloqueaba. Se detectó con un `.md` que iba 31 minutos por delante de su PDF, ya commiteado. Ahora compara la marca de tiempo y falla diciendo la causa; probado haciéndolo fallar. |
 | v1.4 | 2026-08-06 | Equipo Alan & Aura Académico | **La sección de calidad cubría el producto y no el proceso.** Entra `§11.4`: las dos compuertas no fueron reuniones de criterio sino revisiones conducidas contra cláusulas concretas, y ahora están tabuladas —`IEEE 1028` §5.1, §5.2.1, §5.4.2, §5.5.6, §6.5.2, §6.5.6.5, §6.8.2 y §6.8.3, cada una con cómo se ejerció— junto con `ISO/IEC/IEEE 12207` §6.3.3, de donde sale la forma del registro de decisiones, y §6.4.5, que sustenta el diseño detallado. Se cierra con `OMG UML 2.5.1`, la norma que zanjó el defecto que resistió cinco intentos, y con lo que ese caso enseña: tener la norma no basta si no se abre en el punto donde vive la duda. **`§4` deja de nombrar solo los tres marcos** y acredita la bibliografía que resolvió el cómo, con qué aportó cada obra; de Wiegers salieron dos cosas distintas —una taxonomía y un criterio de parada— y se separan para no confundirlas. |

@@ -12,7 +12,7 @@
 - El modelo activo en cada momento es el **cerebro/orquestador**: razona, decide, verifica y es el responsable final. Los subagentes son apoyo para tareas mecánicas; su salida **siempre se audita** antes de incorporarse — nunca se les delega el juicio final.
 
 ## 2. Identidad y nomenclatura
-- Subproyecto académico hijo de Smart-AID (materia *Diseño y Construcción de Productos de Software*, UNAL Medellín, Grupo 5). Ideador y líder: **Jonatan Estiven Sánchez Vargas**. Equipo: **Santiago Bedoya García**, **Luis Fernando Montoya Rodríguez**, **Santiago Eusse Gil**.
+- Subproyecto académico hijo de Smart-AID (materia *Diseño y Construcción de Productos de Software*, UNAL Medellín, Grupo 3). Ideador y líder: **Jonatan Estiven Sánchez Vargas**. Equipo: **Santiago Bedoya García**, **Luis Fernando Montoya Rodríguez**, **Santiago Eusse Gil**.
 - Personaje masculino = **Alan** en todo artefacto nuevo (alias históricos del macro: Alanus ≡ Alanor ≡ Alan). Femenino = **Aura** (precursor conceptual: Pandora). Nunca "corregir" grafías de los originales; solo citar la grafía original al referir un archivo existente.
 
 - **Autoría de los commits — innegociable.** Los commits los firma **el equipo humano de §2 y nadie más**. **Nunca** se añade un trailer `Co-Authored-By` de una herramienta, un asistente ni un modelo, en ningún commit, por ninguna razón. La hace cumplir un *hook* versionado, `.githooks/commit-msg`, que retira esa línea **antes de que el commit exista** — actívalo en cada clon con `git config core.hooksPath .githooks`. Decisión `SD-38` *(registrada originalmente como `SD-32`, renumerada al detectarse que ese ID lo ocupaban dos decisiones distintas)*.

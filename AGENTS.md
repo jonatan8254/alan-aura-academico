@@ -16,7 +16,7 @@
 - No versionar contenido con © de terceros; se cita en APA/puntual, no se reproduce.
 
 ## §3 — Identidad y nomenclatura
-- Hijo académico de Smart-AID (materia *Diseño y Construcción de Productos de Software*, UNAL Medellín, Grupo 5). Ideador/líder: Jonatan Estiven Sánchez Vargas. Equipo: Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil.
+- Hijo académico de Smart-AID (materia *Diseño y Construcción de Productos de Software*, UNAL Medellín, Grupo 3). Ideador/líder: Jonatan Estiven Sánchez Vargas. Equipo: Santiago Bedoya García, Luis Fernando Montoya Rodríguez, Santiago Eusse Gil.
 - **Alan** (masculino; alias históricos Alanus ≡ Alanor) y **Aura** (femenino; precursor Pandora) en todo artefacto nuevo. No corregir grafías en originales; citar la grafía original al referenciar.
 
 - **Autoría de los commits — innegociable.** Los firma **el equipo humano de §3 y nadie más**. **Nunca** un trailer `Co-Authored-By` de herramienta, asistente o modelo, en ningún commit. La hace cumplir `.githooks/commit-msg`, que retira esa línea antes de que el commit exista; se activa con `git config core.hooksPath .githooks`. Decisión `SD-38` *(registrada originalmente como `SD-32`, renumerada al detectarse que ese ID lo ocupaban dos decisiones distintas)*.
