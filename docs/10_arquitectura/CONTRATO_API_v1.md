@@ -50,6 +50,12 @@ true` literal, mismo patrón que `consentimientoBase`. `RevocarPersonalizacionRe
 queda vacío a propósito: su `FE-03` no liga el `400` a una confirmación ausente, solo a "petición
 mal formada" — asimetría real entre las dos ECU, no un descuido.
 
+**Actualización 2026-08-06 (sexta) — `EliminarCuentaRequest` gana `confirmacion`.**
+Mismo patrón: `ECU-04 FE-03` liga el `400` a "solicitud mal formada **o sin confirmación
+explícita**". El endpoint solo cubre los pasos 2–3 de `ECU-04` (confirmar + ejecutar) — el paso 1
+(mostrar el alcance antes de confirmar) es un texto fijo del lado del cliente, sin llamada al
+servidor; `alcance` en la respuesta confirma lo ya ejecutado, no una vista previa.
+
 ---
 
 | Método | Ruta | Origen | Auth | Request | Response | Códigos |
