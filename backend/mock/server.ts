@@ -124,7 +124,8 @@ const servidor = createServer(async (req, res) => {
         return responderJson(res, 400, { error: "mensaje vacío" });
       }
       const respuesta =
-        respuestasDeEjemplo[Math.floor(Math.random() * respuestasDeEjemplo.length)];
+        respuestasDeEjemplo[Math.floor(Math.random() * respuestasDeEjemplo.length)] ??
+        respuestasDeEjemplo[0]!;
       return responderJson(res, 200, {
         respuesta,
         modo: "ordinario",
