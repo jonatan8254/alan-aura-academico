@@ -165,6 +165,7 @@ const servidor = createServer(async (req, res) => {
 
     if (metodo === "GET" && ruta === "/api/v1/admin/metricas") {
       return responderJson(res, 200, {
+        agregadoDeCuentas,
         agregado: agregadoDeUso,
         estadoDelChatbot: estado.chatbot,
       } satisfies MetricasResponse);

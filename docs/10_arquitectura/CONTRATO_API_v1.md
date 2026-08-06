@@ -43,6 +43,29 @@ tiene memoria del turno anterior (rompe `RN-02.2`: cápsula + persona + hasta 4 
 turno). No hay persistencia server-side (`RF-13`): el cliente reenvía el historial en cada turno.
 Nuevo tipo `ChatIntercambio { rol, texto }`.
 
+**Actualización 2026-08-06 (quinta) — `ReiniciarPerfilRequest` gana `confirmacion`.**
+`ECU-11 RE-01`/`FE-03` exigen confirmación **explícita** del usuario antes de borrar la cápsula
+("confirmación ausente o petición mal formada" → `400`) — el request estaba vacío. `confirmacion:
+true` literal, mismo patrón que `consentimientoBase`. `RevocarPersonalizacionRequest` (CU-12) se
+queda vacío a propósito: su `FE-03` no liga el `400` a una confirmación ausente, solo a "petición
+mal formada" — asimetría real entre las dos ECU, no un descuido.
+
+**Actualización 2026-08-06 (sexta) — `EliminarCuentaRequest` gana `confirmacion`.**
+Mismo patrón: `ECU-04 FE-03` liga el `400` a "solicitud mal formada **o sin confirmación
+explícita**". El endpoint solo cubre los pasos 2–3 de `ECU-04` (confirmar + ejecutar) — el paso 1
+(mostrar el alcance antes de confirmar) es un texto fijo del lado del cliente, sin llamada al
+servidor; `alcance` en la respuesta confirma lo ya ejecutado, no una vista previa.
+
+**Actualización 2026-08-06 (séptima) — `MetricasResponse` gana `agregadoDeCuentas`.**
+`ECU-09 §5` exige **cuatro** cifras: total de cuentas y onboardings completados (cardinalidades de
+`Usuario`) además de llamadas al chat en 7 días y tasa técnica (de `EventoOperativo`) — el contrato
+solo tenía las dos últimas. `AgregadoDeCuentas` ya existía (lo usa `DirectorioResponse`); se reusa,
+no se duplica el tipo.
+
+**Actualización 2026-08-06 (octava) — `ChatAccessRequest` gana `confirmacion`.**
+`ECU-10 RN-03.4` exige confirmación explícita del *kill switch*, y `FE-03` liga el `400` a "sin la
+confirmación exigida" — mismo patrón que `ReiniciarPerfilRequest`/`EliminarCuentaRequest`.
+
 ---
 
 | Método | Ruta | Origen | Auth | Request | Response | Códigos |

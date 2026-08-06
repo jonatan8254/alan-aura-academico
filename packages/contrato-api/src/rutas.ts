@@ -132,10 +132,19 @@ export interface ChatResponseV1 {
 export type ChatStatus = 200 | 400 | 401 | 403 | 409 | 429 | 502 | 504;
 
 /**
- * POST /api/v1/perfil/reiniciar (CU-11). Sin cuerpo de request.
+ * POST /api/v1/perfil/reiniciar (CU-11).
  * 400/403/500 añadidos tras la verificación exhaustiva (ECU-11 FE-02/03/04).
+ *
+ * confirmacion añadido: ECU-11 RE-01/FE-03 exigen confirmación EXPLÍCITA
+ * del usuario ("confirmación ausente o petición mal formada" → 400) — a
+ * diferencia de CU-12 (revocar), cuyo FE-03 no liga el 400 a una
+ * confirmación ausente, solo a "petición mal formada". Literal `true`,
+ * mismo patrón que consentimientoBase: el request no se puede armar sin
+ * confirmar.
  */
-export type ReiniciarPerfilRequest = Record<string, never>;
+export interface ReiniciarPerfilRequest {
+  confirmacion: true;
+}
 export interface ReiniciarPerfilResponse {
   estado: "caracterizacion_reiniciada";
 }
@@ -156,8 +165,17 @@ export type RevocarPersonalizacionStatus = 200 | 400 | 401 | 403;
  * 400/403 añadidos (ECU-04 FE-02/03). El 409 original se retira: ningún
  * flujo de ECU-04 lo justifica; 500 lo reemplaza para FE-04 (cascada
  * interrumpida), por simetría con el FE-04 de ECU-11, que sí es explícito.
+ *
+ * confirmacion añadido: ECU-04 FE-03 liga el 400 a "solicitud mal formada
+ * o SIN CONFIRMACIÓN EXPLÍCITA" — mismo patrón que ReiniciarPerfilRequest.
+ * El endpoint solo cubre los pasos 2–3 (ECU-04 §17): el paso 1 —mostrar el
+ * alcance antes de confirmar— es responsabilidad del cliente, con un texto
+ * fijo; alcance en la respuesta es la confirmación de lo ya ejecutado, no
+ * una vista previa.
  */
-export type EliminarCuentaRequest = Record<string, never>;
+export interface EliminarCuentaRequest {
+  confirmacion: true;
+}
 export interface EliminarCuentaResponse {
   alcance: AlcanceDeBorrado;
 }
@@ -171,9 +189,17 @@ export interface DirectorioResponse {
 }
 export type DirectorioStatus = 200 | 401 | 403;
 
-/** GET /api/v1/admin/metricas (CU-09, admin) */
+/**
+ * GET /api/v1/admin/metricas (CU-09, admin).
+ * agregadoDeCuentas añadido: ECU-09 §5 exige CUATRO cifras —total de
+ * cuentas y onboardings completados (cardinalidades de Usuario) además de
+ * llamadas en 7 días y tasa técnica (de EventoOperativo)— y el contrato
+ * solo tenía las dos últimas. AgregadoDeCuentas ya existía (lo usa
+ * DirectorioResponse) — se reusa, no se duplica.
+ */
 export type MetricasRequest = Record<string, never>;
 export interface MetricasResponse {
+  agregadoDeCuentas: AgregadoDeCuentas;
   agregado: AgregadoDeUso;
   estadoDelChatbot: EstadoDisponibilidad;
 }
@@ -182,9 +208,14 @@ export type MetricasStatus = 200 | 401 | 403;
 /**
  * POST /api/v1/admin/chat-access (CU-10, admin — kill switch).
  * 400 añadido tras la verificación exhaustiva (ECU-10 FE-03).
+ *
+ * confirmacion añadido: RN-03.4 exige confirmación explícita y FE-03 liga
+ * el 400 a "sin la confirmación exigida" — mismo patrón que
+ * ReiniciarPerfilRequest/EliminarCuentaRequest.
  */
 export interface ChatAccessRequest {
   estadoNuevo: EstadoDisponibilidad;
+  confirmacion: true;
 }
 export interface ChatAccessResponse {
   estado: EstadoDisponibilidad;
