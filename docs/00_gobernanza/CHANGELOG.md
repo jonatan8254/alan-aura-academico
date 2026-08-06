@@ -37,6 +37,16 @@ Formato: fecha · versión · cambios. Solo se registran hitos del paquete docum
 - **Nada medido:** ninguna de las tres herramientas está instalada y no se desplegó nada. `ADR-005 §5` enumera **cinco verificaciones pendientes** en vez de darlas por hechas.
 - **Dos defectos de `ESTADO_PIPELINE`, corregidos y declarados por exceder el alcance:** `§Qué sigue` decía en el punto 1 que ninguna fila bloquea el paso al código y en el punto 2 que «solo la 30» lo bloquea —la **30 está cerrada** desde `SD-45`/`SD-46`—; y la misma frase declaraba «9 abiertas» para acto seguido decir «de las **diez** abiertas».
 
+## 2026-08-06 — v1.2.0 · `SD-51`: el informe académico deja de poder mentir
+
+- **`INF-01` sustituye al `.docx`.** El informe llevaba tres semanas afirmando **10 casos de uso** —son 14—, **12 clases** —son 16 en el dominio y 43 en el diseño— y la pila **Django/SQLite/PythonAnywhere**, abandonada en `ADR-002`. Ningún validador podía verlo: `verificar_coherencia.py` solo recorre `.md`.
+- **La corrección no es de formato, es de detectabilidad.** La fuente pasa a Markdown versionado, y **al entrar en el barrido el bloque 1 cazó de inmediato** tres citas históricas del propio informe sin marcar.
+- **El `.docx` y el PDF pasan a ser vistas derivadas**, generadas por `generar_informe.py`: conversor propio y Chrome sin interfaz, porque no hay `pandoc` ni LaTeX. El generador **falla** si una cifra no coincide con `HECHOS_CANONICOS`, si un artefacto citado no existe o su versión no cuadra, o si una figura queda sin numerar. Probado con sabotaje.
+- **Los 31 diagramas van en vectorial, y eso sale de medir.** Solo **uno** es legible a página completa vertical; 17 lo son en apaisado y **13 no lo son de ninguna forma** — `MC-01` mide 9347 × 2208 px y su texto cae a **0,22 mm**, diez veces bajo el umbral de impresión. Como el entregable es un PDF, el problema se convierte en zoom, y el informe se lo dice al lector. §11.3 lleva además un recorte ampliado de la región que discute.
+- **El informe documenta hasta el cierre del `CDR`.** Entra la sección 11, aseguramiento de la calidad, con las dos compuertas, las cinco verificaciones independientes y el defecto que resistió cinco intentos. `ARQ-01` y la Fase 3 quedan fuera del cuerpo.
+- **`verificar_estilo.py`, con 11 *fixtures*.** Mide los marcadores de escritura automática que son medibles, y **cazó tics propios en su primera ejecución** —además de dos falsos positivos suyos, que hubo que acotar—. Lo que no es medible queda declarado como pasada humana.
+- **Cambio en instrumental compartido, declarado y probado:** `verificar_coherencia.py` gana una exención acotada para citas de decisiones superadas. Exige el identificador **y** la marca de supersesión; nombrar el valor viejo sin decir que está superado sigue disparando.
+
 ## 2026-08-05 — v1.1.0 · `SD-48`: el expediente cuenta ya la historia que ocurrió
 
 > **El acta se contradecía a sí misma sobre su propio veredicto, y ningún validador podía
