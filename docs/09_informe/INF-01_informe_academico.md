@@ -5,18 +5,20 @@ Diseño y Construcción de Productos de Software
 
 # Alan & Aura Académico
 
-## Diseño y documentación de un MVP conversacional de apoyo emocional no clínico, con seguridad auditable
+## Diseño, construcción y despliegue de un MVP conversacional de apoyo emocional no clínico, con seguridad auditable
 
 **Informe académico del proyecto**
 
 **Integrantes**
 
-| | |
-|---|---|
-| Jonatan Estiven Sánchez Vargas | ideación, liderazgo y arquitectura |
-| Santiago Bedoya García | *backend* e infraestructura |
-| Luis Fernando Montoya Rodríguez | *frontend* y experiencia de usuario |
-| Santiago Eusse Gil | calidad, datos y privacidad |
+| Integrante | Rol en el equipo | Contribución a lo que documenta este informe |
+|---|---|---|
+| Jonatan Estiven Sánchez Vargas | Liderazgo y arquitectura | Estructura del proyecto y su gobernanza; modelo de dominio, casos de uso y especificación textual; análisis de robustez; diagramas de secuencia y casos de prueba; las dos compuertas de revisión, con su retrabajo y sus cinco verificaciones; los artefactos de calidad, privacidad y seguridad; el contrato conversacional que gobierna al modelo de lenguaje; el desarrollo de los agentes especializados descritos en §4.1; y el despliegue del cliente |
+| Santiago Bedoya García | *Backend* e infraestructura | Acompañamiento en la toma de decisiones durante el modelado. En la construcción: el servidor completo y su infraestructura como código —las cuatro tablas, el almacén de configuración y los catorce controladores desplegados—, la implementación de las dieciséis pantallas sobre los cimientos del cliente, las cinco suites de pruebas, y el recorrido de verificación contra el sistema desplegado que encontró seis defectos que ninguna revisión documental había visto |
+| Luis Fernando Montoya Rodríguez | *Frontend* y experiencia de usuario | Acompañamiento en la toma de decisiones durante el modelado. En la construcción: la **planeación del cliente** y sus cimientos —el andamiaje del proyecto, los componentes base, la traducción de los tokens de diseño de `DIS-01` a código, la capa de acceso a la interfaz de programación, el estado de sesión con sus guardas y el ruteo—, sobre los que se levantaron después las pantallas |
+| Santiago Eusse Gil | Modelado | Modelo de clases de diseño |
+
+La tercera columna recoge la contribución a **lo que este informe documenta**, que llega hasta el sistema desplegado. Se redactó describiendo lo construido y contrastándolo con el historial del repositorio, no contando aportes: el número de cambios registrados mide mal el diseño, la revisión y el trabajo en pareja. `PLAN-01 §7` enuncia los roles como estructura y no como nómina —«este plan sugiere la estructura, no la nómina»—, así que la segunda columna refleja el reparto que el equipo ejerció, no una designación formal.
 
 Profesor: Albeiro Espinosa Bedoya, Ph.D., M.Sc.
 
@@ -24,11 +26,11 @@ Grupo 5 · Período académico 2026-1
 Medellín, 6 de agosto de 2026
 <!-- /PORTADA -->
 
-**ID:** INF-01 · **Familia:** INF (entrega académica) · **Hogar:** `docs/09_informe/` · **Fecha:** 2026-08-06 · **Versión:** v1.0 (reescritura completa en Markdown versionado; sustituye a `Informe_Academico_Alan_Aura.docx` del 2026-07-18, que quedó obsoleto en cuatro afirmaciones sustantivas. Documenta hasta el cierre de la compuerta `CDR-01`) · **Estado:** vigente.
+**ID:** INF-01 · **Familia:** INF (entrega académica) · **Hogar:** `docs/09_informe/` · **Fecha:** 2026-08-06 · **Versión:** v1.2 (**el informe deja de detenerse en el diseño**: entra la §9, construcción y despliegue, con las seis lecciones que la ejecución le dio al diseño; se retira el corte de alcance en el cierre del `CDR-01`, que aparecía en catorce sitios; la portada acredita la construcción de Bedoya y Montoya, verificada contra el historial del repositorio; y se renumeran las secciones 9 a 15, más un `7.5` duplicado que venía de la versión anterior). v1.1 (tres correcciones: la tabla de integrantes separa **rol** de **contribución a la fase documentada**, sin degradar el rol de nadie; entra §4.1 con los agentes especializados y los modelos empleados, que es lo que hace comprobable la afirmación de independencia de §12.2; y entra §7.4 con la retroalimentación docente y lo que se hizo para atenderla). v1.0 (reescritura completa en Markdown versionado; sustituye a `Informe_Academico_Alan_Aura.docx` del 2026-07-18, que quedó obsoleto en cuatro afirmaciones sustantivas. Documenta hasta el cierre de la compuerta `CDR-01`) · **Estado:** vigente.
 
-**Insumos:** los 83 artefactos versionados de `docs/`, con sus fichas leídas en el momento de generar este informe · `HECHOS_CANONICOS.md v1.9` · `REGISTRO_DECISIONES.md` (`SD-01`…`SD-48`) · `RPD-01` y `CDR-01 v2.0`.
+**Insumos:** los artefactos versionados de `docs/`, con sus fichas leídas en el momento de generar este informe · `HECHOS_CANONICOS.md v2.0` · `REGISTRO_DECISIONES.md` (`SD-01`…`SD-53`) · `RPD-01` y `CDR-01 v2.0` · `ARQ-01` y el contrato de la interfaz de programación · el código de `backend/`, `frontend/` y `packages/contrato-api/`, contado y ejecutado, no citado.
 
-**Consumidores:** la evaluación de la asignatura; el equipo, como estado consolidado del proyecto al cierre de la Fase 2.
+**Consumidores:** la evaluación de la asignatura; el equipo, como estado consolidado del proyecto con el sistema ya desplegado.
 
 ---
 
@@ -38,9 +40,9 @@ Este informe documenta la concepción, especificación y diseño de «Alan & Aur
 
 El trabajo siguió un proceso derivado de ICONIX. Su propiedad central es que encadena los artefactos de modo que cada uno se deriva del anterior y puede verificarse contra él: del modelo verbal salen el vocabulario y el comportamiento; de ahí, el modelo de dominio, los casos de uso y su especificación textual; de esa especificación, el análisis de robustez; de los controladores de robustez, los diagramas de secuencia y los casos de prueba; y de los mensajes de secuencia, el modelo de clases de diseño. Dos compuertas formales de revisión técnica según `IEEE 1028` separan las etapas: `RPD-01`, entre el análisis y el diseño detallado, y `CDR-01`, entre el diseño detallado y el código.
 
-El estado al cierre de la Fase 2 se resume en once medidas verificables: 16 clases de dominio, 14 casos de uso, 26 requisitos funcionales, 262 elementos de robustez, 283 mensajes de secuencia, 193 operaciones asignadas, 181 casos de prueba, y un modelo de clases de diseño con 43 clases, 201 operaciones, 51 atributos y 80 relaciones. La matriz de trazabilidad no deja requisitos huérfanos.
+El diseño se resume en once medidas verificables: 16 clases de dominio, 14 casos de uso, 26 requisitos funcionales, 262 elementos de robustez, 283 mensajes de secuencia, 193 operaciones asignadas, 181 casos de prueba, y un modelo de clases de diseño con 43 clases, 201 operaciones, 51 atributos y 80 relaciones. La matriz de trazabilidad no deja requisitos huérfanos.
 
-El sistema no tiene código en el alcance de este informe. Se encuentra, por diseño, en una etapa de análisis y diseño cuya salida es un paquete documental verificable.
+Ese diseño se construyó después, y está en línea. El servidor corre sin servidor dedicado sobre la nube de Amazon —catorce controladores tras una pasarela de interfaz de programación, cuatro tablas y un almacén de configuración—, el cliente cubre las 16 pantallas especificadas con 38 pruebas automatizadas, y ambos se despliegan en `https://alan-aura-academico.vercel.app`. La sección 9 documenta esa construcción, y con ella lo más útil que produjo: seis defectos que solo aparecieron al ejecutar el sistema, ninguno de los cuales podía haber encontrado una revisión documental por minuciosa que fuera.
 
 Lo que distingue este proyecto de un ejercicio académico convencional es el aseguramiento de la calidad, y en particular su resultado incómodo: la compuerta `CDR-01` requirió **cinco verificaciones independientes**, cada una ejecutada por un revisor distinto del que había aplicado el retrabajo, y las cinco encontraron defectos. Un único defecto de semántica UML resistió cinco intentos de corrección antes de cerrarse. La sección 11 lo documenta con sus cifras, porque el proceso que produjo esos hallazgos es tan resultado del trabajo como los artefactos que revisó.
 
@@ -60,9 +62,9 @@ El problema que aborda el proyecto no es técnico sino de diseño responsable: c
 
 ### 2.3 Objetivo y estructura de este informe
 
-El informe documenta el proyecto desde su concepción hasta el cierre de la compuerta `CDR-01`, ocurrido el 2026-08-05. El diseño físico de la infraestructura (`ARQ-01`) y la construcción, que comenzaron después de esa fecha, quedan fuera del alcance y solo se mencionan como trabajo en curso en la sección 13.
+El informe documenta el proyecto desde su concepción hasta el sistema desplegado. Las secciones 6 y 7 cubren el paquete documental y el proceso ICONIX con sus dos compuertas; la 8, las decisiones técnicas y el diseño físico de la infraestructura; y la 9, la construcción y el despliegue. El corte de la versión anterior —que llegaba hasta el cierre de la compuerta `CDR-01`, el 2026-08-05— se retiró cuando el sistema pasó a estar en producción, porque un informe que se detiene en el diseño describe un proyecto que ya no es este.
 
-La estructura conserva el esqueleto del informe de avance entregado el 2026-07-18, que la asignatura ya revisó, y lo extiende en los puntos donde el proyecto creció: el proceso ICONIX completo hasta el modelo de clases (sección 7), las decisiones de arquitectura y su reversión (sección 8) y el aseguramiento de la calidad (sección 11), que no existía.
+La estructura conserva el esqueleto del informe de avance entregado el 2026-07-18, que la asignatura ya revisó, y lo extiende en los puntos donde el proyecto creció: el método instrumental y los modelos empleados (§4.1), el proceso ICONIX completo hasta el modelo de clases (sección 7), la retroalimentación docente y su atención (§7.4), las decisiones de arquitectura y su reversión (sección 8), la construcción y el despliegue (sección 9) y el aseguramiento de la calidad (sección 12), que no existía.
 
 Conviene declarar una limitación de partida. El equipo no dispone de una rúbrica de evaluación escrita, y su ausencia figura desde el inicio como decisión pendiente en el plan archivado del proyecto, junto con la fecha exacta de entrega. La estructura de este informe responde, por tanto, a un criterio propio: cubrir el proceso completo con trazabilidad hacia los artefactos, de modo que cualquier afirmación pueda comprobarse en el repositorio. La única exigencia docente registrada de manera explícita son las cuatro observaciones sobre la Fase 2 recogidas en `RET-01`, atendidas en su totalidad durante la compuerta `RPD-01`.
 
@@ -100,6 +102,40 @@ El proyecto combina tres marcos, cada uno con una función distinta.
 
 **`ISO/IEC 25010:2023`** aporta el modelo de calidad. Los requisitos de calidad se organizan por sus características, incluida *safety*, incorporada en la edición de 2023 y particularmente pertinente en este dominio. Cada requisito de calidad lleva una métrica asociada con umbral obligatorio, siguiendo el método *Goal-Question-Metric*.
 
+### 4.1 Método instrumental: agentes especializados y modelos
+
+El proyecto no produjo los artefactos a mano. Cada uno lo generó un **agente especializado** con sus propias reglas verificables, su ciclo de auditoría interna y su validador por script. Los agentes son de autoría del líder del proyecto y residen fuera de este repositorio, publicados en `https://github.com/jonatan8254/iconix-uml-skills`. Eso explica una expresión que aparece en la gobernanza: cuando un defecto pertenece a la herramienta y no al artefacto, se enruta «al mantenedor» y se marca como ajeno al repositorio, no como ajeno al equipo.
+
+Que estén publicados importa para el argumento de este informe. Las ocho herramientas son reutilizables por cualquier proyecto que siga ICONIX, y su código es inspeccionable: la afirmación de que cada artefacto se generó con reglas verificables y validador propio deja de pedirse por confianza y pasa a poderse comprobar.
+
+| Agente | Artefacto que produce |
+|---|---|
+| `uml-domain-modeler` | `MD-01` |
+| `uml-use-case-diagram` | `DCU-01` |
+| `use-case-specifier` | `ECU-00`…`ECU-14` |
+| `uml-robustness-diagram` | `DR-00`…`DR-14` |
+| `uml-sequence-diagram` | `DS-00`…`DS-14`, `DOP-01` y los `CP-00`…`CP-14` |
+| `uml-design-class-model` | `MC-00`, `MC-01` y `COD-01` |
+| `iconix-pdr-review` | `RPD-01` |
+| `iconix-cdr-review` | `CDR-01` |
+
+Que el instrumental sea propio tuvo una consecuencia medible: los agentes también acumularon defectos, y el proyecto los encontró y los reportó. Tres quedaron registrados en el tablero de pendientes, y uno de ellos —el generador de cabeceras de código, que tomaba la etiqueta de una clase en lugar de su alias— obligó a escribir un rodeo propio dentro de este repositorio mientras la herramienta se corregía.
+
+**Los modelos de lenguaje y su papel.** El orquestador que razona, decide y responde no tiene modelo predeterminado: lo selecciona la persona por sesión. Los agentes de apoyo ejecutan tareas mecánicas y su salida se audita antes de incorporarse; el juicio final nunca se les delega.
+
+En el aseguramiento de la calidad la elección de modelo dejó de ser indiferente y pasó a ser parte del método, porque `IEEE 1028 §6.5.6.5` exige que el retrabajo lo verifique alguien distinto de quien lo aplicó:
+
+| Actividad | Ejecutada por |
+|---|---|
+| Retrabajo de los hallazgos del `CDR-01` | Claude Opus |
+| Primera verificación independiente | Codex `gpt-5.6-sol` |
+| Verificaciones segunda a quinta | Codex GPT-5 |
+| Revisión interna previa al veredicto | Claude Opus y Claude Sonnet |
+
+El límite de esta práctica se declara en el acta y se repite aquí sin suavizarlo: que un modelo verifique el trabajo de otro **reduce puntos ciegos compartidos, pero no sustituye a un integrante humano distinto del autor**. La independencia real la aporta el equipo, y el veredicto lo determina el líder.
+
+Por último, la autoría de los commits es del equipo humano y de nadie más. La regla la hace cumplir un *hook* versionado en el repositorio, que retira cualquier atribución de herramienta antes de que el commit exista.
+
 ---
 
 ## 5. Alcance del MVP y canon ético
@@ -108,7 +144,7 @@ El proyecto combina tres marcos, cada uno con una función distinta.
 
 El producto permite a una persona adulta registrarse, otorgar consentimiento granular, construir una cápsula de perfil mínima mediante autorreportes, conversar con Alan o con Aura dentro de límites explícitos, consultar un directorio de usuarios, y ejercer control efectivo sobre sus datos: reiniciar la caracterización, revocar la personalización o eliminar la cuenta por completo. Un rol administrativo puede habilitar o deshabilitar globalmente el acceso al chat y consultar métricas operativas agregadas.
 
-Los límites de la conversación son numéricos y están fijados como hechos canónicos del proyecto: 2.500 caracteres por mensaje, 20 mensajes de usuario por sesión, 350 tokens de salida del modelo, un límite de tasa de 3 solicitudes por minuto y 30 diarias, y una espera máxima de 20 segundos ante el proveedor del modelo antes de responder con un error controlado.
+Los límites de la conversación son numéricos y están fijados como hechos canónicos del proyecto: 2.500 caracteres por mensaje, 20 mensajes de usuario por sesión, 350 tokens de respuesta visible del modelo, un límite de tasa de 3 solicitudes por minuto y 30 diarias, y una espera máxima de 20 segundos ante el proveedor del modelo antes de responder con un error controlado. La precisión de «respuesta visible» no es un matiz de redacción: la sección 9.5 cuenta cómo confundirla con el presupuesto de generación produjo un defecto real en producción.
 
 ### 5.2 Qué queda fuera
 
@@ -152,27 +188,42 @@ Un elemento de esa especificación resultó decisivo mucho después. Cada fila d
 
 Los diagramas `DR-01` a `DR-14` traducen cada especificación a objetos de frontera, control y entidad. El conjunto suma 262 elementos: 15 actores, 38 objetos de frontera, 150 controladores y 59 entidades. La cifra de controladores importa porque establece la cota inferior de casos de prueba: cada controlador debe rendir al menos uno.
 
-### 7.4 Compuerta `RPD-01`
+### 7.4 La retroalimentación docente y su atención
+
+El 31 de julio de 2026 el profesor formuló cuatro observaciones sobre la Fase 2. Quedaron registradas literalmente en `RET-01` y se atendieron bajo la decisión `SD-28`, antes de la compuerta `RPD-01`. La tabla recoge cada observación en sus palabras y lo que se hizo.
+
+| Observación | Qué se hizo |
+|---|---|
+| «Los objetos usuario y administrador deben tener relación, ya que, el administrador es un tipo de usuario» | `MD-01` gana el supertipo `TitularDeCuenta`, del que descienden ambos, y `DCU-01` refleja el rol general |
+| «Los actores que aparecen en el diagrama deberían estar representados en un objeto del dominio: Visitante y usuario adulto» | `Visitante` pasa a ser clase del modelo de dominio, y participa en `CU-01`, `CU-02` y `CU-04` con sus diagramas de robustez |
+| «Los requisitos funcionales especificados no se ven reflejados en su totalidad en el diagrama de casos de uso presentado» | `DCU-01` pasa de **10 a 14** casos de uso. La medición previa fue contundente: **13 de los 26 requisitos funcionales, la mitad, no tenían ninguna manifestación gráfica**. Tras la corrección, los 26 tienen caso de uso propio |
+| «Realizar verificación de los objetos del dominio, deben verse reflejados en los casos de uso» | Se publicó la matriz de verificación en `TRZ-01 §5.1`. Comprobada por script, halló **4 de 16 filas discrepantes** y destapó que `DR-06` omitía la entidad `EventoDeSeguridad` |
+
+Dos aspectos de esta pasada merecen mencionarse porque condicionaron el resto del proyecto.
+
+**Una de las cuatro observaciones se atendió rechazando su solución literal.** La primera sugería que el administrador es un tipo de usuario, lo cual invitaba a una herencia directa entre ambos. Esa herencia no pasa el test de sustitución: un administrador no es sustituible por un usuario en los casos de uso de conversación, porque no tiene cápsula de perfil ni consentimiento. La corrección introdujo un supertipo común en lugar de la herencia sugerida, y la razón quedó escrita. Atender una observación no consiste en obedecerla.
+
+**La primera pasada de correcciones se hizo mal y hubo que rehacerla.** `PDR-01` lo admite por escrito: las dos primeras correcciones se aplicaron sin cargar los agentes especializados que gobiernan esos artefactos, de modo que se hicieron a ojo. Ese episodio es el origen documentado de una disciplina que el proyecto sostuvo después sin excepción: cada artefacto lo modifica el agente que lo posee, y lo que no se puede comprobar no se da por hecho.
+
+### 7.5 Compuerta `RPD-01`
 
 La primera revisión técnica formal evaluó el paquete de análisis antes de autorizar el diseño detallado. Sobre 106,1 páginas equivalentes levantó 5 hallazgos: 1 Mayor, 2 Moderados y 2 Menores. Veredicto: `Aceptado con verificación de retrabajo`.
 
-La compuerta atendió además las cuatro observaciones del profesor recogidas en `RET-01`: la relación entre los roles de usuario y administrador, el tratamiento de los actores como objetos del dominio, los requisitos funcionales no reflejados en el diagrama de casos de uso, y la verificación cruzada entre el modelo de dominio y los casos de uso.
-
-### 7.5 Diagramas de secuencia y delta de operaciones
+### 7.6 Diagramas de secuencia y delta de operaciones
 
 Los diagramas `DS-01` a `DS-14` constituyen el diseño detallado del comportamiento. Suman 283 mensajes, y cada mensaje es una operación asignándose a la clase que lo recibe: ese es su propósito, no ilustrar un flujo. El delta consolidado `DOP-01` registra 193 nombres de operación distintos con la clase que los recibe y la justificación de por qué van ahí.
 
 De los controladores se derivaron 181 casos de prueba (`CP-01` a `CP-14`), con cobertura comprobada de todos los caminos: curso básico, flujos alternativos y flujos de excepción.
 
-### 7.6 Modelo de clases de diseño
+### 7.7 Modelo de clases de diseño
 
 `MC-01` consolida 43 clases: 16 del espacio del problema, con nombre idéntico al de `MD-01`, y 27 del espacio de la solución. Contiene 201 operaciones, 51 atributos propios, 11 enumerados y 80 relaciones. La convergencia entre el espacio del problema y el de la solución se verifica mediante una matriz de procedencia que exige que cada elemento trace a su artefacto de origen.
 
-### 7.7 Compuerta `CDR-01`
+### 7.8 Compuerta `CDR-01`
 
 La segunda revisión técnica formal evaluó si el diseño detallado autorizaba el paso a la construcción. Ejecutó las diez reglas del método sobre el paquete completo y levantó 20 hallazgos: 3 Mayores, 8 Moderados y 9 Menores. La tasa de 0,57 hallazgos por página supera la tasa base de 0,4 medida en documentos de diseño, lo cual se interpreta como cobertura adecuada de la revisión y no como deficiencia del paquete. Veredicto inicial: `Reinspección requerida`.
 
-El proceso que siguió a esa disposición ocupa la sección 11 y es, con diferencia, la parte más instructiva del proyecto.
+El proceso que siguió a esa disposición ocupa la sección 12 y es, con diferencia, la parte más instructiva del proyecto.
 
 ---
 
@@ -188,9 +239,66 @@ Esa misma ADR estableció una frontera temporal que gobernó el resto de la Fase
 
 `ADR-004` fijó la supresión inmediata de los datos al eliminar la cuenta, sin ventana de gracia ni marca de baja lógica, y el estado inicial del interruptor de disponibilidad del chat.
 
+`ADR-005` cerró la última decisión que faltaba antes de escribir infraestructura: la herramienta con que se declara. Se eligió el kit de desarrollo de la nube de Amazon en TypeScript, que permite escribir la infraestructura en el mismo lenguaje que el resto del sistema y comprobarla con el mismo compilador. La decisión llevaba dos frenos declarados, y el segundo es consecuencia directa de `ADR-003`: como no hay respaldo del almacén, cualquier operación capaz de reemplazar un recurso con estado debe declararse de forma explícita, nunca aceptarse por omisión.
+
+Con `ARQ-01` se escribió el diseño físico que `ADR-002` había diferido: las claves de las cuatro tablas, la tabla de rutas de la interfaz de programación, el inventario del almacén de objetos, los permisos y el procedimiento de despliegue. Ese documento cerró tres cuestiones que llevaban abiertas desde la Fase 1. La más interesante es la del falseo de petición entre sitios: al pasar todo el tráfico del navegador por el mismo origen mediante reescritura, deja de existir origen cruzado real, y con él la necesidad de un mecanismo antifalseo. La protección no se implementó; se volvió innecesaria por la topología, que es una forma más barata y más segura de resolverla. La contrapartida quedó declarada en el documento de privacidad: el proveedor del alojamiento pasa a ser encargado del tratamiento, porque todas las credenciales y toda la cápsula de perfil atraviesan su infraestructura.
+
 ---
 
-## 9. Trazabilidad
+## 9. Fase 3 — Construcción y despliegue
+
+El diseño autorizado en `CDR-01` se construyó entre el 5 y el 6 de agosto de 2026. Esta sección documenta qué se construyó, cómo se verificó y —lo que más valor tiene para un informe de ingeniería— qué le enseñó la ejecución al diseño.
+
+### 9.1 El contrato compartido
+
+La primera pieza no fue ni el servidor ni el cliente, sino el contrato entre ambos: un paquete de TypeScript, `contrato-api`, con 68 tipos —14 entidades, 11 enumerados y 43 de solicitud y respuesta— que ambos lados importan en vez de declarar por su cuenta. La jerarquía se declaró por escrito, y es lo que evita la deriva silenciosa: si el documento de contrato y el paquete discrepan, manda el paquete, porque el compilador lo comprueba y a un documento no lo comprueba nadie.
+
+Junto al contrato se escribió un servidor de simulación con las mismas rutas. Su función fue permitir que cliente y servidor avanzaran en paralelo sin bloquearse, y cumplió mientras el servidor real no existía. Su historia es también una advertencia: cuando el servidor real estuvo desplegado, la simulación había divergido —no validaba sesión, ni rol, ni confirmación en casi ninguna ruta protegida— y el cliente pasó a consumir directamente el sistema real. Una simulación que no se mantiene deja de ser una ayuda y se convierte en una fuente de falsos negativos.
+
+### 9.2 El servidor
+
+El servidor sigue el diseño físico sin desviarse: 14 controladores sobre entorno de ejecución Node 22, tras una pasarela de interfaz de programación, con cuatro tablas y un almacén de objetos para la configuración. La infraestructura completa está escrita como código, de modo que el despliegue es reproducible y su diferencia con el estado actual, inspeccionable antes de aplicarla.
+
+Dos piezas del canon viajaron del documento al código sin perder nada. El filtro determinista de peligro se evalúa **antes** de cualquier llamada al modelo de lenguaje, de forma que un mensaje de riesgo explícito nunca llega al proveedor y la respuesta la produce el propio sistema; esa ruta funciona aunque el proveedor esté caído, que era justo lo que el protocolo de seguridad exigía. Y las guardas de salida filtran la respuesta antes de entregarla. El texto que gobierna la conducta de Alan y de Aura vive fuera del código, en el almacén de configuración y versionado, precisamente para que cambiarlo no exija tocar el programa.
+
+### 9.3 El cliente
+
+El cliente cubre las 16 pantallas especificadas en `DIS-00`. Se implementan en 17 archivos porque el chat resuelve tres de ellas —la conversación, su degradación y la contención ante peligro— como tres estados de una misma pantalla, que es como se comporta de verdad para quien la usa. Sobre los cimientos del proyecto se levantaron 17 componentes propios y siete primitivas de la biblioteca base.
+
+Una decisión de esa capa merece constancia porque es reutilizable: la traducción de un fallo del servidor a un texto para la persona ocurre en un único módulo. Ninguna pantalla decide por su cuenta qué decir ante un error. Eso es lo que hace verificable el requisito de no mostrar códigos crudos, en vez de dejarlo a la disciplina de quien escriba la siguiente pantalla.
+
+Quedan dos desviaciones declaradas. No hay modo oscuro, pese a que el sistema de diseño lo especifica y los mockups lo dibujan: fue una decisión consciente del equipo, no un olvido. Y la respuesta del chat no transporta todavía los recursos de ayuda como datos estructurados, así que la pantalla de contención depende del texto libre del mensaje; el catálogo de líneas de ayuda reales quedó diferido de forma explícita.
+
+### 9.4 El despliegue
+
+El servidor está en la nube de Amazon, en una región declarada provisional hasta que se resuelva la cuestión de residencia de datos que el proyecto tiene abierta desde la Fase 1. El cliente está en `https://alan-aura-academico.vercel.app`.
+
+La pieza que une ambos es una regla de reescritura, y su orden es lo que la hace correcta: las peticiones a la interfaz de programación se reescriben hacia la pasarela, y todo lo demás cae en una regla general que devuelve el documento de la aplicación. Invertirlas haría que cada llamada al servidor devolviera la página en vez de datos. La segunda regla tampoco es opcional: sin ella, recargar el navegador en una ruta interna daría un error de página no encontrada.
+
+Esa reescritura es la materialización de la decisión de topología descrita en §8. El navegador habla con un solo origen, y por eso la cookie de sesión puede ser estricta y no hace falta mecanismo antifalseo.
+
+### 9.5 Lo que la construcción le enseñó al diseño
+
+Esta es la parte que justifica haber construido y no solo diseñado. Al ejecutar el sistema aparecieron seis defectos, y **ninguno de ellos era detectable leyendo los artefactos**. Todos habían sobrevivido a dos compuertas formales, cinco verificaciones independientes y un análisis de robustez de 262 elementos.
+
+| Defecto | Qué falló | Por qué el diseño no podía verlo |
+|---|---|---|
+| Respuestas vacías del chat | El presupuesto de generación se agotaba antes de emitir texto | El requisito decía «tokens de salida» dando por hecho que era una sola magnitud. En un modelo que razona antes de responder, el razonamiento consume el mismo presupuesto |
+| Memoria a la mitad | El historial se limitaba a cuatro mensajes, no a cuatro intercambios | Un intercambio son dos mensajes. La regla era correcta; su lectura, no |
+| Freno de intentos declarado y nunca emitido | El contrato prometía una respuesta que el código no producía | Un contrato describe lo que debería ocurrir; solo una llamada real revela si ocurre |
+| Estado intermedio inconsistente al reiniciar el perfil | La cápsula se borraba y el perfil seguía diciendo que existía | La especificación describe el resultado, no la atomicidad de los pasos intermedios |
+| Error de servidor donde el contrato pedía error de petición | Un valor inválido se detectaba demasiado tarde | El orden de validación es una decisión de implementación |
+| Una ruta que el diseño no tenía | La pantalla de disponibilidad necesitaba consultar el estado, no solo cambiarlo | La tabla de rutas se derivó de las acciones, y omitió la consulta que la pantalla requería |
+
+El patrón es consistente: **el diseño detallado eliminó los defectos de coherencia, y dejó intactos los de encuentro con la realidad**. Los cuatro primeros nacen de supuestos que el documento no podía comprobar —cómo consume tokens un modelo de razonamiento, qué es un intercambio, si una promesa se cumple, si una operación es atómica—. Los dos últimos son omisiones que solo se ven cuando alguien intenta usar lo diseñado.
+
+Ninguna cantidad adicional de revisión documental los habría encontrado, y merece decirse con claridad porque este informe dedica su sección 12 a defender el valor de la revisión. Revisar y ejecutar no compiten: encuentran clases distintas de defecto. La lección del `CDR` —que una convención sin comprobador es una intención— tiene aquí su continuación natural: **un diseño sin ejecución es una hipótesis**, por bien revisado que esté.
+
+La verificación posterior al despliegue lo confirma en el otro sentido. Once llamadas dirigidas contra el sistema en línea comprobaron que las correcciones funcionaban y que el contrato conversacional se sostenía: el personaje revela ser una inteligencia artificial cuando se le pregunta, rechaza dar un diagnóstico y deriva, y los dos personajes mantienen tonos distinguibles. Esa verificación tiene un límite que conviene declarar en vez de disimular: **no es la evaluación formal de coherencia de personaje** que los requisitos de calidad exigen, con rúbrica y muestra de al menos diez diálogos. Son sondas dirigidas a criterios puntuales. La evaluación formal sigue pendiente.
+
+---
+
+## 10. Trazabilidad
 
 `TRZ-01` mantiene la correspondencia entre requisitos, casos de uso y clases. `TRZ-DS-01` extiende la cadena hacia el diseño detallado, ligando cada paso del texto de un caso de uso con su mensaje de secuencia, la operación resultante, la clase receptora y el caso de prueba que lo cubre.
 
@@ -198,19 +306,82 @@ La propiedad que ambas matrices garantizan es la ausencia de requisitos huérfan
 
 ---
 
-## 10. Requisitos de calidad
+## 11. Requisitos de calidad
 
-Los 10 requisitos de calidad se organizan según las características de `ISO/IEC 25010:2023` e incluyen *safety*, incorporada en esa edición. Cada uno lleva una métrica con umbral obligatorio bajo el método GQM, de modo que la afirmación «el sistema es seguro» se sustituye por una medición con criterio de aceptación.
+El encuadre es la familia `SQuaRE` (`ISO/IEC 25000`). El modelo de producto lo aporta `ISO/IEC 25010:2023`, y la estructura de medición se apoya en tres normas de la misma familia: `ISO/IEC 25030` para el marco de requisitos de calidad, `ISO/IEC 25023` para la medición de producto y `ISO/IEC 25022` para la calidad en uso. La edición de 2023 no es un detalle bibliográfico: es la que incorpora *safety* como característica propia, y citar la anterior habría dejado sin cobertura normativa precisamente la parte que a este proyecto más le importa.
 
-Las reglas de negocio se clasifican con la taxonomía de Wiegers, que distingue hechos, restricciones, activadores de acción, inferencias y cálculos. La distinción tiene efecto práctico: una restricción se verifica de manera distinta a una inferencia, y confundirlas produce pruebas que no prueban lo que dicen.
+### 11.1 Diez requisitos con umbral obligatorio
+
+Cada requisito de calidad se construye con el método GQM —meta, pregunta, métrica, umbral—, y esa estructura no es una cita metodológica sino la forma material de la tabla de `REQ-01 §3`: cada columna es uno de los cuatro elementos. El efecto buscado es sustituir la afirmación «el sistema es seguro» por una medición con criterio de aceptación.
+
+| ID | Característica (25010:2023) | Métrica | Umbral |
+|---|---|---|---|
+| `RC-01` | Safety · *fail safe* §3.9.3 | Fallbacks correctos sobre casos de peligro con el modelo apagado | 100 % |
+| `RC-02` | Safety · *risk identification* §3.9.2 | Verdaderos positivos sobre el conjunto de prueba | ≥ 0,90 |
+| `RC-03` | Safety · *operational constraint* §3.9.1 | Salidas seguras sobre *prompts* adversarios | ≥ 0,95 |
+| `RC-04` | Security · confidencialidad | *Payloads* con fuga sobre *payloads* inspeccionados | 0 fugas |
+| `RC-05` | Performance efficiency · *time behaviour* | p95 de latencia extremo a extremo, arranque en frío incluido | ≤ 5 s |
+| `RC-06` | Interaction capability §3.4 | Usuarios que completan el onboarding, n≥5 | ≥ 80 % |
+| `RC-07` | Reliability · disponibilidad | Peticiones correctas o degradadas con gracia sobre el total | ≥ 95 % |
+| `RC-08` | Functional suitability · corrección | Rúbrica de coherencia de personaje, n≥10 diálogos | ≥ 4,0 / 5 |
+| `RC-09` | Flexibility · instalabilidad | Despliegue reproducible según el procedimiento | 1 corrida documentada |
+| `RC-10` | Maintainability · modificabilidad | Cambios por configuración sobre cambios totales | 100 % |
+
+Tres de los diez apuntan a **sub-cláusulas distintas de *safety***, no a la característica genérica. La granularidad es deliberada: el fallback determinista, la identificación del riesgo y la restricción de la salida del modelo son mecanismos separados, fallan por separado y se miden por separado.
+
+### 11.2 El puente normativo y sus tres niveles de honestidad
+
+`NORM-01` mapea cada requisito de calidad a su cláusula, y hace algo que rara vez se ve en trabajo académico: **declara con qué grado de verificación se afirma cada correspondencia**.
+
+| Nivel | Qué significa | Filas |
+|---|---|---|
+| `[V-cláusula]` | El texto de la norma se abrió y se citó literalmente | 6 |
+| `[V-estructura]` | La edición y la estructura están confirmadas; la cláusula exacta de la sub-característica queda pendiente de abrir | 7 |
+| `[V-índice]` | La ubicación se conoce; el texto no se ha abierto | — |
+
+Las seis filas a `[V-cláusula]` son las cinco de *safety* más *interaction capability*. Sobre el fallback que sostiene `RC-01`, la norma pide que el sistema pase automáticamente a un modo de operación seguro ante un fallo; sobre la restricción que sostiene `RC-03`, que acote su operación a parámetros seguros al encontrar un peligro operacional. Las otras siete se declaran a `[V-estructura]` en vez de presentarse como citadas, y el propio artefacto recomienda elevarlas al preparar la evaluación.
+
+Esa distinción es el rasgo metodológico que este informe más querría defender. Una matriz que afirmara trece correspondencias verificadas sería más vistosa y menos cierta.
+
+### 11.3 Reglas de negocio: la taxonomía y sus casillas vacías
+
+Las reglas se clasifican con la taxonomía de Wiegers, que distingue **término, hecho, restricción, habilitador de acción, inferencia y cálculo**. La distinción tiene efecto práctico inmediato: una restricción se verifica de manera distinta a un habilitador, y confundirlos produce pruebas que no prueban lo que dicen.
+
+Lo revelador del reparto está en lo que falta. Las categorías de inferencia y de cálculo quedaron **vacías a propósito**, y esa ausencia es una decisión de dominio y no un descuido de clasificación: el filtro de peligro es determinista, y las métricas de administración son contadores operativos agregados, nunca puntuaciones sobre la persona. Un MVP de acompañamiento emocional que hubiera llenado esas dos casillas habría empezado a perfilar a sus usuarios.
+
+La categoría **término** sostiene las dos definiciones de las que cuelga todo el canon ético: qué cuenta como persona adulta y qué cuenta como peligro explícito.
+
+### 11.4 Accesibilidad
+
+El sistema de diseño fija el nivel `AA` de `WCAG 2.1` como criterio de cierre de cada pantalla, con los contrastes calculados y registrados: el texto sobre página alcanza una razón aproximada de 13:1, y los dos colores de personaje sobre blanco quedan por encima de 5:1. La accesibilidad no se agota ahí. El sistema declara foco visible, objetivos táctiles de al menos 44 píxeles y respeto de `prefers-reduced-motion`, esto último con su fundamento citado en el criterio 2.3.3 de la norma, porque el movimiento no esencial perjudica a personas con trastornos vestibulares.
+
+La implementación lo recogió: el apagado de animación por preferencia del sistema existe en la hoja de estilos base, y el indicador de escritura del chat es un latido lento que queda estático cuando esa preferencia está activa. Lo que **no** se hizo es una auditoría de accesibilidad ejecutada, con herramienta automática o con lector de pantalla.
+
+### 11.5 Qué se midió y qué no
+
+El proyecto midió con rigor la calidad del proceso, y no midió la **calidad del producto**.
+
+| Dimensión | Estado |
+|---|---|
+| Tasa de hallazgos por página en el `CDR-01` | 0,57 contra una base GQM de 0,4 |
+| Verificaciones independientes que encontraron defectos | 5 de 5 |
+| Requisitos huérfanos en la trazabilidad | 0 |
+| Cobertura de controladores por casos de prueba | 150 de 150 |
+| Requisitos de calidad con umbral definido | 10 de 10 |
+| **Requisitos de calidad medidos contra su umbral** | **0 de 10** |
+| Casos de prueba diseñados frente a ejecutados | 181 diseñados, 0 ejecutados |
+
+Los umbrales existen y los instrumentos de medición se diseñaron —la clase de evento operativo se creó para que la disponibilidad de `RC-07` fuera computable, y el procedimiento de despliegue para que `RC-09` fuera reproducible—, pero la evaluación no se ha ejecutado. Dos casos los declara el propio corpus por escrito: `RC-05`, cuyo umbral de cinco segundos puede verse comprometido por el arranque en frío de las funciones sin servidor, magnitud que nadie ha medido; y `RC-08`, la rúbrica de coherencia de personaje, que las once sondas dirigidas contra el sistema desplegado **no sustituyen**, por ser comprobaciones puntuales y no una muestra.
+
+Queda una frontera que no es técnica. El diseño **se alinea** con los principios de la Ley 1581 de 2012 y su decreto reglamentario, y el informe no afirma cumplimiento: esa validación exige criterio jurídico y está declarada como pendiente de nivel 6 desde la Fase 1. De ella depende, entre otras cosas, la región definitiva de alojamiento, hoy provisional.
 
 ---
 
-## 11. Aseguramiento de la calidad
+## 12. Aseguramiento de la calidad
 
 Esta sección documenta el proceso de revisión y sus resultados, incluidos los desfavorables. Se incluye porque el proceso es un resultado del trabajo, y porque su parte más útil para quien lea este informe no son los aciertos sino los cinco intentos fallidos que se describen en 11.3.
 
-### 11.1 Las dos compuertas
+### 12.1 Las dos compuertas
 
 | | `RPD-01` | `CDR-01` |
 |---|---|---|
@@ -223,7 +394,7 @@ Esta sección documenta el proceso de revisión y sus resultados, incluidos los 
 
 El retrabajo de los 20 hallazgos de `CDR-01` cerró 17 de ellos, difirió 1 con riesgo aceptado y disparador declarado, y heredó 2 al diseño físico posterior. En el proceso destapó **8 hallazgos nuevos**, lo cual es un resultado esperable: corregir un artefacto obliga a mirarlo con un detalle que la revisión original no alcanzó.
 
-### 11.2 Las cinco verificaciones independientes
+### 12.2 Las cinco verificaciones independientes
 
 La cláusula §6.5.6.5 de `IEEE 1028` exige que el retrabajo lo verifique alguien distinto de quien lo aplicó. El proyecto la aplicó de forma estricta: cada verificación se encargó con encuadre adversarial explícito —el objetivo era refutar las correcciones, no confirmarlas— y ninguna la ejecutó el mismo agente que había hecho el trabajo.
 
@@ -239,7 +410,7 @@ La cláusula §6.5.6.5 de `IEEE 1028` exige que el retrabajo lo verifique alguie
 
 El freno que menciona la tercera fila procede de Wiegers y establece no revisar el mismo material más de tres veces: si a la tercera no converge, el problema deja de estar en la revisión y pasa a estar en el artefacto o en su alcance. Se activó, y forzó el cambio de enfoque que se describe a continuación.
 
-### 11.3 Caso de estudio: el defecto que resistió cinco intentos
+### 12.3 Caso de estudio: el defecto que resistió cinco intentos
 
 El defecto es el siguiente. Diecisiete flujos de excepción declaran en su especificación que el caso de uso «vuelve al paso N», y sus diagramas de secuencia no volvían a ninguna parte.
 
@@ -266,15 +437,19 @@ Lo que finalmente resolvió el defecto no fue elegir mejor, sino cambiar de inst
 
 La regla `R3` merece una nota, porque su primera formulación fue refutada. Se enunció inicialmente como que el diagrama no dibuja el punto de reentrada y lo delega a la especificación y al caso de prueba. La cuarta verificación la rechazó con un argumento que no admite réplica: dibujar una reentrada y declarar en una nota que no se pretende dibujarla no elimina la semántica del fragmento, porque un `loop` tiene un inicio concreto y UML repite desde ahí. La regla quedaba **afirmada, no implementada**. La corrección consistió en acotar cada bucle al paso que su especificación nombra, de modo que el diagrama diga la verdad en lugar de disculparse por no decirla.
 
-### 11.4 El instrumental de verificación
+### 12.4 El instrumental de verificación
 
 El proyecto construyó sus propias herramientas de comprobación, versionadas en el repositorio y ejecutables por cualquiera que lo clone.
 
 `verificar_coherencia.py` recorre los artefactos en seis bloques: cifras canónicas desactualizadas, residuos de arrastre, disciplina de ficha y versión, versiones declaradas frente a versiones reales, frescura de los artefactos derivados y orden de los historiales de cambios. `barrido_desenlaces.py` comprueba las reglas `R1` y `R2` de la convención descrita arriba, y lleva 18 casos de regresión versionados que se ejercitan con una opción propia de autoprueba. A ellos se suman los validadores de robustez, secuencia y procedencia del modelo de clases.
 
+Dos instrumentos más nacieron con este informe y con la construcción. `verificar_estilo.py` mide siete marcadores de escritura automática que sí admiten medida —densidad de rayas, series retóricas de tres elementos, fórmulas de relleno, aperturas metatextuales, exceso de negrita, uniformidad de longitud de párrafo y proporción de viñetas frente a prosa—, con 11 casos de regresión que documentan los falsos positivos aceptados; cazó tics propios en su primera ejecución. Y el cliente lleva 38 pruebas automatizadas en cinco suites, que cubren lo que no puede comprobarse contra el sistema real sin efectos: los caminos de error, las guardas de ruta y la traducción de fallos a texto.
+
+Un límite que conviene declarar: **el servidor no tiene pruebas automatizadas**. Su verificación fue por llamadas dirigidas contra el sistema desplegado, que es una forma legítima de comprobar pero no una red de regresión. Es la deuda más clara que deja la Fase 3.
+
 El instrumental fue a su vez objeto de hallazgos, y esa es la parte instructiva. La cuarta verificación demostró con catorce sabotajes que la primera versión del comprobador de desenlaces decoraba la convención más de lo que la sostenía: cualquier fragmento ocultaba una violación de `R2`, tres formas de flecha escapaban a su expresión regular, y una nota cuyo texto contuviera la palabra `end` descuadraba el recorrido. La quinta encontró un falso negativo adicional que los 18 casos de regresión no cubrían, con una observación que quedó escrita en la cabecera del propio script: los casos de regresión los había escrito el autor a partir de la lista del revisor, de modo que demostraban regresión sobre los defectos **conocidos**, no suficiencia general.
 
-### 11.5 Lecciones
+### 12.5 Lecciones
 
 Dos conclusiones del proceso son transferibles fuera de este proyecto.
 
@@ -284,9 +459,11 @@ La segunda es que **una convención sin comprobador es una intención**. Las cua
 
 ---
 
-## 12. Resultados y estado actual
+## 13. Resultados y estado actual
 
-El paquete al cierre de `CDR-01` queda descrito por las siguientes medidas, todas verificables contra los artefactos que las producen y vigiladas de forma automática frente a desactualización.
+El proyecto queda descrito por las siguientes medidas, todas verificables contra los artefactos o el código que las producen, y vigiladas frente a desactualización desde la tabla de hechos canónicos.
+
+**Del diseño:**
 
 | Medida | Valor |
 |---|---|
@@ -306,25 +483,41 @@ El paquete al cierre de `CDR-01` queda descrito por las siguientes medidas, toda
 | Atributos propios de `MC-01` | 51 |
 | Relaciones de `MC-01` | 80 |
 
+**Del sistema construido:**
+
+| Medida | Valor |
+|---|---|
+| Recursos de la interfaz de programación | 13, servidos por 14 métodos |
+| Controladores desplegados | 14 |
+| Tablas del almacén | 4, más un almacén de objetos |
+| Tipos del contrato compartido | 68 = 14 entidades + 11 enumerados + 43 de rutas |
+| Pantallas implementadas | 16, en 17 archivos |
+| Componentes propios del cliente | 17, más 7 primitivas de la biblioteca base |
+| Pruebas automatizadas | 38 en 5 suites, todas del cliente |
+| Defectos encontrados al ejecutar | 6, ninguno detectable en los artefactos |
+| Sistema en línea | `https://alan-aura-academico.vercel.app` |
+
 El veredicto de la compuerta `CDR-01`, determinado por el líder del proyecto el 2026-08-05 conforme a `IEEE 1028 §5.2.1` y sostenido por una quinta verificación independiente, es **`Aceptado con verificación de retrabajo`**, con cero hallazgos Críticos y cero Mayores abiertos.
 
 La forma de la disposición es deliberada. «Con verificación de retrabajo» no describe una firma pendiente, sino que la comprobación es continua: los seis bloques del verificador de coherencia, el comprobador de desenlaces con sus 18 casos de regresión, los validadores de robustez, secuencia y procedencia, y el trinquete de cifras canónicas se ejecutan sobre el repositorio en cualquier momento y por cualquiera.
 
 ---
 
-## 13. Conclusiones y trabajo futuro
+## 14. Conclusiones y trabajo futuro
 
-El proyecto produjo un paquete de análisis y diseño completo, coherente y verificable, sometido a dos compuertas formales de revisión técnica y a cinco verificaciones independientes del retrabajo. El diseño está autorizado para pasar a construcción.
+El proyecto produjo un paquete de análisis y diseño completo, coherente y verificable, sometido a dos compuertas formales de revisión técnica y a cinco verificaciones independientes del retrabajo; y sobre él construyó y desplegó el sistema que ese diseño especificaba.
 
 La conclusión metodológica que el equipo extrae no está en los artefactos sino en el proceso. Un proyecto documental de este tamaño acumula afirmaciones que dejan de ser ciertas sin que nadie lo note, y la disciplina que funcionó no fue revisar más veces, sino convertir cada criterio en algo ejecutable. El caso extremo lo aportó el propio informe que este documento sustituye: pasó tres semanas afirmando cifras que ya eran falsas —diez casos de uso y doce clases, cuando eran catorce y dieciséis— junto a una pila tecnológica abandonada, precisamente porque era el único artefacto que ningún validador recorría.
 
-**Trabajo en curso.** Con posterioridad al cierre documentado en este informe, el equipo fijó la herramienta de infraestructura como código, produjo el diseño físico `ARQ-01` —claves de DynamoDB, contrato de la API, inventario de S3 e IAM— e inició la construcción con un contrato compartido y un servidor de simulación que permite trabajar en paralelo el cliente y el servidor. Ese trabajo queda fuera del alcance de este documento y se informará por separado.
+Esa conclusión ganó un matiz al construir, y es lo que la sección 9 documenta. La disciplina de hacer ejecutable cada criterio funcionó dentro de lo que un documento puede afirmar, y ahí eliminó los defectos de coherencia. Fuera de ese perímetro no alcanzó: los seis defectos que apareció la ejecución nacían de supuestos sobre el mundo —cómo consume tokens un modelo que razona, si una operación es realmente atómica, si una promesa del contrato se cumple— que ningún validador documental podía contrastar. Revisar y ejecutar encuentran clases distintas de defecto, y **un diseño sin ejecución es una hipótesis**, por bien revisado que esté.
 
-**Trabajo pendiente declarado.** Nueve puntos permanecen abiertos en el tablero de pendientes del proyecto, ninguno de ellos bloqueante para la construcción: tres corresponden al diseño físico, uno a la fase de construcción, dos a fases posteriores de verificación documental, uno a la propagación de una corrección hacia el documento de visión, uno a validaciones que requieren decisión del equipo sobre servicios externos y frontera legal, y uno a la entrega académica.
+**Trabajo pendiente declarado.** Cuatro puntos permanecen abiertos en el tablero del proyecto, ninguno bloqueante: dos requieren decisión del equipo sobre servicios externos y sobre la frontera legal de los datos, uno es la propagación de una corrección hacia el documento de visión, y uno la entrega académica.
+
+A ellos se suman tres deudas que deja la construcción, declaradas aquí y no disimuladas. El servidor no tiene pruebas automatizadas, así que su verificación depende de llamadas dirigidas y no de una red de regresión. La evaluación formal de coherencia de personaje que exigen los requisitos de calidad, con rúbrica y muestra de al menos diez diálogos, sigue sin hacerse. Y el catálogo de recursos de ayuda está vacío, de modo que la pantalla de contención deriva con texto y no con líneas de atención reales; esta última pesa más que las otras dos, porque es la única que afecta a lo que una persona en riesgo recibiría.
 
 ---
 
-## 14. Referencias
+## 15. Referencias
 
 International Organization for Standardization. (2023). *ISO/IEC 25010:2023 — Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model*. ISO.
 
@@ -342,7 +535,7 @@ Wiegers, K., & Beatty, J. (2013). *Software Requirements* (3.ª ed.). Microsoft 
 
 ---
 
-## 15. Anexos
+## 16. Anexos
 
 ---
 
@@ -359,19 +552,20 @@ Versiones leídas de la ficha de cada artefacto en el momento de generar este in
 | `ADR-002` | `01_vision/ADR-002_reversion_stack_serverless.md` | — |
 | `ADR-003` | `01_vision/ADR-003_no_respaldo_del_dato_personal.md` | — |
 | `ADR-004` | `01_vision/ADR-004_supresion_inmediata_y_estado_inicial.md` | — |
+| `ADR-005` | `01_vision/ADR-005_herramienta_de_infraestructura_como_codigo.md` | — |
 | `MV-01` | `02_modelos_verbales/MV-01_modelo_verbal_general.md` | v2.7 |
-| `CONV-CONTRATO-01` | `02_modelos_verbales/CONTRATO_conversacional.md` | v1.2 |
+| `CONV-CONTRATO-01` | `02_modelos_verbales/CONTRATO_conversacional.md` | v1.3 |
 | `REQ-01` | `03_requisitos/REQ-01_requisitos.md` | v1.7 |
 | `PER-01` | `03_requisitos/PER-01_mapa_persistencia.md` | v1.7 |
 | `PRIV-01` | `03_requisitos/PRIV-01_privacidad_datos.md` | v1.8 |
 | `SEG-01` | `03_requisitos/SEG-01_protocolo_seguridad.md` | v1.2 |
 | `TRZ-01` | `04_trazabilidad/TRZ-01_trazabilidad.md` | v2.1 |
 | `NORM-01` | `04_trazabilidad/NORM-01_puente_normativo.md` | v1.0 |
-| `PLAN-01` | `05_plan/PLAN-01_plan_proyecto.md` | v1.2 |
+| `PLAN-01` | `05_plan/PLAN-01_plan_proyecto.md` | v1.4 |
 | `DIS-00` | `08_diseno/DIS-00_inventario_y_plan.md` | v1.1 |
 | `DIS-01` | `08_diseno/DIS-01_sistema_diseno.md` | v1.1 |
 
-Cuatro artefactos citables carecen de campo `Versión` en su ficha: `ADR-002`, `ADR-003`, `ADR-004` y `RPD-01`. Es una inconsistencia menor de la disciplina documental del proyecto, detectada al preparar este informe y registrada aquí en lugar de corregirse sobre la marcha, porque la corrección corresponde a la revisión de esos artefactos y no a su cita.
+Siete artefactos citables carecen de campo `Versión` en su ficha: `ADR-002`, `ADR-003`, `ADR-004`, `ADR-005`, `RPD-01`, `ARQ-01` y el contrato de la interfaz de programación. Es una inconsistencia menor de la disciplina documental del proyecto, detectada al preparar este informe y registrada aquí en lugar de corregirse sobre la marcha, porque la corrección corresponde a la revisión de esos artefactos y no a su cita.
 
 ### Fase 2 — proceso ICONIX
 
@@ -395,13 +589,22 @@ Cuatro artefactos citables carecen de campo `Versión` en su ficha: `ADR-002`, `
 | `COD-01` | `07_casos_uso/clases/COD-01_insumos_para_codigo.md` | v1.6 |
 | `CDR-01` | `07_casos_uso/CDR-01_revision_critica_diseno.md` | v2.0 |
 
+### Fase 3 — construcción y despliegue
+
+| Artefacto | Archivo | Versión |
+|---|---|---|
+| `ARQ-01` | `10_arquitectura/ARQ-01_diseno_fisico.md` | — |
+| `CONTRATO-API` | `10_arquitectura/CONTRATO_API_v1.md` | — |
+
+El código construido no se inventaría aquí porque no es un artefacto documental: vive en `backend/`, `frontend/` y `packages/contrato-api/` del mismo repositorio, y su estado se comprueba compilando y ejecutando, no leyendo una ficha.
+
 ### Gobernanza
 
 | Artefacto | Función | Versión |
 |---|---|---|
-| `HECHOS_CANONICOS` | tabla de cifras canónicas del proyecto | v1.9 |
+| `HECHOS_CANONICOS` | tabla de cifras canónicas del proyecto | v2.0 |
 | `ESTADO_PIPELINE` | estado de fase y tablero de pendientes | v3.9 |
-| `REGISTRO_DECISIONES` | las 48 decisiones documentadas en el anexo D | — |
+| `REGISTRO_DECISIONES` | las 53 decisiones documentadas en el anexo D | — |
 | `INDICE_MAESTRO` | inventario de artefactos con sus versiones | — |
 | `CHANGELOG` | historial del paquete documental | — |
 | `RET-01` | retroalimentación docente sobre la Fase 2 | v1.0 |
@@ -435,7 +638,7 @@ Las matrices completas viven en `TRZ-01` y `TRZ-DS-01`. Este anexo recoge su for
 
 ## Anexo D. Registro de decisiones
 
-Las 48 decisiones documentadas del proyecto hasta el cierre de la compuerta `CDR-01`. Cada una consta en `REGISTRO_DECISIONES.md` con su justificación completa, su estado de confirmación y su propagación a los artefactos afectados.
+Las 53 decisiones documentadas del proyecto. Cada una consta en `REGISTRO_DECISIONES.md` con su justificación completa, su estado de confirmación y su propagación a los artefactos afectados.
 
 | ID | Decisión |
 |---|---|
@@ -487,8 +690,13 @@ Las 48 decisiones documentadas del proyecto hasta el cierre de la compuerta `CDR
 | SD-46 | Cerrar los dos Moderados que quedaban y determinar el veredicto del `CDR-01` |
 | SD-47 | Cerrar los dos hallazgos de la quinta verificación, con lo que el límite de `IEEE 1028 §6.5.6.5` deja de existir |
 | SD-48 | Completar el expediente del `CDR` y poner al día todo lo que la gobernanza seguía anunciando como futuro |
+| SD-49 | Fijar AWS CDK en TypeScript como herramienta de infraestructura como código, con dos frenos declarados |
+| SD-50 | `ARQ-01`, el diseño físico: topología de origen, 4 tablas, tabla de rutas, inventario de objetos, permisos y procedimiento |
+| SD-51 | Reescribir el informe académico como artefacto versionado en Markdown, dentro del barrido del verificador |
+| SD-52 | El contrato conversacional recupera cuatro reglas que su importación original no trajo, y los *prompts* pasan a v3 |
+| SD-53 | El informe cubre la Fase 3, y los cuatro documentos de gobernanza dejan de describir un proyecto sin código |
 
-Las decisiones `SD-41` a `SD-47` corresponden en su totalidad al ciclo de corrección y verificación de la compuerta `CDR-01` descrito en la sección 11. Siete decisiones para cerrar una compuerta es una cifra alta, y la sección 11.3 explica por qué hicieron falta.
+Las decisiones `SD-41` a `SD-47` corresponden en su totalidad al ciclo de corrección y verificación de la compuerta `CDR-01` descrito en la sección 12. Siete decisiones para cerrar una compuerta es una cifra alta, y la sección 11.3 explica por qué hicieron falta.
 
 ---
 
@@ -529,4 +737,6 @@ Las decisiones `SD-41` a `SD-47` corresponden en su totalidad al ciclo de correc
 
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
+| v1.2 | 2026-08-06 | Equipo Alan & Aura Académico | **El informe deja de detenerse en el diseño.** La v1.0 se cortó en el cierre del `CDR-01` por decisión declarada (`SD-51 D4`), y ese corte era correcto mientras no hubiera código. Dejó de serlo el 2026-08-06, cuando el sistema quedó desplegado: un informe que termina en el diseño describe un proyecto que ya no es este. Entra la **§9, construcción y despliegue** —contrato compartido, servidor, cliente, despliegue— y con ella **§9.5**, que es lo que justifica haber construido: los seis defectos que apareció la ejecución, ninguno detectable en los artefactos pese a dos compuertas, cinco verificaciones independientes y 262 elementos de robustez. La conclusión que se saca de ahí no contradice a la §12 sino que la acota: revisar y ejecutar encuentran clases distintas de defecto, y un diseño sin ejecución es una hipótesis. Se retira el corte de alcance de los **catorce sitios** donde aparecía, se acredita en portada la construcción de Bedoya y Montoya —redactada describiendo lo construido y contrastada con el historial del repositorio, no contando aportes—, y el subtítulo pasa a nombrar la construcción y el despliegue. Se corrige de paso un **`7.5` duplicado** que la v1.1 dejó al renumerar, y se precisa que los 350 *tokens* son de respuesta visible: confundirlos con el presupuesto de generación fue uno de los seis defectos. |
+| v1.1 | 2026-08-06 | Equipo Alan & Aura Académico | **Tres correcciones, ninguna cosmética.** *(a)* La tabla de integrantes confundía el **rol** con la **contribución a la fase documentada**: repetía los roles que `PLAN-01 §7` prevé para la construcción, posterior a lo que este informe cubre. Al corregirla en un primer intento se degradó sin base el rol de dos integrantes; ahora se separan en dos columnas, de modo que los roles quedan intactos y la contribución dice la verdad. El modelo de clases de diseño es de Santiago Eusse Gil. *(b)* Entra **§4.1**, método instrumental: los ocho agentes especializados que producen cada artefacto —de autoría del líder y residentes fuera de este repositorio— y los modelos empleados con su papel. Sin esa sección, la afirmación de §12.2 de que cada verificación la hizo «un revisor distinto» **no se podía comprobar**; ahora dice cuál hizo cada una y declara el límite: un modelo distinto no sustituye a un revisor humano. *(c)* Entra **§7.4**, la retroalimentación docente: los cuatro puntos del profesor citados literalmente y lo que se hizo con cada uno, incluidos los dos que dan credibilidad al resto — que una de las cuatro se atendió **rechazando su solución literal** por no pasar el test de sustitución, y que la primera pasada de correcciones se hizo sin cargar los agentes y hubo que rehacerla. |
 | v1.0 | 2026-08-06 | Equipo Alan & Aura Académico | **Reescritura completa.** Sustituye al `.docx` del 2026-07-18, que afirmaba 10 casos de uso, 12 clases y la pila Django/SQLite/PythonAnywhere, ninguna de las cuatro cosas cierta desde `ADR-002` y la ampliación de la especificación. El informe pasa a Markdown versionado para que entre en el barrido de `verificar_coherencia.py`, que solo recorre `.md` y por eso nunca detectó la desactualización. Entra la sección 11, aseguramiento de la calidad, que documenta las dos compuertas, las cinco verificaciones independientes y el defecto que resistió cinco intentos. Alcance: hasta el cierre de `CDR-01`; `ARQ-01` y la construcción quedan fuera. |

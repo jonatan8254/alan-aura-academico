@@ -94,7 +94,13 @@ def comprobar(md):
     vigentes = set(h.values())
     for cifra, etiqueta in [("283", "mensajes"), ("262", "elementos"), ("193", "operaciones"),
                             ("181", "casos de prueba"), ("201", "operaciones"),
-                            ("43", "clases"), ("51", "atributos"), ("80", "relaciones")]:
+                            ("43", "clases"), ("51", "atributos"), ("80", "relaciones"),
+                            # Fase 3 (SD-53). El informe las cita en la seccion 9 y en la
+                            # tabla de medidas; sin estar aqui, nada avisaria si se desalinean
+                            # de HECHOS_CANONICOS, que es donde viven H-32 a H-35.
+                            ("16", "pantallas"), ("38", "pruebas"),
+                            ("14", "handlers"), ("13", "rutas REST"),
+                            ("68", "tipos del contrato")]:
         if cifra not in vigentes:
             fallos.append(f"CIFRA: el informe cita {cifra} {etiqueta}, y no figura en HECHOS_CANONICOS")
 
@@ -205,7 +211,13 @@ def a_html(md):
         elif re.match(r"^#{1,4} ", l):
             n = len(l) - len(l.lstrip("#"))
             txt = l[n:].strip()
-            cls = ' class="salto"' if re.match(r"^## \d", l) or l.startswith("## Anexo") else ""
+            # Salto de pagina SOLO en los anexos, que son la frontera estructural
+            # real del documento. Forzarlo tambien en cada "## <digito>" dejaba
+            # media pagina en blanco detras de cada seccion corta --y las hay de
+            # siete lineas--, inflando el PDF sin ganar legibilidad. Las secciones
+            # numeradas fluyen; lo que evita que un encabezado quede huerfano al pie
+            # es la regla `break-after: avoid` del CSS, no un salto duro.
+            cls = ' class="salto"' if l.startswith("## Anexo") else ""
             out.append(f"<h{n}{cls}>{en_linea(txt)}</h{n}>")
             i += 1
         elif l.strip() == "---":
@@ -346,7 +358,10 @@ h2 { font-size: 1.35em; text-align: left; margin: 1.6em 0 .5em;
      border-bottom: 1px solid #bbb; padding-bottom: .2em; }
 h3 { font-size: 1.1em; text-align: left; margin: 1.3em 0 .4em; }
 h2.salto { page-break-before: always; }
-p { margin: 0 0 .7em; }
+/* Un encabezado nunca queda solo al pie de pagina: arrastra consigo lo que
+   introduce. Es lo que sustituye al salto duro que antes llevaba cada seccion. */
+h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+p { margin: 0 0 .7em; orphans: 2; widows: 2; }
 code { font-family: Consolas, 'Courier New', monospace; font-size: .88em;
        background: #f2f2f2; padding: .05em .25em; border-radius: 2px; }
 table { border-collapse: collapse; width: 100%; margin: .9em 0; font-size: .88em;

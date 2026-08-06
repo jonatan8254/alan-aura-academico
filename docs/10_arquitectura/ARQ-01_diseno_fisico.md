@@ -1,11 +1,11 @@
 # ARQ-01 — Diseño físico
 
-**ID:** ARQ-01 · **Familia:** ARQ (diseño físico, posterior al CDR) · **Hogar:** `docs/10_arquitectura/` · **Fecha:** 2026-08-05 · **Estado:** aceptada (con verificaciones pendientes).
+**ID:** ARQ-01 · **Familia:** ARQ (diseño físico, posterior al CDR) · **Hogar:** `docs/10_arquitectura/` · **Fecha:** 2026-08-06 · **Versión:** v1.1 · **Estado:** aceptada e **implementada** (`SD-53`). El diseño se ejecutó contra AWS real el 2026-08-06; de las seis verificaciones de §N+1, la 1 y la 3 quedan cerradas.
 **Insumos:** `ADR-002 §1` (que difirió los cuatro entregables de este documento), `ADR-002-D1/D4/D5/D6/D7`, `ADR-003`, `ADR-004-D1`, `ADR-005` (herramienta: CDK en TypeScript), `MC-01`/`MC-00`/`COD-01` (43 clases congeladas), `PER-01` completo, `PRIV-01 §4.1`, `CDR-01` (`H-09`), las 14 `ECU` (§17/§10, interfaces técnicas), `00_PLAN_CODEX_ORIGINAL §4.9`, decisión del usuario sobre topología de origen (2026-08-05).
 **Consumidores:** Fase 3 (construcción del MVP), `PRIV-01 §4.1` (actualizado por este documento), `PER-01 §8` (cierra `PER-H4`).
-**Naturaleza:** documento de **diseño físico**, con el mismo estatus que `PER-01`/`DIS-00`: fija estructura, no la implementa. **El código CDK real se escribe en Fase 3**, todavía no chartered — ningún artefacto de la Fase 2 (`MD-01`…`MC-01`) contenía código, y este tampoco lo contiene.
+**Naturaleza:** documento de **diseño físico**, con el mismo estatus que `PER-01`/`DIS-00`: fija estructura, no la implementa. El código CDK correspondiente **se escribió en la Fase 3** y vive en `backend/infra/` (rama `backend`); este documento sigue sin contener código, como el resto de artefactos de diseño.
 
-**Regla de honestidad (§4.9).** Nada de este documento se ejecutó contra AWS real. Ninguna tabla, función ni bucket existe hoy; ningún número de latencia, costo o límite de servicio está medido. Donde hay juicio de diseño propio va marcado `[I2]`; donde hay una propuesta a validar en construcción, `[P5]`.
+**Regla de honestidad (§4.9), actualizada el 2026-08-06.** ~~Nada de este documento se ejecutó contra AWS real; ninguna tabla, función ni bucket existe hoy.~~ **Ya no es cierto:** las 4 tablas DynamoDB, el bucket S3 y los 14 controladores están desplegados y verificados de punta a punta contra la pasarela real. **Lo que sigue sin medirse** es la latencia —el arranque en frío de `RC-05` sigue sin cuantificar—, el costo y los límites de servicio. Donde hay juicio de diseño propio va marcado `[I2]`; donde hay una propuesta a validar en construcción, `[P5]`.
 
 ## Escala de verificación
 
@@ -190,13 +190,13 @@ El cambio real se aplica en `docs/03_requisitos/PRIV-01_privacidad_datos.md`, no
 
 ## §N+1 — Verificaciones pendientes
 
-Ninguna de estas se ha hecho. Se listan para que no se den por hechas. `[E1]`
+~~Ninguna de estas se ha hecho.~~ **Actualizado el 2026-08-06 (`SD-53`): la 1 y la 3 quedan cerradas por la Fase 3.** Las demás siguen abiertas y se listan para que no se den por hechas. `[E1]`
 
 | # | Qué falta verificar | Marca |
 |---|---|---|
-| 1 | Que las 4 tablas se despliegan tal como se diseñaron aquí, con CDK real | `[E1]` |
+| ~~1~~ | ✅ **CERRADA.** Las 4 tablas y el bucket se desplegaron con CDK real (`backend/infra/`) y se verificaron contra la pasarela desplegada | `[E1]` |
 | 2 | Que `GSI-2` (directorio) resuelve `CU-08` sin `Scan`, medido | `[N6]` |
-| 3 | Códigos de estado de `D3` contra cada flujo `FA`/`FE` de las 14 `ECU`, uno a uno — hoy es una primera consolidación, no un recorrido exhaustivo | `[I2]` |
+| ~~3~~ | ✅ **CERRADA, y encontró defectos.** El recorrido uno a uno lo ejecutó la pasada documentada en `CONTRATO_API_v1` (2026-08-06), que halló **cinco rutas con códigos faltantes** —incluidos el `409` y el `502` de `/chat`, que `DR-06` ya diseñaba sin que el contrato los tuviera—. **Deuda que abre:** esta tabla de `D3` no incorporó todavía esas correcciones; el contrato vigente es `packages/contrato-api` | `[E1]` |
 | 4 | Que las reescrituras de Vercel funcionan dentro de los límites de su plan gratuito, sin verificar desde `ADR-002 §4.9` | `[N6]` |
 | 5 | Región definitiva, condicionada a `V6-b` | `[N6]` |
 | 6 | Que el plan de uso de API Gateway aplica de verdad el límite de 3/min sin bloquear tráfico legítimo | `[N6]` |
@@ -207,4 +207,5 @@ Ninguna de estas se ha hecho. Se listan para que no se den por hechas. `[E1]`
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-06 | Equipo Alan & Aura Académico | **`SD-53`: el documento deja de decir que nada de él existe.** La regla de honestidad afirmaba «nada de este documento se ejecutó contra AWS real; ninguna tabla, función ni bucket existe hoy», y para entonces las 4 tablas, el bucket y los 14 controladores llevaban un día desplegados. Se rectifica sin borrarla, se cierran las verificaciones **1** (despliegue con CDK real) y **3** (recorrido de códigos de estado, que encontró cinco rutas incompletas), y el estado pasa a «aceptada e implementada». **Deuda que queda abierta y se declara:** la tabla de rutas de `D3` no ha incorporado las correcciones de códigos que ese recorrido produjo; el contrato vigente es `packages/contrato-api`. |
 | v1.0 | 2026-08-05 | S. Bedoya | Creación (`SD-50`). `D1` fija Vercel como intermediario (decisión del usuario), con la consecuencia declarada sobre `PRIV-01 §4.1`. `D2` fija 4 tablas DynamoDB —una única para las entidades ligadas al titular, tres separadas para lo global/telemetría, por `PER-T2`— y **cierra `PER-H4`**. `D3` fija el espacio de nombres `/api/v1/`, resuelve los tres `RA-01` heredados (dos sin necesitar ruta nueva, por ser `character` de solo lectura) e incorpora primera consolidación de `H-09`. `D4` fija un bucket S3 con prefijos. `D5` fija IAM de mínimo privilegio sin VPC. `D6` es el *runbook* esqueleto, con región explícitamente provisional. No decide código real ni la región definitiva. |

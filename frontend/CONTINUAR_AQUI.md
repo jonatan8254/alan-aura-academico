@@ -1,6 +1,19 @@
 # Frontend — estado y cómo continuar
 
-**Fecha:** 2026-08-06 · **Rama:** `fase-3-frontend` · **Para:** quien retome la implementación de las pantallas.
+> # ⚠️ DOCUMENTO HISTÓRICO — NO SEGUIR SUS INSTRUCCIONES
+>
+> **Describe el estado del 2026-08-06 por la mañana, cuando las 16 pantallas eran *stubs*.**
+> Esa misma tarde se implementaron todas, se mergeó la rama en `main` y el sistema se desplegó.
+> Casi todo lo que este archivo declara pendiente **está cerrado**, y sus cifras se quedaron cortas
+> (dice 13 envoltorios y 15 componentes: son **14** y **17**).
+>
+> **El estado real es [`frontend/README.md`](README.md)**, y las cifras canónicas viven en
+> `docs/00_gobernanza/HECHOS_CANONICOS.md` (`H-32` a `H-35`).
+>
+> Se conserva porque su §5 —las trampas verificadas contra las `ECU`— **sigue siendo válida y útil**:
+> son decisiones de comportamiento que ninguna otra fuente recoge. Lo demás es historia.
+
+**Fecha:** 2026-08-06 (mañana) · **Rama:** `fase-3-frontend`, hoy mergeada en `main` · **Para:** contexto histórico.
 
 Este archivo no es un artefacto de gobernanza: es el traspaso operativo entre dos sesiones de
 trabajo. La autoridad sigue siendo `DIS-00`/`DIS-01` para la interfaz, las `ECU` para el

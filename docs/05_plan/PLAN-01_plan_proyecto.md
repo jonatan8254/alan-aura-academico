@@ -1,8 +1,8 @@
 # PLAN-01 — Plan de proyecto del MVP «Alan & Aura Académico»
-**ID:** PLAN-01 · **Hogar:** `docs/05_plan/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-33: `R-11` reformulado de canon/legal a operativo). v1.1 (SD-29: riesgos y verificaciones realineados a `ADR-002` — R-2 reformulado, R-6 incorpora el arranque en frío, **R-8…R-11 nuevos** (cuenta de AWS, protección CSRF a construir, dependencia de red del *fallback*, respaldos fuera de la cascada — este último, `PER-H5`), rol de backend y `V6-a` actualizados). Al pasar el backend a TypeScript, el instrumental de pruebas del plan de Codex (pytest) deja de aplicar: corresponde Vitest, y Playwright se mantiene por ser agnóstico.
+**ID:** PLAN-01 · **Hogar:** `docs/05_plan/` · **Fecha:** 2026-08-06 · **Versión:** v1.4 (**`SD-53`: la v1.3 se quedó corta el mismo día**. Daba `S3` y `S4` por sin abrir con la administración ya construida, las 16 pantallas mergeadas en `main` y el sistema desplegado; se corrige el estado real, el cierre de §9 y la ficha). v1.3 (**el cronograma deja de describir el pasado como presente**: `S0–S1` figura cerrada con sus dos compuertas, el diseño físico consta como hecho —no estaba en este cronograma— y `S2` como en curso en dos ramas, medido contra el repositorio. La regla de no-adelanto se marca **agotada**: se escribió cuando la ejecución en curso era la documental). v1.2 (SD-33: `R-11` reformulado de canon/legal a operativo). v1.1 (SD-29: riesgos y verificaciones realineados a `ADR-002` — R-2 reformulado, R-6 incorpora el arranque en frío, **R-8…R-11 nuevos** (cuenta de AWS, protección CSRF a construir, dependencia de red del *fallback*, respaldos fuera de la cascada — este último, `PER-H5`), rol de backend y `V6-a` actualizados). Al pasar el backend a TypeScript, el instrumental de pruebas del plan de Codex (pytest) deja de aplicar: corresponde Vitest, y Playwright se mantiene por ser agnóstico.
 **Insumos:** VIS-01, ADR-001, MV-01.x, REQ-01, PRIV-01, SEG-01, NORM-01, TRZ-01.
 **Consumidores:** ejecución del subproyecto (fases 2–4).
-**Naturaleza:** plan de gestión de ~1 mes. **Alcance de este plan:** planifica todo el MVP; **produce** solo hasta los artefactos pre-ICONIX (esta fase). ICONIX, construcción y verificación quedan **planificados, no ejecutados**.
+**Naturaleza:** plan de gestión de ~1 mes. **Alcance de este plan:** planifica todo el MVP. ~~Produce solo hasta los artefactos pre-ICONIX; ICONIX, construcción y verificación quedan planificados, no ejecutados.~~ **Al 2026-08-06 se ejecutaron todas:** ICONIX cerrado con sus dos compuertas, construcción desplegada, y la verificación en curso.
 
 ---
 
@@ -13,12 +13,24 @@ Ciclo **ágil ligero (Scrum-lite) con gates**, coherente con el macro (Scrum + V
 
 | Semana | Fase | Entregables | Gate de salida |
 |---|---|---|---|
-| **S0–S1** | Documental (esta fase) + **ICONIX análisis** | Paquete documental (VIS/ADR/MV/REQ/PRIV/SEG/NORM/TRZ/PLAN) ✅; luego modelo de dominio, casos de uso y robustez desde MV-01.x. | **G1:** requisitos completos, cero huérfanos (TRZ-01), umbrales fijados; dominio/CU trazados a REQ-01. |
-| **S2** | **Construcción – núcleo** | Onboarding (RF-01…06), cápsula, esqueleto de conversación (RF-07/08), integración Groq gobernada (RF-09). | **G2:** flujo onboarding→chat funcionando en local con LLM gobernado (solo cápsula). |
+| **S0–S1** ✅ | Documental + **ICONIX completo** *(cerrada)* | Paquete documental (VIS/ADR/MV/REQ/PRIV/SEG/NORM/TRZ/PLAN) ✅; luego modelo de dominio, casos de uso y robustez desde MV-01.x. | **G1:** requisitos completos, cero huérfanos (TRZ-01), umbrales fijados; dominio/CU trazados a REQ-01. |
+| **S2** 🔄 | **Construcción – núcleo** *(en curso)* | Onboarding (RF-01…06), cápsula, esqueleto de conversación (RF-07/08), integración Groq gobernada (RF-09). | **G2:** flujo onboarding→chat funcionando en local con LLM gobernado (solo cápsula). |
 | **S3** | **Construcción – seguridad y admin** | Gate binario + fallback determinista (RF-10/11), no persistencia (RF-13), administración (RF-14…18). | **G3:** fallback opera con LLM caído (RC-01); config por entorno (RC-10). |
 | **S4** | **Verificación + despliegue + entrega** | Pruebas de RC-01…RC-10 (umbrales), despliegue en capa gratuita, demo y documentación de entrega. | **G4 (final):** «MVP terminado» (VIS-01 §8) verificado; demo reproducible. |
 
-> **Regla de no-adelanto:** los entregables de S1–S4 se **listan** aquí para planificar; su producción es de fases posteriores. Esta ejecución cierra en el paquete documental.
+> ~~**Regla de no-adelanto:** los entregables de S1–S4 se **listan** aquí para planificar; su producción es de fases posteriores. Esta ejecución cierra en el paquete documental.~~
+>
+> **Estado real al 2026-08-06** *(medido contra el repositorio, no estimado)*. La regla de no-adelanto **cumplió su función y se agotó**: se escribió cuando la ejecución en curso era
+> la documental, y esa fase cerró.
+>
+> - **S0–S1 — cerrada.** Paquete documental completo, `ICONIX` de punta a punta y las **dos compuertas** ejecutadas: `RPD-01` entre análisis y diseño, y `CDR-01` entre diseño y código,
+>   esta última con veredicto `Aceptado con verificación de retrabajo` determinado por el líder el 2026-08-05 tras **cinco verificaciones independientes**.
+> - **Diseño físico — hecho, y no estaba en este cronograma.** `ADR-005` fija la herramienta de infraestructura como código y `ARQ-01` el diseño físico —claves de DynamoDB,
+>   contrato de API, inventario de S3 e IAM—. `ADR-002 §1` lo difería hasta después del `CDR`, y esa condición se cumplió.
+> - **S2 y S3 — cerradas.** `backend`: *stack* CDK con 4 tablas y almacén de objetos, y los *vertical slices* completos —autenticación, *onboarding*, chat con el *gate* de seguridad y Groq, perfil, cuenta y administración— contra DynamoDB real, con **14 controladores** desplegados. `fase-3-frontend`, **ya mergeada en `main`**: las **16 pantallas** en 17 archivos, 17 componentes propios y **38 pruebas**.
+>   La administración, que era `S3`, está construida: directorio, métricas e interruptor de disponibilidad.
+> - **S4 — en curso.** El sistema está **desplegado y verificado de punta a punta**: la pasarela en AWS y el cliente en `https://alan-aura-academico.vercel.app`. **Lo que falta es la entrega académica** y la evaluación formal de los requisitos de calidad —ningún `MET-*` se ha medido contra su umbral, y los 181 casos de prueba diseñados siguen sin ejecutarse—.
+>   entrega siguen sin abrir.
 
 ## 3. Backlog inicial (épicas → historias → RF)
 | Épica | Historia (resumen) | RF |
@@ -77,9 +89,22 @@ Priorización (MoSCoW): **Must** E1, E2 (núcleo), E3 (seguridad), E4 (privacida
 - **Gate final G4:** «MVP terminado» de VIS-01 §8 verificado punto por punto.
 
 ## 9. Cierre
+- **Estado al 2026-08-06:** `S0–S1` cerrada con sus dos compuertas; diseño físico escrito e implementado; `S2` y `S3` cerradas; `S4` en curso, con el sistema desplegado y pendiente la entrega académica y la evaluación de calidad.
 - **Confirmadas:** enfoque, cronograma de 4 semanas, backlog y DoD/DoR.
 - **Recomendaciones:** cerrar V6-a en S0 antes de escribir código; congelar umbrales [N6] tras medición.
 - **Supuestos:** disponibilidad del equipo del curso y de los *free tiers*.
-- **Pendientes:** ejecución de fases 2–4 (fuera de esta entrega documental).
+- ~~**Pendientes:** ejecución de fases 2–4 (fuera de esta entrega documental).~~ **Al 2026-08-06:** las fases 2 y 3 están **cerradas** y el sistema desplegado; lo pendiente es la **entrega académica**, la evaluación de los requisitos de calidad —empezando por `RC-08`— y los hitos de validación `V6-a` y `V6-b`.
+
+---
+
+**Historial de cambios**
+
+| Versión | Fecha | Autor | Cambio |
+|---|---|---|---|
+| v1.4 | 2026-08-06 | Equipo Alan & Aura Académico | **`SD-53`: la v1.3 se quedó corta el mismo día que se escribió.** Decía «`S2` en curso» con «las pantallas de *onboarding*» y «`S3` y `S4` sin abrir», y para el cierre de la jornada estaban las **16 pantallas**, la administración completa, **38 pruebas** y el sistema **desplegado**. Se corrige el bloque de estado real, el cierre de §9 y la ficha, que seguía diciendo «esta fase» y «no ejecutados». `S2` y `S3` pasan a cerradas y `S4` a en curso, a falta de la entrega y de la evaluación de calidad. |
+| v1.3 | 2026-08-06 | J. Sánchez | **El plan afirmaba en presente una fase ya cerrada.** §2 decía «Documental (**esta fase**)» y su regla de no-adelanto, «esta ejecución cierra en el paquete documental», cuando la construcción ya había arrancado. La regla se marca **agotada** —cumplió su función, no se borra— y entra el **estado real medido contra el repositorio**: `S0–S1` cerrada con `RPD-01` y `CDR-01`; el diseño físico (`ADR-005`, `ARQ-01`) hecho, aunque no figuraba en este cronograma; `S2` en curso en las ramas `backend` —*stack* CDK y *vertical slices* de auth, *onboarding* y chat— y `fase-3-frontend` —*scaffold*, sesión, rutas y pantallas de *onboarding*—; `S3` y `S4` sin abrir. **Este artefacto no tenía historial**: entra aquí, porque el bloque 6 de `verificar_coherencia.py` lo comprueba. |
+| v1.2 | 2026-08-01 | J. Sánchez | `SD-33`: `R-11` reformulado de canon/legal a operativo. |
+| v1.1 | 2026-08-01 | J. Sánchez | `SD-29`: riesgos y verificaciones realineados a `ADR-002`. |
+| v1.0 | 2026-07-2x | J. Sánchez | Creación del plan de proyecto. |
 
 **Fin de PLAN-01.**
