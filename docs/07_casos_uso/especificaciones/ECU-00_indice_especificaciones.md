@@ -1,5 +1,5 @@
 # ECU-00 — Índice de especificaciones de casos de uso
-**ID:** ECU-00 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.0 · **Estado:** Propuesto.
+**ID:** ECU-00 · **Familia:** ECU (especificación de casos de uso, fase 2 ICONIX) · **Hogar:** `docs/07_casos_uso/especificaciones/` · **Fecha:** 2026-07-31 · **Versión:** v2.1 (`SD-48`: §7 declaraba que «`MV-01` §7.3 y `RF-25` aún dicen 1.500 caracteres», y **ninguno de los dos lo dice**). v2.0 · **Estado:** Propuesto.
 **Propósito:** índice de las **14 especificaciones textuales** de casos de uso derivadas de `DCU-01 v2.1` con la skill `use-case-specifier` (paso 3 ICONIX).
 **Insumos:** DCU-01 v2.1, MD-01 v1.4, MV-01, REQ-01, PRIV-01, PER-01, SEG-01, contrato conversacional, VIS-01, DIS-00, `00_PLAN_CODEX_ORIGINAL.md`. **Consumidores:** análisis de robustez, diagramas de secuencia, pruebas.
 **Naturaleza:** este documento es un **índice**, no una especificación. Ver §6 para lo que eso implica en la verificación.
@@ -94,12 +94,18 @@ for f in ECU-0[1-9]*.md ECU-1[0-4]*.md; do python .../validate_use_case_spec.py 
 | `DR-05`, `DR-07` y `DR-08` quedaron **desalineados** por estas reescrituras; faltan `DR-11…DR-14` | `docs/07_casos_uso/robustez/` | **D.4** |
 | `PER-01` cita criterios y flujos de `ECU-04` que la renumeración rompió | `PER-01` §104, §170, §176 | D.5 |
 | `DIS-00` afirma que reiniciar la caracterización es «reversible»: es **falso** | `DIS-00` §3 | D.5 |
-| `MV-01` §7.3 y `RF-25` aún dicen 1.500 caracteres por mensaje; el vigente es **2.500** | `MV-01`, `REQ-01` | D.5 |
+| ~~`MV-01` §7.3 y `RF-25` aún dicen 1.500 caracteres por mensaje~~ **— ya no: los dos dicen 2.500.** Comprobado contra la fuente en `SD-48`: `REQ-01 RF-25` dice **2.500** y en `MV-01` el 1.500 solo sobrevive en un **bloque de cambio histórico** (`MV-01:66`), que es correcto que lo conserve. El pendiente estaba **resuelto en los documentos y abierto solo en el registro** | — | **Cerrado (`SD-48`)** |
 | `MV-01` §13.2 llama «vista derivada, no clase» a `EventoOperativo`; `MD-01 v1.4` y `PER-01` lo tratan como entidad | `MV-01` §13.2 | D.5 |
 | `PER-H4`: campos de `ContadorDeUsoDiario` | `PER-01` | abierta |
 | La matriz clase ↔ caso de uso y la tabla de visibilidad RF → CU | `TRZ-01` | D.5 |
 
 ## 8. Siguiente paso ICONIX
 **Análisis de robustez** `DR-01…DR-14`, uno por caso de uso, reusando los objetos de frontera, control y entidad que cada flujo ya nombra. Después, diagramas de secuencia `DS-XX` y casos de prueba `CP-XX`.
+
+**Historial de cambios**
+
+| Versión | Fecha | Autor | Cambio |
+|---|---|---|---|
+| v2.1 | 2026-08-05 | J. Sánchez | **`SD-48`: §7 declaraba una afirmación falsa.** Decía que «`MV-01` §7.3 y `RF-25` aún dicen 1.500 caracteres por mensaje», y **ninguno de los dos lo dice**: `REQ-01 RF-25` dice **2.500**, y en `MV-01` el 1.500 solo sobrevive en un bloque de cambio histórico (`MV-01:66`), que es correcto que lo conserve. Era el **pendiente 1 de `HECHOS_CANONICOS`**: estaba **resuelto en los documentos y abierto solo en el registro**, y esta era la línea que lo mantenía vivo. Se tacha y se corrige; no se borra (`SD-31`). **Este artefacto no tenía historial**: entra aquí, porque la disciplina de ficha lo exige y el bloque 6 de `verificar_coherencia.py` lo comprueba. |
 
 **Fin de ECU-00.**

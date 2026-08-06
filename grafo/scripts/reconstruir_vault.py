@@ -12,7 +12,14 @@ import json
 import networkx as nx
 from networkx.readwrite import json_graph as jg
 
-sys.path.insert(0, r"C:\Users\joui8\AppData\Local\Programs\Python\Python313\Lib\site-packages")
+# `SD-48`: la ruta absoluta que habia aqui violaba el check de independencia de
+# `AGENTS.md §0` —el repositorio debe poder clonarse en cualquier maquina—. Es el
+# mismo defecto que `CVI-02` del `CDR-01`, cerrado en `SD-45`. Ahora se resuelve
+# con el `site-packages` del interprete que ejecuta el script, sea cual sea.
+import site
+for _ruta in (site.getsitepackages() + [site.getusersitepackages()]):
+    if _ruta not in sys.path:
+        sys.path.insert(0, _ruta)
 from graphify.export import to_obsidian, to_canvas
 
 GRAPH = r"C:\GitHub\alan-aura-academico\grafo\graph_subproyecto_final.json"

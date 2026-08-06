@@ -1,7 +1,29 @@
 # Changelog — Subproyecto «Alan & Aura Académico»
 Formato: fecha · versión · cambios. Solo se registran hitos del paquete documental (no ediciones menores).
 
+> **Convención de versionado** *(declarada en `SD-48`; hasta entonces se aplicaba de hecho, sin estar escrita)*. Versiona el **paquete documental**, no un programa, así que *SemVer* se traduce así:
+> - **MAYOR** — se cierra una **fase del pipeline** o una **compuerta**. `v1.0.0` es el cierre del `CDR-01` y con él el de la Fase 2 ICONIX (`SD-46`); `ARQ-01` y la fase de construcción marcarán los siguientes.
+> - **MENOR** — entra un **artefacto nuevo** o una **decisión** que cambia el estado del paquete: `SD-XX` con contenido propio.
+> - **PARCHE** — correcciones, propagación y cierre de hallazgos **sin** artefacto nuevo.
+> 
+> El salto de `v0.29.0` a `v1.0.0` es, por tanto, el cierre de la compuerta — y esta nota existe porque **no estaba justificado en ningún sitio**, que era justo el tipo de hueco que este proyecto se ha dedicado a cerrar.
+
 ---
+
+## 2026-08-05 — v1.1.0 · `SD-48`: el expediente cuenta ya la historia que ocurrió
+
+> **El acta se contradecía a sí misma sobre su propio veredicto, y ningún validador podía
+> detectarlo.** §14 cerraba declarando «estado del paquete: **`REINSPECCIÓN REQUERIDA`**» y §10
+> respondía «¿listo para codificar? **No**», ambas congeladas en `v1.7`, mientras §13 y la
+> ficha decían `CERRADA`. Los seis bloques vigilan **cifras y versiones**; esto era **prosa**.
+
+- **`CDR-01 v2.0`.** Entra **§0**, el resumen ejecutivo del cierre, y **§15** con las cuatro tablas que faltaban: las **cinco verificaciones** en una sola vista, el **índice** de las nueve secciones de hallazgos, la **trazabilidad hallazgo→decisión** y lo que queda abierto con su destino. §10 y §14 pasan a responder en presente, **conservando marcadas** las tablas de `v1.7` (`SD-31`: lo que estaba mal se marca, no se borra).
+- **Lo que faltaba no era cosmético:** `SD-45-H1` **no aparecía ni una vez** en el acta, y `RI-1`, `RI-2`, `RI-3` y `SD-43-H1` solo como prosa suelta. Un auditor no podía reconstruir qué decisión cerró qué hallazgo.
+- **Un error del propio líder, corregido:** §13 decía «quedaban **cuatro** Mayores» cuando quedaba **uno**, `CVI-03`. Los cuatro eran los `TVI-*` de la **tercera** verificación — confusión de rondas en la frase que justifica el veredicto.
+- **`AGENTS.md` y `CLAUDE.md`, que es lo primero que lee cualquier agente**, decían «Fase 2 **completa salvo la compuerta**», «`CDR-01 v1.2`» y «siguiente hito: la verificación independiente». Actualizados **los dos** —son espejo— y con la **lección del `CDR`** añadida: fijar convención e instalarla como comprobador, y **quien aplica no firma**.
+- **La gobernanza anunciaba futuro que ya era pasado:** `§Qué sigue` presentaba la **cuarta** verificación como «lo único que separa al proyecto del código», la línea 13 mantenía el veredicto viejo, e `INDICE_MAESTRO` declaraba **catorce versiones falsas** de `DS` y `CP` — ahora **leídas de sus fichas**, no citadas de memoria.
+- **Dos arreglos fuera del alcance del `CDR`, declarados:** `ECU-00 §7` afirmaba que «`MV-01` §7.3 y `RF-25` aún dicen 1.500 caracteres» y **ninguno lo dice** —pendiente 1 de `HECHOS_CANONICOS`, cerrado—; y `grafo/scripts/reconstruir_vault.py` llevaba una **ruta absoluta con el usuario del sistema**, el mismo defecto que `CVI-02`.
+- **Se declara la convención de versionado**, que se aplicaba de hecho sin estar escrita.
 
 ## 2026-08-05 — v1.0.1 · `SD-47`: la quinta verificación sostiene el veredicto
 
