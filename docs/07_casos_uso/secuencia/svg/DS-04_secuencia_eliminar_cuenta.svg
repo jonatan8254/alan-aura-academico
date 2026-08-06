@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3052 2411" width="3052" height="2411" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3052 2476" width="3052" height="2476" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
 <title id="t">DS-04 - Secuencia de CU-04 «Eliminar cuenta»</title>
 <desc id="d">Diagrama de secuencia UML. 11 participantes, 23 mensajes.</desc>
-<rect x="0" y="0" width="3052" height="2411" fill="#FFFFFF"/>
+<rect x="0" y="0" width="3052" height="2476" fill="#FFFFFF"/>
 <text x="24" y="26" font-size="15" font-weight="600" fill="#2C2C2A">DS-04 - Secuencia de CU-04 «Eliminar cuenta»</text>
-<line x1="77.3" y1="103.0" x2="77.3" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="477.1" y1="67.0" x2="477.1" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="932.2" y1="80.0" x2="932.2" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1199.1" y1="80.0" x2="1199.1" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1425.1" y1="67.0" x2="1425.1" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="1772.8" y1="67.0" x2="1772.8" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2009.5" y1="67.0" x2="2009.5" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2276.5" y1="67.0" x2="2276.5" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2502.5" y1="67.0" x2="2502.5" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2728.5" y1="67.0" x2="2728.5" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="2971.2" y1="67.0" x2="2971.2" y2="2383.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="77.3" y1="103.0" x2="77.3" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="477.1" y1="67.0" x2="477.1" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="932.2" y1="80.0" x2="932.2" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1199.1" y1="80.0" x2="1199.1" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1425.1" y1="67.0" x2="1425.1" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="1772.8" y1="67.0" x2="1772.8" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2009.5" y1="67.0" x2="2009.5" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2276.5" y1="67.0" x2="2276.5" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2502.5" y1="67.0" x2="2502.5" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2728.5" y1="67.0" x2="2728.5" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="2971.2" y1="67.0" x2="2971.2" y2="2448.0" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
 <rect x="439.1" y="272.0" width="798.0" height="66.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,272 501.05000000000007,272 501.05000000000007,284 493.05000000000007,292 439.05000000000007,292" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="448.05000000000007" y="286" font-size="10" font-weight="600" fill="#993C1D">break</text>
@@ -21,7 +21,7 @@
 <rect x="39.3" y="356.0" width="1423.8" height="424.0" fill="none" stroke="#5F5E5A" stroke-width="1" rx="3"/>
 <polygon points="39.349999999999994,356 101.35,356 101.35,368 93.35,376 39.349999999999994,376" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
 <text x="48.349999999999994" y="370" font-size="10" font-weight="600" fill="#5F5E5A">loop</text>
-<text x="111.35" y="370" font-size="10" fill="#5F5E5A">[hasta que llegue una confirmacion explicita y valida]</text>
+<text x="111.35" y="370" font-size="10" fill="#5F5E5A">[hasta que llegue una confirmacion explicita y valida, o el Usuario cancele (FA-03)]</text>
 <rect x="429.1" y="578.0" width="96.0" height="194.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="429.05000000000007,578 491.05000000000007,578 491.05000000000007,590 483.05000000000007,598 429.05000000000007,598" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="438.05000000000007" y="592" font-size="10" font-weight="600" fill="#993C1D">alt</text>
@@ -44,11 +44,11 @@
 <text x="1459.1" y="1252" font-size="10" fill="#993C1D">[FA-01 la cuenta nunca completo el onboarding]</text>
 <line x1="1387.1" y1="1332.0" x2="2314.5" y2="1332.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
 <text x="1397.1" y="1345.0" font-size="10" fill="#993C1D">[existen capsula, consentimiento y contadores]</text>
-<rect x="439.1" y="1781.0" width="1024.0" height="216.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
+<rect x="439.1" y="1781.0" width="2327.4" height="328.0" fill="none" stroke="#993C1D" stroke-width="1" rx="3"/>
 <polygon points="439.05000000000007,1781 501.05000000000007,1781 501.05000000000007,1793 493.05000000000007,1801 439.05000000000007,1801" fill="#FAECE7" stroke="#993C1D" stroke-width="1"/>
 <text x="448.05000000000007" y="1795" font-size="10" font-weight="600" fill="#993C1D">alt</text>
 <text x="511.05000000000007" y="1795" font-size="10" fill="#993C1D">[FE-04 el almacenamiento falla a mitad de la cascada]</text>
-<line x1="439.1" y1="1981.0" x2="1463.1" y2="1981.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
+<line x1="439.1" y1="1981.0" x2="2766.5" y2="1981.0" stroke="#993C1D" stroke-width="1" stroke-dasharray="5 4"/>
 <text x="449.1" y="1994.0" font-size="10" fill="#993C1D">[la cascada se completa]</text>
 <line x1="57.3" y1="142.0" x2="2991.2" y2="142.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="1365.1" y="131.0" width="318.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
@@ -56,9 +56,9 @@
 <line x1="57.3" y1="1090.0" x2="2991.2" y2="1090.0" stroke="#8a8a8a" stroke-width="1"/>
 <rect x="1431.6" y="1079.0" width="185.4" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
 <text x="1524.3" y="1094.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 3 - Borrado en cascada</text>
-<line x1="57.3" y1="2157.0" x2="2991.2" y2="2157.0" stroke="#8a8a8a" stroke-width="1"/>
-<rect x="1362.0" y="2146.0" width="324.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
-<text x="1524.3" y="2161.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 4 - Cierre de sesion y condicion de Visitante</text>
+<line x1="57.3" y1="2015.0" x2="2991.2" y2="2015.0" stroke="#8a8a8a" stroke-width="1"/>
+<rect x="1362.0" y="2004.0" width="324.5" height="22" rx="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+<text x="1524.3" y="2019.0" font-size="11" font-weight="600" text-anchor="middle" fill="#5F5E5A">Paso 4 - Cierre de sesion y condicion de Visitante</text>
 <line x1="77.3" y1="186.0" x2="477.1" y2="186.0" stroke="#5F5E5A" stroke-width="1.3"/>
 <polygon points="475.05000000000007,186 468.05000000000007,182.6 468.05000000000007,189.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="196.2" y="161.0" width="162.0" height="15.0" fill="#FFFFFF"/>
@@ -143,14 +143,14 @@
 <polygon points="479.05000000000007,1969 486.05000000000007,1965.6 486.05000000000007,1972.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
 <rect x="525.1" y="1918.0" width="239.0" height="15.0" fill="#FFFFFF"/>
 <text x="529.1" y="1930.0" font-size="10" fill="#2C2C2A">informarQueQuedoAMediasYOfrecerReintento()</text>
-<line x1="1425.1" y1="2201.0" x2="2728.5" y2="2201.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="2726.4999999999995,2201 2719.4999999999995,2197.6 2719.4999999999995,2204.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="1984.8" y="2176.0" width="184.0" height="15.0" fill="#FFFFFF"/>
-<text x="1988.8" y="2188.0" font-size="10" fill="#2C2C2A">quedarEnLaCondicionDeVisitante()</text>
-<line x1="477.1" y1="2241.0" x2="932.2" y2="2241.0" stroke="#5F5E5A" stroke-width="1.3"/>
-<polygon points="930.1500000000001,2241 923.1500000000001,2237.6 923.1500000000001,2244.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
-<rect x="565.9" y="2216.0" width="277.5" height="15.0" fill="#FFFFFF"/>
-<text x="569.9" y="2228.0" font-size="10" fill="#2C2C2A">cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()</text>
+<line x1="1425.1" y1="2059.0" x2="2728.5" y2="2059.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="2726.4999999999995,2059 2719.4999999999995,2055.6 2719.4999999999995,2062.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="1984.8" y="2034.0" width="184.0" height="15.0" fill="#FFFFFF"/>
+<text x="1988.8" y="2046.0" font-size="10" fill="#2C2C2A">quedarEnLaCondicionDeVisitante()</text>
+<line x1="477.1" y1="2099.0" x2="932.2" y2="2099.0" stroke="#5F5E5A" stroke-width="1.3"/>
+<polygon points="930.1500000000001,2099 923.1500000000001,2095.6 923.1500000000001,2102.4" fill="#5F5E5A" stroke="#5F5E5A" stroke-width="1.2"/>
+<rect x="565.9" y="2074.0" width="277.5" height="15.0" fill="#FFFFFF"/>
+<text x="569.9" y="2086.0" font-size="10" fill="#2C2C2A">cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()</text>
 <rect x="6.0" y="940.0" width="1547.8" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
 <text x="14.0" y="958.0" font-size="9.5" fill="#2C2C2A">Por que `loop` + `alt`, y por que `FE-02` se queda fuera (`SVI-01` del</text>
 <text x="14.0" y="971.0" font-size="9.5" fill="#2C2C2A">`CDR-01 v1.5`, `SD-43`). `ECU-04` dice «Cancela y vuelve al paso 1»</text>
@@ -177,24 +177,29 @@
 <text x="1459.1" y="1722.0" font-size="9.5" fill="#2C2C2A">—la cascada no lo alcanza— y por eso debe ser irreidentificable (`RE-06`,</text>
 <text x="1459.1" y="1735.0" font-size="9.5" fill="#2C2C2A">`PER-T2`): sin alias ni username, sin permitir reconstruir que la cuenta existio.</text>
 <text x="1459.1" y="1748.0" font-size="9.5" fill="#2C2C2A">La operacion existe para que esa propiedad sea verificable (`CA-11`), no tacita.</text>
-<rect x="387.1" y="2007.0" width="1148.0" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="395.1" y="2025.0" font-size="9.5" fill="#2C2C2A">Aqui no se deshace nada, y esa es la correccion (`H-02`, Mayor). La version</text>
-<text x="395.1" y="2038.0" font-size="9.5" fill="#2C2C2A">anterior dibujaba `deshacerLoSuprimido()`, una compensacion que ningun mecanismo</text>
-<text x="395.1" y="2051.0" font-size="9.5" fill="#2C2C2A">puede implementar: la cascada toca cuatro entidades, `ADR-002-D5` fija DynamoDB</text>
-<text x="395.1" y="2064.0" font-size="9.5" fill="#2C2C2A">—que no revierte escrituras confirmadas fuera de `TransactWriteItems`— y `ADR-003`</text>
-<text x="395.1" y="2077.0" font-size="9.5" fill="#2C2C2A">deja el almacen sin respaldo. Lo borrado no vuelve.</text>
-<text x="395.1" y="2090.0" font-size="9.5" fill="#2C2C2A">Lo que sostiene la garantia es el orden, no la reversion: si el fallo ocurre,</text>
-<text x="395.1" y="2103.0" font-size="9.5" fill="#2C2C2A">el `Consentimiento` ya no esta, asi que la persona deja de ser procesada igual,</text>
-<text x="395.1" y="2116.0" font-size="9.5" fill="#2C2C2A">y el reintento retoma desde donde quedo porque cada supresion es idempotente.</text>
-<rect x="2186.5" y="2253.0" width="652.0" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
-<text x="2194.5" y="2271.0" font-size="9.5" fill="#2C2C2A">Esta cascada es TODA la que existe — PER-H5 cerrado en ADR-003 (SD-33).</text>
-<text x="2194.5" y="2284.0" font-size="9.5" fill="#2C2C2A">El almacen operativo no se respalda: sin exportaciones ni recuperacion a un punto</text>
-<text x="2194.5" y="2297.0" font-size="9.5" fill="#2C2C2A">en el tiempo, no hay copia que escape a lo que estos mensajes suprimen. El hueco que</text>
-<text x="2194.5" y="2310.0" font-size="9.5" fill="#2C2C2A">`ADR-002-D6` habia abierto se cerro quitando el segundo almacen, no acotandolo.</text>
-<text x="2194.5" y="2323.0" font-size="9.5" fill="#2C2C2A">Y desde SD-35 esta supresion es ademas INMEDIATA (`ADR-004-D1`): fisica, sin</text>
-<text x="2194.5" y="2336.0" font-size="9.5" fill="#2C2C2A">ventana de gracia y sin marca de baja — `PER-H2` cerrado. Resulto ser una ambiguedad</text>
-<text x="2194.5" y="2349.0" font-size="9.5" fill="#2C2C2A">sintactica del plan §4.14, no un hueco de diseno: el MVP no tiene «cierre de cuenta».</text>
-<text x="2194.5" y="2362.0" font-size="9.5" fill="#2C2C2A">Con sus dos excepciones cerradas, `RF-24` pasa a cumplirse segun el diseno.</text>
+<rect x="387.1" y="2119.0" width="1148.0" height="185.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="395.1" y="2137.0" font-size="9.5" fill="#2C2C2A">El paso 4 vive DENTRO del operando de exito (`TVI-01`, Mayor, `CDR-01 v1.6`;</text>
+<text x="395.1" y="2150.0" font-size="9.5" fill="#2C2C2A">regla 1 de `SD-44`). Antes el operando estaba vacio y el cierre de sesion</text>
+<text x="395.1" y="2163.0" font-size="9.5" fill="#2C2C2A">quedaba fuera del `alt`: se confirmaba que no queda dato recuperable despues de</text>
+<text x="395.1" y="2176.0" font-size="9.5" fill="#2C2C2A">una cascada que habia quedado a medias. Un `alt` con el exito vacio y la continuacion</text>
+<text x="395.1" y="2189.0" font-size="9.5" fill="#2C2C2A">fuera es el defecto de `opt` con otro nombre. Lo comprueba `barrido_desenlaces.py`.</text>
+<text x="395.1" y="2202.0" font-size="9.5" fill="#2C2C2A">Aqui no se deshace nada, y esa es la correccion (`H-02`, Mayor). La version</text>
+<text x="395.1" y="2215.0" font-size="9.5" fill="#2C2C2A">anterior dibujaba `deshacerLoSuprimido()`, una compensacion que ningun mecanismo</text>
+<text x="395.1" y="2228.0" font-size="9.5" fill="#2C2C2A">puede implementar: la cascada toca cuatro entidades, `ADR-002-D5` fija DynamoDB</text>
+<text x="395.1" y="2241.0" font-size="9.5" fill="#2C2C2A">—que no revierte escrituras confirmadas fuera de `TransactWriteItems`— y `ADR-003`</text>
+<text x="395.1" y="2254.0" font-size="9.5" fill="#2C2C2A">deja el almacen sin respaldo. Lo borrado no vuelve.</text>
+<text x="395.1" y="2267.0" font-size="9.5" fill="#2C2C2A">Lo que sostiene la garantia es el orden, no la reversion: si el fallo ocurre,</text>
+<text x="395.1" y="2280.0" font-size="9.5" fill="#2C2C2A">el `Consentimiento` ya no esta, asi que la persona deja de ser procesada igual,</text>
+<text x="395.1" y="2293.0" font-size="9.5" fill="#2C2C2A">y el reintento retoma desde donde quedo porque cada supresion es idempotente.</text>
+<rect x="2186.5" y="2318.0" width="652.0" height="120.0" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1" rx="3"/>
+<text x="2194.5" y="2336.0" font-size="9.5" fill="#2C2C2A">Esta cascada es TODA la que existe — PER-H5 cerrado en ADR-003 (SD-33).</text>
+<text x="2194.5" y="2349.0" font-size="9.5" fill="#2C2C2A">El almacen operativo no se respalda: sin exportaciones ni recuperacion a un punto</text>
+<text x="2194.5" y="2362.0" font-size="9.5" fill="#2C2C2A">en el tiempo, no hay copia que escape a lo que estos mensajes suprimen. El hueco que</text>
+<text x="2194.5" y="2375.0" font-size="9.5" fill="#2C2C2A">`ADR-002-D6` habia abierto se cerro quitando el segundo almacen, no acotandolo.</text>
+<text x="2194.5" y="2388.0" font-size="9.5" fill="#2C2C2A">Y desde SD-35 esta supresion es ademas INMEDIATA (`ADR-004-D1`): fisica, sin</text>
+<text x="2194.5" y="2401.0" font-size="9.5" fill="#2C2C2A">ventana de gracia y sin marca de baja — `PER-H2` cerrado. Resulto ser una ambiguedad</text>
+<text x="2194.5" y="2414.0" font-size="9.5" fill="#2C2C2A">sintactica del plan §4.14, no un hueco de diseno: el MVP no tiene «cierre de cuenta».</text>
+<text x="2194.5" y="2427.0" font-size="9.5" fill="#2C2C2A">Con sus dos excepciones cerradas, `RF-24` pasa a cumplirse segun el diseno.</text>
 <g fill="none" stroke="#2C2C2A" stroke-width="1.4"><circle cx="77.35" cy="46" r="9"/><line x1="77.35" y1="55" x2="77.35" y2="77"/><line x1="65.35" y1="64" x2="89.35" y2="64"/><line x1="77.35" y1="77" x2="67.35" y2="92"/><line x1="77.35" y1="77" x2="87.35" y2="92"/></g>
 <text x="77.3" y="97.0" font-size="11" text-anchor="middle" fill="#2C2C2A">Usuario adulto</text>
 <rect x="393.5" y="34.0" width="167.2" height="33.0" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>

@@ -1,11 +1,22 @@
 @startuml
 ' DS-04 - Secuencia de CU-04 «Eliminar cuenta»
+' v1.4 (TVI-01/03/04 del CDR-01 v1.6, SD-44): TVI-01: el paso 4 pasa DENTRO del operando de exito de FE-04; la guarda nombra FA-03.
+'       CONVENCION SD-44 — R1: el sufijo de exito vive DENTRO de su operando.
+'       R2: un break dentro de un loop solo vale si lo que sigue al bucle es
+'       limpieza comun. R3: el punto de reentrada es normativo en la ECU y
+'       verificable en el CP; el diagrama NO lo dibuja. R4: la guarda nombra
+'       todas las salidas del bucle. Lo comprueba barrido_desenlaces.py.
 ' v1.3 (SVI-01 del CDR-01 v1.5, SD-43): FA-03 y FE-03 a `alt` dentro de un `loop`, y FE-04 a `alt` (ECU-04: los tres «Vuelve»).
 '       Tercer intento sobre la misma rama, y el primero que lee el DESENLACE de la
 '       ECU en vez de la categoria del flujo. `break` abandonaba; `opt` caia al exito;
 '       `break` otra vez (SD-41) se restauro alegando que la ECU decia «Termina», lo
-'       cual es FALSO. Ahora `loop` + `alt`: el alt excluye, el loop realiza el retorno.
-'       Los break legitimos quedan FUERA del loop a proposito: dentro saldrian del
+'       cual es FALSO. Y `loop` + `alt` (SD-43) tampoco bastaba: la TERCERA verificacion
+'       (TVI-01/02, CDR-01 v1.6) mostro que el operando de exito quedaba VACIO y la
+'       continuacion FUERA del alt, asi que el sufijo de exito se ejecutaba igual.
+'       SD-44 fija la convencion: el sufijo de exito vive DENTRO de su operando, y el
+'       punto exacto de reentrada es normativo en la ECU y verificable en el CP — el
+'       diagrama NO pretende dibujarlo. Los break legitimos quedan fuera del loop; dentro
+'       saldrian del
 '       bucle y seguirian ejecutando, en vez de terminar.
 ' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FA-03, FE-03 y FE-04 vuelven de opt a BREAK.
 '       Criterio: estan a profundidad 0 —el fragmento envolvente es la interaccion
@@ -47,7 +58,7 @@ break FE-01 la sesion expira
   B_PaginaGestionCuenta -> B_PaginaInicioSesion : solicitarReingresoPorCU03()
 end
 
-loop hasta que llegue una confirmacion explicita y valida
+loop hasta que llegue una confirmacion explicita y valida, o el Usuario cancele (FA-03)
   B_PaginaGestionCuenta -> E_Usuario : enumerarRegistrosQueDesapareceran()
   E_Usuario --> B_PaginaGestionCuenta : alcance de la supresion
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : advertirQueLaAccionEsIrreversible()
@@ -123,9 +134,20 @@ alt FE-04 el almacenamiento falla a mitad de la cascada
   E_Usuario --> B_PaginaGestionCuenta : la supresion quedo a medias
   B_PaginaGestionCuenta -> B_PaginaGestionCuenta : informarQueQuedoAMediasYOfrecerReintento()
 else la cascada se completa
+
+  == Paso 4 - Cierre de sesion y condicion de Visitante ==
+
+  E_Usuario -> E_Visitante : quedarEnLaCondicionDeVisitante()
+  B_PaginaGestionCuenta -> B_PaginaPresentacion : cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()
 end
 
 note over E_Usuario, B_PaginaGestionCuenta
+  <b>El paso 4 vive DENTRO del operando de exito</b> (`TVI-01`, Mayor, `CDR-01 v1.6`;
+  regla 1 de `SD-44`). Antes el operando estaba <b>vacio</b> y el cierre de sesion
+  quedaba fuera del `alt`: se confirmaba que <b>no queda dato recuperable</b> despues de
+  una cascada que habia quedado a medias. Un `alt` con el exito vacio y la continuacion
+  fuera <b>es el defecto de `opt` con otro nombre</b>. Lo comprueba `barrido_desenlaces.py`.
+
   <b>Aqui no se deshace nada, y esa es la correccion</b> (`H-02`, Mayor). La version
   anterior dibujaba `deshacerLoSuprimido()`, una compensacion que <b>ningun mecanismo
   puede implementar</b>: la cascada toca cuatro entidades, `ADR-002-D5` fija DynamoDB
@@ -135,11 +157,6 @@ note over E_Usuario, B_PaginaGestionCuenta
   el `Consentimiento` ya no esta, asi que la persona <b>deja de ser procesada igual</b>,
   y el reintento retoma desde donde quedo porque cada supresion es idempotente.
 end note
-
-== Paso 4 - Cierre de sesion y condicion de Visitante ==
-
-E_Usuario -> E_Visitante : quedarEnLaCondicionDeVisitante()
-B_PaginaGestionCuenta -> B_PaginaPresentacion : cerrarSesionYConfirmarQueNoQuedaDatoRecuperable()
 
 note over E_ContadorDeUsoDiario, E_Visitante
   <b>Esta cascada es TODA la que existe — PER-H5 cerrado en ADR-003 (SD-33).</b>

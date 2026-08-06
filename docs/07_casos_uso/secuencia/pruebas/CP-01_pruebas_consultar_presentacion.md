@@ -1,6 +1,6 @@
 # CP-01 — Casos de prueba de CU-01 «Consultar presentación del servicio»
 
-**ID:** CP-01 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.2 (SD-42: historial reordenado a descendente; ninguna afirmación cambia). v1.1 · **Estado:** Propuesto.
+**ID:** CP-01 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.3 (`SD-44` (`TVI-06`): la fila de `SD-42` publicaba «23 descendentes / 3 / 5» **como hecho**, y la cifra real es **21 / 3 / 7**. Se tacha y se rectifica, no se borra (`SD-31`). **Ninguna afirmación vigente de este artefacto cambia.**). v1.2 (SD-42: historial reordenado a descendente; ninguna afirmación cambia). v1.1 · **Estado:** Propuesto.
 **Insumos:** `DR-01 v2.1` (7 controladores), `DS-01 v1.0`, `ECU-01` (§11 `CA-01…CA-08`).
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador**.
 
@@ -42,6 +42,7 @@ porque lo que se verifica es que **nada existe**.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
-| v1.2 | 2026-08-05 | J. Sánchez | **SD-42 — reparación del registro, no del contenido.** El historial iba desordenado y se reordena a **descendente**, que es la convención del repositorio: se estableció **midiendo** —23 artefactos descendentes contra 3 ascendentes y 5 sin orden— y el `CHANGELOG` ya la había declarado en su `v0.21.1`. **Ninguna afirmación de este artefacto cambia.** El desorden alcanzaba a **ocho** archivos y no lo vigilaba nada; desde esta versión lo comprueba el **bloque 6** de `verificar_coherencia.py`. |
+| v1.3 | 2026-08-05 | J. Sánchez | `SD-44` (`TVI-06`): la fila de `SD-42` publicaba «23 descendentes / 3 / 5» **como hecho**, y la cifra real es **21 / 3 / 7**. Se tacha y se rectifica, no se borra (`SD-31`). **Ninguna afirmación vigente de este artefacto cambia.** |
+| v1.2 | 2026-08-05 | J. Sánchez | **SD-42 — reparación del registro, no del contenido.** El historial iba desordenado y se reordena a **descendente**, que es la convención del repositorio: se estableció **midiendo** —~~23 artefactos descendentes contra 3 ascendentes y 5 sin orden~~ **21 descendentes, 3 ascendentes y 7 mixtos** *(la cifra de `SD-42` estaba mal medida: se contó después de reparar ya `PER-01` y `CP-00`. Corregida en `SD-43`; este historial se rectifica en `SD-44`, `TVI-06`)*— y el `CHANGELOG` ya la había declarado en su `v0.21.1`. **Ninguna afirmación de este artefacto cambia.** El desorden alcanzaba a **ocho** archivos y no lo vigilaba nada; desde esta versión lo comprueba el **bloque 6** de `verificar_coherencia.py`. |
 | v1.1 | 2026-08-01 | J. Sánchez | **SD-30:** `H-8` resuelto a favor de `ECU-01`; `CP-507` pasa de dirigir a P-02 a volver a P-01. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. 7 casos desde los 7 controladores de `DR-01`. |

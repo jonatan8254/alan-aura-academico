@@ -1,6 +1,6 @@
 # CP-03 — Casos de prueba de CU-03 «Iniciar y cerrar sesión»
 
-**ID:** CP-03 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** CP-03 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto.
 **Insumos:** `DR-03 v2.0` (12 controladores), `DS-03 v1.0`, `ECU-03 v2.0` (`CA-01…CA-08`), `REQ-01` (`RNF-08`).
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador**.
 
@@ -12,7 +12,7 @@ Numeración global: `CU-03` ocupa **`CP-701`…`CP-712`**.
 |---|---|---|---|---|---|---|
 | CP-701 | `C_SolicitarCredenciales` | Básico p.1 | Titular sin sesión; cuenta creada por CU-02. | Abre P-03. | P-03 solicita únicamente `username` y `contraseña`; **ningún control de selección de rol** aparece. | CA-01 |
 | CP-702 | `C_VerificarCredenciales` | Básico p.2 · **FE-01 no tomado** | Credenciales correctas. | Las envía. | No aparece el mensaje de credenciales incorrectas; continúa hacia la determinación del rol. | — |
-| CP-703 | `C_MsgCredencialesIncorrectas` | **FE-01** | Se prueban **los dos casos por separado**: username inexistente y contraseña incorrecta. | Envía cualquiera de los dos. | El texto de error es **idéntico** en ambos casos y **no revela cuál campo falló**; no se establece sesión. | CA-06 |
+| CP-703 | `C_MsgCredencialesIncorrectas` | **FE-01** | Se prueban **los dos casos por separado**: username inexistente y contraseña incorrecta. | Envía cualquiera de los dos. | El texto de error es **idéntico** en ambos casos y **no revela cuál campo falló**; no se establece sesión; vuelve al **paso 2**. | CA-06 |
 | CP-704 | `C_DeterminarRolEnElServidor` | Básico p.2 | Credenciales válidas de una cuenta con `rol=usuario`. | El sistema determina el rol. | La sesión queda con `rol=usuario`, determinado **en el servidor**; **manipular el envío del cliente pidiendo otro rol no cambia el resultado**. | CA-01 |
 | CP-705 | `C_EstablecerSesion` | Básico p.3 | Rol ya determinado. | El sistema establece la sesión. | Existe sesión activa con ese rol; una petición a función protegida **ya no responde 401**. | CA-01 |
 | CP-706 | `C_ComprobarOnboardingCompleto` | Básico p.4 · **FA-01 no tomado** | Existen `Consentimiento` con capa base y `CapsulaDePerfil` con `character`. | El sistema comprueba el onboarding. | **No se desvía** a P-05: continúa hacia el enrutamiento a la conversación. | CA-02 |
@@ -49,4 +49,5 @@ debe restituir el acceso. Es la diferencia entre borrar una cookie y cerrar una 
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-05 | J. Sánchez | `TVI-02` del `CDR-01 v1.6`: `CP-703` fija el punto de reentrada —**paso 2**, el que declara `ECU-03 FE-01`—, que antes quedaba sin decir. El diagrama de secuencia no dibuja el retorno (`SD-44 R3`): lo normativo es la `ECU` y lo verificable, esta prueba. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. 12 casos desde los 12 controladores de `DR-03`, con `RNF-08` probado desde ambos lados y el mensaje genérico verificado como idéntico. |

@@ -381,7 +381,7 @@ public class B_MetricasDeUso {  // Metricas de uso (P-15)  <<solucion>>
 
 public class B_ControlDisponibilidad {  // Kill switch - control de disponibilidad (P-16)  <<solucion>>
     public void cancelarSinCambiarElEstado() { }
-    public void rechazarConfirmacionInvalidaYVolverAlPaso1() { }
+    public void rechazarConfirmacionInvalidaYVolverAlPaso2() { }
     private Boolean verificarSesionYRolDeAdministrador() { }
     private EstadoDisponibilidad mostrarEstadoActual() { }
     private void informarEstadoYaVigenteSinRegistrarAccion() { }

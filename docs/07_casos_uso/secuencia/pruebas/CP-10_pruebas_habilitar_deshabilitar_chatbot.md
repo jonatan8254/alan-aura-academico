@@ -1,6 +1,6 @@
 # CP-10 — Casos de prueba de CU-10 «Habilitar o deshabilitar el chatbot»
 
-**ID:** CP-10 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** CP-10 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto.
 **Insumos:** `DR-10 v2.0` (11 controladores), `DS-10 v1.0`, `ECU-10 v2.0` (`CA-01…CA-09`), `PER-01 v1.2` (`PER-T2`), `MV-01` `RN-03.4`/`RN-03.7`.
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador**.
 
@@ -18,7 +18,7 @@ Numeración global: `CU-10` ocupa **`CP-1101`…`CP-1114`**.
 | CP-1106 | `C_SolicitarConfirmacion` | **FA-01 tomado** | Estado vigente = deshabilitado. | Elige «Habilitar». | Mismo diálogo, ahora anunciando que los Usuarios podrán volver a conversar; **el estado aún no cambió**. | CA-04 |
 | CP-1107 | `C_InformarEstadoYaVigente` | **FA-03** | Estado vigente = deshabilitado. | Elige «Deshabilitar» **de nuevo**. | Informa que ese estado ya rige; **la traza no muestra ninguna `AccionAdministrativa` nueva**; el estado no cambia. | CA-06 |
 | CP-1108 | `C_CancelarCambio` | **FA-02** | Diálogo abierto. | Pulsa «Cancelar». | Vuelve a P-16; el estado queda intacto; **ninguna `AccionAdministrativa` nueva**. | CA-05 |
-| CP-1109 | `C_RechazarConfirmacionInvalida` | **FE-03** | Diálogo mostrado. | Llega una petición **sin la confirmación exigida**, o mal formada. | HTTP 400; **el estado no cambia**; vuelve al paso 1. | CA-09 |
+| CP-1109 | `C_RechazarConfirmacionInvalida` | **FE-03** | Diálogo mostrado. | Llega una petición **sin la confirmación exigida**, o mal formada. | HTTP 400; **el estado no cambia**; vuelve al **paso 2** y puede confirmar de nuevo. | CA-09 |
 | CP-1110 | `C_CambiarEstadoGlobal` | Básico p.3 | Confirmó explícitamente. | Llega la confirmación válida. | Una relectura inmediata muestra «deshabilitado»; P-16 refleja el cambio. | CA-01 |
 | CP-1111 | `C_RegistrarAccion` | Básico p.3-4 · **`RN-03.4`** | Cambio recién aplicado. | El sistema registra inmediatamente después de cambiar. | La traza muestra **exactamente una** `AccionAdministrativa` nueva **y** el estado cambiado en el mismo evento; **ningún cambio sin su registro, ni registro sin cambio**. | CA-02 |
 | CP-1112 | `C_RegistrarAccion` | Básico p.4 · **`PER-T2`** | Existe una `AccionAdministrativa` recién creada. | Se inspecciona el registro de auditoría. | Contiene **únicamente autor y fecha**; **cero campos de alias, username o cualquier dato de Usuario** (inspección campo a campo). | CA-02 |
@@ -52,4 +52,5 @@ crea** `AccionAdministrativa`: la auditoría registra cambios, no intenciones.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-05 | J. Sánchez | `TVI-02` del `CDR-01 v1.6`: `CP-1109` decía «vuelve al paso 1» y `ECU-10 FE-03` dice **paso 2**. La prueba propagaba un destino falso. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. 14 casos desde los 11 controladores de `DR-10`, con `RN-03.4` probado como conjunción y `PER-T2` verificado campo a campo. |

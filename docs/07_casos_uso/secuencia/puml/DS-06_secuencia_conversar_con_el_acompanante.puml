@@ -1,5 +1,11 @@
 @startuml
 ' DS-06 - Secuencia de CU-06 «Conversar con el acompanante»
+' v1.3 (TVI-01/03/04 del CDR-01 v1.6, SD-44): TVI-04: la accion del actor del paso 8 se acota con opt; cerrar() y descartarContenido() quedan como limpieza comun.
+'       CONVENCION SD-44 — R1: el sufijo de exito vive DENTRO de su operando.
+'       R2: un break dentro de un loop solo vale si lo que sigue al bucle es
+'       limpieza comun. R3: el punto de reentrada es normativo en la ECU y
+'       verificable en el CP; el diagrama NO lo dibuja. R4: la guarda nombra
+'       todas las salidas del bucle. Lo comprueba barrido_desenlaces.py.
 ' v1.2 (VI-01 del CDR-01 v1.4, SD-41): FE-03, FE-05, FE-06 y FE-07 pasan de opt a ALT.
 '       Unico diagrama cuyos flujos viven dentro de un `loop`: ahi `break` abandonaria
 '       el bucle y terminaria la conversacion, contra el «Vuelve al paso 2/4» de ECU-06.
@@ -155,7 +161,21 @@ end note
 
 == Paso 8 - Cierre y no persistencia ==
 
-ACT_Usuario -> B_InterfazDeChat : cerrar la conversacion
+note over ACT_Usuario, E_Mensaje
+  <b>La limpieza comun se separa de la accion normal del actor</b> (`TVI-04`, Mayor,
+  `CDR-01 v1.6`; regla 2 de `SD-44`). Los `break` de `FE-01`, `FE-08` y `FA-01` estan
+  <b>dentro</b> del `loop`, asi que en UML salen del bucle y <b>siguen ejecutando</b> lo
+  que viene despues. Eso es correcto para `cerrar()` y `descartarContenido()`, que son
+  limpieza aplicable a <b>cualquier</b> desenlace; no lo era para «cerrar la conversacion»,
+  que es una accion del Usuario del curso basico y se ejecutaba incluso despues de que la
+  `ECU` hubiera dicho «Termina». El `opt` la acota sin tocar los `break`, que ahi
+  <b>si</b> expresan la terminacion que el texto pide. Lo comprueba `barrido_desenlaces.py`.
+end note
+
+opt la sesion llega al paso 8 por el curso basico
+  ACT_Usuario -> B_InterfazDeChat : cerrar la conversacion
+end
+
 B_InterfazDeChat -> E_Conversacion : cerrar()
 B_InterfazDeChat -> E_Mensaje : descartarContenido()
 

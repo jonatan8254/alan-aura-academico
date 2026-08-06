@@ -466,7 +466,7 @@ package "Solucion · frontera de presentacion" <<Rectangle>> {
 
   class "Kill switch - control de disponibilidad (P-16)" as B_ControlDisponibilidad <<solucion>> {
     +cancelarSinCambiarElEstado() : void
-    +rechazarConfirmacionInvalidaYVolverAlPaso1() : void
+    +rechazarConfirmacionInvalidaYVolverAlPaso2() : void
     -verificarSesionYRolDeAdministrador() : Boolean
     -mostrarEstadoActual() : EstadoDisponibilidad
     -informarEstadoYaVigenteSinRegistrarAccion() : void

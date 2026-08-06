@@ -1,6 +1,6 @@
 # CP-12 — Casos de prueba de CU-12 «Revocar la personalización»
 
-**ID:** CP-12 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.0 · **Estado:** Propuesto.
+**ID:** CP-12 · **Familia:** CP · **Hogar:** `docs/07_casos_uso/secuencia/pruebas/` · **Fecha:** 2026-08-01 · **Versión:** v1.1 · **Estado:** Propuesto.
 **Insumos:** `DR-12 v2.0` (9 controladores), `DS-12 v1.0`, `ECU-12 v2.0` (`CA-01…CA-09`), `PRIV-01` (`PRIV-R3`), `PER-01 v1.2` (`PER-T7`), `MV-01` `RN-07`/`RN-08`.
 **Generado con:** skill `uml-sequence-diagram`. Borrador por subagente, **auditado por el orquestador**.
 
@@ -15,7 +15,7 @@ Numeración global: `CU-12` ocupa **`CP-1301`…`CP-1311`**.
 | CP-1303 | `C_DenegarPorPermiso` | **FE-02** | Rol no autorizado. | Llega una petición de revocación. | HTTP 403; **el `Consentimiento` no cambió**. | CA-08 |
 | CP-1304 | `C_InformarYaRevocada` | **FA-01** | La capa de personalización **ya está revocada**. | Elige «Revocar» de nuevo. | Informa que ya está revocada y **no repite el cambio**; **la fecha de revocación es la misma de antes** — sin escritura nueva. | CA-04 |
 | CP-1305 | `C_CancelarRevocacion` | **FA-03** | Alcance presentado, en espera de confirmación. | Cancela en vez de confirmar. | El `Consentimiento` **intacto en ambas capas**; vuelve al paso 1. | CA-05 |
-| CP-1306 | `C_MsgPeticionInvalida` | **FE-03** | Alcance presentado. | Llega la petición mal formada. | HTTP 400; **el `Consentimiento` no cambió**; puede reintentar. | CA-09 |
+| CP-1306 | `C_MsgPeticionInvalida` | **FE-03** | Alcance presentado. | Llega la petición mal formada. | HTTP 400; **el `Consentimiento` no cambió**; vuelve al **paso 2** y puede reintentar. | CA-09 |
 | CP-1307 | `C_RevocarCapaPersonalizacion` | Básico p.3 | Confirmó la revocación. | El sistema marca la capa como revocada, con fecha. | Una inspección muestra **a la vez** la personalización en «revocado» con fecha **y la capa base en «otorgado», sin tocar**. | CA-01 |
 | CP-1308 | `C_MarcarAutorreportesParaDescarte` | Básico p.3 · **FA-02 no tomado** | Capa recién revocada; cápsula con al menos un autorreporte. | El sistema ejecuta el marcado. | Los cuatro autorreportes aparecen **marcados para descarte**, no eliminados de inmediato; **`character` intacto, sin marca alguna**. | CA-03 · PRIV-R3 |
 | CP-1309 | `C_MarcarAutorreportesParaDescarte` | **FA-02 tomado** | Cápsula con **únicamente** `character`. | El sistema ejecuta el mismo marcado. | **No encuentra autorreportes que marcar** (efecto observable nulo); la capa queda revocada igualmente; `character` intacto. | CA-06 |
@@ -55,4 +55,5 @@ reversible y no punitiva y otra irreversible que cuesta el acceso.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.1 | 2026-08-05 | J. Sánchez | `TVI-02` del `CDR-01 v1.6`: `CP-1306` fija el punto de reentrada —**paso 2**, el que declara `ECU-12 FE-03`—. |
 | v1.0 | 2026-08-01 | J. Sánchez | Creación. 11 casos desde los 9 controladores de `DR-12`, con el invariante de no-punitividad probado por sus dos mitades y `CP-1311` formando par con `CP-1213`. |
