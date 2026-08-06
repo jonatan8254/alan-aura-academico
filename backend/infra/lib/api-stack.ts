@@ -110,6 +110,14 @@ export class ApiStack extends Stack {
         TABLA_EVENTO_OPERATIVO: props.tablaEventoOperativo.tableName,
         BUCKET_CONFIGURACION: props.bucketConfiguracion.bucketName,
         GROQ_API_KEY_ARN: groqApiKey.secretArn,
+        // El código NO lee esta variable: existe para que un cambio de prompt
+        // sea desplegable. `config.ts` cachea los system prompts en un Map de
+        // módulo sin TTL, así que subir el JSON a S3 no basta — el texto viejo
+        // sigue vivo hasta que el contenedor se recicla, y cuándo ocurre eso no
+        // lo decide nadie. Subir el objeto y bumpear esta variable en el mismo
+        // commit convierte «sube y espera» en un despliegue con fecha y diff.
+        // Debe coincidir con el campo `version` de backend/config/prompts/*.json.
+        PROMPTS_VERSION: "v2",
         ...entornoDeSesion,
       },
       // API Gateway REST tiene un tope duro de integración de 29s — el
