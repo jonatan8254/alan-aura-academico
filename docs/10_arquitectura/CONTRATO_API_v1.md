@@ -29,6 +29,13 @@ especulaba para `OnboardingStatus` **se retira** — ningún flujo de `ECU-05` l
 `FE-01` no llega al servidor (mismo patrón que el `409` sin respaldo retirado de `/cuenta/eliminar`).
 Decisión del usuario, no unilateral.
 
+**Actualización 2026-08-06 (tercera) — los 4 autorreportes pasan a opcionales.**
+`OnboardingRequest` los declaraba obligatorios; `RN-01.4` de `ECU-05` dice literal *"Ningún
+autorreporte de la caracterización es obligatorio; el usuario puede omitir los 4. Obligatorios son
+solo edad, capa base del consentimiento y `character`"*. Corregido en `moodSelfReport`,
+`energySelfReport`, `conversationGoal` y `responseStyle` (ahora `?:`); el mock ajustó su validación
+en consecuencia.
+
 ---
 
 | Método | Ruta | Origen | Auth | Request | Response | Códigos |

@@ -110,7 +110,9 @@ const servidor = createServer(async (req, res) => {
 
     if (metodo === "POST" && ruta === "/api/v1/onboarding") {
       const cuerpo = (await leerCuerpo(req)) as OnboardingRequest;
-      if (!cuerpo.character || !cuerpo.conversationGoal) {
+      // Solo edad, capa base y character son obligatorios (RN-01.4) — los
+      // 4 autorreportes se pueden omitir.
+      if (!cuerpo.character || !cuerpo.esAdulto || !cuerpo.consentimientoBase) {
         return responderJson(res, 400, { error: "cápsula incompleta" });
       }
       return responderJson(res, 200, {
