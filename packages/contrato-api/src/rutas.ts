@@ -77,14 +77,19 @@ export type LogoutStatus = 200 | 401;
  * POST /api/v1/auth/logout, sin llegar a llamar esta ruta. Por eso
  * esAdulto es `true` literal, igual que consentimientoBase: el request
  * físicamente no se puede armar para un menor.
+ *
+ * Los 4 autorreportes son opcionales (RN-01.4: "Ningún autorreporte de la
+ * caracterización es obligatorio; el usuario puede omitir los 4.
+ * Obligatorios son solo edad, capa base del consentimiento y character") —
+ * antes se declaraban obligatorios por error.
  */
 export interface OnboardingRequest {
   esAdulto: true;
   versionDisclosure: string;
-  moodSelfReport: MoodSelfReport;
-  energySelfReport: EnergySelfReport;
-  conversationGoal: ConversationGoal;
-  responseStyle: ResponseStyle;
+  moodSelfReport?: MoodSelfReport;
+  energySelfReport?: EnergySelfReport;
+  conversationGoal?: ConversationGoal;
+  responseStyle?: ResponseStyle;
   character: Character;
   consentimientoBase: true;
   consentimientoPersonalizacion: boolean;
