@@ -57,8 +57,12 @@ async function incrementarSiNoSuperaElLimite(
       new UpdateCommand({
         TableName: TABLA_TITULAR,
         Key: { titularId, sk },
-        UpdateExpression: `ADD contador :uno SET ttl = :ttl${asignacionesExtra}`,
+        // "ttl" es palabra reservada de DynamoDB — sin alias, el
+        // UpdateExpression falla con ValidationException en runtime (no lo
+        // detecta `cdk synth`, solo empaqueta código, no lo ejecuta).
+        UpdateExpression: `ADD contador :uno SET #ttl = :ttl${asignacionesExtra}`,
         ConditionExpression: "attribute_not_exists(contador) OR contador < :limite",
+        ExpressionAttributeNames: { "#ttl": "ttl" },
         ExpressionAttributeValues: {
           ":uno": 1,
           ":ttl": ttl,
