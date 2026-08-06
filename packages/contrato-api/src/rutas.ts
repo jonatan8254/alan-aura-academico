@@ -68,8 +68,19 @@ export interface LogoutResponse {
 }
 export type LogoutStatus = 200 | 401;
 
-/** POST /api/v1/onboarding (CU-05, incluye character de CU-14 por ARQ-01-D3 §1) */
+/**
+ * POST /api/v1/onboarding (CU-05, incluye character de CU-14 por ARQ-01-D3 §1).
+ *
+ * esAdulto/versionDisclosure (ECU-05 paso 3) añadidos tras la verificación
+ * exhaustiva. ECU-05 §17 nunca listó el paso 3 en el endpoint (solo 5, 7, 8):
+ * FE-01 (menor de edad) no crea nada — lo resuelve el frontend solo, con
+ * POST /api/v1/auth/logout, sin llegar a llamar esta ruta. Por eso
+ * esAdulto es `true` literal, igual que consentimientoBase: el request
+ * físicamente no se puede armar para un menor.
+ */
 export interface OnboardingRequest {
+  esAdulto: true;
+  versionDisclosure: string;
   moodSelfReport: MoodSelfReport;
   energySelfReport: EnergySelfReport;
   conversationGoal: ConversationGoal;
@@ -81,7 +92,8 @@ export interface OnboardingRequest {
 export interface OnboardingResponse {
   onboardingCompleto: true;
 }
-export type OnboardingStatus = 200 | 400 | 401 | 403;
+/** 403 retirado: ningún flujo de ECU-05 lo respalda para esta ruta (igual que el 409 de /cuenta/eliminar). */
+export type OnboardingStatus = 200 | 400 | 401;
 
 /**
  * POST /api/v1/chat (CU-06, CU-07 extend, CU-13 vía campo character).
