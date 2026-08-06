@@ -4,10 +4,12 @@
   "workspaces": [
     "packages/*",
     "backend",
+    "backend/infra",
     "frontend"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "mock": "npm run mock --workspace backend"
+    "mock": "npm run mock --workspace backend",
+    "synth": "npm run synth --workspace backend-infra"
   }
 }
