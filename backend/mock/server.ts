@@ -1,10 +1,16 @@
 /**
  * Mock server de las 13 rutas de /api/v1 (CONTRATO_API_v1.md / ARQ-01-D3).
  * Sin AWS, sin persistencia real — datos de ejemplo en memoria (fixtures.ts).
- * Objetivo: que el frontend arranque sin esperar a que el backend real exista.
+ * Objetivo original: que el frontend arranque sin esperar a que el backend real exista.
  *
- * No valida sesión ni CSRF: eso es responsabilidad del backend real. Aquí solo
- * se respeta el shape de contrato-api y los códigos de estado declarados.
+ * DESACTUALIZADO desde 2026-08-06 — el backend real ya está desplegado y probado
+ * end-to-end, y el frontend pasó a consumirlo directamente (ver frontend/vite.config.ts,
+ * API_TARGET). Una auditoría con verificación adversarial encontró que este mock casi
+ * nunca valida sesión, rol ni confirmación explícita, y le faltan la mayoría de los
+ * códigos de error del contrato (401/403/409/429/500/502/504 según la ruta) — NO
+ * confiar en él para probar flujos de error. Se conserva por si hace falta desarrollar
+ * sin AWS, pero requeriría resincronizarse antes de volver a usarse como referencia de
+ * comportamiento.
  */
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
 import type {
