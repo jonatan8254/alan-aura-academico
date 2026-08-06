@@ -1,5 +1,5 @@
 # CDR-01 — Acta de Revisión Crítica del Diseño (CDR)
-**ID:** CDR-01 · **Familia:** CDR (compuerta ICONIX entre el diseño detallado y el código) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-08-04 · **Versión:** v1.4 (verificación independiente y adversarial del retrabajo de `SD-39`; ver §8-quinquies y §13). v1.3 (SD-39: §6 deja de declarar la regla #2 y la revisión visual como no ejecutadas — ambas se cerraron en el retrabajo). v1.2 (SD-39: el retrabajo queda **aplicado y registrado** —§8-ter y §8-quater—, con dos etiquetas y la aritmética de `H-01` corregidas; **el veredicto no se toca**: lo determina la verificación independiente). v1.1 (cobertura completa: 14/14 especificaciones, 168/168 obligaciones emparejadas, los 8 validadores sobre los 31 `.puml`, y tres comprobaciones cruzadas nuevas. **7 hallazgos nuevos, uno de ellos Mayor**; `H-01` crece de 12 a 18 instancias). v1.0 (compuerta inicial, 13 hallazgos) · **Estado:** vigente.
+**ID:** CDR-01 · **Familia:** CDR (compuerta ICONIX entre el diseño detallado y el código) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-08-04 · **Versión:** v1.5 (segunda verificación independiente y adversarial del retrabajo `SD-40…SD-42`; ver §8-sexies y §13). v1.4 (verificación independiente y adversarial del retrabajo de `SD-39`; ver §8-quinquies y §13). v1.3 (SD-39: §6 deja de declarar la regla #2 y la revisión visual como no ejecutadas — ambas se cerraron en el retrabajo). v1.2 (SD-39: el retrabajo queda **aplicado y registrado** —§8-ter y §8-quater—, con dos etiquetas y la aritmética de `H-01` corregidas; **el veredicto no se toca**: lo determina la verificación independiente). v1.1 (cobertura completa: 14/14 especificaciones, 168/168 obligaciones emparejadas, los 8 validadores sobre los 31 `.puml`, y tres comprobaciones cruzadas nuevas. **7 hallazgos nuevos, uno de ellos Mayor**; `H-01` crece de 12 a 18 instancias). v1.0 (compuerta inicial, 13 hallazgos) · **Estado:** vigente.
 **Modalidad:** completa — las diez reglas, con ciclo de deliberación. Sesión de dos roles: el orquestador conduce, registra y recomienda; el **líder del proyecto** determina (IEEE 1028 §5.2.1) y ejerce la regla #4 por el equipo.
 **Generado con:** skill `iconix-cdr-review`. **Naturaleza:** revisión **técnica** (IEEE 1028 cláusula 5), no inspección. El cliente no participa: Rosenberg 4545 lo excluye expresamente del CDR.
 **Paquete revisado:** el diseño detallado del subproyecto «Alan & Aura Académico» al cierre de `SD-32` — modelo de clases de diseño, 14 diagramas de secuencia y sus artefactos derivados.
@@ -402,6 +402,93 @@ veredicto: aun en el mejor resultado posible de los validadores quedan Mayores a
 
 **Responsable de todos los puntos de acción:** Jonatan Estiven Sánchez Vargas (líder), con reparto al equipo a su criterio. §5.5.6 deja la asignación al seguimiento de gestión, no a la revisión.
 
+### 8-sexies. Segunda verificación independiente del retrabajo (v1.5)
+
+**Objeto y encuadre.** Se intentaron refutar los seis commits de `f11988c..HEAD`
+(`7d6b95f`, `6cb11b9`, `8e837ee`, `d732c9a`, `239c019`, `0a38639`), no sus
+mensajes. La evidencia fue el *diff*, las filas vigentes de las `ECU`, los `.puml`
+resultantes y ejecuciones sobre copias temporales fuera del repositorio.
+
+**Identidad y límite de independencia.** Esta verificación la realizó **OpenAI Codex,
+modelo GPT-5, invocado mediante la herramienta Codex**, distinto de **Claude Opus**,
+modelo que aplicó `SD-39`, `SD-41` y `SD-42`. Un modelo distinto es mejor que otra
+sesión del mismo modelo, pero **no satisface IEEE 1028 §6.5.6.5**. La independencia
+real la aporta el equipo humano del proyecto. Esta acta propone; el líder determina.
+
+#### Tablero de la segunda verificación
+
+| # | Severidad | Categoría §6.8.2 | Ubicación verificable | Evidencia ejecutada y disposición propuesta |
+|---|---|---|---|---|
+| **SVI-01** | **Mayor** | **Inconsistent** | Trece `break` de `DS-03:50`, `DS-04:48,58,102`, `DS-05:77,124`, `DS-10:82,86`, `DS-11:59,63,76`, `DS-12:57,61`; filas vigentes `ECU-03:79`, `ECU-04:175,183,184`, `ECU-05:166,167`, `ECU-10:161,170`, `ECU-11:174,182,183`, `ECU-12:161,169`; propagación falsa en `CHANGELOG:33`, `ESTADO_PIPELINE:112`, `REGISTRO_DECISIONES` `SD-41` y `DS-00 §12` | **`SD-41` queda refutado en 13/17 ramas.** Se abrieron y contrastaron una por una las diecisiete filas: las diecisiete dicen **«Vuelve»** o **«Cancela y vuelve»**; ninguna de estas diecisiete dice «Termina». Los cuatro `alt` de `DS-06` sí excluyen el sufijo de éxito y el `loop` realiza el retorno. En las otras trece, `break` ejecuta su operando en lugar del resto de la interacción y **termina el intento**: no modela volver a un paso anterior. `SD-41` confundió «no ejecutar el remanente» con «volver». **Reabrir `VI-01`, rediseñar esas trece ramas con iteración/alternativas explícitas y repetir ECU↔DS antes de fase 3.** Responsable: líder/equipo. |
+| **SVI-02** | Moderado | **Risk-prone** | `scripts/verificar_coherencia.py:66-83,88-102,234-235` | Las exenciones de `CDR-01` como archivo histórico y de toda línea `**Insumos:**` son **globales**, no acotadas al pasaje histórico. Sabotaje idéntico en copias: con la versión anterior (`239c019`), `**Insumos:** estado vigente saboteado: 1.500 caracteres` y `CDR-01:2 estado vigente saboteado: 1.500 caracteres` producen `[H-01]` y código 1; con `0a38639`, ambos pasan con «RESULTADO: sin errores». En el árbol real, los valores obsoletos encontrados en `MC-00:5`, `TRZ-DS-01:5` y los pasajes de `CDR-01` son procedencia/historia legítima; **no se encontró un defecto vivo actualmente silenciado**, pero el regex puede silenciarlo. **Acotar la exención a citas versionadas y secciones históricas, no al archivo/línea completos.** Responsable: mantenedor del script; antes de usar el bloque 1 como compuerta de otra propagación. |
+| **SVI-03** | Menor | **Incorrect** | `REGISTRO_DECISIONES` `SD-42` y comentario de `comprobar_historial()` | Recuento reproducido sobre el padre de `SD-42` (`239c019`) con el mismo regex `FILA_HISTORIAL` y comparación semántica de versiones: **21 descendentes, 3 ascendentes y 7 mixtos**, no **23/3/5**. Los siete mixtos eran `PER-01`, `MD-01`, `ECU-04`, `ECU-05`, `ECU-08`, `ECU-09`, `CP-00`; los tres ascendentes, `ECU-02`, `ECU-03`, `CP-01`. La mayoría descendente sigue sosteniendo la convención, pero su medición publicada es incorrecta. **Corregir la cifra de procedencia al propagar esta acta.** Responsable: dueño de gobernanza. |
+
+#### Adjudicación rama por rama de `VI-01`
+
+| Rama | Texto vigente de la ECU | Fragmento actual | Resultado adversarial |
+|---|---|---|---|
+| `DS-03 FE-01` | `ECU-03`: **Vuelve al paso 2** | `break` | **REFUTADO**: termina; no vuelve |
+| `DS-04 FA-03` | `ECU-04`: **Cancela y vuelve al paso 1** | `break` | **REFUTADO** |
+| `DS-04 FE-03` | `ECU-04`: **Vuelve al paso 2** | `break` | **REFUTADO** |
+| `DS-04 FE-04` | `ECU-04`: **Vuelve al paso 1**, con reintento | `break` | **REFUTADO**; tampoco realiza el reintento |
+| `DS-05 FE-02` | `ECU-05`: **Vuelve al paso 4** | `break` | **REFUTADO** |
+| `DS-05 FE-03` | `ECU-05`: **Vuelve al paso 8** | `break` | **REFUTADO** |
+| `DS-06 FE-03` | `ECU-06`: **Vuelve al paso 2** | rama de `alt` dentro de `loop` | **CONFIRMADO** |
+| `DS-06 FE-05` | `ECU-06`: **Vuelve al paso 2** tras espera | rama de `alt` dentro de `loop` | **CONFIRMADO** |
+| `DS-06 FE-06` | `ECU-06`: **Vuelve al paso 4** | rama de `alt` dentro de `loop` | **CONFIRMADO** |
+| `DS-06 FE-07` | `ECU-06`: **Vuelve al paso 4** | rama de `alt` dentro de `loop` | **CONFIRMADO** |
+| `DS-10 FA-02` | `ECU-10`: **Cancela y vuelve al paso 1** | `break` | **REFUTADO** |
+| `DS-10 FE-03` | `ECU-10`: **Vuelve al paso 2** | `break` | **REFUTADO** |
+| `DS-11 FA-03` | `ECU-11`: **Cancela y vuelve al paso 1** | `break` | **REFUTADO** |
+| `DS-11 FE-03` | `ECU-11`: **Vuelve al paso 2** | `break` | **REFUTADO** |
+| `DS-11 FE-04` | `ECU-11`: **Vuelve al paso 1** | `break` | **REFUTADO** |
+| `DS-12 FA-03` | `ECU-12`: **Cancela y vuelve al paso 1** | `break` | **REFUTADO** |
+| `DS-12 FE-03` | `ECU-12`: **Vuelve al paso 2** | `break` | **REFUTADO** |
+
+#### Resultado sobre `VI-02…VI-08`
+
+| Objeto | Resultado | Evidencia de primera mano |
+|---|---|---|
+| `VI-02` | **CONFIRMADO en la costura aplicada, pero afectado aguas arriba por `SVI-01`** | `DR-04` conserva/reintenta sin prometer atomicidad; `DR-11` informa sin deshacer; `DOP-01` usa `dejarDeExistir()`; `COD-01` proyecta `conservarLoYaSuprimido()` y `revocarCapaBase(fecha : DateTime)`; `CP-04/05/11` prueban la semántica nueva. `verificar_procedencia_mc01.py` dio **SIN DISCREPANCIAS**. No obstante, los `break` de `DS-04 FE-04` y `DS-11 FE-04` vuelven a contradecir el retorno de sus ECU: es el mismo `SVI-01`, no un cuarto hallazgo. |
+| `VI-03` | **CONFIRMADO** | Barrido conceptual de `ECU-08`: las menciones restantes de reidentificación/datos individuales son historial, negación explícita o la cita literal de `VIS-01` acompañada por su lectura correcta. `RA-07` mantiene visible la sobrepromesa externa; no se recortaron las cinco columnas de `RF-15`. |
+| `VI-04…VI-06` | **CONFIRMADOS** | Los siete archivos de alias quedaron unificados; ficha/historial de `CDR-01 v1.4` existen; el canon propagado cuadra con los recuentos reproducidos de abajo. |
+| `VI-07` | **CONFIRMADO con alcance declarado** | `python scripts/verificar_coherencia.py --base f11988c` ejecutó los bloques 3 y 5 contra los seis commits y dio cero errores. Sabotajes separados demostraron que el bloque 3 detecta ficha e historial omitidos y el 5 un `.svg` más antiguo. |
+| `VI-08` | **CONFIRMADO en cobertura de patrones; aparece `SVI-02` por las exenciones** | Los cinco patrones nuevos dispararon al insertar sus unidades obsoletas; `H-28` se comprobó por estructura, no por afirmación: las seis clases `FilaDeDirectorio`, `AgregadoDeCuentas`, `AgregadoDeUso`, `AlcanceDeBorrado`, `Persona` y `ReferenciaDeDerivacion` existen en `MC-01` y no aparecen en ningún `DS` ni en el delta de secuencia. Por tanto **27 en MC-01 y 21 en DS/DOP son medidas distintas y correctas**. |
+| `SD-40-H1` | **CONFIRMADO dinámicamente** | Modelo temporal con `as B_Landing-P01`: el regex nuevo capturó el alias completo y la guarda lo rechazó como identificador inválido; con `B_Landing_P01` corrigió la etiqueta; una referencia externa a la etiqueta activó la tercera guarda. Cero escrituras en el repositorio. |
+
+#### Sabotaje de los seis bloques y recuentos de no regresión
+
+| Bloque | Sabotaje en copia temporal | Resultado observado |
+|---|---|---|
+| 1. Hechos canónicos | `README`: afirmación viva «282 mensajes» | `[H-22]`, código 1 |
+| 2. Residuos de stack | `README`: «Stack vigente: Django» | `[STACK]`, código 1 |
+| 3. Disciplina de ficha | Cambio de título de `CDR-01` sin versión ni historial | dos `[FICHA]`, código 1 |
+| 4. Versiones declaradas | `TRZ-DS-01 v9.9` en `INDICE_MAESTRO` | `[VERSION]` contra su ficha `v1.4`, código 1; confirma el ID compuesto |
+| 5. Artefactos derivados | Cambio de `DS-03.puml` sin regenerar SVG | `[DERIVADO]`, código 1 |
+| 6. Historial completo | ficha `v9.9` sin fila; luego fila `v0.0` fuera de orden | `[HISTORIAL]` en ambos sabotajes, código 1 |
+
+Recuentos ejecutados sobre las fuentes actuales, no citados: robustez **262 =
+15 actores + 38 bordes + 150 controladores + 59 entidades**; secuencia **283
+mensajes**; `MC-01` **43 clases, 201 operaciones, 51 atributos y 80 relaciones**;
+**193 nombres de operación distintos + 8 repeticiones**. El generador de robustez
+en modo `--verificar` dio 14/14 sin colisiones y reprodujo 262; el de secuencia
+dio 14/14 sin colisiones y sus mensajes suman 283; la procedencia de `MC-01`
+terminó sin discrepancias.
+
+**No plenamente verificado, y por qué.** `validate_robustness_puml.py` y
+`validate_sequence_puml.py`, citados por el paquete, no están en este repositorio
+ni en las skills expuestas a esta sesión; por eso no se reproducen como propios
+sus «0 errores / 10 advertencias». Sí se ejecutaron los verificadores propios
+disponibles y los dos generadores en modo de solo verificación. No se marca la
+capa ausente como verde.
+
+**Resultado final real de `python scripts/verificar_coherencia.py`.** Código **1**,
+con **dos** errores, ambos del bloque 4: `INDICE_MAESTRO:2` y `:78` siguen
+declarando `CDR-01 v1.4` mientras esta acta ya declara `v1.5`. Los bloques 1, 2,
+3, 5 y 6 dieron «ERRORES: ninguno». Corregir el índice exigiría modificar un
+segundo archivo y está expresamente fuera del alcance de escritura de esta
+verificación; el rojo se declara, no se oculta.
+
 ## 9. Verificaciones que salieron limpias — y se dicen
 
 Una revisión que solo lista defectos no informa de lo que sí se comprobó.
@@ -455,38 +542,61 @@ La salida (d) —*«resolution, decision rationale and assumptions»*— es la q
 
 **Propuesto por la revisión: `REINSPECCIÓN REQUERIDA`.**
 
-> **Resultado de la verificación v1.4.** El retrabajo de `SD-39` ya no está solo “aplicado”: fue contrastado adversarialmente por **OpenAI Codex, modelo GPT-5, invocado mediante Codex**, distinto de Claude Opus, que lo aplicó. El cambio de modelo reduce puntos ciegos compartidos frente a abrir otra sesión del mismo modelo, pero **no satisface IEEE 1028 §6.5.6.5**. La independencia real la aporta el equipo humano. Esta revisión propone y el líder determina.
+> **Resultado de la verificación v1.5.** Los seis commits de `SD-40…SD-42`
+> fueron contrastados adversarialmente por **OpenAI Codex, modelo GPT-5, invocado
+> mediante Codex**, distinto de Claude Opus, que aplicó el retrabajo. El cambio de
+> modelo reduce puntos ciegos compartidos, pero **no satisface IEEE 1028
+> §6.5.6.5**. La independencia real la aporta el equipo humano.
 
-**Condición que lo justifica:** permanecen abiertas **tres anomalías Mayores** de la verificación: `VI-01` (las 17 ramas caen al éxito), `VI-02` (la nueva semántica no se propagó por la costura ICONIX) y `VI-06` (los consumidores vivos contradicen los hechos canónicos). `H-14` quedó confirmado como corregido y ya no integra la condición. Conforme al contrato de esta compuerta, **cualquier Mayor abierto exige `Reinspección requerida`**; no procede degradarlo a una aceptación por cansancio.
+**Condición que lo justifica:** queda abierto **un hallazgo Mayor, `SVI-01`**.
+`SD-41` restauró trece `break` afirmando que sus ECU decían «Termina»; la lectura
+de primera mano muestra que las diecisiete filas del universo dicen «Vuelve» o
+«Cancela y vuelve». Los cuatro `alt` de `DS-06` quedan confirmados; los otros
+trece terminan la interacción sin realizar el retorno exigido. Conforme al contrato
+de la compuerta, **cualquier Mayor abierto exige `Reinspección requerida`**.
 
-**El veredicto no mejora por el mero hecho de que hubo retrabajo.** Se confirmaron 22 de los 28 objetos de §8-ter/§8-quater en todo o en su destinatario concreto, pero cinco correcciones se refutaron o quedaron parciales y una no pudo probarse dinámicamente. La disposición la decide el peor hallazgo abierto, no el porcentaje confirmado.
+`VI-02`, `VI-03`, `VI-04`, `VI-05`, `VI-06`, `VI-07`, `VI-08` y `SD-40-H1`
+quedan confirmados en su objeto concreto. El paquete conserva además dos hallazgos
+no bloqueantes de esta verificación: `SVI-02` (exenciones demasiado amplias,
+Moderado) y `SVI-03` (recuento publicado de historiales incorrecto, Menor).
 
-**No es un rechazo del paquete.** Los recuentos estructurales cierran, las 27 clases de solución tienen justificación y `H-14` evita persistencia personal inventada. La escala refleja que todavía hay contradicciones de comportamiento y de asignación entre artefactos, no que todo el diseño sea inútil.
+**No es un rechazo del paquete.** Los recuentos estructurales cierran, la costura
+de `VI-02` fue propagada y la corrección de `ECU-08` quedó alineada. La escala
+refleja una contradicción de comportamiento localizada pero repetida en seis
+diagramas, no una invalidez general del diseño.
 
-**Alcance de la siguiente reinspección.** Verificar las 17 ramas de `DS-03/04/05/06/10/11/12`; la cadena de borrado/expiración en `ECU-04/05/11`, `DR-04/05/11`, `DS-04/05/11`, `DOP-01`, `MC-01`, `COD-01` y `CP-04/05/11`; la redacción de `ECU-08`; y la propagación de cifras en `AGENTS.md`, `CLAUDE.md`, `HECHOS_CANONICOS`, `DOP-01`, `COD-01` y `ESTADO_PIPELINE`. No procede repetir las diez reglas completas: procede refutar las correcciones de estos hallazgos y ejecutar los validadores disponibles.
+**Alcance de la siguiente reinspección.** Corregir y volver a contrastar solo los
+trece retornos de `DS-03/04/05/10/11/12` contra sus ECU, junto con las afirmaciones
+propagadas de `CHANGELOG`, `ESTADO_PIPELINE`, `REGISTRO_DECISIONES` y `DS-00`.
+Regenerar sus SVG y ejecutar el validador de secuencia dueño. `SVI-02` y `SVI-03`
+pueden cerrarse en la misma propagación, pero no sustituyen la corrección del Mayor.
 
-**Quien verifique el próximo retrabajo no debe ser quien lo aplique.** La revisión humana del equipo sigue siendo la que puede satisfacer la independencia de §6.5.6.5.
+**Quien verifique el próximo retrabajo no debe ser quien lo aplique.** Solo la
+revisión humana del equipo puede satisfacer plenamente la independencia de
+§6.5.6.5.
 
 **El veredicto lo determina el líder del proyecto**, no esta skill (§5.2.1). Lo anterior es la propuesta de la revisión con su condición.
 
-> **Freno declarado (Wiegers):** no se pide revisar el mismo material más de **tres veces**. Esta es la primera verificación del retrabajo. Si a la tercera el paquete sigue sin pasar, el problema es el artefacto o su alcance; el límite nunca convierte un Mayor abierto en aceptación.
+> **Freno declarado (Wiegers):** no se pide revisar el mismo material más de **tres veces**. Esta es la segunda verificación independiente del retrabajo. Si a la tercera el paquete sigue sin pasar, el problema es el artefacto o su alcance; el límite nunca convierte un Mayor abierto en aceptación.
 
 ## 14. Certificado de auditoría interna del acta
 
 | Criterio de parada | Estado |
 |---|---|
 | 0 hallazgos críticos en el paquete verificado | ✅ |
-| 0 hallazgos mayores en el paquete verificado | ❌ **3**: `VI-01`, `VI-02`, `VI-06` |
-| Hallazgos moderados/menores documentados | ✅ `VI-03`, `VI-04`, `VI-05`, `VI-07`, `VI-08`; `H-24` sigue declarado |
-| Cada objeto de §8-ter/§8-quater con resultado de la verificación | ✅ **28/28**; `H-26` marca expresamente el límite dinámico |
-| Cada hallazgo nuevo con severidad, una categoría, ubicación, evidencia, acción, responsable y hito | ✅ **8/8** |
-| Cada regla declarada ejecutada o no ejecutada, sin huecos | ✅ 10/10 ejecutadas; los resultados adversos están enlazados |
-| Dos pasadas consecutivas sin hallazgos nuevos | ⚠️ No se usa para ocultar el resultado: esta pasada **sí** encontró hallazgos. La siguiente se reserva a verificar su retrabajo |
+| 0 hallazgos mayores en el paquete verificado | ❌ **1**: `SVI-01` |
+| Hallazgos moderados/menores documentados | ✅ `SVI-02` Moderado · `SVI-03` Menor; `RA-07` sigue declarado fuera del alcance de este retrabajo |
+| Las 17 ramas de `VI-01` contrastadas contra su fila vigente de ECU | ✅ **17/17**: 4 confirmadas · 13 refutadas |
+| Cada bloque nuevo/modificado del instrumental provocado en copia | ✅ **6/6**; las dos exenciones se probaron además contra la versión anterior |
+| Conteos estructurales reproducidos sobre las fuentes | ✅ 262 robustez · 283 mensajes · 43/201/51/80 en `MC-01` · 193 nombres de operación |
+| Capas no ejecutadas declaradas sin pase implícito | ✅ validadores externos de robustez/secuencia no disponibles; generadores propios y procedencia sí ejecutados |
+| Dos pasadas consecutivas sin hallazgos nuevos | ⚠️ No se alcanza: esta pasada produjo `SVI-01…SVI-03` |
 
-**Estado del acta v1.4: `VERIFICACIÓN REGISTRADA`; estado del paquete: `REINSPECCIÓN REQUERIDA`.**
-La comprobación documental interna cierra; la ejecución dinámica de los validadores queda limitada por
-la ausencia de sus scripts externos y de un *runtime* Python ejecutable en esta sesión, como declara
-§8-quinquies. No se convierte esa ausencia en un pase verde.
+**Estado del acta v1.5: `SEGUNDA VERIFICACIÓN REGISTRADA`; estado del paquete: `REINSPECCIÓN REQUERIDA`.**
+Python 3.13 sí estuvo disponible y permitió ejecutar el instrumental propio. La
+limitación restante es concreta: los dos validadores externos de las skills de
+robustez y secuencia no estuvieron expuestos a esta sesión. No se convierte esa
+ausencia en un pase verde.
 
 **Cinco correcciones de medición propia quedan declaradas** —dos de la v1.0 (§3.4 y §7) y tres de la v1.1 (§7-bis.4)—, porque una revisión que no publica sus propios errores de instrumentación no merece crédito por los ajenos. Juntas habrían producido **más de noventa hallazgos falsos** si la regla de releer cada hallazgo mecánico en su `archivo:línea` no existiera:
 
@@ -506,6 +616,7 @@ la ausencia de sus scripts externos y de un *runtime* Python ejecutable en esta 
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.5 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Segunda verificación independiente y adversarial de los seis commits `SD-40…SD-42`.** Las 17 ramas de `VI-01` se releen contra sus ECU: las 17 dicen «Vuelve» o «Cancela y vuelve»; se confirman los cuatro `alt` de `DS-06` y se refutan los trece `break` restaurados, que terminan la interacción sin realizar el retorno (`SVI-01`, Mayor). Los seis bloques de `verificar_coherencia.py` se hacen fallar en copias; se demuestra que las nuevas exenciones de `**Insumos:**` y del archivo CDR son demasiado amplias (`SVI-02`, Moderado); el recuento anterior a `SD-42` da 21 historiales descendentes, 3 ascendentes y 7 mixtos, no 23/3/5 (`SVI-03`, Menor). Se confirman `VI-02…VI-08` y `SD-40-H1` en su objeto concreto; `H-28` queda validado como 27 clases en MC frente a 21 en secuencia. Recuentos ejecutados: 262 elementos de robustez, 283 mensajes, 43 clases, 201 operaciones, 51 atributos, 80 relaciones y 193 nombres de operación. El veredicto propuesto permanece en **Reinspección requerida** por el Mayor abierto. Se declara que GPT-5/Codex es distinto de Claude Opus, pero que solo el equipo humano satisface plenamente IEEE 1028 §6.5.6.5. |
 | v1.4 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Verificación independiente y adversarial del retrabajo de `SD-39`.** Se contrastan 28/28 objetos de §8-ter/§8-quater contra los artefactos: se refutan `H-01`, `H-02`, `H-15`, `H-16` y parcialmente `H-17`; se registran `VI-01…VI-08`, con tres Mayores abiertos. Recuentos de primera mano: 43 = 16 + 27 clases, 201 = 193 + 8 operaciones, 51 atributos, 80 = 17 + 63 relaciones, 63 = 44 + 19 dependencias y 283 mensajes; 33 `break`/34 `opt`. El veredicto propuesto permanece en **Reinspección requerida**, ahora por evidencia de la verificación y no por espera. Se declara que GPT-5/Codex es distinto de Claude Opus, pero que solo la revisión humana satisface la independencia de IEEE 1028 §6.5.6.5. También se declaran la imposibilidad de reejecutar los validadores Python en esta sesión y el error de versión que el bloque 4 debe producir mientras `INDICE_MAESTRO` siga en v1.3; no se presentan como pase. |
 | v1.3 | 2026-08-05 | J. Sánchez | **Corrección de una contradicción interna de la v1.2.** §6 seguía declarando la regla **#2** como «NO EJECUTADA — diferida con disparador» y la **revisión visual del `.svg`** como capa no ejecutada, cuando `SD-39` cerró las dos: la #2 se ejerció y destapó `H-26`, y el render está generado y mirado. La v1.2 actualizó §14 y §8-ter pero **no la tabla de cobertura**, que es donde un lector comprueba si la compuerta corrió entera. **Con esto, las diez reglas quedan ejecutadas.** Hallada al preparar el encargo de la verificación independiente: se corrige antes de entregarlo, en vez de dejar un defecto conocido para que lo encuentre el revisor. |
 | v1.2 | 2026-08-05 | J. Sánchez | **Retrabajo de `SD-39` aplicado, todavía no verificado.** §8-ter registra la disposición de los 20 hallazgos originales y §8-quater los ocho que destapó el retrabajo; se corrigen la identificación de `H-14`/`H-16` y el reparto de `H-01` a 33 `break` correctos + 17 sustituidos. El veredicto no cambia, a la espera de una verificación distinta de quien aplicó. **Fila repuesta en v1.4:** la versión constaba en la ficha, pero faltaba en este historial (`VI-05`). |
