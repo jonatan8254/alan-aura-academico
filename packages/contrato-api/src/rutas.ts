@@ -106,10 +106,24 @@ export type OnboardingStatus = 200 | 400 | 401;
  * no disponible, ECU-06 FE-06) añadidos tras la verificación exhaustiva de
  * H-09/ARQ-01-D3 §N+1 punto 3 — DR-06.puml ya diseñaba estas dos pantallas
  * de error sin que el contrato las tuviera.
+ *
+ * history/clientRequestId añadidos: ECU-06 §17 los lista como campos del
+ * endpoint ("character, message, history (≤4), client_request_id") y no
+ * estaban — sin history el LLM no tiene memoria del turno anterior (rompe
+ * RN-02.2). No hay persistencia server-side (RF-13): el cliente reenvía el
+ * historial en cada turno, el servidor no lo guarda entre peticiones.
  */
+export interface ChatIntercambio {
+  rol: "usuario" | "personaje";
+  texto: string;
+}
 export interface ChatRequestV1 {
   texto: string;
   character: Character;
+  /** Los últimos intercambios de la sesión actual, más reciente al final. Máximo 4 (RN-02.2). */
+  history: ChatIntercambio[];
+  /** Idempotencia del turno ante reintento (ECU-06 FE-06/FE-07). */
+  clientRequestId: string;
 }
 export interface ChatResponseV1 {
   respuesta: string;
