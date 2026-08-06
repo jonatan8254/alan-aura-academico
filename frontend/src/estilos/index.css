@@ -1,0 +1,99 @@
+/**
+ * index.css — punto de entrada único de estilos. Orden deliberado:
+ *   1. tailwindcss     — motor de utilidades (Tailwind v4, vía @tailwindcss/vite).
+ *   2. tema.css        — tokens (@theme): deben existir ANTES de que base.css los consuma.
+ *   3. base.css        — reset + capa de interacción, consume los tokens de tema.css.
+ * No importar nada más aquí: cualquier CSS de un componente vive junto al componente.
+ */
+@import "tailwindcss";
+@import "./tema.css";
+@import "./base.css";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Puente shadcn/ui (Base UI) -> DIS-01 — Fase 0b.
+ *
+ * `shadcn init` trae de fábrica su propia paleta sintética (--background, --primary,
+ * --border, ...) resuelta en oklch neutro, un bloque `.dark` completo y una familia
+ * tipográfica nueva (Geist Variable) que se auto-asignaba a --font-sans. Las tres cosas
+ * chocaban de frente con Fase 0a: tema.css YA es la única fuente de la paleta (DIS-01 §2,
+ * "el ÚNICO lugar del código donde puede aparecer un literal hexadecimal"), la fuente sans
+ * ya está fijada a Figtree, y DIS-01/tema.css documentan una decisión EXPLÍCITA de no tener
+ * modo oscuro todavía. Ese bloque generado se retiró entero (junto con `@custom-variant
+ * dark`, la familia Geist y los tokens de sidebar/chart que ninguno de los 7 componentes de
+ * Fase 0b usa) y, en su lugar, los nombres que las primitivas de shadcn esperan se alían
+ * aquí a los roles YA existentes de tema.css: cero hex nuevo, cero paleta paralela, cero
+ * modo oscuro a medio terminar.
+ *
+ * Los nombres SIN el prefijo `--color-` (`--background`, `--secondary`, ...) se mantienen
+ * en :root porque algunos componentes generados los referencian directo dentro de una
+ * utilidad arbitraria (p.ej. `bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)]`
+ * en button.tsx) — Tailwind v4 no resuelve esas expresiones vía el alias `--color-*` de
+ * `@theme inline`, necesita el custom property bare.
+ */
+:root {
+  --background: var(--color-pagina);
+  --foreground: var(--color-texto);
+  --card: var(--color-superficie);
+  --card-foreground: var(--color-texto);
+  --popover: var(--color-superficie);
+  --popover-foreground: var(--color-texto);
+  /* Fase 3 — el primario apuntaba al acento «serenidad», y DIS-01 §2.4 lo reserva a
+     «elementos de marca neutrales (enlaces, foco, encabezados de sistema)»: no a los botones.
+     El style tile y los mockups pintan el primario en el neutro de texto, y con el valor
+     anterior la MISMA acción salía oscura en el encabezado (que usa `bg-texto` a mano) y azul
+     en el hero de P-01, en la misma pantalla. `--ring` sí se queda en `sistema`, que es
+     exactamente el uso de foco que §2.4 describe. */
+  --primary: var(--color-texto);
+  --primary-foreground: var(--color-superficie);
+  --secondary: var(--color-superficie-alt);
+  --secondary-foreground: var(--color-texto);
+  --muted: var(--color-superficie-alt);
+  --muted-foreground: var(--color-suave);
+  --accent: var(--color-superficie-alt);
+  --accent-foreground: var(--color-texto);
+  --destructive: var(--color-destructivo);
+  --destructive-foreground: var(--color-superficie);
+  --border: var(--color-borde);
+  --input: var(--color-borde);
+  --ring: var(--color-sistema);
+  /* DIS-01 §4 ya fija 10px para controles — se reutiliza, no se inventa un radio nuevo. */
+  --radius: var(--radius-control);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+/* Borde por defecto de las primitivas shadcn (p.ej. <Table>, <Dialog>) cuando usan la
+ * utilidad bare `border` sin color explícito — el resto de este código sigue escribiendo
+ * `border-borde` a propósito (rol semántico de tema.css), esto es solo la red de seguridad
+ * para lo que generó la CLI. body/html NO se re-declaran aquí: base.css ya es su dueño. */
+@layer base {
+  * {
+    @apply border-border;
+  }
+}

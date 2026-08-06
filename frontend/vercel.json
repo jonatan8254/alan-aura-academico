@@ -1,8 +1,25 @@
 {
+  "$comentario": [
+    "El ORDEN de estas dos reglas es lo que las hace correctas. Vercel evalua los rewrites en",
+    "orden y aplica la PRIMERA coincidencia, asi que /api/v1/... casa con la regla 1 y nunca",
+    "llega al catch-all. Invertirlas haria que toda llamada al backend devolviera el index.html",
+    "y la app fallaria con 'respuesta ilegible' en cada peticion.",
+    "El catch-all es obligatorio: con BrowserRouter, refrescar en /chat/ o abrir un enlace",
+    "directo a /plataforma-admin/metricas/ daria un 404 de Vercel sin el. Los assets del build",
+    "se sirven desde el sistema de archivos ANTES de los rewrites, asi que /(.*) no los toca.",
+    "Sin trailingSlash ni cleanUrls: las rutas de rutas.tsx llevan barra final y cualquiera de",
+    "las dos opciones introduciria redirecciones 308 que hoy nadie espera.",
+    "ARQ-01-D1: el navegador solo habla con el origen de Vercel, asi que no hay origen cruzado,",
+    "la cookie puede ser SameSite=Strict y no hace falta token CSRF."
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://localhost:4000/api/:path*"
+      "destination": "https://ju9xcyfczf.execute-api.us-east-1.amazonaws.com/v1/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

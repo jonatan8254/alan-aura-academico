@@ -113,6 +113,13 @@ export type OnboardingStatus = 200 | 400 | 401;
  * RN-02.2). No hay persistencia server-side (RF-13): el cliente reenvía el
  * historial en cada turno, el servidor no lo guarda entre peticiones.
  */
+/**
+ * UN MENSAJE, no un intercambio completo — el nombre es engañoso y ya causó un bug: hasta el
+ * 2026-08-06 el backend capaba `history` a 4 ELEMENTOS creyendo que eso eran «4 intercambios»
+ * de RN-02.2, cuando un intercambio es una ida y vuelta (2 mensajes). El modelo recibía la
+ * mitad de la memoria que el canon concede. El tipo se conserva por compatibilidad; el límite
+ * correcto está en `ChatRequestV1.history`.
+ */
 export interface ChatIntercambio {
   rol: "usuario" | "personaje";
   texto: string;
@@ -120,7 +127,11 @@ export interface ChatIntercambio {
 export interface ChatRequestV1 {
   texto: string;
   character: Character;
-  /** Los últimos intercambios de la sesión actual, más reciente al final. Máximo 4 (RN-02.2). */
+  /**
+   * Los últimos mensajes de la sesión actual, planos, más reciente al final.
+   * **Máximo 8 mensajes = 4 intercambios** (RN-02.2, C-4, RNF-04). El backend responde 400
+   * por encima de 8. No incluye el `texto` de este turno: el servidor lo añade al final.
+   */
   history: ChatIntercambio[];
   /** Idempotencia del turno ante reintento (ECU-06 FE-06/FE-07). */
   clientRequestId: string;
@@ -221,3 +232,25 @@ export interface ChatAccessResponse {
   estado: EstadoDisponibilidad;
 }
 export type ChatAccessStatus = 200 | 400 | 401 | 403;
+
+/**
+ * GET /api/v1/admin/chat-access (CU-10, admin) — lee el estado vigente del kill switch y el
+ * último cambio auditado. Pendiente declarado hasta esta corrida: solo existía la ruta de
+ * escritura de arriba; `ECU-10 §11` paso 1 exige que la pantalla «presente el estado global
+ * vigente y el último cambio registrado, con autor y fecha», y no había de dónde leerlo.
+ *
+ * Mismo recurso REST que `ChatAccessRequest`/`ChatAccessResponse` (arriba), método distinto —
+ * de ahí el nombre `Consultar*` en vez de reusar `ChatAccessResponse` para dos formas distintas.
+ */
+export type ConsultarChatAccessRequest = Record<string, never>;
+export interface UltimoCambioDeAcceso {
+  /** El ALIAS del administrador que hizo el cambio — nunca su `username` (RN-03.5). */
+  autor: string;
+  fecha: string;
+}
+export interface ConsultarChatAccessResponse {
+  estado: EstadoDisponibilidad;
+  /** `null` si el kill switch nunca se tocó desde que existe la tabla de auditoría. */
+  ultimoCambio: UltimoCambioDeAcceso | null;
+}
+export type ConsultarChatAccessStatus = 200 | 401 | 403;
