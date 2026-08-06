@@ -74,8 +74,13 @@ export class ApiStack extends Stack {
     // Un rol de ejecución por función (ARQ-01-D5) — grant puntual, no compartido.
     // logout no toca la tabla: solo verifica la firma de la cookie.
     props.tablaTitular.grantReadWriteData(registro);
-    props.tablaTitular.grantReadData(login);
-    props.tablaTitular.grantReadData(loginAdmin);
+    // ReadWrite y no solo lectura: además de autenticar (lectura por
+    // GSI-1-username), cada intento incrementa el contador de
+    // dentroDelLimiteDeIntentosDeLogin (limites.ts) — sin el permiso de
+    // escritura, el UpdateItem del freno de fuerza bruta fallaría con
+    // AccessDenied antes de llegar siquiera a intentar autenticar.
+    props.tablaTitular.grantReadWriteData(login);
+    props.tablaTitular.grantReadWriteData(loginAdmin);
     props.tablaTitular.grantReadWriteData(onboarding);
 
     secretoDeSesion.grantRead(login);
@@ -178,30 +183,49 @@ export class ApiStack extends Stack {
       ...entornoDeSesion,
     });
     const chatAccess = this.crearHandler("ChatAccessHandler", "admin/chat-access.ts", {
+      TABLA_TITULAR: props.tablaTitular.tableName,
       TABLA_CONFIGURACION: props.tablaConfiguracion.tableName,
       TABLA_ACCION_ADMINISTRATIVA: props.tablaAccionAdministrativa.tableName,
       ...entornoDeSesion,
     });
+    // Lectura complementaria de /admin/chat-access (GET, ECU-10 §11 paso 1):
+    // handler propio porque un mismo recurso REST puede tener un método por
+    // verbo, cada uno con su propia Lambda — mismo patrón que health/auth/etc.
+    const consultarChatAccess = this.crearHandler(
+      "ConsultarChatAccessHandler",
+      "admin/consultar-chat-access.ts",
+      {
+        TABLA_CONFIGURACION: props.tablaConfiguracion.tableName,
+        TABLA_ACCION_ADMINISTRATIVA: props.tablaAccionAdministrativa.tableName,
+        ...entornoDeSesion,
+      },
+    );
 
     props.tablaTitular.grantReadData(directorio);
     props.tablaTitular.grantReadData(metricas);
     props.tablaEventoOperativo.grantReadData(metricas);
     props.tablaConfiguracion.grantReadData(metricas);
+    // grantReadData además de ReadWrite: chat-access.ts ahora resuelve el
+    // alias del administrador leyendo su PERFIL antes de auditar el cambio.
+    props.tablaTitular.grantReadData(chatAccess);
     props.tablaConfiguracion.grantReadWriteData(chatAccess);
     props.tablaAccionAdministrativa.grantWriteData(chatAccess);
+    props.tablaConfiguracion.grantReadData(consultarChatAccess);
+    props.tablaAccionAdministrativa.grantReadData(consultarChatAccess);
 
     secretoDeSesion.grantRead(directorio);
     secretoDeSesion.grantRead(metricas);
     secretoDeSesion.grantRead(chatAccess);
+    secretoDeSesion.grantRead(consultarChatAccess);
 
     const admin = v1.addResource("admin");
     admin
       .addResource("directorio")
       .addMethod("GET", new apigateway.LambdaIntegration(directorio));
     admin.addResource("metricas").addMethod("GET", new apigateway.LambdaIntegration(metricas));
-    admin
-      .addResource("chat-access")
-      .addMethod("POST", new apigateway.LambdaIntegration(chatAccess));
+    const chatAccessResource = admin.addResource("chat-access");
+    chatAccessResource.addMethod("POST", new apigateway.LambdaIntegration(chatAccess));
+    chatAccessResource.addMethod("GET", new apigateway.LambdaIntegration(consultarChatAccess));
   }
 
   private crearHandler(

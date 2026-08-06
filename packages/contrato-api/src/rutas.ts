@@ -221,3 +221,25 @@ export interface ChatAccessResponse {
   estado: EstadoDisponibilidad;
 }
 export type ChatAccessStatus = 200 | 400 | 401 | 403;
+
+/**
+ * GET /api/v1/admin/chat-access (CU-10, admin) — lee el estado vigente del kill switch y el
+ * último cambio auditado. Pendiente declarado hasta esta corrida: solo existía la ruta de
+ * escritura de arriba; `ECU-10 §11` paso 1 exige que la pantalla «presente el estado global
+ * vigente y el último cambio registrado, con autor y fecha», y no había de dónde leerlo.
+ *
+ * Mismo recurso REST que `ChatAccessRequest`/`ChatAccessResponse` (arriba), método distinto —
+ * de ahí el nombre `Consultar*` en vez de reusar `ChatAccessResponse` para dos formas distintas.
+ */
+export type ConsultarChatAccessRequest = Record<string, never>;
+export interface UltimoCambioDeAcceso {
+  /** El ALIAS del administrador que hizo el cambio — nunca su `username` (RN-03.5). */
+  autor: string;
+  fecha: string;
+}
+export interface ConsultarChatAccessResponse {
+  estado: EstadoDisponibilidad;
+  /** `null` si el kill switch nunca se tocó desde que existe la tabla de auditoría. */
+  ultimoCambio: UltimoCambioDeAcceso | null;
+}
+export type ConsultarChatAccessStatus = 200 | 401 | 403;

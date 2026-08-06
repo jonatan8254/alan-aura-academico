@@ -60,6 +60,15 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   if (!Array.isArray(cuerpo.history) || cuerpo.history.length > MAX_INTERCAMBIOS_HISTORIAL) {
     return json(400, { error: `history admite hasta ${MAX_INTERCAMBIOS_HISTORIAL} intercambios` });
   }
+  // Bug real, corregido: sin esto, un `character` fuera del enum llegaba
+  // intacto hasta `obtenerSystemPrompt` (abajo), donde fallaba al buscar un
+  // objeto de S3 que no existe y salía como 502 "el proveedor no está
+  // disponible" — copia engañosa para lo que en realidad es una entrada
+  // mal formada. Comparación literal, mismo patrón que `estadoNuevo` en
+  // admin/chat-access.ts.
+  if (cuerpo.character !== "alan" && cuerpo.character !== "aura") {
+    return json(400, { error: "character debe ser alan o aura" });
+  }
 
   if (!(await dentroDelLimitePorMinuto(sesion.titularId))) {
     return json(429, { error: "límite de mensajes por minuto alcanzado" }); // FE-05

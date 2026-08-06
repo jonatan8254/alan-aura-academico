@@ -25,6 +25,42 @@ export async function dentroDelLimitePorMinuto(titularId: string): Promise<boole
   return incrementarSiNoSuperaElLimite(titularId, `CONTADOR_MIN#${minuto}`, LIMITE_POR_MINUTO, ttl);
 }
 
+const LIMITE_INTENTOS_LOGIN_POR_MINUTO = 5;
+
+/**
+ * Freno de fuerza bruta para `/auth/login` y `/auth/login-admin`. Bug real,
+ * no una feature nueva: `LoginStatus`/`LoginAdminStatus` declaran `429`
+ * desde que existe el contrato, y ningún handler lo emitía — no había
+ * ningún límite antes de esta función.
+ *
+ * Clave por USERNAME, no por IP. La amenaza que importa aquí es adivinar la
+ * contraseña de UNA cuenta, y el username —aunque lo declare quien
+ * ataca— es la identidad que se protege, con el mismo criterio que ya usa
+ * el límite de chat (ahí la identidad viene de una sesión válida; aquí
+ * todavía no existe, así que es lo único disponible). Limitar también por
+ * IP queda fuera de esta corrida: ningún artefacto lo pide, y añade una
+ * segunda decisión de diseño —qué IP, detrás de qué proxy— sin necesidad
+ * probada.
+ *
+ * Prefijo `LOGIN#` para no compartir espacio de claves con el contador de
+ * chat (usa el `titularId` desnudo) ni con el *lock* de username de
+ * `registro.ts` (`USERNAME#<username>` sin sufijo). Vive en `TABLA_TITULAR`
+ * como un ítem más, pero sin el atributo `username`, así que no aparece en
+ * `GSI-1-username` (índice disperso: un ítem sin el atributo indexado no se
+ * proyecta).
+ */
+export async function dentroDelLimiteDeIntentosDeLogin(username: string): Promise<boolean> {
+  const minuto = Math.floor(Date.now() / 60_000);
+  const ttl = Math.floor(Date.now() / 1000) + 120;
+
+  return incrementarSiNoSuperaElLimite(
+    `LOGIN#${username}`,
+    `CONTADOR_MIN#${minuto}`,
+    LIMITE_INTENTOS_LOGIN_POR_MINUTO,
+    ttl,
+  );
+}
+
 /**
  * Incremento y comprobación en una sola UpdateItem condicional: si ya está
  * en el límite, la condición falla y no se incrementa — nadie queda

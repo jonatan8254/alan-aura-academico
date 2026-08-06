@@ -1,6 +1,7 @@
 import type { APIGatewayProxyHandler } from "aws-lambda";
 import type { LoginRequest, LoginResponse } from "contrato-api";
 import { autenticar, tieneOnboardingCompleto } from "../../lib/autenticacion.js";
+import { dentroDelLimiteDeIntentosDeLogin } from "../../lib/limites.js";
 import { firmarSesion } from "../../lib/sesion.js";
 import { json, jsonConCookie } from "../../lib/respuestas.js";
 
@@ -13,6 +14,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
   if (!cuerpo.username || !cuerpo.contrasena) {
     return json(400, { error: "username y contrasena son requeridos" });
+  }
+
+  // Bug real, corregido: LoginStatus declara 429 desde el contrato original
+  // y nunca se emitía — no había ningún freno de fuerza bruta.
+  if (!(await dentroDelLimiteDeIntentosDeLogin(cuerpo.username))) {
+    return json(429, { error: "demasiados intentos; espera un momento" });
   }
 
   const perfil = await autenticar(cuerpo.username, cuerpo.contrasena);
