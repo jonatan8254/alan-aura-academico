@@ -21,7 +21,7 @@ export interface ApiStackProps extends StackProps {
  * mecanismo de API Gateway REST — HTTP API v2 no lo tiene en esos términos.
  *
  * Esta pasada monta /api/v1/health, las 4 rutas de auth, /onboarding,
- * /chat y las 2 de /perfil — quedan las 3 de /admin y /cuenta/eliminar,
+ * /chat, las 2 de /perfil y /cuenta/eliminar — quedan las 3 de /admin,
  * que se añaden handler por handler repitiendo el mismo patrón
  * (NodejsFunction sin Docker, un rol de ejecución por función, ARQ-01-D5).
  */
@@ -146,6 +146,17 @@ export class ApiStack extends Stack {
       .addResource("personalizacion")
       .addResource("revocar")
       .addMethod("POST", new apigateway.LambdaIntegration(revocar));
+
+    const eliminarCuenta = this.crearHandler("EliminarCuentaHandler", "cuenta/eliminar.ts", {
+      TABLA_TITULAR: props.tablaTitular.tableName,
+      ...entornoDeSesion,
+    });
+    props.tablaTitular.grantReadWriteData(eliminarCuenta);
+    secretoDeSesion.grantRead(eliminarCuenta);
+
+    v1.addResource("cuenta")
+      .addResource("eliminar")
+      .addMethod("POST", new apigateway.LambdaIntegration(eliminarCuenta));
   }
 
   private crearHandler(
