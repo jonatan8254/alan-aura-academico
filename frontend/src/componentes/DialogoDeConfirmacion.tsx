@@ -53,7 +53,14 @@ export function DialogoDeConfirmacion({
   const t = TONOS[tono];
   return (
     <Dialog open={abierto} onOpenChange={onCambiarAbierto}>
-      <DialogContent>
+      {/*
+        `showCloseButton={false}` arregla dos cosas de una: la X que genera shadcn trae un
+        icono de lucide con `sr-only "Close"` EN INGLÉS (rompe RNF-01, «todos los textos de
+        cara al usuario en español CO») y es de otra familia de iconos que la Tabler de
+        DIS-01 §4. Y de fondo: una X que cancela en silencio una acción irreversible es peor
+        affordance que el «Cancelar» explícito que este diálogo ya tiene debajo.
+      */}
+      <DialogContent showCloseButton={false}>
         <DialogHeader className="items-center text-center">
           <span className={cn("flex size-10 items-center justify-center rounded-full", t.insignia)}>
             <Icono icono={t.icono} size={22} />

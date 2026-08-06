@@ -38,9 +38,19 @@ export function SesionProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     registrarCallback401(() => {
+      // El destino se decide ANTES de limpiar, y se lee de `leerPista()` en vez de del
+      // `sesion` del closure: este callback se registra una sola vez y capturaría un valor
+      // viejo, mientras que `sessionStorage` siempre tiene el actual.
+      //
+      // Por qué el rol importa: sin esto, un administrador cuya sesión expira en
+      // /plataforma-admin/ aterriza en el login de USUARIO, que es la puerta equivocada y
+      // contradice el acceso separado de RN-03.7 (y de ECU-08/09/10 FE-01, que mandan a
+      // reingresar por la ruta administrativa).
+      const rol = leerPista()?.rol;
+      const puerta = rol === "administrador" ? "/plataforma-admin/login/" : "/login/";
       escribirPista(null);
       setSesion(null);
-      navigate("/login/?motivo=sesion_expirada");
+      navigate(`${puerta}?motivo=sesion_expirada`);
     });
     return () => registrarCallback401(null);
   }, [navigate]);

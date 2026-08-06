@@ -29,7 +29,12 @@ function DialogOverlay({
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+        // `bg-scrim` (tema.css) en vez del `bg-black/10` que genera shadcn: el negro puro es
+        // una paleta paralela a DIS-01 §2.3 («se evita blanco/negro puros, leen clínico»),
+        // y al 10% el diálogo destructivo de P-13 queda flotando sobre una página aún
+        // legible, que es justo lo que un scrim debe impedir. `lint:tokens` no lo caza
+        // porque `black/10` no es un hexadecimal.
+        "fixed inset-0 isolate z-50 bg-scrim duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
         className
       )}
       {...props}

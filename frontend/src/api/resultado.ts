@@ -30,12 +30,31 @@ export type Resultado<T> = ResultadoOk<T> | ResultadoFallo;
  * EliminarCuentaStatus). `errores.ts` lo resuelve como `desconocido` con `estado: 500`, igual
  * que cualquier código que el contrato no anticipó — ver su cabecera.
  */
+/**
+ * `detalle` — REGLA DURA: no se renderiza NUNCA, en ninguna pantalla.
+ *
+ * Es la frase que el servidor puso en el cuerpo del error, y existe aquí por una sola
+ * razón: hay códigos que significan dos cosas distintas y el status no las separa. El caso
+ * que obliga a tenerlo es el 403 de `/api/v1/chat`, que es "consentimiento base no
+ * otorgado" (ECU-06 FE-09 → rehacer el onboarding) o "rol no autorizado" (FE-02 → termina).
+ * Sin leer el cuerpo, FE-09 es inimplementable.
+ *
+ * Por qué no se muestra: el texto es vocabulario de servidor ("username y contrasena son
+ * requeridos" nombra campos que la interfaz llama Usuario y Contraseña), y cuando el error
+ * lo genera API Gateway en vez de un handler llega en inglés ("Internal server error").
+ * Mostrarlo es exactamente la jerga que RF-26 prohíbe. La copia se decide en
+ * `copia/fallos.ts`, a partir del `tipo` y del contexto de la pantalla.
+ *
+ * Tampoco es un discriminador de fiar: el cuerpo `{"error": "..."}` es convención de los
+ * handlers, no contrato — CONTRATO_API_v1.md no lo declara. Por eso quien lo consulte debe
+ * usar coincidencia tolerante y caer siempre a la rama segura si no reconoce nada.
+ */
 export type Fallo =
   | { tipo: "entrada_invalida"; estado: 400; detalle?: string }
   | { tipo: "sin_sesion"; estado: 401 }
-  | { tipo: "sin_permiso"; estado: 403 }
+  | { tipo: "sin_permiso"; estado: 403; detalle?: string }
   | { tipo: "conflicto"; estado: 409; detalle?: string }
-  | { tipo: "limite_de_tasa"; estado: 429; esperarSegundos: number | null }
+  | { tipo: "limite_de_tasa"; estado: 429; esperarSegundos: number | null; detalle?: string }
   | { tipo: "proveedor_caido"; estado: 502 }
   | { tipo: "tiempo_agotado"; estado: 504 }
   | { tipo: "red" }

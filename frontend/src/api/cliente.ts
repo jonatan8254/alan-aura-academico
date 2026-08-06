@@ -17,7 +17,49 @@ import { mapStatus, type ContextoDeError } from "./errores";
 
 const TIMEOUT_MS = 25_000;
 
-const RUTAS_SIN_REDIRECCION_401 = new Set(["/auth/login", "/auth/login-admin"]);
+/**
+ * En estas rutas un 401 NO significa "tu sesión expiró", así que el efecto global de abajo
+ * no debe dispararse.
+ *
+ * En login y login-admin es "credenciales inválidas" (Fase 0b). `/auth/logout` se añadió en
+ * Fase 3 y responde a otra cosa: ahí un 401 significa "la sesión ya no existía", es decir,
+ * el estado que se quería alcanzar YA se cumple. Redirigir sería contraproducente en los dos
+ * únicos flujos que llaman a logout: el bloqueo de menores de ECU-05 FE-01 acabaría en
+ * `/login/?motivo=sesion_expirada` en vez de en `/onboarding/no-disponible`, y el botón de
+ * cerrar sesión le diría "tu sesión expiró" a quien la cerró a propósito.
+ */
+const RUTAS_SIN_REDIRECCION_401 = new Set([
+  "/auth/login",
+  "/auth/login-admin",
+  "/auth/logout",
+]);
+
+/**
+ * Extrae el motivo que el servidor puso en el cuerpo de un error, para DISCRIMINAR — nunca
+ * para mostrar (ver la nota de `detalle` en resultado.ts).
+ *
+ * Hay dos formas posibles y ninguna está en el contrato: los handlers propios mandan
+ * `{"error": "..."}` y API Gateway, cuando el error lo genera él (ruta inexistente, Lambda
+ * que lanzó), manda `{"message": "..."}`. Se aceptan las dos.
+ *
+ * No lanza en ningún caso: un 502 de API Gateway sin cuerpo, el HTML de un proxy o una
+ * respuesta vacía devuelven `undefined`, y quien consuma el `Fallo` cae a su rama segura.
+ * Esto preserva la invariante de la cabecera — `pedir()` sigue sin poder lanzar.
+ */
+async function leerMotivoDeError(resp: Response): Promise<string | undefined> {
+  try {
+    const cuerpo: unknown = await resp.json();
+    if (cuerpo !== null && typeof cuerpo === "object") {
+      const campos = cuerpo as Record<string, unknown>;
+      if (typeof campos.error === "string") return campos.error;
+      if (typeof campos.message === "string") return campos.message;
+    }
+  } catch {
+    // Cuerpo ausente, vacío o no-JSON. No es excepcional: pasa siempre que el error viene
+    // de la infraestructura y no de un handler.
+  }
+  return undefined;
+}
 
 let alExpirarSesion: (() => void) | null = null;
 
@@ -75,7 +117,11 @@ export async function pedir<T>(
 
   if (!resp.ok) {
     const esperarSegundos = leerRetryAfter(resp);
-    const fallo = mapStatus(resp.status, contexto, esperarSegundos);
+    // El cuerpo se consume UNA sola vez, y solo en esta rama: la de éxito lo lee más abajo,
+    // y las dos son excluyentes. El `await` va después del clearTimeout, así que no
+    // interactúa con el AbortController.
+    const detalle = await leerMotivoDeError(resp);
+    const fallo = mapStatus(resp.status, contexto, esperarSegundos, detalle);
     if (resp.status === 401 && !RUTAS_SIN_REDIRECCION_401.has(ruta) && alExpirarSesion) {
       alExpirarSesion();
     }

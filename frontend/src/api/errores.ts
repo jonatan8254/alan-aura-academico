@@ -23,6 +23,17 @@ import type { Fallo } from "./resultado";
  * La disambiguación real — qué COPIA mostrar ("tu consentimiento fue revocado" vs. "no
  * tienes permiso") — es trabajo de la pantalla que consume el `Fallo`, en una fase
  * posterior; `mapStatus` se mantiene "tonto" (código -> tipo), no código -> texto.
+ *
+ * FASE 3 — la fase posterior es esta, y resultó que `contexto` no bastaba. `contexto`
+ * distingue rutas ("este 502 es de /chat, aquel de /auth/registro"), pero los dos 403 de
+ * ECU-06 salen de la MISMA ruta: sin mirar el cuerpo son indistinguibles y FE-09 no se
+ * puede implementar. De ahí el cuarto parámetro `detalle`, que cliente.ts extrae del cuerpo
+ * y que solo se propaga en los códigos donde algo depende de él (400/403/409/429).
+ *
+ * Los dos mecanismos se reparten el trabajo y conviene no confundirlos:
+ *   - `contexto`  → ambigüedad ENTRE rutas. La resuelve `copia/fallos.ts`.
+ *   - `detalle`   → ambigüedad DENTRO de una ruta. La resuelve quien consume el `Fallo`.
+ * `detalle` no se renderiza jamás; ver la nota en resultado.ts.
  */
 export type ContextoDeError = "chat" | "general";
 
@@ -31,18 +42,19 @@ export function mapStatus(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   contexto: ContextoDeError = "general",
   esperarSegundos: number | null = null,
+  detalle?: string,
 ): Fallo {
   switch (status) {
     case 400:
-      return { tipo: "entrada_invalida", estado: 400 };
+      return { tipo: "entrada_invalida", estado: 400, detalle };
     case 401:
       return { tipo: "sin_sesion", estado: 401 };
     case 403:
-      return { tipo: "sin_permiso", estado: 403 };
+      return { tipo: "sin_permiso", estado: 403, detalle };
     case 409:
-      return { tipo: "conflicto", estado: 409 };
+      return { tipo: "conflicto", estado: 409, detalle };
     case 429:
-      return { tipo: "limite_de_tasa", estado: 429, esperarSegundos };
+      return { tipo: "limite_de_tasa", estado: 429, esperarSegundos, detalle };
     case 502:
       return { tipo: "proveedor_caido", estado: 502 };
     case 504:

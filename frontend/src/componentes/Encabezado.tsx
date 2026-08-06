@@ -39,13 +39,17 @@ function Encabezado({ derecha, tono = "usuario" }: { derecha?: ReactNode; tono?:
 }
 
 /** P-01/P-02/P-03: los dos accesos públicos. `omitir` esconde el enlace a la pantalla en la
- * que ya se está — un enlace a uno mismo no es navegación, es ruido. */
-export function EncabezadoPublico({ omitir }: { omitir?: "registro" | "login" }) {
+ * que ya se está — un enlace a uno mismo no es navegación, es ruido.
+ *
+ * `"ambos"` (Fase 3) deja solo la marca, y existe por una pantalla concreta: la de bloqueo
+ * de menores de edad. Ofrecerle «Registrarse» a alguien que acaba de declararse menor y
+ * recibir un no sería un dark pattern de manual — DIS-01 §7 los prohíbe explícitamente. */
+export function EncabezadoPublico({ omitir }: { omitir?: "registro" | "login" | "ambos" }) {
   return (
     <Encabezado
       derecha={
         <>
-          {omitir === "login" ? null : (
+          {omitir === "login" || omitir === "ambos" ? null : (
             <Link
               to="/login/"
               className="rounded-control px-3 py-2 text-sm text-texto hover:bg-superficie-alt"
@@ -53,7 +57,7 @@ export function EncabezadoPublico({ omitir }: { omitir?: "registro" | "login" })
               Iniciar sesión
             </Link>
           )}
-          {omitir === "registro" ? null : (
+          {omitir === "registro" || omitir === "ambos" ? null : (
             <Link
               to="/registro/"
               className="rounded-control bg-texto px-3.5 py-2 text-sm text-superficie hover:bg-texto/90"

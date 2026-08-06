@@ -1,4 +1,4 @@
-import type { Rol } from "contrato-api";
+import type { Character, Rol } from "contrato-api";
 
 /**
  * pista.ts — la "pista de sesión" optimista que vive en `sessionStorage`.
@@ -18,6 +18,16 @@ export interface PistaDeSesion {
   alias: string;
   rol: Rol;
   onboardingCompleto: boolean;
+  /**
+   * El acompañante elegido en P-09. Opcional porque ninguna respuesta del backend lo
+   * devuelve: `LoginResponse` no trae la cápsula y no hay `GET /perfil` entre las 13 rutas.
+   * Lo escribe P-09 al terminar el onboarding, y tras un login nuevo llega `undefined`.
+   *
+   * Esa ausencia no es un problema que haya que tapar: el chat arranca entonces en su estado
+   * de elección, que es literalmente el paso 1 de `ECU-06` («el Usuario elige con quién
+   * conversar»). Inventar un default sería elegir por la persona.
+   */
+  character?: Character;
 }
 
 const CLAVE = "pista-sesion";
