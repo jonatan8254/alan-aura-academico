@@ -1,0 +1,32 @@
+{
+  // Extiende la base del monorepo (../tsconfig.base.json) pero la SOBRESCRIBE donde la base
+  // asume un paquete Node (NodeNext + declaration:true) y este es un paquete de app para Vite.
+  // Ver AGENTS.md / instrucciones de Fase 0a — "Trap A" — para el porqué de cada override.
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // --- overrides obligatorios (la base trae NodeNext, pensado para tsc puro/Node) ---
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "declaration": false,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "verbatimModuleSyntax": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    // --- heredados de ../tsconfig.base.json, NO relajar ---
+    // "strict": true
+    // "noUncheckedIndexedAccess": true
+
+    // --- añadidos razonables para un proyecto Vite (no pedidos explícitamente, no aflojan nada) ---
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}

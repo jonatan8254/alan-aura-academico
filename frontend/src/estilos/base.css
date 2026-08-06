@@ -1,0 +1,100 @@
+/**
+ * base.css — reset mínimo + la capa de interacción que los mockups de DIS-01 no tienen
+ * (foco visible, reduce-motion). Ver DIS-01 §1.6 ("Accesible por defecto") y §6.
+ *
+ * Fuentes: @fontsource/figtree y @fontsource/source-serif-4, self-hosted (sin CDN) — los
+ * mockups DECLARAN estas familias sin cargarlas y hoy renderizan Segoe UI/Georgia
+ * (DIS-01 §7.1). Solo se importan los pesos 400 y 500: no hay un solo 600/bold en el
+ * sistema de diseño (DIS-01 §3).
+ *
+ * NOTA (DIS-01 §7.1): cargar las fuentes reales cambia la métrica respecto a las fuentes
+ * de sistema con las que se diseñaron los mockups — la escala tipográfica de tema.css y la
+ * medida de ≤66ch quedan pendientes de revalidación visual. Ese trabajo es de una fase
+ * posterior, no de este scaffold.
+ */
+@import "@fontsource/figtree/400.css";
+@import "@fontsource/figtree/500.css";
+@import "@fontsource/source-serif-4/400.css";
+@import "@fontsource/source-serif-4/500.css";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html {
+    /* No hay modo oscuro en esta pasada (decisión explícita) — el navegador no debe intentar
+     * adivinar un `dark` que no existe aún para form controls, scrollbars, etc. */
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-pagina);
+    color: var(--color-texto);
+    font-family: var(--font-sans);
+    font-size: var(--text-cuerpo);
+    line-height: var(--text-cuerpo--line-height);
+  }
+
+  img,
+  picture,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* DIS-01 §5/E5: jerarquía clara con aire generoso — los títulos no deben partirse en una
+   * palabra huérfana fea cuando hay espacio para balancear las líneas. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Disponibilidad de variantes numéricas tabulares (tablas de métricas admin, IDs, fechas)
+   * sin tener que declarar font-feature-settings a mano en cada sitio. */
+  .num-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* --- Foco visible — DIS-01 §1.6/§6, ausente en los 21 mockups ------------------------ */
+  /* `:focus-visible`, NUNCA `:focus`: `:focus` también dispara con click de mouse, que es
+   * exactamente el ruido visual que un usuario sin teclado no necesita ver. */
+  :focus-visible {
+    outline: 2px solid var(--color-sistema);
+    outline-offset: 2px;
+    border-radius: var(--radius-control);
+  }
+
+  /* Compatibilidad: si un navegador no soporta :focus-visible, no queremos quedarnos SIN
+   * foco visible en absoluto — ese es justo el defecto que DIS-01 §1.6 pide corregir. */
+  @supports not selector(:focus-visible) {
+    :focus {
+      outline: 2px solid var(--color-sistema);
+      outline-offset: 2px;
+    }
+  }
+
+  /* --- Movimiento reducido — DIS-01 §4/E6, ausente en los 21 mockups ------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

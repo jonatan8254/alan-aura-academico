@@ -1,0 +1,187 @@
+/**
+ * tema.css — fuente única de los tokens de DIS-01 §2 (color), §3 (tipografía) y §4 (ritmo).
+ *
+ * Ver docs/08_diseno/DIS-01_sistema_diseno.md §7.1: "si cuatro personas copian los
+ * hexadecimales a mano [...] la paleta habrá divergido antes de la segunda semana". Este
+ * archivo es el ÚNICO lugar del código donde puede aparecer un literal hexadecimal — lo
+ * hace cumplir `npm run lint:tokens` (frontend/scripts/lint-tokens.mjs), que falla si
+ * encuentra un `#rgb`/`#rrggbb` fuera de este archivo.
+ *
+ * Valores transcritos verbatim de DIS-01 §2/§3/§4 (rampas Aura/Alan, neutros, sistema,
+ * semánticos, admin) y verificados contra docs/08_diseno/mockups/00_style_tile.html y
+ * mockups/p14–p16 (admin) para los tokens que DIS-01 §2 no tabula explícitamente pero sí
+ * usa en los mockups aplicados (borde-fuerte, tinte/texto de "sistema", borde de crisis,
+ * fondo/borde de admin, scrim de modal).
+ *
+ * NO dark mode en esta pasada (decisión explícita, Fase 0a): los roles semánticos de abajo
+ * están planos a propósito, sin `dark:` ni scope `data-tema`, para que añadir modo oscuro
+ * después sea "rellenar valores", no reestructurar.
+ */
+
+@theme {
+  /* ============================================================
+   * TIPOGRAFÍA — DIS-01 §3
+   * ============================================================
+   * Sans humanista (UI) = Figtree; sobrescribe el `font-sans` por defecto de Tailwind, así
+   * que cualquier utilidad `font-sans` (incl. la que aplica base.css a <body>) ya es Figtree.
+   * Serif de voz (SOLO burbujas de Alan/Aura, no UI general) = Source Serif 4, como familia
+   * nueva `font-voz` — nunca se usa por defecto, un componente la pide explícitamente.
+   *
+   * Pesos: DIS-01 §3 declara exactamente dos — regular 400 y medium 500. No hay un solo
+   * 600/700 en el sistema de diseño; por eso solo se importan esos dos pesos en base.css
+   * (@fontsource/figtree, @fontsource/source-serif-4). `font-semibold`/`font-bold` de
+   * Tailwind siguen existiendo como utilidades pero no tienen respaldo de fuente cargada:
+   * no usarlas.
+   */
+  --font-sans: "Figtree", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-voz: "Source Serif 4", ui-serif, Georgia, serif;
+
+  /* Escala tipográfica — DIS-01 §3. Line-height explícito SOLO donde el documento lo fija
+   * (cuerpo: 1.6). Para display/H1/H2/caption el documento no fija un interlineado propio
+   * (solo el rango general 1.4–1.6 de E5) — no se inventa un número que DIS-01 no dio; se
+   * deja que Tailwind aplique su line-height por defecto para ese tamaño. */
+  --text-display: 28px;
+  --text-h1: 22px;
+  --text-h2: 18px;
+  --text-cuerpo: 16px;
+  --text-cuerpo--line-height: 1.6;
+  --text-caption: 13px;
+
+  /* NOTA (DIS-01 §7.1): cargar las fuentes reales (antes: Segoe UI/Georgia por fuentes no
+   * cargadas) cambia la métrica. La escala de arriba y la medida de ≤66ch de abajo quedan
+   * pendientes de revalidar visualmente contra Figtree/Source Serif 4 reales — eso es
+   * trabajo de una fase posterior (mockups de alta fidelidad / QA visual), no de esta. */
+
+  /* Medida de lectura — DIS-01 §3 ("medida de lectura ≤ 66 caracteres") → utilidad `max-w-lectura`. */
+  --container-lectura: 66ch;
+
+  /* ============================================================
+   * RITMO / FORMA — DIS-01 §4
+   * ============================================================ */
+  /* Radios — DIS-01 §4: "10px controles, 16px tarjetas, pill solo en chips/avatars".
+   * Pill ya existe como `rounded-full` de Tailwind; no se redefine. */
+  --radius-control: 10px;
+  --radius-tarjeta: 16px;
+
+  /* Movimiento — DIS-01 §4 / E6: "120–240 ms, ease-out". El `ease-out` de Tailwind por
+   * defecto YA es cubic-bezier(0,0,0.2,1); no se redefine, solo se documenta su uso junto
+   * a estas duraciones. Ver base.css para el apagado global bajo prefers-reduced-motion. */
+  --duration-rapido: 120ms;
+  --duration-lento: 240ms;
+
+  /* ============================================================
+   * TIER 1 — rampas de marca, literales, verbatim DIS-01 §2.1/§2.2
+   * ============================================================ */
+  --color-aura-50: #e7f1ef;
+  --color-aura-100: #c5e2db;
+  --color-aura-300: #6fb3a6;
+  --color-aura-500: #3e8e82;
+  --color-aura-700: #1f6357;
+  --color-aura-900: #123f39;
+
+  --color-alan-50: #fbefdd;
+  --color-alan-100: #f5ddb8;
+  --color-alan-300: #e7b064;
+  --color-alan-500: #d98a2b;
+  --color-alan-700: #8a5216;
+  --color-alan-900: #5c360e;
+
+  /* ============================================================
+   * TIER 1/2 — roles semánticos, también literales (DIS-01 §2.3/§2.4/§2.5 + admin).
+   * Estos SON los nombres que usan los componentes (bg-superficie, text-suave,
+   * border-borde, ...) — nunca los stops de arriba ni un hex suelto.
+   * ============================================================ */
+
+  /* Neutros claros — DIS-01 §2.3 (párrafo "Claro:"). */
+  --color-pagina: #faf7f2;
+  --color-superficie: #ffffff;
+  --color-superficie-alt: #fdfbf7;
+  --color-borde: #e9e4db;
+  /* "borde-fuerte" no está tabulado en DIS-01 §2.3 pero es el borde de mayor contraste que
+   * usan los propios mockups aplicados (toggles, botones secundarios) — ver
+   * mockups/00_style_tile.html línea ~106/112. */
+  --color-borde-fuerte: #d8d2c7;
+  --color-texto: #2b2a27;
+  --color-suave: #6b6862; /* DIS-01 llama a este stop "secundario"; aquí es el rol "suave". */
+  --color-tenue: #9a968e;
+
+  /* Acento "serenidad" compartido — DIS-01 §2.4. Tinte/texto tomados del banner de
+   * disclosure en mockups/00_style_tile.html (background/color del bloque de disclosure). */
+  --color-sistema: #3f6e8c;
+  --color-sistema-tinte: #ebf1f4;
+  --color-sistema-texto: #22333f;
+
+  /* Semánticos sobrios — DIS-01 §2.5. */
+  --color-exito: #6fa368;
+  --color-exito-tinte: #eaf1e4;
+  --color-exito-texto: #2e4a28;
+
+  --color-aviso: #a8842f; /* "preferir borde+icono, sin relleno grande" (DIS-01 §2.5) */
+
+  --color-crisis: #9e5744;
+  --color-crisis-tinte: #f3e4dd;
+  --color-crisis-texto: #6e3a2c;
+  /* Borde de la tarjeta de contención/derivación — mockups/00_style_tile.html línea ~115. */
+  --color-crisis-borde: #e7c9be;
+
+  --color-destructivo: #b4472f; /* solo confirmación de "eliminar cuenta" (DIS-01 §2.5) */
+
+  /* Admin — fondo/borde del panel, tomados de mockups/p14_admin_directorio.html,
+   * p15_admin_metricas.html y p16_admin_kill_switch.html (idénticos en los tres). */
+  --color-admin-pagina: #f4f4f0;
+  --color-admin-borde: #e4e2da;
+
+  /* Scrim de modal (confirmación de kill switch, etc.) — mockups/p16_admin_kill_switch.html. */
+  --color-scrim: rgba(30, 25, 20, 0.5);
+}
+
+/* Ancho de borde — DIS-01 §7.1 pide corregir explícitamente el `0.5px` de los mockups (no
+ * renderiza en pantallas de densidad estándar) a 1px. La utilidad `.border` de Tailwind YA
+ * es 1px por defecto, así que en la práctica basta con no escribir `border-[0.5px]` en
+ * ningún componente; esta variable existe para el caso raro de necesitar el valor fuera de
+ * una utilidad de Tailwind (SVG inline, CSS que no es de Tailwind) y para que la corrección
+ * del mockup quede grepable en un solo sitio. */
+:root {
+  --ancho-borde: 1px;
+}
+
+/* ============================================================
+ * TIER 3 — roles de personaje (Alan/Aura), indirectos vía `@theme inline`.
+ * ============================================================
+ * SIN el `inline` aquí, `@theme` congelaría el valor resuelto en el momento de definirse
+ * (heredaría lo que sea que `--persona-*` valga en :root, casi siempre nada) y el override
+ * por `[data-persona="..."]` de abajo nunca llegaría a la utilidad. Con `inline`, Tailwind
+ * emite la utilidad como `var(--persona-tinte)` etc. literalmente, así que se resuelve en
+ * cascada normal de CSS en tiempo de render — el scope `[data-persona]` sí gana.
+ */
+@theme inline {
+  --color-persona-tinte: var(--persona-tinte);
+  --color-persona-500: var(--persona-500);
+  --color-persona-solido: var(--persona-solido);
+  --color-persona-texto: var(--persona-texto);
+}
+
+@layer base {
+  /* Valor por defecto neutro: si algo usa bg-persona-* fuera de un scope [data-persona],
+   * que caiga en un neutro reconocible en vez de en "transparent"/CSS inválido. */
+  :root {
+    --persona-tinte: var(--color-superficie-alt);
+    --persona-500: var(--color-suave);
+    --persona-solido: var(--color-texto);
+    --persona-texto: var(--color-texto);
+  }
+
+  [data-persona="aura"] {
+    --persona-tinte: var(--color-aura-50);
+    --persona-500: var(--color-aura-500);
+    --persona-solido: var(--color-aura-700);
+    --persona-texto: var(--color-aura-900);
+  }
+
+  [data-persona="alan"] {
+    --persona-tinte: var(--color-alan-50);
+    --persona-500: var(--color-alan-500);
+    --persona-solido: var(--color-alan-700);
+    --persona-texto: var(--color-alan-900);
+  }
+}
