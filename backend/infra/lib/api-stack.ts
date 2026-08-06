@@ -3,12 +3,16 @@ import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import * as s3 from "aws-cdk-lib/aws-s3";
 import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
 import { Construct } from "constructs";
 import * as path from "node:path";
 
 export interface ApiStackProps extends StackProps {
   tablaTitular: dynamodb.Table;
+  tablaConfiguracion: dynamodb.Table;
+  tablaEventoOperativo: dynamodb.Table;
+  bucketConfiguracion: s3.Bucket;
 }
 
 /**
@@ -16,8 +20,8 @@ export interface ApiStackProps extends StackProps {
  * /chat vía un "plan de uso" (usage plan + throttling por clave), que es un
  * mecanismo de API Gateway REST — HTTP API v2 no lo tiene en esos términos.
  *
- * Esta pasada monta /api/v1/health, las 4 rutas de auth y /onboarding —
- * el resto de las rutas de ARQ-01-D3 se añade handler por handler,
+ * Esta pasada monta /api/v1/health, las 4 rutas de auth, /onboarding y
+ * /chat — el resto de las rutas de ARQ-01-D3 se añade handler por handler,
  * repitiendo el mismo patrón (NodejsFunction sin Docker, un rol de
  * ejecución por función, ARQ-01-D5).
  */
@@ -87,18 +91,54 @@ export class ApiStack extends Stack {
     auth.addResource("logout").addMethod("POST", new apigateway.LambdaIntegration(logout));
 
     v1.addResource("onboarding").addMethod("POST", new apigateway.LambdaIntegration(onboarding));
+
+    // API key de Groq: secreto externo (no generado por CDK, a diferencia
+    // de SessionSecret). El placeholder que CDK genera al crearlo se
+    // reemplaza a mano tras el deploy (aws secretsmanager put-secret-value
+    // con la key real, nunca escrita en código ni en este repo).
+    const groqApiKey = new secretsmanager.Secret(this, "GroqApiKey", {
+      description: "API key de Groq (motor conversacional, CAPSULA_CONTEXTO.md). Placeholder hasta poblarla a mano.",
+    });
+
+    const chat = this.crearHandler(
+      "ChatHandler",
+      "chat.ts",
+      {
+        TABLA_TITULAR: props.tablaTitular.tableName,
+        TABLA_CONFIGURACION: props.tablaConfiguracion.tableName,
+        TABLA_EVENTO_OPERATIVO: props.tablaEventoOperativo.tableName,
+        BUCKET_CONFIGURACION: props.bucketConfiguracion.bucketName,
+        GROQ_API_KEY_ARN: groqApiKey.secretArn,
+        ...entornoDeSesion,
+      },
+      // API Gateway REST tiene un tope duro de integración de 29s — el
+      // handler debe terminar antes. El presupuesto de Groq (RN-02.9,
+      // incl. el reintento de FE-06) ya está acotado a 20s total en
+      // groq.ts; 28s deja margen para las lecturas de DynamoDB/S3 alrededor
+      // sin arriesgar el corte de API Gateway.
+      Duration.seconds(28),
+    );
+    props.tablaTitular.grantReadWriteData(chat);
+    props.tablaConfiguracion.grantReadData(chat);
+    props.tablaEventoOperativo.grantWriteData(chat);
+    props.bucketConfiguracion.grantRead(chat);
+    groqApiKey.grantRead(chat);
+    secretoDeSesion.grantRead(chat);
+
+    v1.addResource("chat").addMethod("POST", new apigateway.LambdaIntegration(chat));
   }
 
   private crearHandler(
     id: string,
     archivoRelativo: string,
     environment?: Record<string, string>,
+    timeout: Duration = Duration.seconds(5),
   ): NodejsFunction {
     return new NodejsFunction(this, id, {
       entry: path.join(__dirname, "..", "..", "src", "handlers", archivoRelativo),
       handler: "handler",
       runtime: Runtime.NODEJS_22_X, // CAPSULA_CONTEXTO.md: "AWS Lambda (Node 22 / TypeScript)"
-      timeout: Duration.seconds(5),
+      timeout,
       environment,
     });
   }

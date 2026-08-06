@@ -5,6 +5,11 @@ import { ApiStack } from "../lib/api-stack";
 const app = new App();
 
 const dataStack = new DataStack(app, "AlanAuraDataStack");
-new ApiStack(app, "AlanAuraApiStack", { tablaTitular: dataStack.tablaTitular });
+new ApiStack(app, "AlanAuraApiStack", {
+  tablaTitular: dataStack.tablaTitular,
+  tablaConfiguracion: dataStack.tablaConfiguracion,
+  tablaEventoOperativo: dataStack.tablaEventoOperativo,
+  bucketConfiguracion: dataStack.bucketConfiguracion,
+});
 
 app.synth();
