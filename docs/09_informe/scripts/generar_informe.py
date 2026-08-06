@@ -417,15 +417,28 @@ def generar(pdf=True):
     if not nav:
         print("  !!  no hay Chrome ni Edge: el PDF no se genera")
         return 0
+    # BUG REAL, corregido el 2026-08-06. Aqui se comprobaba `os.path.exists(SALIDA_PDF)`,
+    # que es cierto en cuanto existe un PDF de CUALQUIER corrida anterior. Si el archivo
+    # esta bloqueado --basta con tenerlo abierto en un visor, que es justo lo que hace
+    # quien va a revisarlo-- Chrome no lo sobrescribe, y el generador informaba `OK` sobre
+    # el PDF viejo. Se detecto con un informe cuyo .md iba 31 minutos por delante de su
+    # PDF, ya commiteado. Ahora se compara la marca de tiempo: existir no es haberse
+    # escrito.
+    antes = os.path.getmtime(SALIDA_PDF) if os.path.exists(SALIDA_PDF) else 0
     cmd = [nav, "--headless", "--disable-gpu", "--no-pdf-header-footer",
            f"--print-to-pdf={SALIDA_PDF}", "file:///" + SALIDA_HTML.replace("\\", "/")]
     r = subprocess.run(cmd, capture_output=True, timeout=180)
-    if os.path.exists(SALIDA_PDF):
-        print(f"  OK  PDF   {os.path.basename(SALIDA_PDF)}  "
-              f"({os.path.getsize(SALIDA_PDF)//1024} kB, con {os.path.basename(nav)})")
-    else:
+    if not os.path.exists(SALIDA_PDF):
         print(f"  !!  el navegador no produjo el PDF: {r.stderr.decode('utf-8', 'ignore')[:200]}")
         return 1
+    if os.path.getmtime(SALIDA_PDF) <= antes:
+        print("  !!  EL PDF NO SE REESCRIBIO: quedo la version anterior, que ya no cuadra")
+        print("      con el .md. Causa habitual: el archivo esta abierto en un visor y")
+        print("      Windows lo bloquea. Cierralo y vuelve a generar.")
+        print(f"      {r.stderr.decode('utf-8', 'ignore')[:200]}")
+        return 1
+    print(f"  OK  PDF   {os.path.basename(SALIDA_PDF)}  "
+          f"({os.path.getsize(SALIDA_PDF)//1024} kB, con {os.path.basename(nav)})")
     return 0
 
 
