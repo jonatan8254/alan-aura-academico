@@ -64,13 +64,25 @@ lo lea debe saber que el estado real es este README, no ese archivo.
   decidió no implementarlo. No proponer un conmutador ni tokens oscuros salvo que se reabra
   explícitamente.
 
+### Estado tras el deploy del backend (2026-08-06) — si vienes a verificar, lee esto primero
+
+**El backend está desplegado con los dos bugs del chat corregidos y verificado en producción —
+no hace falta volver a probarlo.** Detalle completo, con la evidencia de la auditoría
+post-deploy, en `backend/CONTINUAR_AQUI.md`. Dos cosas que afectan directamente a lo que ves en
+pantalla:
+
+- **El chat ya no pierde memoria a la mitad de camino ni pinta burbujas vacías.** Ambos bugs
+  —uno de contrato (`history` capaba a 4 mensajes en vez de 8), uno del proveedor (`gpt-oss-20b`
+  agotaba tokens razonando y devolvía texto vacío— están corregidos en el backend y reforzados en
+  el frontend (`Chat.tsx`: nunca pinta una respuesta vacía, la trata como fallo con reintento).
+- **Los prompts son v3**, con las cláusulas `C-11`/`C-12`/`C-13` nuevas y sin las tres fallas que
+  encontraron las sondas de v2 (Markdown crudo, género incorrecto de Aura, síntomas listados tras
+  rechazar un diagnóstico). Verificado con 11 llamadas contra el API Gateway real tras el deploy.
+
 ### Pendientes conocidos
 
-- **Sin desplegar a Vercel todavía.** Todo lo verificado fue `npm run dev` local contra el API
-  Gateway real; el deploy en sí (con las variables de entorno / `vercel.json` en producción) no ha
-  ocurrido.
+- **Sin desplegar a Vercel todavía.** El único pendiente operativo de todo el proyecto en este
+  momento. Todo lo demás —backend y frontend— está verificado en producción.
 - Un hueco de contrato que el frontend tuvo que recortar en pantalla (`recursos` de
-  `ChatResponseV1`, P-12) — detalle completo en `backend/CONTINUAR_AQUI.md`. Los tres bugs de
-  backend y el `GET /admin/chat-access` que faltaban ya están cerrados (2026-08-06): P-16
-  (`Disponibilidad.tsx`) ya consume `consultarChatAccess` en vez de `/admin/metricas`, y muestra
-  el bloque de auditoría real («último cambio: alias · fecha»).
+  `ChatResponseV1`, P-12) — diferido a fase posterior por decisión explícita, detalle en
+  `backend/CONTINUAR_AQUI.md`.
