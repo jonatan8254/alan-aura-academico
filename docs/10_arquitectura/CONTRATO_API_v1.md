@@ -43,6 +43,13 @@ tiene memoria del turno anterior (rompe `RN-02.2`: cápsula + persona + hasta 4 
 turno). No hay persistencia server-side (`RF-13`): el cliente reenvía el historial en cada turno.
 Nuevo tipo `ChatIntercambio { rol, texto }`.
 
+**Actualización 2026-08-06 (quinta) — `ReiniciarPerfilRequest` gana `confirmacion`.**
+`ECU-11 RE-01`/`FE-03` exigen confirmación **explícita** del usuario antes de borrar la cápsula
+("confirmación ausente o petición mal formada" → `400`) — el request estaba vacío. `confirmacion:
+true` literal, mismo patrón que `consentimientoBase`. `RevocarPersonalizacionRequest` (CU-12) se
+queda vacío a propósito: su `FE-03` no liga el `400` a una confirmación ausente, solo a "petición
+mal formada" — asimetría real entre las dos ECU, no un descuido.
+
 ---
 
 | Método | Ruta | Origen | Auth | Request | Response | Códigos |

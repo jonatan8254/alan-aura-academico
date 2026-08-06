@@ -132,10 +132,19 @@ export interface ChatResponseV1 {
 export type ChatStatus = 200 | 400 | 401 | 403 | 409 | 429 | 502 | 504;
 
 /**
- * POST /api/v1/perfil/reiniciar (CU-11). Sin cuerpo de request.
+ * POST /api/v1/perfil/reiniciar (CU-11).
  * 400/403/500 añadidos tras la verificación exhaustiva (ECU-11 FE-02/03/04).
+ *
+ * confirmacion añadido: ECU-11 RE-01/FE-03 exigen confirmación EXPLÍCITA
+ * del usuario ("confirmación ausente o petición mal formada" → 400) — a
+ * diferencia de CU-12 (revocar), cuyo FE-03 no liga el 400 a una
+ * confirmación ausente, solo a "petición mal formada". Literal `true`,
+ * mismo patrón que consentimientoBase: el request no se puede armar sin
+ * confirmar.
  */
-export type ReiniciarPerfilRequest = Record<string, never>;
+export interface ReiniciarPerfilRequest {
+  confirmacion: true;
+}
 export interface ReiniciarPerfilResponse {
   estado: "caracterizacion_reiniciada";
 }
