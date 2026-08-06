@@ -1,5 +1,5 @@
 # CDR-01 — Acta de Revisión Crítica del Diseño (CDR)
-**ID:** CDR-01 · **Familia:** CDR (compuerta ICONIX entre el diseño detallado y el código) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-08-04 · **Versión:** v1.8 (**el líder determina el veredicto: `Aceptado con verificación de retrabajo`**, tras cerrarse en `SD-45`/`SD-46` los cuatro Mayores y los tres Moderados de la cuarta verificación; ver §13). v1.7 (cuarta verificación independiente y adversarial de `SD-44`; incluye en la misma versión las tres correcciones del acta; ver §8-octies y §13). v1.6 (tercera verificación independiente y adversarial del retrabajo `SD-43`; ver §8-septies y §13). v1.5 (segunda verificación independiente y adversarial del retrabajo `SD-40…SD-42`; ver §8-sexies y §13). v1.4 (verificación independiente y adversarial del retrabajo de `SD-39`; ver §8-quinquies y §13). v1.3 (SD-39: §6 deja de declarar la regla #2 y la revisión visual como no ejecutadas — ambas se cerraron en el retrabajo). v1.2 (SD-39: el retrabajo queda **aplicado y registrado** —§8-ter y §8-quater—, con dos etiquetas y la aritmética de `H-01` corregidas; **el veredicto no se toca**: lo determina la verificación independiente). v1.1 (cobertura completa: 14/14 especificaciones, 168/168 obligaciones emparejadas, los 8 validadores sobre los 31 `.puml`, y tres comprobaciones cruzadas nuevas. **7 hallazgos nuevos, uno de ellos Mayor**; `H-01` crece de 12 a 18 instancias). v1.0 (compuerta inicial, 13 hallazgos) · **Estado:** **CERRADA** (compuerta determinada por el líder el 2026-08-05).
+**ID:** CDR-01 · **Familia:** CDR (compuerta ICONIX entre el diseño detallado y el código) · **Hogar:** `docs/07_casos_uso/` · **Fecha:** 2026-08-04 · **Versión:** v1.9 (verificación independiente acotada del material nuevo de `SD-45`/`SD-46`; ver §8-nonies). v1.8 (**el líder determina el veredicto: `Aceptado con verificación de retrabajo`**, tras cerrarse en `SD-45`/`SD-46` los cuatro Mayores y los tres Moderados de la cuarta verificación; ver §13). v1.7 (cuarta verificación independiente y adversarial de `SD-44`; incluye en la misma versión las tres correcciones del acta; ver §8-octies y §13). v1.6 (tercera verificación independiente y adversarial del retrabajo `SD-43`; ver §8-septies y §13). v1.5 (segunda verificación independiente y adversarial del retrabajo `SD-40…SD-42`; ver §8-sexies y §13). v1.4 (verificación independiente y adversarial del retrabajo de `SD-39`; ver §8-quinquies y §13). v1.3 (SD-39: §6 deja de declarar la regla #2 y la revisión visual como no ejecutadas — ambas se cerraron en el retrabajo). v1.2 (SD-39: el retrabajo queda **aplicado y registrado** —§8-ter y §8-quater—, con dos etiquetas y la aritmética de `H-01` corregidas; **el veredicto no se toca**: lo determina la verificación independiente). v1.1 (cobertura completa: 14/14 especificaciones, 168/168 obligaciones emparejadas, los 8 validadores sobre los 31 `.puml`, y tres comprobaciones cruzadas nuevas. **7 hallazgos nuevos, uno de ellos Mayor**; `H-01` crece de 12 a 18 instancias). v1.0 (compuerta inicial, 13 hallazgos) · **Estado:** **CERRADA** (compuerta determinada por el líder el 2026-08-05).
 **Modalidad:** completa — las diez reglas, con ciclo de deliberación. Sesión de dos roles: el orquestador conduce, registra y recomienda; el **líder del proyecto** determina (IEEE 1028 §5.2.1) y ejerce la regla #4 por el equipo.
 **Generado con:** skill `iconix-cdr-review`. **Naturaleza:** revisión **técnica** (IEEE 1028 cláusula 5), no inspección. El cliente no participa: Rosenberg 4545 lo excluye expresamente del CDR.
 **Paquete revisado:** el diseño detallado del subproyecto «Alan & Aura Académico» al cierre de `SD-32` — modelo de clases de diseño, 14 diagramas de secuencia y sus artefactos derivados.
@@ -901,6 +901,60 @@ resuelven sus clases concretas; R3 evade `TVI-02`, y el instrumento no sostiene
 la generalidad que su verde sugiere. El freno no se viola al revisar material
 nuevo, pero tampoco autoriza cerrar un Mayor que el material nuevo conserva.
 
+### 8-nonies. Verificación independiente acotada de `SD-45`/`SD-46` (v1.9)
+
+**Alcance.** Solo se verifican (1) el rediseño de `DS-04`, `DS-06`, `DS-10`,
+`DS-11` y `DS-12` contra las filas ECU afectadas y (2) el comprobador
+`barrido_desenlaces.py` con sus 17 *fixtures* y sabotaje nuevo sobre copias. No
+se reabre la auditoría del paquete ni se revisan `CVI-04`, `ECU-06 FE-07`, la
+gobernanza o los demás recuentos canónicos.
+
+#### Segmento 1 — los cuatro `loop` y las notas de `DS-06`
+
+**Resultado conductual: sostenido.** En `DS-04:72`, `DS-11:83` y `DS-12:81`
+el `loop` abre exactamente en el mensaje del Actor que realiza el paso 2; en
+`DS-10:94-111` incluye además `solicitarConfirmacionDeLaAccion()` y
+`nombrarElEfectoSobreLasConversacionesAntesDeConfirmar()`, que son el lado del
+Sistema del paso 2 de `ECU-10`. `RI-1` quedó corregido. Las cuatro guardas
+nombran las dos respuestas y sus mensajes permiten confirmar o cancelar; las
+cancelaciones `FA-03`/`FA-02` están fuera del bucle y alcanzan un `alt` cuyo
+operando de éxito contiene toda la continuación. `RI-2` quedó corregido. No se
+encontraron mensajes perdidos, duplicados o desplazados ni ramas de error que
+caigan al sufijo de éxito.
+
+| # | Severidad IEEE 1028 §6.8.3 | Categoría §6.8.2 | Ubicación | Evidencia y disposición |
+|---|---|---|---|---|
+| **`VRI-01`** | **Menor** | **Inconsistent** | `DS-06:156-157,170-173`; `DS-12:109-112,146-155` | La conducta vigente es correcta, pero las notas no convergieron: `DS-06` aún dice que `FE-07` vuelve al paso 4 y que es una discrepancia de la ECU, aunque `ECU-06 FE-07` ya vuelve al paso 2; `DS-12` aún declara una «aproximación» inmediatamente antes de afirmar que la cancelación es una nueva invocación y que la reentrada es exacta. Retirar o reescribir esas afirmaciones históricas; no afecta el flujo ejecutable del diagrama. |
+
+**Evidencia ejecutada.** Extractor independiente sobre los 14 `.puml`:
+**283 mensajes** (`12/16/21/23/24/49/26/13/13/21/19/17/16/13`). Balance de
+fragmentos en los cinco DS: **5/5 sin aperturas ni cierres huérfanos**. Validador
+de secuencia con cada `DR` y `ECU`: **14/14, 0 errores y 11 advertencias**; la
+advertencia adicional de `DS-12` es el falso positivo declarado sobre tres
+autollamadas que no comparten camino.
+
+#### Segmento 2 — comprobador reescrito
+
+**Resultado: la regresión versionada pasa, pero no agota el dialecto.**
+`--autoprueba` ejecutó los **17/17** *fixtures* con el resultado esperado; el
+barrido basal dio **R1 = 0, R2 = 0**. Sobre una fuente sintética fuera del
+repositorio se introdujo un `actor "Usuario adulto"` sin alias y, después de un
+`break` interno en un `loop`, la acción no acotada
+`"Usuario adulto" -> Pantalla : cerrar la operacion`. El validador de secuencia
+aceptó el sabotaje con **0 errores y 0 advertencias**, pero el comprobador dio
+**R2 = 0**.
+
+| # | Severidad IEEE 1028 §6.8.3 | Categoría §6.8.2 | Ubicación | Evidencia y disposición |
+|---|---|---|---|---|
+| **`VRI-02`** | **Moderado** | **Risk-prone** | `barrido_desenlaces.py:45-46,123-145` | **Falso negativo nuevo:** `ACTOR` solo reconoce emisores `ACT_\w+`; PlantUML también admite actores citados con espacios, que `MENSAJE` tampoco reconoce. Generalizar la detección a participantes declarados como `actor` —con o sin alias— y versionar este sabotaje. El 17/17 demuestra regresión sobre los defectos conocidos, no suficiencia general. |
+
+**Pronunciamiento acotado.** No se hallaron Críticos ni Mayores. Esta
+verificación **sostiene** —no determina— `Aceptado con verificación de
+retrabajo`; el límite declarado de **IEEE 1028 §6.5.6.5 para `SD-45`/`SD-46`
+queda cubierto por esta verificación independiente acotada**. `VRI-01` y
+`VRI-02` no alteran la conducta de los cuatro rediseños ni obligan a reabrir el
+veredicto determinado por el líder en §13.
+
 ## 9. Verificaciones que salieron limpias — y se dicen
 
 Una revisión que solo lista defectos no informa de lo que sí se comprobó.
@@ -1080,6 +1134,7 @@ informes declaran no mecanizable.
 
 | Versión | Fecha | Autor | Cambio realizado |
 |---|---|---|---|
+| v1.9 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Segmento 1 — verificación acotada del rediseño de los cuatro `loop`.** Contrastados `DS-04`, `DS-10`, `DS-11` y `DS-12` contra sus filas ECU: el paso 2 y, en `DS-10`, sus dos mensajes del Sistema están dentro; las cancelaciones son alcanzables fuera del bucle y la continuación completa queda en el éxito. `DS-06` conserva el `loop` genuino. Recuento independiente: 283 mensajes; balance 5/5; validador 14/14 con 0 errores y 11 advertencias. Se registra `VRI-01` (Menor, notas desactualizadas de `DS-06`/`DS-12`).<br>**Segmento 2 — comprobador reescrito.** `--autoprueba`: 17/17; basal R1=0/R2=0. Sabotaje nuevo fuera del repositorio con actor citado y espacios: el validador de secuencia da 0/0, pero el barrido omite la acción no acotada y da R2=0 (`VRI-02`, Moderado). **Cero Críticos y cero Mayores:** la verificación sostiene el veredicto determinado y cubre el límite de §6.5.6.5 declarado para `SD-45`/`SD-46`; §13 no se modifica. |
 | v1.8 | 2026-08-05 | J. Sánchez, líder | **Determinación del veredicto — no es una verificación más, es la decisión de la compuerta** (`IEEE 1028 §5.2.1`: el acta propone, el líder determina). **`ACEPTADO CON VERIFICACIÓN DE RETRABAJO`**, con **cero Críticos y cero Mayores**. Entre la propuesta de `v1.7` y esta determinación se cerraron: `CVI-03` y `CVI-01`/`CVI-02` en `SD-45`; `RI-1`, `RI-2` y `RI-3` —tres defectos que la propia corrección de `CVI-03` introdujo, hallados por una revisión interna con dos modelos distintos—; y los dos Moderados restantes en `SD-46`: `CVI-04`, regenerando el `plantuml-src` embebido **sin PlantUML** y comprobándolo por ida y vuelta, y `ECU-06 FE-07`, por su skill dueña. **Los Moderados no se difirieron: se cerraron.** **Límite declarado:** `SD-45` y `SD-46` los aplicó el mismo modelo que el retrabajo anterior y no pasaron por verificación independiente formal — sí por revisión interna, que encontró tres defectos reales—; `§6.5.6.5` no queda plenamente satisfecho para ellos, y el líder determina conociéndolo, con el **freno de Wiegers** activo desde la tercera pasada. **La compuerta entre el diseño detallado y el código queda cerrada; siguiente hito, `ARQ-01`.** |
 | v1.7 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Segmento 1 — cuarta verificación adversarial de `c6b3351`/`6aa158f`.** Se confirma el cierre concreto de `TVI-01`, `TVI-03`, `TVI-04`, R4, `TVI-05` y `TVI-06`; se refuta R3 como solución de `TVI-02` (`CVI-03`, Mayor): cinco `loop` conservan una reentrada incompatible con una o más de sus ECU —incluido el caso preexistente de `DS-06`— y seis CP adicionales no fijan el retorno exacto. El comprobador se provoca sobre copias con casos a–f y exhibe falsos negativos/positivos (`CVI-01`) más una ruta absoluta contra la independencia (`CVI-02`). `SD-44` se reconoce como replanteo real y material nuevo, no parche disfrazado, pero el paquete no converge y el veredicto propuesto sigue en **Reinspección requerida**.<br>**Segmento 2 — no regresión y correcciones del acta.** Recuentos: 283 mensajes; robustez 262 = 15/38/150/59; `MC-01` 43/201/51/80 y 193 operaciones distintas; 181 CP. Validadores: robustez 0 errores, secuencia 0 errores/10 advertencias, procedencia sin discrepancias, barrido basal 0/0 con alcance refutado. El SVG visible cambia un token, pero su `plantuml-src` queda obsoleto (`CVI-04`). Se actualiza §10, se corrige 7→8 ramas refutadas, `H-24` queda cerrado y ejercitado, y se definen las condiciones de entrada de los tres estados. GPT-5/Codex es distinto de Claude Opus, pero solo el equipo humano satisface plenamente IEEE 1028 §6.5.6.5. |
 | v1.6 | 2026-08-05 | OpenAI Codex (GPT-5), revisor | **Segmento 1 — tercera verificación adversarial de `a23f9c4` (`SD-43`).** Se contrastan 13/13 ramas: 5 se confirman y 8 se refutan; `DS-04/11 FE-04` todavía caen al éxito, seis retornos no vuelven al inicio exacto del paso de su ECU y `SD-43-H1` se confirma en sustancia con el recuento corregido a tres `break` internos + tres externos. Se registran cuatro Mayores (`TVI-01`, `TVI-02`, `TVI-04`, `TVI-07`) y tres Menores (`TVI-03`, `TVI-05`, `TVI-06`); el veredicto propuesto sigue en **Reinspección requerida** y se activa el freno de Wiegers: el material no converge y debe replantearse el artefacto/alcance antes de otra presentación.<br>**Segmento 2 — instrumental y no regresión ejecutados.** `SVI-02` se confirma mediante sabotaje con tres detecciones y controles sin falsos positivos; `SVI-03` reproduce 21/3/7 y deja dos registros históricos adicionales por rectificar. Recuentos: 283 mensajes, robustez 262 = 15/38/150/59, `MC-01` 43/201/51/80, 193 operaciones distintas y 181 CP. Validadores: robustez 14/14 en 0 errores, secuencia 14/14 en 0 errores y 10 advertencias, procedencia sin discrepancias. GPT-5/Codex es distinto de Claude Opus, pero solo el equipo humano satisface plenamente IEEE 1028 §6.5.6.5. |
