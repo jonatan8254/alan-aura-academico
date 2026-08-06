@@ -41,13 +41,16 @@ de publicar un prompt nuevo.
    muestra el bloque de auditoría real. Verificado contra AWS: se deshabilitó y volvió a habilitar
    el chat desde la pantalla, el registro mostró el alias correcto (no un UUID), y el chat quedó
    reactivado al terminar.
-2. **`ChatResponseV1` no transporta recursos de ayuda.** Sigue abierto. El backend carga
+2. **`ChatResponseV1` no transporta recursos de ayuda.** Diferido a una fase posterior a la Fase 3
+   — decisión explícita del usuario (2026-08-06), no un olvido: por ahora la contención se resuelve
+   con el texto libre de `mensaje` («no puedo atender esto, busca ayuda humana»), sin tarjetas
+   estructuradas de líneas telefónicas. El backend ya carga
    `ConfigSeguridad.contencion.recursos: ReferenciaDeDerivacion[]` de S3
-   (`config/ayuda/contencion.json`), pero `chat.ts` solo devuelve `configSeguridad.contencion.mensaje`
-   en el `safety_fallback`. El catálogo, además, está vacío hoy (decisión deliberada, diferida a
-   fase posterior). Si se llena el catálogo, `ChatResponseV1` necesita un campo
-   `recursos?: RecursoDeAyuda[]` para que P-12 pueda pintar tarjetas estructuradas en vez de
-   depender de que el texto libre de `mensaje` los mencione.
+   (`config/ayuda/contencion.json`), pero `chat.ts` no lo devuelve — el catálogo, además, sigue
+   vacío. **Cuando se retome:** `ChatResponseV1` necesita un campo `recursos?: RecursoDeAyuda[]`
+   para que P-12 pinte tarjetas estructuradas en vez de depender de que el texto libre las
+   mencione; y hay que llenar el catálogo, que es una decisión de contenido (qué líneas, por
+   entorno) tanto como de código.
 
 ## Tres correcciones al prompt (v2), verificadas contra Groq real el 2026-08-06
 
