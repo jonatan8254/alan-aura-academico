@@ -96,6 +96,20 @@ type EstadoDelTurno = "reposo" | "esperando" | "fallido";
 const nuevoId = () => crypto.randomUUID();
 
 /**
+ * El saludo de apertura del mockup p10. Es `origen: "local"` — nunca entra en el `history`
+ * que va al modelo, porque es un turno que el personaje no dijo.
+ */
+function saludoDe(character: Character, alias?: string): Turno {
+  return {
+    id: nuevoId(),
+    clase: "personaje",
+    origen: "local",
+    texto: `Hola${alias ? `, ${alias}` : ""}. Me alegra que estés aquí. ¿Cómo llegas hoy?`,
+    character,
+  };
+}
+
+/**
  * `history` = los últimos 4 turnos REMOTOS, planos, más reciente al final.
  *
  * CUATRO ELEMENTOS, no cuatro pares: el handler responde 400 a `history.length > 4`, así que
@@ -120,7 +134,13 @@ export function Chat() {
   const navegar = useNavigate();
 
   const [personaje, setPersonaje] = useState<Character | null>(sesion?.character ?? null);
-  const [mensajes, setMensajes] = useState<Turno[]>([]);
+  // Si el acompañante ya venía elegido (se acaba de terminar el onboarding, o la pista lo
+  // guarda), la conversación abre con el saludo en vez de con una pantalla en blanco. Solo
+  // en el arranque: llegar sin `character` lleva al selector, y el saludo lo pone la
+  // elección.
+  const [mensajes, setMensajes] = useState<Turno[]>(() =>
+    sesion?.character ? [saludoDe(sesion.character, sesion.alias)] : [],
+  );
   const [borrador, setBorrador] = useState("");
   const [estadoDeSesion, setEstadoDeSesion] = useState<EstadoDeSesion>(
     sesion?.character ? "abierta" : "eligiendo_personaje",
@@ -162,13 +182,7 @@ export function Chat() {
     setMensajes((previos) => [
       ...previos,
       primeraVez
-        ? {
-            id: nuevoId(),
-            clase: "personaje" as const,
-            origen: "local" as const,
-            texto: `Hola${sesion?.alias ? `, ${sesion.alias}` : ""}. Me alegra que estés aquí. ¿Cómo llegas hoy?`,
-            character: elegido,
-          }
+        ? saludoDe(elegido, sesion?.alias)
         : // ECU-13 §11 paso 3: «confirma el cambio al Usuario sin cerrar la Conversacion».
           {
             id: nuevoId(),
@@ -188,18 +202,7 @@ export function Chat() {
     setBorrador("");
     setEstadoDelTurno("reposo");
     setEstadoDeSesion("abierta");
-    if (personaje) {
-      const ficha = fichaDe(personaje);
-      setMensajes([
-        {
-          id: nuevoId(),
-          clase: "personaje",
-          origen: "local",
-          texto: `Empecemos de nuevo. ${ficha.nombre} te acompaña. ¿Cómo llegas hoy?`,
-          character: personaje,
-        },
-      ]);
-    }
+    if (personaje) setMensajes([saludoDe(personaje, sesion?.alias)]);
   }
 
   async function despachar(turno: TurnoPendiente) {

@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { espiarFetch, PISTA_USUARIO, renderConSesion } from "@/pruebas/dobles";
 import { leerPista } from "@/sesion/pista";
@@ -22,6 +22,21 @@ import { GestionDeCuenta } from "./GestionDeCuenta";
 
 const ruta = () => screen.getByTestId("ruta-actual").textContent;
 const dialogo = () => screen.getByRole("dialog");
+
+/**
+ * Eliminar la cuenta sale con una recarga completa, no con `navigate`: la guarda de /cuenta/
+ * ganaba la carrera al limpiar la pista y aterrizaba en «Necesitas iniciar sesión», que es un
+ * reproche a alguien que acaba de borrar su cuenta. jsdom no implementa la navegación, así
+ * que se espía.
+ */
+let irA: ReturnType<typeof vi.fn>;
+beforeEach(() => {
+  irA = vi.fn();
+  Object.defineProperty(window, "location", {
+    writable: true,
+    value: { ...window.location, assign: irA },
+  });
+});
 
 describe("P-13 · gestión de cuenta", () => {
   it("ninguna de las tres acciones dispara petición sin confirmar", async () => {
@@ -55,7 +70,7 @@ describe("P-13 · gestión de cuenta", () => {
     await userEvent.click(screen.getByRole("button", { name: "Eliminar" }));
     await userEvent.click(within(dialogo()).getByRole("button", { name: "Sí, eliminar" }));
 
-    await waitFor(() => expect(ruta()).toBe("/?motivo=cuenta_eliminada"));
+    await waitFor(() => expect(irA).toHaveBeenCalledWith("/?motivo=cuenta_eliminada"));
     expect(llamadas).toHaveLength(1);
     expect(llamadas[0]!.cuerpo).toEqual({ confirmacion: true });
     // El orden importa: si se navegara antes de limpiar, SoloInvitados rebotaría a /chat/ y
@@ -80,6 +95,7 @@ describe("P-13 · gestión de cuenta", () => {
 
     await waitFor(() => expect(screen.queryByText(/parte de tus datos/i)).not.toBeNull());
     expect(ruta()).toBe("/cuenta/");
+    expect(irA).not.toHaveBeenCalled();
     expect(leerPista()).not.toBeNull();
     expect(screen.queryByRole("button", { name: "Reintentar" })).not.toBeNull();
   });

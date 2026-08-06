@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 
 import { cerrarSesion } from "@/api/endpoints";
 import { Button } from "@/components/ui/button";
@@ -36,7 +35,6 @@ export function BotonDeCerrarSesion({
   etiqueta?: string;
 }) {
   const { escribirSesion } = useSesion();
-  const navegar = useNavigate();
   const [saliendo, setSaliendo] = useState(false);
 
   async function salir() {
@@ -46,7 +44,12 @@ export function BotonDeCerrarSesion({
     // del 401 (ver cliente.ts) precisamente para que este camino no sea secuestrado.
     await cerrarSesion();
     escribirSesion(null);
-    navegar(destino, { replace: true });
+    // Recarga completa y no `navigate`, por el mismo motivo que la eliminación de cuenta:
+    // al limpiar la pista, la guarda de la ruta desde la que se sale se re-renderiza y su
+    // `<Navigate>` gana la carrera, añadiendo un `?motivo=sesion_requerida` que le reprocha
+    // no haber iniciado sesión a quien acaba de cerrarla a propósito. Y salir es, de todas
+    // formas, el momento correcto para tirar todo el estado en memoria.
+    window.location.assign(destino);
   }
 
   return (

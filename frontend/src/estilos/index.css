@@ -39,7 +39,13 @@
   --card-foreground: var(--color-texto);
   --popover: var(--color-superficie);
   --popover-foreground: var(--color-texto);
-  --primary: var(--color-sistema);
+  /* Fase 3 — el primario apuntaba al acento «serenidad», y DIS-01 §2.4 lo reserva a
+     «elementos de marca neutrales (enlaces, foco, encabezados de sistema)»: no a los botones.
+     El style tile y los mockups pintan el primario en el neutro de texto, y con el valor
+     anterior la MISMA acción salía oscura en el encabezado (que usa `bg-texto` a mano) y azul
+     en el hero de P-01, en la misma pantalla. `--ring` sí se queda en `sistema`, que es
+     exactamente el uso de foco que §2.4 describe. */
+  --primary: var(--color-texto);
   --primary-foreground: var(--color-superficie);
   --secondary: var(--color-superficie-alt);
   --secondary-foreground: var(--color-texto);

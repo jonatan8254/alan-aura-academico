@@ -77,11 +77,18 @@ export function GestionDeCuenta() {
     const r = await cmdEliminar.ejecutar(undefined);
     cerrar();
     if (!r.ok) return; // FE-04 (500): NO se navega ni se toca la pista. Ver la nota de abajo.
-    // ORDEN OBLIGATORIO: limpiar la pista y solo después navegar. Al revés, `SoloInvitados`
-    // ve una sesión viva en `/` y rebota a /chat/, con lo que el aviso de ECU-04 §11 paso 4
-    // no se ve nunca.
+
+    // Salida DURA, no `navigate`. Verificado en el navegador: al limpiar la pista, la guarda
+    // `RequiereSesion` que envuelve a /cuenta/ se re-renderiza y su `<Navigate>` gana la
+    // carrera, con lo que la persona aterrizaba en «Necesitas iniciar sesión para continuar»
+    // —un reproche— en vez del aviso de ECU-04 §11 paso 4. Invertir el orden no sirve:
+    // entonces `SoloInvitados` vería la sesión viva en `/` y rebotaría al chat.
+    //
+    // Una recarga completa lo cierra sin depender de cómo agrupe React las dos
+    // actualizaciones, y además es lo honesto: la cuenta ya no existe, así que todo el
+    // estado en memoria es basura y arrancar de cero es el estado correcto.
     escribirSesion(null);
-    navegar("/?motivo=cuenta_eliminada", { replace: true });
+    window.location.assign("/?motivo=cuenta_eliminada");
   }
 
   return (
