@@ -1,0 +1,14 @@
+{
+  "name": "contrato-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Contrato compartido de la API /api/v1 (ARQ-01-D3): enums, entidades y DTOs de request/response de las 13 rutas. Fuente única para backend y frontend.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

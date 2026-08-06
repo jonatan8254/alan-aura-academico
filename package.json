@@ -1,0 +1,13 @@
+{
+  "name": "alan-aura-academico",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "mock": "npm run mock --workspace backend"
+  }
+}

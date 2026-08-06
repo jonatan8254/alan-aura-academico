@@ -1,0 +1,9 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Placeholder de workspace — reemplazar con el scaffold real (Vite + React + TS + Tailwind v4 + shadcn) al iniciar el desarrollo del frontend.",
+  "dependencies": {
+    "contrato-api": "*"
+  }
+}
