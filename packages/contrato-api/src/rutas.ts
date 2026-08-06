@@ -165,8 +165,17 @@ export type RevocarPersonalizacionStatus = 200 | 400 | 401 | 403;
  * 400/403 añadidos (ECU-04 FE-02/03). El 409 original se retira: ningún
  * flujo de ECU-04 lo justifica; 500 lo reemplaza para FE-04 (cascada
  * interrumpida), por simetría con el FE-04 de ECU-11, que sí es explícito.
+ *
+ * confirmacion añadido: ECU-04 FE-03 liga el 400 a "solicitud mal formada
+ * o SIN CONFIRMACIÓN EXPLÍCITA" — mismo patrón que ReiniciarPerfilRequest.
+ * El endpoint solo cubre los pasos 2–3 (ECU-04 §17): el paso 1 —mostrar el
+ * alcance antes de confirmar— es responsabilidad del cliente, con un texto
+ * fijo; alcance en la respuesta es la confirmación de lo ya ejecutado, no
+ * una vista previa.
  */
-export type EliminarCuentaRequest = Record<string, never>;
+export interface EliminarCuentaRequest {
+  confirmacion: true;
+}
 export interface EliminarCuentaResponse {
   alcance: AlcanceDeBorrado;
 }
