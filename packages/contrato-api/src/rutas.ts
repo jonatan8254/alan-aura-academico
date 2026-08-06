@@ -68,12 +68,28 @@ export interface LogoutResponse {
 }
 export type LogoutStatus = 200 | 401;
 
-/** POST /api/v1/onboarding (CU-05, incluye character de CU-14 por ARQ-01-D3 §1) */
+/**
+ * POST /api/v1/onboarding (CU-05, incluye character de CU-14 por ARQ-01-D3 §1).
+ *
+ * esAdulto/versionDisclosure (ECU-05 paso 3) añadidos tras la verificación
+ * exhaustiva. ECU-05 §17 nunca listó el paso 3 en el endpoint (solo 5, 7, 8):
+ * FE-01 (menor de edad) no crea nada — lo resuelve el frontend solo, con
+ * POST /api/v1/auth/logout, sin llegar a llamar esta ruta. Por eso
+ * esAdulto es `true` literal, igual que consentimientoBase: el request
+ * físicamente no se puede armar para un menor.
+ *
+ * Los 4 autorreportes son opcionales (RN-01.4: "Ningún autorreporte de la
+ * caracterización es obligatorio; el usuario puede omitir los 4.
+ * Obligatorios son solo edad, capa base del consentimiento y character") —
+ * antes se declaraban obligatorios por error.
+ */
 export interface OnboardingRequest {
-  moodSelfReport: MoodSelfReport;
-  energySelfReport: EnergySelfReport;
-  conversationGoal: ConversationGoal;
-  responseStyle: ResponseStyle;
+  esAdulto: true;
+  versionDisclosure: string;
+  moodSelfReport?: MoodSelfReport;
+  energySelfReport?: EnergySelfReport;
+  conversationGoal?: ConversationGoal;
+  responseStyle?: ResponseStyle;
   character: Character;
   consentimientoBase: true;
   consentimientoPersonalizacion: boolean;
@@ -81,7 +97,8 @@ export interface OnboardingRequest {
 export interface OnboardingResponse {
   onboardingCompleto: true;
 }
-export type OnboardingStatus = 200 | 400 | 401 | 403;
+/** 403 retirado: ningún flujo de ECU-05 lo respalda para esta ruta (igual que el 409 de /cuenta/eliminar). */
+export type OnboardingStatus = 200 | 400 | 401;
 
 /**
  * POST /api/v1/chat (CU-06, CU-07 extend, CU-13 vía campo character).
@@ -89,10 +106,24 @@ export type OnboardingStatus = 200 | 400 | 401 | 403;
  * no disponible, ECU-06 FE-06) añadidos tras la verificación exhaustiva de
  * H-09/ARQ-01-D3 §N+1 punto 3 — DR-06.puml ya diseñaba estas dos pantallas
  * de error sin que el contrato las tuviera.
+ *
+ * history/clientRequestId añadidos: ECU-06 §17 los lista como campos del
+ * endpoint ("character, message, history (≤4), client_request_id") y no
+ * estaban — sin history el LLM no tiene memoria del turno anterior (rompe
+ * RN-02.2). No hay persistencia server-side (RF-13): el cliente reenvía el
+ * historial en cada turno, el servidor no lo guarda entre peticiones.
  */
+export interface ChatIntercambio {
+  rol: "usuario" | "personaje";
+  texto: string;
+}
 export interface ChatRequestV1 {
   texto: string;
   character: Character;
+  /** Los últimos intercambios de la sesión actual, más reciente al final. Máximo 4 (RN-02.2). */
+  history: ChatIntercambio[];
+  /** Idempotencia del turno ante reintento (ECU-06 FE-06/FE-07). */
+  clientRequestId: string;
 }
 export interface ChatResponseV1 {
   respuesta: string;

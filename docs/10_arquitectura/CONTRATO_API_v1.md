@@ -18,6 +18,31 @@ incorporan la corrección; **el artefacto de gobernanza `ARQ-01_diseno_fisico.md
 —sigue con su tabla original— y su propio dueño debe decidir si registra esta corrección con un
 `SD-*` formal, como es el ritual del proyecto para artefactos cerrados.
 
+**Actualización 2026-08-06 (segunda) — el hueco de la declaración de edad, resuelto.** `ECU-05 §17`
+nunca listó el paso 3 (declarar edad) como parte de `POST /onboarding/` — solo los pasos 5, 7 y 8. Y
+`FE-01` (menor de edad) no crea nada: "el Sistema cierra la sesión sin esperar acción del Usuario".
+Se resuelve **enteramente en el frontend**: la pantalla de edad nunca llama a `/onboarding` si la
+respuesta es "menor" — llama directo a `POST /api/v1/auth/logout` (ya existente). `OnboardingRequest`
+gana `esAdulto: true` (literal, igual que `consentimientoBase`) y `versionDisclosure: string`, que
+viajan en el mismo POST final para el camino de éxito. Consecuencia: el `403` que esta tabla
+especulaba para `OnboardingStatus` **se retira** — ningún flujo de `ECU-05` lo respalda una vez que
+`FE-01` no llega al servidor (mismo patrón que el `409` sin respaldo retirado de `/cuenta/eliminar`).
+Decisión del usuario, no unilateral.
+
+**Actualización 2026-08-06 (tercera) — los 4 autorreportes pasan a opcionales.**
+`OnboardingRequest` los declaraba obligatorios; `RN-01.4` de `ECU-05` dice literal *"Ningún
+autorreporte de la caracterización es obligatorio; el usuario puede omitir los 4. Obligatorios son
+solo edad, capa base del consentimiento y `character`"*. Corregido en `moodSelfReport`,
+`energySelfReport`, `conversationGoal` y `responseStyle` (ahora `?:`); el mock ajustó su validación
+en consecuencia.
+
+**Actualización 2026-08-06 (cuarta) — `ChatRequestV1` gana `history` y `clientRequestId`.**
+`ECU-06 §17` lista el *endpoint* con los campos *"character, message, history (≤4),
+client_request_id"* y solo `character`/`texto` estaban en el contrato. Sin `history` el LLM no
+tiene memoria del turno anterior (rompe `RN-02.2`: cápsula + persona + hasta 4 intercambios +
+turno). No hay persistencia server-side (`RF-13`): el cliente reenvía el historial en cada turno.
+Nuevo tipo `ChatIntercambio { rol, texto }`.
+
 ---
 
 | Método | Ruta | Origen | Auth | Request | Response | Códigos |
@@ -27,7 +52,7 @@ incorporan la corrección; **el artefacto de gobernanza `ARQ-01_diseno_fisico.md
 | `POST` | `/api/v1/auth/login` | CU-03 | No | `LoginRequest` | `LoginResponse` | `200`, `400`ⁿ, `401`, `429`ⁿ |
 | `POST` | `/api/v1/auth/login-admin` | CU-03 (admin) | No | `LoginAdminRequest` | `LoginAdminResponse` | `200`, `400`ⁿ, `401`, `429`ⁿ |
 | `POST` | `/api/v1/auth/logout` | CU-03 — cierra `RA-01` | Sí | `LogoutRequest` (vacío) | `LogoutResponse` | `200`, `401` |
-| `POST` | `/api/v1/onboarding` | CU-05 (incl. `character` de CU-14) | Sí | `OnboardingRequest` | `OnboardingResponse` | `200`, `400`, `401`, `403`ᵍ |
+| `POST` | `/api/v1/onboarding` | CU-05 (incl. `character` de CU-14) | Sí | `OnboardingRequest` | `OnboardingResponse` | `200`, `400`, `401` |
 | `POST` | `/api/v1/chat` | CU-06, CU-07 (`extend`), CU-13 (`character` por petición) | Sí | `ChatRequestV1` | `ChatResponseV1` | `200`, `400`, `401`, `403`, `409`, `429`, `502`, `504` |
 | `POST` | `/api/v1/perfil/reiniciar` | CU-11 | Sí | `ReiniciarPerfilRequest` (vacío) | `ReiniciarPerfilResponse` | `200`, `400`, `401`, `403`, `500` |
 | `POST` | `/api/v1/perfil/personalizacion/revocar` | CU-12 — cierra `RA-01` | Sí | `RevocarPersonalizacionRequest` (vacío) | `RevocarPersonalizacionResponse` | `200`, `400`, `401`, `403` |
@@ -38,8 +63,6 @@ incorporan la corrección; **el artefacto de gobernanza `ARQ-01_diseno_fisico.md
 
 ⁿ Sin cita textual en `ECU-03` (ni `FA` ni `FE` la mencionan) — higiene REST estándar
 (validación de esquema, freno de fuerza bruta), no un hueco verificado. No bloquea.
-ᵍ Alcanzable solo si `OnboardingRequest` incorpora la declaración de edad de `ECU-05` paso 3;
-hoy el DTO no tiene ese campo — hueco de contrato a resolver antes de implementar el handler.
 
 ## Notas de uso
 
