@@ -16,8 +16,8 @@ export interface ApiStackProps extends StackProps {
  * /chat vía un "plan de uso" (usage plan + throttling por clave), que es un
  * mecanismo de API Gateway REST — HTTP API v2 no lo tiene en esos términos.
  *
- * Esta pasada monta /api/v1/health y las 4 rutas de auth (vertical slice) —
- * el resto de las 13 rutas de ARQ-01-D3 se añade handler por handler,
+ * Esta pasada monta /api/v1/health, las 4 rutas de auth y /onboarding —
+ * el resto de las rutas de ARQ-01-D3 se añade handler por handler,
  * repitiendo el mismo patrón (NodejsFunction sin Docker, un rol de
  * ejecución por función, ARQ-01-D5).
  */
@@ -61,16 +61,22 @@ export class ApiStack extends Stack {
       ...entornoDeSesion,
     });
     const logout = this.crearHandler("LogoutHandler", "auth/logout.ts", entornoDeSesion);
+    const onboarding = this.crearHandler("OnboardingHandler", "onboarding.ts", {
+      TABLA_TITULAR: props.tablaTitular.tableName,
+      ...entornoDeSesion,
+    });
 
     // Un rol de ejecución por función (ARQ-01-D5) — grant puntual, no compartido.
     // logout no toca la tabla: solo verifica la firma de la cookie.
     props.tablaTitular.grantReadWriteData(registro);
     props.tablaTitular.grantReadData(login);
     props.tablaTitular.grantReadData(loginAdmin);
+    props.tablaTitular.grantReadWriteData(onboarding);
 
     secretoDeSesion.grantRead(login);
     secretoDeSesion.grantRead(loginAdmin);
     secretoDeSesion.grantRead(logout);
+    secretoDeSesion.grantRead(onboarding);
 
     const auth = v1.addResource("auth");
     auth.addResource("registro").addMethod("POST", new apigateway.LambdaIntegration(registro));
@@ -79,6 +85,8 @@ export class ApiStack extends Stack {
       .addResource("login-admin")
       .addMethod("POST", new apigateway.LambdaIntegration(loginAdmin));
     auth.addResource("logout").addMethod("POST", new apigateway.LambdaIntegration(logout));
+
+    v1.addResource("onboarding").addMethod("POST", new apigateway.LambdaIntegration(onboarding));
   }
 
   private crearHandler(
