@@ -122,7 +122,7 @@ export class ApiStack extends Stack {
         // lo decide nadie. Subir el objeto y bumpear esta variable en el mismo
         // commit convierte «sube y espera» en un despliegue con fecha y diff.
         // Debe coincidir con el campo `version` de backend/config/prompts/*.json.
-        PROMPTS_VERSION: "v2",
+        PROMPTS_VERSION: "v3",
         ...entornoDeSesion,
       },
       // API Gateway REST tiene un tope duro de integración de 29s — el
